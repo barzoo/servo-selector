@@ -1,0 +1,36 @@
+{
+  "resistors": [
+    {
+      "id": "br-50-100",
+      "model": "BR-50-100",
+      "resistance": 100,
+      "continuousPower": 50,
+      "peakPower": 500,
+      "compatibleDrives": ["XC20-004"]
+    },
+    {
+      "id": "br-100-50",
+      "model": "BR-100-50",
+      "resistance": 50,
+      "continuousPower": 100,
+      "peakPower": 1000,
+      "compatibleDrives": ["XC20-004", "XC20-008"]
+    },
+    {
+      "id": "br-200-30",
+      "model": "BR-200-30",
+      "resistance": 30,
+      "continuousPower": 200,
+      "peakPower": 2000,
+      "compatibleDrives": ["XC20-008", "XC20-015"]
+    },
+    {
+      "id": "br-400-15",
+      "model": "BR-400-15",
+      "resistance": 15,
+      "continuousPower": 400,
+      "peakPower": 4000,
+      "compatibleDrives": ["XC20-015", "XC20-030"]
+    }
+  ]
+}

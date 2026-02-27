@@ -1,0 +1,122 @@
+{
+  "drives": [
+    {
+      "id": "xc20-004",
+      "model": "XC20-004",
+      "series": "XC20",
+      "powerRating": 400,
+      "ratedOutputCurrent": 2.8,
+      "peakOutputCurrent": 8.4,
+      "dcBusVoltage": 565,
+      "braking": {
+        "internalResistor": 50,
+        "internalResistance": 100,
+        "maxExternalResistor": 200,
+        "minExternalResistance": 15
+      },
+      "communicationInterfaces": [
+        { "type": "ETHERCAT", "modelSuffix": "-EC" },
+        { "type": "PROFINET", "modelSuffix": "-PN" },
+        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" },
+        { "type": "ANALOG", "modelSuffix": "-AN" }
+      ],
+      "encoderSupport": [
+        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
+        { "type": "MULTI_TURN", "protocol": "BISS_C" }
+      ],
+      "emcFilter": {
+        "internal": true,
+        "externalOptions": [{ "class": "C3", "model": "EMC-C3-004" }]
+      },
+      "compatibleMotors": ["MC20-004", "MC20-010", "MC20-020", "MC20-040"]
+    },
+    {
+      "id": "xc20-008",
+      "model": "XC20-008",
+      "series": "XC20",
+      "powerRating": 750,
+      "ratedOutputCurrent": 5.5,
+      "peakOutputCurrent": 16.5,
+      "dcBusVoltage": 565,
+      "braking": {
+        "internalResistor": 50,
+        "internalResistance": 50,
+        "maxExternalResistor": 400,
+        "minExternalResistance": 10
+      },
+      "communicationInterfaces": [
+        { "type": "ETHERCAT", "modelSuffix": "-EC" },
+        { "type": "PROFINET", "modelSuffix": "-PN" },
+        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" },
+        { "type": "ANALOG", "modelSuffix": "-AN" }
+      ],
+      "encoderSupport": [
+        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
+        { "type": "MULTI_TURN", "protocol": "BISS_C" }
+      ],
+      "emcFilter": {
+        "internal": true,
+        "externalOptions": [{ "class": "C3", "model": "EMC-C3-008" }]
+      },
+      "compatibleMotors": ["MC20-010", "MC20-020", "MC20-040", "MC20-060", "MC20-075"]
+    },
+    {
+      "id": "xc20-015",
+      "model": "XC20-015",
+      "series": "XC20",
+      "powerRating": 1500,
+      "ratedOutputCurrent": 9.5,
+      "peakOutputCurrent": 28.5,
+      "dcBusVoltage": 565,
+      "braking": {
+        "internalResistor": 100,
+        "internalResistance": 30,
+        "maxExternalResistor": 800,
+        "minExternalResistance": 8
+      },
+      "communicationInterfaces": [
+        { "type": "ETHERCAT", "modelSuffix": "-EC" },
+        { "type": "PROFINET", "modelSuffix": "-PN" },
+        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" }
+      ],
+      "encoderSupport": [
+        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
+        { "type": "MULTI_TURN", "protocol": "BISS_C" }
+      ],
+      "emcFilter": {
+        "internal": true,
+        "externalOptions": [{ "class": "C3", "model": "EMC-C3-015" }]
+      },
+      "compatibleMotors": ["MC20-060", "MC20-075", "MC20-100"]
+    },
+    {
+      "id": "xc20-030",
+      "model": "XC20-030",
+      "series": "XC20",
+      "powerRating": 3000,
+      "ratedOutputCurrent": 17.0,
+      "peakOutputCurrent": 51.0,
+      "dcBusVoltage": 565,
+      "braking": {
+        "internalResistor": 100,
+        "internalResistance": 20,
+        "maxExternalResistor": 1500,
+        "minExternalResistance": 6
+      },
+      "communicationInterfaces": [
+        { "type": "ETHERCAT", "modelSuffix": "-EC" },
+        { "type": "PROFINET", "modelSuffix": "-PN" },
+        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" }
+      ],
+      "encoderSupport": [
+        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
+        { "type": "MULTI_TURN", "protocol": "BISS_C" }
+      ],
+      "emcFilter": {
+        "internal": true,
+        "externalOptions": [{ "class": "C3", "model": "EMC-C3-030" }]
+      },
+      "compatibleMotors": ["MC20-100", "MC20-150", "MC20-200"]
+    }
+  ]
+}

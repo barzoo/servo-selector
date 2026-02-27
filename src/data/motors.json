@@ -1,0 +1,178 @@
+{
+  "motors": [
+    {
+      "id": "mc20-040-004",
+      "model": "MC20-040-004-30-2",
+      "series": "MC20",
+      "frameSize": 40,
+      "ratedPower": 50,
+      "ratedTorque": 0.16,
+      "peakTorque": 0.48,
+      "ratedSpeed": 3000,
+      "maxSpeed": 6000,
+      "ratedCurrent": 0.9,
+      "peakCurrent": 2.7,
+      "torqueConstant": 0.178,
+      "voltageConstant": 11.7,
+      "phaseResistance": 11.5,
+      "phaseInductance": 24.0,
+      "rotorInertia": 0.025,
+      "weight": 0.5,
+      "encoderOptions": [
+        { "type": "SINGLE_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-S0" },
+        { "type": "MULTI_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-M0" }
+      ],
+      "options": {
+        "brake": { "available": true, "torque": 0.16, "voltage": 24, "power": 5.4, "modelSuffix": "-B1" },
+        "keyShaft": { "available": true, "modelSuffix": "-K0" }
+      },
+      "dimensions": { "shaftDiameter": 6, "overallLength": 65, "overallLengthWithBrake": 95 },
+      "matchedDrives": ["XC20-004"]
+    },
+    {
+      "id": "mc20-040-010",
+      "model": "MC20-040-010-30-2",
+      "series": "MC20",
+      "frameSize": 40,
+      "ratedPower": 100,
+      "ratedTorque": 0.32,
+      "peakTorque": 0.95,
+      "ratedSpeed": 3000,
+      "maxSpeed": 6000,
+      "ratedCurrent": 1.3,
+      "peakCurrent": 3.9,
+      "torqueConstant": 0.246,
+      "voltageConstant": 15.8,
+      "phaseResistance": 5.8,
+      "phaseInductance": 12.5,
+      "rotorInertia": 0.051,
+      "weight": 0.8,
+      "encoderOptions": [
+        { "type": "SINGLE_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-S0" },
+        { "type": "MULTI_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-M0" }
+      ],
+      "options": {
+        "brake": { "available": true, "torque": 0.32, "voltage": 24, "power": 7.2, "modelSuffix": "-B1" },
+        "keyShaft": { "available": true, "modelSuffix": "-K0" }
+      },
+      "dimensions": { "shaftDiameter": 8, "overallLength": 78, "overallLengthWithBrake": 108 },
+      "matchedDrives": ["XC20-004", "XC20-008"]
+    },
+    {
+      "id": "mc20-060-020",
+      "model": "MC20-060-020-30-2",
+      "series": "MC20",
+      "frameSize": 60,
+      "ratedPower": 200,
+      "ratedTorque": 0.64,
+      "peakTorque": 1.91,
+      "ratedSpeed": 3000,
+      "maxSpeed": 6000,
+      "ratedCurrent": 2.0,
+      "peakCurrent": 6.0,
+      "torqueConstant": 0.32,
+      "voltageConstant": 20.5,
+      "phaseResistance": 2.8,
+      "phaseInductance": 6.8,
+      "rotorInertia": 0.14,
+      "weight": 1.4,
+      "encoderOptions": [
+        { "type": "SINGLE_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-S0" },
+        { "type": "MULTI_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-M0" }
+      ],
+      "options": {
+        "brake": { "available": true, "torque": 0.64, "voltage": 24, "power": 8.5, "modelSuffix": "-B1" },
+        "keyShaft": { "available": true, "modelSuffix": "-K0" }
+      },
+      "dimensions": { "shaftDiameter": 11, "overallLength": 92, "overallLengthWithBrake": 127 },
+      "matchedDrives": ["XC20-004", "XC20-008"]
+    },
+    {
+      "id": "mc20-060-040",
+      "model": "MC20-060-040-30-2",
+      "series": "MC20",
+      "frameSize": 60,
+      "ratedPower": 400,
+      "ratedTorque": 1.27,
+      "peakTorque": 3.82,
+      "ratedSpeed": 3000,
+      "maxSpeed": 6000,
+      "ratedCurrent": 3.0,
+      "peakCurrent": 9.0,
+      "torqueConstant": 0.423,
+      "voltageConstant": 27.2,
+      "phaseResistance": 1.6,
+      "phaseInductance": 3.8,
+      "rotorInertia": 0.26,
+      "weight": 1.9,
+      "encoderOptions": [
+        { "type": "SINGLE_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-S0" },
+        { "type": "MULTI_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-M0" }
+      ],
+      "options": {
+        "brake": { "available": true, "torque": 1.27, "voltage": 24, "power": 10.0, "modelSuffix": "-B1" },
+        "keyShaft": { "available": true, "modelSuffix": "-K0" }
+      },
+      "dimensions": { "shaftDiameter": 14, "overallLength": 110, "overallLengthWithBrake": 145 },
+      "matchedDrives": ["XC20-004", "XC20-008"]
+    },
+    {
+      "id": "mc20-080-075",
+      "model": "MC20-080-075-30-2",
+      "series": "MC20",
+      "frameSize": 80,
+      "ratedPower": 750,
+      "ratedTorque": 2.39,
+      "peakTorque": 7.16,
+      "ratedSpeed": 3000,
+      "maxSpeed": 5000,
+      "ratedCurrent": 4.8,
+      "peakCurrent": 14.4,
+      "torqueConstant": 0.498,
+      "voltageConstant": 32.0,
+      "phaseResistance": 0.75,
+      "phaseInductance": 1.9,
+      "rotorInertia": 1.18,
+      "weight": 3.5,
+      "encoderOptions": [
+        { "type": "SINGLE_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-S0" },
+        { "type": "MULTI_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-M0" }
+      ],
+      "options": {
+        "brake": { "available": true, "torque": 2.39, "voltage": 24, "power": 12.0, "modelSuffix": "-B1" },
+        "keyShaft": { "available": true, "modelSuffix": "-K0" }
+      },
+      "dimensions": { "shaftDiameter": 19, "overallLength": 135, "overallLengthWithBrake": 170 },
+      "matchedDrives": ["XC20-008", "XC20-015"]
+    },
+    {
+      "id": "mc20-100-200",
+      "model": "MC20-100-200-30-2",
+      "series": "MC20",
+      "frameSize": 100,
+      "ratedPower": 2000,
+      "ratedTorque": 6.37,
+      "peakTorque": 19.1,
+      "ratedSpeed": 3000,
+      "maxSpeed": 4500,
+      "ratedCurrent": 10.5,
+      "peakCurrent": 31.5,
+      "torqueConstant": 0.607,
+      "voltageConstant": 38.9,
+      "phaseResistance": 0.28,
+      "phaseInductance": 0.72,
+      "rotorInertia": 3.45,
+      "weight": 7.8,
+      "encoderOptions": [
+        { "type": "SINGLE_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-S0" },
+        { "type": "MULTI_TURN", "resolution": 23, "protocol": "BISS_C", "modelSuffix": "-M0" }
+      ],
+      "options": {
+        "brake": { "available": true, "torque": 6.37, "voltage": 24, "power": 19.0, "modelSuffix": "-B1" },
+        "keyShaft": { "available": true, "modelSuffix": "-K0" }
+      },
+      "dimensions": { "shaftDiameter": 24, "overallLength": 165, "overallLengthWithBrake": 205 },
+      "matchedDrives": ["XC20-030"]
+    }
+  ]
+}
