@@ -5,7 +5,6 @@ import { persist } from 'zustand/middleware';
 import {
   WizardState,
   WizardStep,
-  SizingInput,
   ProjectInfo,
   MechanismConfig,
   MotionParams,

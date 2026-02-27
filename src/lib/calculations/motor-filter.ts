@@ -2,8 +2,6 @@
 
 import { MC20Motor, MechanicalResult, MotorRecommendation, SystemPreferences } from '@/types';
 import motorsData from '@/data/motors.json';
-import drivesData from '@/data/drives.json';
-import resistorsData from '@/data/resistors.json';
 
 export class MotorFilter {
   private motors: MC20Motor[];
@@ -11,7 +9,7 @@ export class MotorFilter {
   private preferences: SystemPreferences;
 
   constructor(mechanical: MechanicalResult, preferences: SystemPreferences) {
-    this.motors = motorsData.motors;
+    this.motors = motorsData.motors as MC20Motor[];
     this.mechanical = mechanical;
     this.preferences = preferences;
   }

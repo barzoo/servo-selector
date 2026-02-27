@@ -114,8 +114,6 @@ export class MechanicalCalculator {
   }
 
   private calculateTorques() {
-    const { type, params } = this.input.mechanism;
-
     const times = this.calculateMotionTimes();
     const maxSpeedRad = this.getMaxAngularSpeed();
     const alpha = maxSpeedRad / times.accel;
