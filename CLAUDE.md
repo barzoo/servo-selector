@@ -13,5 +13,5 @@
 
 # 文档规范
 - 需求文档：`docs/specs/tool-spec.md`
-- 算法设计：`docs/plans/sizing-algo.md`  
+- 算法设计：`docs/plans/sizing-algo.md`
 - 数据清单：`docs/data/servo-dataset.md`
