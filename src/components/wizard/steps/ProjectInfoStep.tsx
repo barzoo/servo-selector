@@ -52,7 +52,7 @@ export function ProjectInfoStep() {
           id="name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 placeholder-gray-400"
           placeholder="例如：CNC X轴伺服选型"
         />
         {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
@@ -67,7 +67,7 @@ export function ProjectInfoStep() {
           id="customer"
           value={formData.customer}
           onChange={(e) => setFormData({ ...formData, customer: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 placeholder-gray-400"
           placeholder="例如：ABC机械有限公司"
         />
         {errors.customer && <p className="mt-1 text-sm text-red-600">{errors.customer}</p>}
@@ -82,7 +82,7 @@ export function ProjectInfoStep() {
           id="salesPerson"
           value={formData.salesPerson}
           onChange={(e) => setFormData({ ...formData, salesPerson: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 placeholder-gray-400"
           placeholder="您的姓名"
         />
       </div>
@@ -96,7 +96,7 @@ export function ProjectInfoStep() {
           rows={3}
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 placeholder-gray-400"
           placeholder="其他需要说明的信息..."
         />
       </div>

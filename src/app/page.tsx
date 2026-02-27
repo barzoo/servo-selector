@@ -4,6 +4,9 @@ import { useWizardStore } from '@/stores/wizard-store';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
 import { ProjectInfoStep } from '@/components/wizard/steps/ProjectInfoStep';
 import { MechanismStep } from '@/components/wizard/steps/MechanismStep';
+import { MotionStep } from '@/components/wizard/steps/MotionStep';
+import { DutyStep } from '@/components/wizard/steps/DutyStep';
+import { SystemConfigStep } from '@/components/wizard/steps/SystemConfigStep';
 
 export default function Home() {
   const { currentStep } = useWizardStore();
@@ -15,11 +18,11 @@ export default function Home() {
       case 2:
         return <MechanismStep />;
       case 3:
-        return <div className="text-center py-20">运动参数步骤（待实现）</div>;
+        return <MotionStep />;
       case 4:
-        return <div className="text-center py-20">工况条件步骤（待实现）</div>;
+        return <DutyStep />;
       case 5:
-        return <div className="text-center py-20">系统配置步骤（待实现）</div>;
+        return <SystemConfigStep />;
       default:
         return <ProjectInfoStep />;
     }
