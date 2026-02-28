@@ -3,9 +3,10 @@
 import { useWizardStore } from '@/stores/wizard-store';
 import { SystemPreferences } from '@/types';
 import { useState } from 'react';
+import { SizingEngine } from '@/lib/calculations/sizing-engine';
 
 export function SystemConfigStep() {
-  const { input, setPreferences, prevStep } = useWizardStore();
+  const { input, setPreferences, setResult, nextStep, prevStep } = useWizardStore();
 
   const [formData, setFormData] = useState<SystemPreferences>(
     input.preferences || {
@@ -21,8 +22,20 @@ export function SystemConfigStep() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPreferences(formData);
-    // TODO: Trigger calculation and show results
-    alert('选型参数已保存，计算功能开发中...');
+
+    // 执行选型计算
+    if (input.project && input.mechanism && input.motion && input.duty) {
+      const engine = new SizingEngine();
+      const result = engine.calculate({
+        project: input.project,
+        mechanism: input.mechanism,
+        motion: input.motion,
+        duty: input.duty,
+        preferences: formData,
+      });
+      setResult(result);
+      nextStep();
+    }
   };
 
   return (

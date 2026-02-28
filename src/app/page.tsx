@@ -7,11 +7,16 @@ import { MechanismStep } from '@/components/wizard/steps/MechanismStep';
 import { MotionStep } from '@/components/wizard/steps/MotionStep';
 import { DutyStep } from '@/components/wizard/steps/DutyStep';
 import { SystemConfigStep } from '@/components/wizard/steps/SystemConfigStep';
+import { ResultStep } from '@/components/wizard/steps/ResultStep';
 
 export default function Home() {
-  const { currentStep } = useWizardStore();
+  const { currentStep, isComplete } = useWizardStore();
 
   const renderStep = () => {
+    if (isComplete) {
+      return <ResultStep />;
+    }
+
     switch (currentStep) {
       case 1:
         return <ProjectInfoStep />;

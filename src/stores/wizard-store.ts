@@ -10,6 +10,7 @@ import {
   MotionParams,
   DutyConditions,
   SystemPreferences,
+  SizingResult,
 } from '@/types';
 
 interface WizardStore extends WizardState {
@@ -21,6 +22,7 @@ interface WizardStore extends WizardState {
   setMotion: (motion: MotionParams) => void;
   setDuty: (duty: DutyConditions) => void;
   setPreferences: (preferences: SystemPreferences) => void;
+  setResult: (result: SizingResult) => void;
   reset: () => void;
 }
 
@@ -74,6 +76,12 @@ export const useWizardStore = create<WizardStore>()(
       setPreferences: (preferences) =>
         set((state) => ({
           input: { ...state.input, preferences },
+        })),
+
+      setResult: (result) =>
+        set(() => ({
+          result,
+          isComplete: true,
         })),
 
       reset: () => set(initialState),
