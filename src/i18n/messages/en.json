@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "Servo Sizing Tool",
+    "description": "Bosch Rexroth Servo System Sizing and Selection Tool"
+  },
+  "common": {
+    "next": "Next",
+    "back": "Back",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "steps": {
+    "projectInfo": "Project Info",
+    "mechanism": "Mechanism",
+    "motion": "Motion",
+    "duty": "Duty Cycle",
+    "systemConfig": "System Config",
+    "result": "Results"
+  },
+  "projectInfo": {
+    "title": "Project Information",
+    "projectName": "Project Name",
+    "projectNamePlaceholder": "Enter project name",
+    "customerName": "Customer Name",
+    "customerNamePlaceholder": "Enter customer name",
+    "salesPerson": "Sales Person",
+    "salesPersonPlaceholder": "Enter sales person name",
+    "date": "Date",
+    "errors": {
+      "projectNameRequired": "Please enter project name"
+    }
+  },
+  "mechanism": {
+    "title": "Mechanism Parameters",
+    "type": "Mechanism Type",
+    "types": {
+      "ballScrew": "Ball Screw",
+      "gear": "Gear/Reducer",
+      "directDrive": "Direct Drive",
+      "belt": "Timing Belt",
+      "rack": "Rack & Pinion"
+    }
+  },
+  "motion": {
+    "title": "Motion Parameters"
+  },
+  "duty": {
+    "title": "Duty Conditions"
+  },
+  "systemConfig": {
+    "title": "System Configuration"
+  },
+  "result": {
+    "title": "Sizing Results",
+    "summary": "Calculation Summary",
+    "recommendedMotor": "Recommended Motor",
+    "recommendedDrive": "Recommended Drive",
+    "exportPdf": "Export PDF"
+  }
+}

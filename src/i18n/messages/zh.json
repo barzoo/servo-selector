@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "伺服选型工具",
+    "description": "Bosch Rexroth 伺服系统选型计算工具"
+  },
+  "common": {
+    "next": "下一步",
+    "back": "上一步",
+    "submit": "提交",
+    "cancel": "取消",
+    "save": "保存",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功"
+  },
+  "steps": {
+    "projectInfo": "项目信息",
+    "mechanism": "机械参数",
+    "motion": "运动参数",
+    "duty": "工况条件",
+    "systemConfig": "系统配置",
+    "result": "选型结果"
+  },
+  "projectInfo": {
+    "title": "项目信息",
+    "projectName": "项目名称",
+    "projectNamePlaceholder": "请输入项目名称",
+    "customerName": "客户名称",
+    "customerNamePlaceholder": "请输入客户名称",
+    "salesPerson": "销售人员",
+    "salesPersonPlaceholder": "请输入销售人员姓名",
+    "date": "日期",
+    "errors": {
+      "projectNameRequired": "请输入项目名称"
+    }
+  },
+  "mechanism": {
+    "title": "机械参数",
+    "type": "机械类型",
+    "types": {
+      "ballScrew": "滚珠丝杠",
+      "gear": "齿轮/减速机",
+      "directDrive": "直接驱动",
+      "belt": "同步带",
+      "rack": "齿轮齿条"
+    }
+  },
+  "motion": {
+    "title": "运动参数"
+  },
+  "duty": {
+    "title": "工况条件"
+  },
+  "systemConfig": {
+    "title": "系统配置"
+  },
+  "result": {
+    "title": "选型结果",
+    "summary": "计算摘要",
+    "recommendedMotor": "推荐电机",
+    "recommendedDrive": "推荐驱动器",
+    "exportPdf": "导出 PDF"
+  }
+}
