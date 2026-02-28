@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
   const t = useTranslations('result');
-  const commonT = useTranslations('common');
   const [selectedMotorIndex, setSelectedMotorIndex] = useState(0);
 
   if (!result || result.motorRecommendations.length === 0) {
