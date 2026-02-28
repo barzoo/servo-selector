@@ -8,6 +8,7 @@ import { MotionStep } from '@/components/wizard/steps/MotionStep';
 import { DutyStep } from '@/components/wizard/steps/DutyStep';
 import { SystemConfigStep } from '@/components/wizard/steps/SystemConfigStep';
 import { ResultStep } from '@/components/wizard/steps/ResultStep';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Home() {
   const { currentStep, isComplete } = useWizardStore();
@@ -36,7 +37,10 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <header className="mb-8 text-center">
+        <header className="mb-8 text-center relative">
+          <div className="absolute right-0 top-0">
+            <LanguageSwitcher />
+          </div>
           <h1 className="text-3xl font-bold text-gray-900">
             博世力士乐伺服选型工具
           </h1>
