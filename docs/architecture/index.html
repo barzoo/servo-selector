@@ -100,6 +100,100 @@
                 </div>
             </div>
         </section>
+
+        <!-- 第二章：第1站 - 用户填写信息 -->
+        <section id="step1" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        1
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">第1站：用户填写信息</h2>
+                        <p class="text-gray-500">5步向导收集需求</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-600 leading-relaxed">
+                    <p class="mb-6">
+                        旅程从这里开始。用户打开网页后，会看到一个<strong>5步向导</strong>，引导他们一步步填写选型所需的信息。就像去医院看病，医生会一步步询问你的症状一样。
+                    </p>
+
+                    <!-- 5步向导可视化 -->
+                    <div class="grid md:grid-cols-5 gap-4 mb-8">
+                        <div class="bg-blue-50 rounded-xl p-4 text-center">
+                            <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">1</div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">项目信息</h4>
+                            <p class="text-xs text-gray-500">项目名称、客户信息</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-4 text-center">
+                            <div class="w-10 h-10 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">2</div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">机械参数</h4>
+                            <p class="text-xs text-gray-500">传动类型、负载重量</p>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-4 text-center">
+                            <div class="w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">3</div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">运动参数</h4>
+                            <p class="text-xs text-gray-500">行程、速度、加速度</p>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-4 text-center">
+                            <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">4</div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">工况条件</h4>
+                            <p class="text-xs text-gray-500">环境温度、工作制</p>
+                        </div>
+                        <div class="bg-indigo-50 rounded-xl p-4 text-center">
+                            <div class="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-2">5</div>
+                            <h4 class="font-semibold text-gray-800 text-sm mb-1">系统配置</h4>
+                            <p class="text-xs text-gray-500">编码器、通讯协议</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold mt-1">①</span>
+                            <div>
+                                <strong class="text-gray-800">项目信息：</strong>
+                                <span>填写项目名称、客户名称等基本信息，方便后续生成报告时识别。</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-purple-600 font-bold mt-1">②</span>
+                            <div>
+                                <strong class="text-gray-800">机械参数：</strong>
+                                <span>选择传动方式（丝杠/减速机/直驱/皮带），输入负载重量、丝杠导程等机械结构参数。</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-orange-600 font-bold mt-1">③</span>
+                            <div>
+                                <strong class="text-gray-800">运动参数：</strong>
+                                <span>输入运动行程、最大速度、加速度等运动要求。这些数据决定了电机需要多大的"力气"。</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-green-600 font-bold mt-1">④</span>
+                            <div>
+                                <strong class="text-gray-800">工况条件：</strong>
+                                <span>设置环境温度、工作制（连续/间歇）、安装方式等使用条件。</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <span class="text-indigo-600 font-bold mt-1">⑤</span>
+                            <div>
+                                <strong class="text-gray-800">系统配置：</strong>
+                                <span>选择编码器类型、通讯协议、电缆长度等配置选项。</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-50 border-l-4 border-purple-500 p-4 mt-6 rounded-r-lg">
+                        <p class="text-purple-800">
+                            <strong>💡 技术视角：</strong>用户在每一步填写的数据，都会被保存到状态管理中，供后续计算模块使用。这些数据构成了选型计算的"原材料"。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- 页脚 -->
