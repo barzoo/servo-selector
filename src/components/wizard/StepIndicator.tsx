@@ -1,30 +1,28 @@
 'use client';
 
 import { WizardStep } from '@/types';
+import { useTranslations } from 'next-intl';
 
 interface StepIndicatorProps {
   currentStep: WizardStep;
 }
 
-const steps = [
-  { id: 1, label: '项目信息' },
-  { id: 2, label: '机械参数' },
-  { id: 3, label: '运动参数' },
-  { id: 4, label: '工况条件' },
-  { id: 5, label: '系统配置' },
-];
+const stepKeys = ['projectInfo', 'mechanism', 'motion', 'duty', 'systemConfig'] as const;
 
 export function StepIndicator({ currentStep }: StepIndicatorProps) {
+  const t = useTranslations('steps');
+
   return (
     <div className="w-full py-6">
       <div className="flex items-center justify-between">
-        {steps.map((step, index) => {
-          const isActive = step.id === currentStep;
-          const isCompleted = step.id < currentStep;
-          const isLast = index === steps.length - 1;
+        {stepKeys.map((key, index) => {
+          const stepId = index + 1;
+          const isActive = stepId === currentStep;
+          const isCompleted = stepId < currentStep;
+          const isLast = index === stepKeys.length - 1;
 
           return (
-            <div key={step.id} className="flex items-center flex-1">
+            <div key={stepId} className="flex items-center flex-1">
               <div className="flex flex-col items-center">
                 <div
                   className={`
@@ -39,7 +37,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                     }
                   `}
                 >
-                  {isCompleted ? '✓' : step.id}
+                  {isCompleted ? '✓' : stepId}
                 </div>
                 <span
                   className={`
@@ -47,7 +45,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                     ${isActive ? 'text-blue-600' : 'text-gray-500'}
                   `}
                 >
-                  {step.label}
+                  {t(key)}
                 </span>
               </div>
               {!isLast && (
