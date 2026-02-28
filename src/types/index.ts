@@ -248,6 +248,11 @@ export interface MotorRecommendation {
   systemConfig?: CompleteSystemConfig;
 }
 
+export interface SizingFailureReason {
+  type: 'TORQUE' | 'PEAK_TORQUE' | 'SPEED' | 'ENCODER';
+  message: string;
+}
+
 export interface CompleteSystemConfig {
   motor: MC20Motor;
   drive: XC20Drive;
@@ -268,6 +273,7 @@ export interface CompleteSystemConfig {
 export interface SizingResult {
   mechanical: MechanicalResult;
   motorRecommendations: MotorRecommendation[];
+  failureReason?: SizingFailureReason;  // 新增：仅当无推荐时存在
   metadata: {
     calculationTime: number;
     version: string;
