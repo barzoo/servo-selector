@@ -30,8 +30,11 @@
     "salesPerson": "Sales Person",
     "salesPersonPlaceholder": "Enter sales person name",
     "date": "Date",
+    "notes": "Notes",
+    "notesPlaceholder": "Additional information...",
     "errors": {
-      "projectNameRequired": "Please enter project name"
+      "projectNameRequired": "Please enter project name",
+      "customerNameRequired": "Please enter customer name"
     }
   },
   "mechanism": {

@@ -30,8 +30,11 @@
     "salesPerson": "销售人员",
     "salesPersonPlaceholder": "请输入销售人员姓名",
     "date": "日期",
+    "notes": "备注",
+    "notesPlaceholder": "其他需要说明的信息...",
     "errors": {
-      "projectNameRequired": "请输入项目名称"
+      "projectNameRequired": "请输入项目名称",
+      "customerNameRequired": "请输入客户名称"
     }
   },
   "mechanism": {
