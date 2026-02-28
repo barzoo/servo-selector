@@ -38,7 +38,26 @@ export class MotorFilter {
 
     scored.sort((a, b) => b.matchScore - a.matchScore);
 
-    return scored.slice(0, 5);
+    return this.filterByEconomy(scored);
+  }
+
+  private filterByEconomy(
+    candidates: MotorRecommendation[]
+  ): MotorRecommendation[] {
+    // 筛选匹配度≥80的高分电机
+    const highScoreMotors = candidates.filter((c) => c.matchScore >= 80);
+
+    if (highScoreMotors.length > 0) {
+      // 有高分电机，最多返回3个
+      return highScoreMotors.slice(0, 3);
+    }
+
+    // 无高分电机，保留前2个并标记为警告
+    return candidates.slice(0, 2).map((c) => ({
+      ...c,
+      feasibility: 'WARNING' as const,
+      warnings: [...c.warnings, '匹配度较低，建议调整工况参数'],
+    }));
   }
 
   private calculateMatchScore(
