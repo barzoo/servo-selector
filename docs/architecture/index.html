@@ -194,6 +194,605 @@
                 </div>
             </div>
         </section>
+
+        <!-- 第三章：第2站 - 数据收集站 -->
+        <section id="step2" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        2
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">第2站：数据收集站</h2>
+                        <p class="text-gray-500">状态管理模块</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-600 leading-relaxed">
+                    <p class="mb-6">
+                        当用户在向导中填写信息时，这些数据并没有"消失"，而是被送到了<strong>数据收集站</strong>——也就是系统的状态管理模块。就像餐厅的前台接待员，把客人的点餐信息记录下来，方便后厨各个部门使用。
+                    </p>
+
+                    <!-- 比喻图示 -->
+                    <div class="bg-amber-50 rounded-xl p-6 mb-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="text-3xl">🍽️</span>
+                            <h3 class="font-semibold text-gray-800">生活中的比喻：餐厅点餐</h3>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                            <div class="bg-white rounded-lg p-4 text-center">
+                                <div class="text-2xl mb-2">👨‍🍳</div>
+                                <p class="font-medium text-gray-700">顾客点餐</p>
+                                <p class="text-gray-500 text-xs mt-1">告诉服务员想吃什么</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 text-center border-2 border-amber-400">
+                                <div class="text-2xl mb-2">📝</div>
+                                <p class="font-medium text-gray-700">前台记录</p>
+                                <p class="text-gray-500 text-xs mt-1">把订单记下来，传递给后厨</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 text-center">
+                                <div class="text-2xl mb-2">🍳</div>
+                                <p class="font-medium text-gray-700">后厨制作</p>
+                                <p class="text-gray-500 text-xs mt-1">根据订单做菜</p>
+                            </div>
+                        </div>
+                        <p class="text-center text-amber-800 mt-4 text-sm">
+                            状态管理就像"前台记录"，确保信息不会丢失，并能传递给需要的模块
+                        </p>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">状态管理做什么？</h3>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="flex items-start gap-4 bg-gray-50 rounded-lg p-4">
+                            <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold shrink-0">1</div>
+                            <div>
+                                <strong class="text-gray-800">保存数据</strong>
+                                <p class="text-gray-600 text-sm mt-1">
+                                    把用户在5个步骤中填写的所有信息保存起来，包括项目信息、机械参数、运动参数等。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 bg-gray-50 rounded-lg p-4">
+                            <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold shrink-0">2</div>
+                            <div>
+                                <strong class="text-gray-800">跨步骤共享</strong>
+                                <p class="text-gray-600 text-sm mt-1">
+                                    用户在第2步填写的负载重量，第4步的计算模块也能访问到。数据在不同步骤间自由流动。
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 bg-gray-50 rounded-lg p-4">
+                            <div class="w-8 h-8 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center font-bold shrink-0">3</div>
+                            <div>
+                                <strong class="text-gray-800">响应式更新</strong>
+                                <p class="text-gray-600 text-sm mt-1">
+                                    当用户修改某个参数时，相关的结果会自动重新计算，不需要手动刷新页面。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg">
+                        <p class="text-indigo-800">
+                            <strong>💡 技术细节：</strong>系统使用 Zustand 进行状态管理。它是一个轻量级的状态库，让数据在各个组件间共享变得简单。所有用户输入的数据都存储在这里，等待计算模块来"取用"。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第四章：第3站 - 计算工厂 -->
+        <section id="step3" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        3
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">第3站：计算工厂</h2>
+                        <p class="text-gray-500">机械计算引擎</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-600 leading-relaxed">
+                    <p class="mb-6">
+                        数据收集完毕后，就进入了<strong>计算工厂</strong>。这里是系统的"大脑"之一，负责把用户输入的机械参数转换成电机需要的性能指标。就像工程师拿着计算器，根据物理公式算出"需要多大的力"。
+                    </p>
+
+                    <!-- 计算过程可视化 -->
+                    <div class="bg-orange-50 rounded-xl p-6 mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-4 text-center">计算工厂的工作流程</h3>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                            <div class="bg-white rounded-lg p-4 text-center shadow-sm w-full md:w-auto">
+                                <div class="text-2xl mb-2">📥</div>
+                                <p class="font-medium text-gray-700 text-sm">输入数据</p>
+                                <p class="text-gray-500 text-xs">负载重量、传动方式、运动参数</p>
+                            </div>
+                            <div class="text-orange-400 text-2xl">⚙️</div>
+                            <div class="bg-orange-100 rounded-lg p-4 text-center border-2 border-orange-300 w-full md:w-auto">
+                                <div class="text-2xl mb-2">🏭</div>
+                                <p class="font-medium text-orange-800 text-sm">计算工厂</p>
+                                <p class="text-orange-600 text-xs">物理公式计算</p>
+                            </div>
+                            <div class="text-orange-400 text-2xl">📤</div>
+                            <div class="bg-white rounded-lg p-4 text-center shadow-sm w-full md:w-auto">
+                                <div class="text-2xl mb-2">📊</div>
+                                <p class="font-medium text-gray-700 text-sm">输出结果</p>
+                                <p class="text-gray-500 text-xs">所需扭矩、转速、惯量</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">计算什么？</h3>
+
+                    <div class="grid md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">⚖️</span>
+                                <h4 class="font-semibold text-gray-800">负载惯量</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                计算负载的转动惯量。惯量越大，电机启动和停止时需要克服的"惰性"就越大。
+                            </p>
+                            <div class="text-xs bg-white rounded p-2 text-gray-500">
+                                例如：丝杠传动要考虑负载重量和丝杠导程
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">💪</span>
+                                <h4 class="font-semibold text-gray-800">所需扭矩</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                计算驱动负载需要多大的力矩。包括加速扭矩、摩擦扭矩、重力扭矩等。
+                            </p>
+                            <div class="text-xs bg-white rounded p-2 text-gray-500">
+                                例如：垂直升降要考虑重力，水平运动要考虑摩擦
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl">🚀</span>
+                                <h4 class="font-semibold text-gray-800">所需转速</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                根据运动速度和传动比，计算电机需要达到的最高转速。
+                            </p>
+                            <div class="text-xs bg-white rounded p-2 text-gray-500">
+                                例如：丝杠导程10mm，速度1m/s，电机需要转6000转/分钟
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">不同传动方式，不同计算</h3>
+
+                    <div class="space-y-3 mb-6">
+                        <div class="flex items-center gap-4 p-3 bg-blue-50 rounded-lg">
+                            <span class="text-2xl">🔩</span>
+                            <div>
+                                <strong class="text-gray-800">丝杠传动</strong>
+                                <p class="text-sm text-gray-600">考虑丝杠导程、效率、摩擦系数，将直线运动转换为旋转运动计算</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-3 bg-purple-50 rounded-lg">
+                            <span class="text-2xl">⚙️</span>
+                            <div>
+                                <strong class="text-gray-800">减速机传动</strong>
+                                <p class="text-sm text-gray-600">考虑减速比，电机转速要乘以减速比，扭矩要除以减速比</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-3 bg-green-50 rounded-lg">
+                            <span class="text-2xl">🔄</span>
+                            <div>
+                                <strong class="text-gray-800">直驱/旋转台</strong>
+                                <p class="text-sm text-gray-600">直接计算旋转负载，不需要转换，相对简单</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 p-3 bg-orange-50 rounded-lg">
+                            <span class="text-2xl">🔄</span>
+                            <div>
+                                <strong class="text-gray-800">皮带/齿形带传动</strong>
+                                <p class="text-sm text-gray-600">考虑皮带轮直径、皮带效率，计算方式类似丝杠</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-lg">
+                        <p class="text-orange-800">
+                            <strong>💡 技术视角：</strong>计算引擎位于 <code>src/lib/calculations/mechanical.ts</code>，包含针对不同传动方式的计算函数。它会根据用户选择的传动类型，调用相应的计算公式。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第五章：第4站 - 匹配中心 -->
+        <section id="step4" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        4
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">第4站：匹配中心</h2>
+                        <p class="text-gray-500">电机匹配算法</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-600 leading-relaxed">
+                    <p class="mb-6">
+                        计算工厂算出了"需要什么样的电机"，接下来就要去<strong>匹配中心</strong>——从众多电机中找出最合适的那几款。就像招聘时筛选简历，根据多个维度给候选人打分，选出最合适的人选。
+                    </p>
+
+                    <!-- 匹配过程图示 -->
+                    <div class="bg-green-50 rounded-xl p-6 mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-4 text-center">匹配中心的工作流程</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-gray-400 text-white rounded-full flex items-center justify-center font-bold shrink-0">1</div>
+                                <div class="flex-1 bg-white rounded-lg p-3">
+                                    <p class="text-sm"><strong>初步筛选</strong> - 先过滤掉不满足最低要求的电机（扭矩不够、转速不够的直接淘汰）</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center font-bold shrink-0">2</div>
+                                <div class="flex-1 bg-white rounded-lg p-3 border-2 border-green-300">
+                                    <p class="text-sm"><strong>多维评分</strong> - 对通过筛选的电机，从多个维度打分</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 bg-green-600 text-white rounded-full flex items-center justify-center font-bold shrink-0">3</div>
+                                <div class="flex-1 bg-white rounded-lg p-3">
+                                    <p class="text-sm"><strong>排序推荐</strong> - 按总分排序，选出得分最高的1-3款推荐给用户</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">评分维度（满分100分）</h3>
+
+                    <!-- 评分维度可视化 -->
+                    <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-medium text-gray-700">💪 扭矩余量（40%权重）</span>
+                                    <span class="text-green-600 font-bold">40分</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-green-500 h-3 rounded-full" style="width: 40%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">电机的额定扭矩 vs 实际需求扭矩，余量越大得分越高</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-medium text-gray-700">⚖️ 惯量比（30%权重）</span>
+                                    <span class="text-blue-600 font-bold">30分</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-blue-500 h-3 rounded-full" style="width: 30%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">负载惯量 vs 电机转子惯量，比例越合适得分越高</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-medium text-gray-700">🚀 转速余量（20%权重）</span>
+                                    <span class="text-orange-600 font-bold">20分</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-orange-500 h-3 rounded-full" style="width: 20%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">电机最大转速 vs 需求转速，余量越大得分越高</p>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-1">
+                                    <span class="font-medium text-gray-700">⚡ 效率（10%权重）</span>
+                                    <span class="text-purple-600 font-bold">10分</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-purple-500 h-3 rounded-full" style="width: 10%"></div>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">电机的工作效率，效率越高得分越高</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">举个例子</h3>
+
+                    <div class="bg-amber-50 rounded-xl p-5 mb-6">
+                        <p class="text-sm text-gray-700 mb-3">
+                            假设计算工厂算出：需要扭矩 2.5 N·m，转速 3000 rpm
+                        </p>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center justify-between bg-white rounded p-2">
+                                <span>电机A：额扭3.0N·m，最大速4000rpm</span>
+                                <span class="text-green-600 font-bold">得分：85分 ✅</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-white rounded p-2">
+                                <span>电机B：额扭2.0N·m，最大速3500rpm</span>
+                                <span class="text-red-500 font-bold">淘汰 ❌（扭矩不够）</span>
+                            </div>
+                            <div class="flex items-center justify-between bg-white rounded p-2">
+                                <span>电机C：额扭5.0N·m，最大速6000rpm</span>
+                                <span class="text-green-600 font-bold">得分：72分 ✅</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-3">
+                            最终推荐：电机A（85分）和电机C（72分）给用户选择
+                        </p>
+                    </div>
+
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+                        <p class="text-green-800">
+                            <strong>💡 技术视角：</strong>匹配算法位于 <code>src/lib/calculations/motor-filter.ts</code>。它首先从电机数据库（<code>src/data/motors.json</code>）中筛选，然后根据评分算法计算每款电机的得分，最后排序返回推荐列表。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第六章：第5站 - 装配车间 -->
+        <section id="step5" class="mb-16">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white text-xl font-bold">
+                        5
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">第5站：装配车间</h2>
+                        <p class="text-gray-500">配件匹配模块</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-600 leading-relaxed">
+                    <p class="mb-6">
+                        选出了合适的电机，但一个完整的伺服系统还需要其他配件。在<strong>装配车间</strong>，系统会根据选中的电机，自动找到兼容的驱动器、电缆、制动电阻等配件。就像买了手机后，需要配充电器、数据线，系统帮你找好配套的配件。
+                    </p>
+
+                    <!-- 配件匹配图示 -->
+                    <div class="bg-indigo-50 rounded-xl p-6 mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-4 text-center">装配车间的"购物清单"</h3>
+                        <div class="flex flex-wrap items-center justify-center gap-3">
+                            <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                                <div class="text-3xl mb-2">🎯</div>
+                                <p class="font-medium text-gray-700 text-sm">选中电机</p>
+                                <p class="text-xs text-gray-500">MS2N04-D1BNN</p>
+                            </div>
+                            <span class="text-indigo-400 text-xl">+</span>
+                            <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                                <div class="text-3xl mb-2">🔌</div>
+                                <p class="font-medium text-gray-700 text-sm">驱动器</p>
+                                <p class="text-xs text-gray-500">HCS01.1E-W0018</p>
+                            </div>
+                            <span class="text-indigo-400 text-xl">+</span>
+                            <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                                <div class="text-3xl mb-2">🔋</div>
+                                <p class="font-medium text-gray-700 text-sm">电缆</p>
+                                <p class="text-xs text-gray-500">5米动力电缆</p>
+                            </div>
+                            <span class="text-indigo-400 text-xl">+</span>
+                            <div class="bg-white rounded-lg p-4 text-center shadow-sm">
+                                <div class="text-3xl mb-2">⚡</div>
+                                <p class="font-medium text-gray-700 text-sm">制动电阻</p>
+                                <p class="text-xs text-gray-500">R911296296</p>
+                            </div>
+                            <span class="text-indigo-400 text-xl">=</span>
+                            <div class="bg-green-100 rounded-lg p-4 text-center border-2 border-green-300">
+                                <div class="text-3xl mb-2">📦</div>
+                                <p class="font-medium text-green-800 text-sm">完整系统</p>
+                                <p class="text-xs text-green-600">即插即用</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">匹配哪些配件？</h3>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-2xl">🔌</span>
+                                <h4 class="font-semibold text-gray-800">驱动器</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                驱动器是控制电机运行的"大脑"。系统会根据电机的功率和型号，从驱动器数据库中找到兼容的型号。
+                            </p>
+                            <div class="text-xs bg-blue-50 rounded p-2 text-blue-700">
+                                <strong>匹配逻辑：</strong>功率匹配 + 通讯协议兼容
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-2xl">🔋</span>
+                                <h4 class="font-semibold text-gray-800">电缆</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                电缆连接电机和驱动器。系统会根据用户选择的长度，匹配合适的动力电缆和编码器电缆。
+                            </p>
+                            <div class="text-xs bg-blue-50 rounded p-2 text-blue-700">
+                                <strong>匹配逻辑：</strong>长度 + 接口类型 + 防护等级
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-2xl">⚡</span>
+                                <h4 class="font-semibold text-gray-800">制动电阻</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                制动电阻用于消耗电机减速时产生的回馈能量。如果应用场景需要快速制动，就需要配置制动电阻。
+                            </p>
+                            <div class="text-xs bg-blue-50 rounded p-2 text-blue-700">
+                                <strong>匹配逻辑：</strong>根据制动需求 + 驱动器型号
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl p-5">
+                            <div class="flex items-center gap-3 mb-3">
+                                <span class="text-2xl">🔧</span>
+                                <h4 class="font-semibold text-gray-800">其他配件</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">
+                                还可能包括滤波器、电抗器等配件，根据具体的应用需求和驱动器要求来配置。
+                            </p>
+                            <div class="text-xs bg-blue-50 rounded p-2 text-blue-700">
+                                <strong>匹配逻辑：</strong>根据应用场景 + 驱动器要求
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">兼容性检查</h3>
+
+                    <div class="bg-amber-50 rounded-xl p-5 mb-6">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xl">✅</span>
+                            <h4 class="font-semibold text-gray-800">如何确保配件兼容？</h4>
+                        </div>
+                        <ul class="space-y-2 text-sm text-gray-700">
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500 mt-0.5">✓</span>
+                                <span><strong>型号匹配：</strong>每个电机都有对应的兼容驱动器型号列表</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500 mt-0.5">✓</span>
+                                <span><strong>功率匹配：</strong>驱动器功率要大于等于电机功率</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500 mt-0.5">✓</span>
+                                <span><strong>接口匹配：</strong>电缆接口要与电机和驱动器的接口对应</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-green-500 mt-0.5">✓</span>
+                                <span><strong>协议匹配：</strong>驱动器支持的通讯协议要满足用户需求</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg">
+                        <p class="text-indigo-800">
+                            <strong>💡 技术视角：</strong>配件数据存储在 <code>src/data/drives.json</code> 和 <code>src/data/resistors.json</code> 中。配件匹配模块会根据电机型号查询兼容的驱动器，再根据用户选择的配置选项（如电缆长度）组装完整的系统配置。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 第七章：旅程的终点 -->
+        <section id="end" class="mb-16">
+            <div class="bg-gradient-to-br from-green-50 to-blue-50 rounded-2xl shadow-lg p-8 border-2 border-green-200">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl">
+                        🏁
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">旅程的终点</h2>
+                        <p class="text-gray-500">结果展示</p>
+                    </div>
+                </div>
+
+                <div class="prose max-w-none text-gray-600 leading-relaxed">
+                    <p class="mb-6">
+                        经过前面所有"站点"的处理，一份选型请求终于完成了它的旅程。现在，用户可以看到完整的推荐结果了。
+                    </p>
+
+                    <!-- 结果展示 -->
+                    <div class="bg-white rounded-xl p-6 mb-6 shadow-sm">
+                        <h3 class="font-semibold text-gray-800 mb-4 text-center">用户看到什么？</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                                <span class="text-2xl">🏆</span>
+                                <div>
+                                    <strong class="text-gray-800">推荐电机列表</strong>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        显示1-3款最适合的电机，每款都包含型号、规格参数和匹配度评分
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                                <span class="text-2xl">📊</span>
+                                <div>
+                                    <strong class="text-gray-800">匹配度评分</strong>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        每款电机的得分和评分详情，让用户了解为什么推荐这款
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                                <span class="text-2xl">📦</span>
+                                <div>
+                                    <strong class="text-gray-800">完整系统配置</strong>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        电机 + 驱动器 + 电缆 + 制动电阻（如需要）的完整清单
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-4 p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                                <span class="text-2xl">📄</span>
+                                <div>
+                                    <strong class="text-gray-800">PDF导出</strong>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        一键生成专业的选型报告，包含所有技术参数和配置清单，可直接发给客户
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 旅程总结 -->
+                    <div class="bg-white rounded-xl p-6 mb-6">
+                        <h3 class="font-semibold text-gray-800 mb-4 text-center">📍 旅程回顾</h3>
+                        <div class="flex flex-wrap items-center justify-center gap-2 text-xs md:text-sm">
+                            <div class="bg-blue-100 px-3 py-2 rounded-lg text-blue-800">
+                                用户输入
+                            </div>
+                            <span class="text-gray-400">→</span>
+                            <div class="bg-purple-100 px-3 py-2 rounded-lg text-purple-800">
+                                数据收集
+                            </div>
+                            <span class="text-gray-400">→</span>
+                            <div class="bg-orange-100 px-3 py-2 rounded-lg text-orange-800">
+                                计算工厂
+                            </div>
+                            <span class="text-gray-400">→</span>
+                            <div class="bg-green-100 px-3 py-2 rounded-lg text-green-800">
+                                匹配中心
+                            </div>
+                            <span class="text-gray-400">→</span>
+                            <div class="bg-indigo-100 px-3 py-2 rounded-lg text-indigo-800">
+                                装配车间
+                            </div>
+                            <span class="text-gray-400">→</span>
+                            <div class="bg-red-100 px-3 py-2 rounded-lg text-red-800 font-bold">
+                                结果输出
+                            </div>
+                        </div>
+                        <p class="text-center text-gray-500 mt-4 text-sm">
+                            一份选型请求，经过6个"站点"的处理，最终变成专业的选型建议
+                        </p>
+                    </div>
+
+                    <!-- 价值总结 -->
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-6 text-white">
+                        <h3 class="font-semibold mb-3 text-center text-lg">🎯 这个系统的价值</h3>
+                        <div class="grid md:grid-cols-3 gap-4 text-center">
+                            <div>
+                                <div class="text-3xl mb-2">⚡</div>
+                                <p class="font-medium">快速</p>
+                                <p class="text-sm text-blue-100">几分钟完成原本需要几小时的选型计算</p>
+                            </div>
+                            <div>
+                                <div class="text-3xl mb-2">🎯</div>
+                                <p class="font-medium">准确</p>
+                                <p class="text-sm text-blue-100">基于物理公式和算法，避免人为计算错误</p>
+                            </div>
+                            <div>
+                                <div class="text-3xl mb-2">📋</div>
+                                <p class="font-medium">专业</p>
+                                <p class="text-sm text-blue-100">自动生成专业报告，提升销售形象</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- 页脚 -->
