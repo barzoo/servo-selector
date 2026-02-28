@@ -10,13 +10,20 @@ export function ResultStep() {
   if (!result || result.motorRecommendations.length === 0) {
     return (
       <div className="text-center py-10">
-        <p className="text-gray-600">暂无选型结果，请返回重新配置。</p>
-        <button
-          onClick={prevStep}
-          className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          返回修改
-        </button>
+        <p className="text-gray-700 text-lg font-medium mb-2">暂无选型结果</p>
+        {result?.failureReason && (
+          <p className="text-yellow-700 bg-yellow-50 px-4 py-2 rounded-md inline-block mb-4">
+            原因：{result.failureReason.message}
+          </p>
+        )}
+        <div className="mt-4">
+          <button
+            onClick={prevStep}
+            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          >
+            返回修改
+          </button>
+        </div>
       </div>
     );
   }
