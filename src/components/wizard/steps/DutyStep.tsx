@@ -7,7 +7,8 @@ import { useTranslations } from 'next-intl';
 
 export function DutyStep() {
   const { input, setDuty, nextStep, prevStep } = useWizardStore();
-  const { t } = useTranslations('duty');
+  const t = useTranslations('duty');
+  const commonT = useTranslations('common');
 
   const [formData, setFormData] = useState<DutyConditions>(
     input.duty || {
@@ -103,13 +104,13 @@ export function DutyStep() {
           onClick={prevStep}
           className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
         >
-          {t('common:common.back')}
+          {commonT('back')}
         </button>
         <button
           type="submit"
           className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
-          {t('common:common.next')}
+          {commonT('next')}
         </button>
       </div>
     </form>
