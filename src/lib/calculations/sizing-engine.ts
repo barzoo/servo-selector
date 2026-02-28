@@ -1,6 +1,6 @@
 // 选型引擎主类
 
-import { SizingInput, SizingResult, MC20Motor, XC20Drive, BrakeResistor, SystemPreferences, MechanicalResult } from '@/types';
+import { SizingInput, SizingResult, SizingFailureReason, MC20Motor, XC20Drive, BrakeResistor, SystemPreferences, MechanicalResult } from '@/types';
 import { MechanicalCalculator } from './mechanical';
 import { MotorFilter } from './motor-filter';
 import motorsData from '@/data/motors.json';
@@ -29,7 +29,13 @@ export class SizingEngine {
     const motorFilter = new MotorFilter(mechanical, input.preferences);
     const motorRecommendations = motorFilter.filter();
 
-    // 3. 为每个推荐电机计算完整系统配置
+    // 3. 诊断无结果情况
+    let failureReason: SizingFailureReason | undefined;
+    if (motorRecommendations.length === 0) {
+      failureReason = this.diagnoseFailure(mechanical, input.preferences);
+    }
+
+    // 4. 为每个推荐电机计算完整系统配置
     const recommendations = motorRecommendations.map((rec) => {
       const drive = this.matchDrive(rec.motor, input.preferences);
       const brakeResistor = this.calculateBrakeResistor(mechanical, drive);
@@ -85,11 +91,64 @@ export class SizingEngine {
     return {
       mechanical,
       motorRecommendations: recommendations,
+      failureReason,  // 新增
       metadata: {
         calculationTime,
         version: '1.0.0',
         timestamp: new Date().toISOString(),
       },
+    };
+  }
+
+  private diagnoseFailure(
+    mechanical: MechanicalResult,
+    preferences: SystemPreferences
+  ): SizingFailureReason {
+    const requiredTorque = mechanical.torques.rms * preferences.safetyFactor;
+    const requiredPeakTorque = mechanical.torques.peak * preferences.safetyFactor;
+    const requiredSpeed = mechanical.speeds.max * 1.1;
+
+    // 找出最大可用规格
+    const maxRatedTorque = Math.max(...this.motors.map((m) => m.ratedTorque));
+    const maxPeakTorque = Math.max(...this.motors.map((m) => m.peakTorque));
+    const maxSpeed = Math.max(...this.motors.map((m) => m.maxSpeed));
+
+    // 按优先级检查失败原因
+    if (requiredTorque > maxRatedTorque) {
+      return {
+        type: 'TORQUE',
+        message: '所需连续扭矩超过所有可用电机范围',
+      };
+    }
+
+    if (requiredPeakTorque > maxPeakTorque) {
+      return {
+        type: 'PEAK_TORQUE',
+        message: '所需峰值扭矩超过所有可用电机范围',
+      };
+    }
+
+    if (requiredSpeed > maxSpeed) {
+      return {
+        type: 'SPEED',
+        message: '所需转速超过所有可用电机范围',
+      };
+    }
+
+    // 检查编码器匹配
+    const encoderMatch = this.motors.some((m) =>
+      m.encoderOptions.some((e) => e.type === preferences.encoderType)
+    );
+    if (!encoderMatch) {
+      return {
+        type: 'ENCODER',
+        message: '当前编码器类型无匹配电机',
+      };
+    }
+
+    return {
+      type: 'TORQUE',
+      message: '无满足所有条件的电机，建议调整工况参数',
     };
   }
 
