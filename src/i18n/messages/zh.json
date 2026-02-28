@@ -39,13 +39,46 @@
   },
   "mechanism": {
     "title": "机械参数",
-    "type": "机械类型",
+    "type": "传动方式",
     "types": {
       "ballScrew": "滚珠丝杠",
-      "gear": "齿轮/减速机",
+      "gearbox": "齿轮/减速机",
       "directDrive": "直接驱动",
-      "belt": "同步带",
-      "rack": "齿轮齿条"
+      "belt": "同步带/皮带",
+      "rackPinion": "齿条齿轮"
+    },
+    "params": {
+      "loadMass": "负载质量 (kg)",
+      "lead": "丝杠导程 (mm)",
+      "screwDiameter": "丝杠直径 (mm)",
+      "screwLength": "丝杠长度 (mm)",
+      "gearRatio": "减速比",
+      "efficiency": "机械效率",
+      "frictionCoeff": "摩擦系数",
+      "preloadTorque": "预紧扭矩 (Nm)",
+      "loadType": "负载类型",
+      "tableDiameter": "转台/卷筒直径 (mm)",
+      "drumDiameter": "卷筒直径 (mm)",
+      "frictionTorque": "摩擦扭矩 (Nm)",
+      "gravityArmLength": "重力臂长度 (mm)",
+      "driveType": "驱动类型",
+      "stroke": "行程 (mm)",
+      "pulleyDiameter": "主动轮直径 (mm)",
+      "drivenPulleyDiameter": "从动轮直径 (mm)",
+      "beltLength": "皮带长度 (mm)",
+      "beltMassPerMeter": "皮带线密度 (kg/m)",
+      "tensionForce": "张紧力 (N)",
+      "pinionDiameter": "小齿轮直径 (mm)",
+      "mountingAngle": "安装角度 (度)"
+    },
+    "loadTypes": {
+      "table": "转台",
+      "drum": "卷筒",
+      "other": "其他"
+    },
+    "driveTypes": {
+      "rotary": "旋转",
+      "linear": "直线"
     }
   },
   "motion": {

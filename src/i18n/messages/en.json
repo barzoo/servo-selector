@@ -39,13 +39,46 @@
   },
   "mechanism": {
     "title": "Mechanism Parameters",
-    "type": "Mechanism Type",
+    "type": "Transmission Type",
     "types": {
       "ballScrew": "Ball Screw",
-      "gear": "Gear/Reducer",
+      "gearbox": "Gear/Reducer",
       "directDrive": "Direct Drive",
       "belt": "Timing Belt",
-      "rack": "Rack & Pinion"
+      "rackPinion": "Rack & Pinion"
+    },
+    "params": {
+      "loadMass": "Load Mass (kg)",
+      "lead": "Screw Lead (mm)",
+      "screwDiameter": "Screw Diameter (mm)",
+      "screwLength": "Screw Length (mm)",
+      "gearRatio": "Gear Ratio",
+      "efficiency": "Mechanical Efficiency",
+      "frictionCoeff": "Friction Coefficient",
+      "preloadTorque": "Preload Torque (Nm)",
+      "loadType": "Load Type",
+      "tableDiameter": "Table/Drum Diameter (mm)",
+      "drumDiameter": "Drum Diameter (mm)",
+      "frictionTorque": "Friction Torque (Nm)",
+      "gravityArmLength": "Gravity Arm Length (mm)",
+      "driveType": "Drive Type",
+      "stroke": "Stroke (mm)",
+      "pulleyDiameter": "Drive Pulley Diameter (mm)",
+      "drivenPulleyDiameter": "Driven Pulley Diameter (mm)",
+      "beltLength": "Belt Length (mm)",
+      "beltMassPerMeter": "Belt Linear Density (kg/m)",
+      "tensionForce": "Tension Force (N)",
+      "pinionDiameter": "Pinion Diameter (mm)",
+      "mountingAngle": "Mounting Angle (deg)"
+    },
+    "loadTypes": {
+      "table": "Rotary Table",
+      "drum": "Drum",
+      "other": "Other"
+    },
+    "driveTypes": {
+      "rotary": "Rotary",
+      "linear": "Linear"
     }
   },
   "motion": {

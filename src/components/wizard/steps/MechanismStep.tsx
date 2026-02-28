@@ -11,13 +11,14 @@ import {
   RackPinionParams,
 } from '@/types';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
-const mechanismTypes: { value: MechanismType; label: string }[] = [
-  { value: 'BALL_SCREW', label: '滚珠丝杠' },
-  { value: 'GEARBOX', label: '齿轮/减速机' },
-  { value: 'DIRECT_DRIVE', label: '直接驱动' },
-  { value: 'BELT', label: '同步带/皮带' },
-  { value: 'RACK_PINION', label: '齿条齿轮' },
+const mechanismTypes: { value: MechanismType; labelKey: string }[] = [
+  { value: 'BALL_SCREW', labelKey: 'ballScrew' },
+  { value: 'GEARBOX', labelKey: 'gearbox' },
+  { value: 'DIRECT_DRIVE', labelKey: 'directDrive' },
+  { value: 'BELT', labelKey: 'belt' },
+  { value: 'RACK_PINION', labelKey: 'rackPinion' },
 ];
 
 const defaultParams = {
@@ -68,6 +69,8 @@ const defaultParams = {
 };
 
 export function MechanismStep() {
+  const t = useTranslations('mechanism');
+  const commonT = useTranslations('common');
   const { input, setMechanism, nextStep, prevStep } = useWizardStore();
 
   const [formData, setFormData] = useState<MechanismConfig>(
@@ -97,7 +100,7 @@ export function MechanismStep() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            负载质量 (kg) <span className="text-red-500">*</span>
+            {t('params.loadMass')} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -114,7 +117,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            丝杠导程 (mm) <span className="text-red-500">*</span>
+            {t('params.lead')} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -131,7 +134,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            丝杠直径 (mm)
+            {t('params.screwDiameter')}
           </label>
           <input
             type="number"
@@ -148,7 +151,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            丝杠长度 (mm)
+            {t('params.screwLength')}
           </label>
           <input
             type="number"
@@ -165,7 +168,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            减速比
+            {t('params.gearRatio')}
           </label>
           <input
             type="number"
@@ -182,7 +185,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            机械效率
+            {t('params.efficiency')}
           </label>
           <input
             type="number"
@@ -202,7 +205,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            摩擦系数
+            {t('params.frictionCoeff')}
           </label>
           <input
             type="number"
@@ -222,7 +225,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            预紧扭矩 (Nm)
+            {t('params.preloadTorque')}
           </label>
           <input
             type="number"
@@ -247,7 +250,7 @@ export function MechanismStep() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            负载质量 (kg) <span className="text-red-500">*</span>
+            {t('params.loadMass')} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -264,7 +267,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            负载类型 <span className="text-red-500">*</span>
+            {t('params.loadType')} <span className="text-red-500">*</span>
           </label>
           <select
             value={params.loadType}
@@ -276,16 +279,16 @@ export function MechanismStep() {
             }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
           >
-            <option value="TABLE">转台</option>
-            <option value="DRUM">卷筒</option>
-            <option value="OTHER">其他</option>
+            <option value="TABLE">{t('loadTypes.table')}</option>
+            <option value="DRUM">{t('loadTypes.drum')}</option>
+            <option value="OTHER">{t('loadTypes.other')}</option>
           </select>
         </div>
 
         {params.loadType === 'TABLE' && (
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              转台直径 (mm)
+              {t('params.tableDiameter')}
             </label>
             <input
               type="number"
@@ -304,7 +307,7 @@ export function MechanismStep() {
         {params.loadType === 'DRUM' && (
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              卷筒直径 (mm)
+              {t('params.drumDiameter')}
             </label>
             <input
               type="number"
@@ -322,7 +325,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            减速比
+            {t('params.gearRatio')}
           </label>
           <input
             type="number"
@@ -339,7 +342,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            机械效率
+            {t('params.efficiency')}
           </label>
           <input
             type="number"
@@ -359,7 +362,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            摩擦扭矩 (Nm)
+            {t('params.frictionTorque')}
           </label>
           <input
             type="number"
@@ -376,7 +379,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            重力臂长度 (mm)
+            {t('params.gravityArmLength')}
           </label>
           <input
             type="number"
@@ -401,7 +404,7 @@ export function MechanismStep() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            驱动类型 <span className="text-red-500">*</span>
+            {t('params.driveType')} <span className="text-red-500">*</span>
           </label>
           <select
             value={params.driveType}
@@ -413,14 +416,14 @@ export function MechanismStep() {
             }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
           >
-            <option value="ROTARY">旋转</option>
-            <option value="LINEAR">直线</option>
+            <option value="ROTARY">{t('driveTypes.rotary')}</option>
+            <option value="LINEAR">{t('driveTypes.linear')}</option>
           </select>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            负载质量 (kg) <span className="text-red-500">*</span>
+            {t('params.loadMass')} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -438,7 +441,7 @@ export function MechanismStep() {
         {params.driveType === 'ROTARY' && (
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              转台直径 (mm)
+              {t('params.tableDiameter')}
             </label>
             <input
               type="number"
@@ -457,7 +460,7 @@ export function MechanismStep() {
         {params.driveType === 'LINEAR' && (
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              行程 (mm)
+              {t('params.stroke')}
             </label>
             <input
               type="number"
@@ -475,7 +478,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            机械效率
+            {t('params.efficiency')}
           </label>
           <input
             type="number"
@@ -503,7 +506,7 @@ export function MechanismStep() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            负载质量 (kg) <span className="text-red-500">*</span>
+            {t('params.loadMass')} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -520,7 +523,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            主动轮直径 (mm)
+            {t('params.pulleyDiameter')}
           </label>
           <input
             type="number"
@@ -537,7 +540,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            从动轮直径 (mm)
+            {t('params.drivenPulleyDiameter')}
           </label>
           <input
             type="number"
@@ -554,7 +557,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            皮带长度 (mm)
+            {t('params.beltLength')}
           </label>
           <input
             type="number"
@@ -571,7 +574,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            皮带线密度 (kg/m)
+            {t('params.beltMassPerMeter')}
           </label>
           <input
             type="number"
@@ -589,7 +592,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            机械效率
+            {t('params.efficiency')}
           </label>
           <input
             type="number"
@@ -609,7 +612,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            张紧力 (N)
+            {t('params.tensionForce')}
           </label>
           <input
             type="number"
@@ -634,7 +637,7 @@ export function MechanismStep() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            负载质量 (kg) <span className="text-red-500">*</span>
+            {t('params.loadMass')} <span className="text-red-500">*</span>
           </label>
           <input
             type="number"
@@ -651,7 +654,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            小齿轮直径 (mm)
+            {t('params.pinionDiameter')}
           </label>
           <input
             type="number"
@@ -668,7 +671,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            减速比
+            {t('params.gearRatio')}
           </label>
           <input
             type="number"
@@ -685,7 +688,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            机械效率
+            {t('params.efficiency')}
           </label>
           <input
             type="number"
@@ -705,7 +708,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            摩擦系数
+            {t('params.frictionCoeff')}
           </label>
           <input
             type="number"
@@ -725,7 +728,7 @@ export function MechanismStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            安装角度 (度)
+            {t('params.mountingAngle')}
           </label>
           <input
             type="number"
@@ -762,11 +765,11 @@ export function MechanismStep() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">机械参数</h2>
+      <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
 
       <div>
         <label className="block text-sm font-medium text-gray-700">
-          传动方式 <span className="text-red-500">*</span>
+          {t('type')} <span className="text-red-500">*</span>
         </label>
         <select
           value={formData.type}
@@ -775,7 +778,7 @@ export function MechanismStep() {
         >
           {mechanismTypes.map((type) => (
             <option key={type.value} value={type.value}>
-              {type.label}
+              {t(`types.${type.labelKey}`)}
             </option>
           ))}
         </select>
@@ -789,13 +792,13 @@ export function MechanismStep() {
           onClick={prevStep}
           className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
         >
-          上一步
+          {commonT('back')}
         </button>
         <button
           type="submit"
           className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
-          下一步
+          {commonT('next')}
         </button>
       </div>
     </form>
