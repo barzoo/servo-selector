@@ -82,19 +82,100 @@
     }
   },
   "motion": {
-    "title": "运动参数"
+    "title": "运动参数",
+    "stroke": "行程 (mm)",
+    "maxVelocity": "最大速度 (mm/s)",
+    "maxAcceleration": "最大加速度 (mm/s²)",
+    "profile": "运动曲线",
+    "profiles": {
+      "trapezoidal": "梯形曲线",
+      "sCurve": "S曲线"
+    },
+    "dwellTime": "停顿时间 (s)",
+    "cycleTime": "循环周期 (s)"
   },
   "duty": {
-    "title": "工况条件"
+    "title": "工况条件",
+    "ambientTemp": "环境温度 (°C)",
+    "dutyCycle": "占空比 (%)",
+    "mountingOrientation": "安装方向",
+    "orientations": {
+      "horizontal": "水平",
+      "verticalUp": "垂直向上",
+      "verticalDown": "垂直向下"
+    },
+    "ipRating": "防护等级"
   },
   "systemConfig": {
-    "title": "系统配置"
+    "title": "系统配置",
+    "safetyFactor": "安全余量系数",
+    "safetyFactorHint": "默认 1.5，推荐范围 1.2-2.0",
+    "encoderType": "编码器类型",
+    "encoderTypes": {
+      "singleTurn": "单圈绝对值",
+      "multiTurn": "多圈绝对值"
+    },
+    "communication": "通讯接口",
+    "communications": {
+      "ethercat": "EtherCAT",
+      "profinet": "PROFINET",
+      "ethernetIp": "EtherNet-IP",
+      "analog": "模拟量"
+    },
+    "emcFilter": "EMC 滤波器",
+    "emcFilters": {
+      "none": "无滤波器",
+      "c3": "C3 等级"
+    },
+    "cableLength": "电缆长度 (m)",
+    "cableLengthOptions": {
+      "terminalOnly": "仅端子（自制电缆）"
+    },
+    "startSizing": "开始选型"
   },
   "result": {
     "title": "选型结果",
     "summary": "计算摘要",
     "recommendedMotor": "推荐电机",
     "recommendedDrive": "推荐驱动器",
-    "exportPdf": "导出 PDF"
+    "exportPdf": "导出 PDF",
+    "noResults": "暂无选型结果",
+    "reason": "原因：",
+    "backToEdit": "返回修改",
+    "projectInfo": "项目信息",
+    "projectName": "项目名称：",
+    "customer": "客户：",
+    "calculationSummary": "计算摘要",
+    "loadInertia": "负载惯量",
+    "rmsTorque": "RMS扭矩",
+    "peakTorque": "峰值扭矩",
+    "maxSpeed": "最大转速",
+    "regenPower": "再生功率",
+    "calcTime": "计算耗时",
+    "recommendedMotors": "推荐电机（{count}款）",
+    "matchScore": "匹配度",
+    "feasibility": {
+      "ok": "推荐",
+      "warning": "警告",
+      "critical": "风险"
+    },
+    "systemConfigDetails": "系统配置详情",
+    "motor": "电机",
+    "motorModel": "型号：",
+    "ratedTorque": "额定扭矩：",
+    "peakTorque": "峰值扭矩：",
+    "ratedSpeed": "额定转速：",
+    "rotorInertia": "转子惯量：",
+    "inertiaRatio": "惯量比：",
+    "drive": "驱动器",
+    "driveModel": "型号：",
+    "ratedCurrent": "额定电流：",
+    "accessories": "配件",
+    "motorCable": "电机电缆：",
+    "encoderCable": "编码器电缆：",
+    "brakeResistor": "制动电阻：",
+    "emcFilter": "EMC滤波器：",
+    "restart": "重新开始",
+    "pdfExportInDevelopment": "PDF导出功能开发中..."
   }
 }

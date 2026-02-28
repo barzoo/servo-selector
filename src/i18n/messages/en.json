@@ -82,19 +82,100 @@
     }
   },
   "motion": {
-    "title": "Motion Parameters"
+    "title": "Motion Parameters",
+    "stroke": "Stroke (mm)",
+    "maxVelocity": "Max Velocity (mm/s)",
+    "maxAcceleration": "Max Acceleration (mm/s²)",
+    "profile": "Motion Profile",
+    "profiles": {
+      "trapezoidal": "Trapezoidal",
+      "sCurve": "S-Curve"
+    },
+    "dwellTime": "Dwell Time (s)",
+    "cycleTime": "Cycle Time (s)"
   },
   "duty": {
-    "title": "Duty Conditions"
+    "title": "Duty Conditions",
+    "ambientTemp": "Ambient Temperature (°C)",
+    "dutyCycle": "Duty Cycle (%)",
+    "mountingOrientation": "Mounting Orientation",
+    "orientations": {
+      "horizontal": "Horizontal",
+      "verticalUp": "Vertical Up",
+      "verticalDown": "Vertical Down"
+    },
+    "ipRating": "IP Rating"
   },
   "systemConfig": {
-    "title": "System Configuration"
+    "title": "System Configuration",
+    "safetyFactor": "Safety Factor",
+    "safetyFactorHint": "Default 1.5, recommended range 1.2-2.0",
+    "encoderType": "Encoder Type",
+    "encoderTypes": {
+      "singleTurn": "Single Turn Absolute",
+      "multiTurn": "Multi Turn Absolute"
+    },
+    "communication": "Communication",
+    "communications": {
+      "ethercat": "EtherCAT",
+      "profinet": "PROFINET",
+      "ethernetIp": "EtherNet-IP",
+      "analog": "Analog"
+    },
+    "emcFilter": "EMC Filter",
+    "emcFilters": {
+      "none": "None",
+      "c3": "Class C3"
+    },
+    "cableLength": "Cable Length (m)",
+    "cableLengthOptions": {
+      "terminalOnly": "Terminal Only (Custom Cable)"
+    },
+    "startSizing": "Start Sizing"
   },
   "result": {
     "title": "Sizing Results",
     "summary": "Calculation Summary",
     "recommendedMotor": "Recommended Motor",
     "recommendedDrive": "Recommended Drive",
-    "exportPdf": "Export PDF"
+    "exportPdf": "Export PDF",
+    "noResults": "No sizing results available",
+    "reason": "Reason: ",
+    "backToEdit": "Back to Edit",
+    "projectInfo": "Project Information",
+    "projectName": "Project Name: ",
+    "customer": "Customer: ",
+    "calculationSummary": "Calculation Summary",
+    "loadInertia": "Load Inertia",
+    "rmsTorque": "RMS Torque",
+    "peakTorque": "Peak Torque",
+    "maxSpeed": "Max Speed",
+    "regenPower": "Regen Power",
+    "calcTime": "Calc Time",
+    "recommendedMotors": "Recommended Motors ({count})",
+    "matchScore": "Match Score",
+    "feasibility": {
+      "ok": "Recommended",
+      "warning": "Warning",
+      "critical": "Risk"
+    },
+    "systemConfigDetails": "System Configuration Details",
+    "motor": "Motor",
+    "motorModel": "Model: ",
+    "ratedTorque": "Rated Torque: ",
+    "peakTorque": "Peak Torque: ",
+    "ratedSpeed": "Rated Speed: ",
+    "rotorInertia": "Rotor Inertia: ",
+    "inertiaRatio": "Inertia Ratio: ",
+    "drive": "Drive",
+    "driveModel": "Model: ",
+    "ratedCurrent": "Rated Current: ",
+    "accessories": "Accessories",
+    "motorCable": "Motor Cable: ",
+    "encoderCable": "Encoder Cable: ",
+    "brakeResistor": "Brake Resistor: ",
+    "emcFilter": "EMC Filter: ",
+    "restart": "Restart",
+    "pdfExportInDevelopment": "PDF export feature is under development..."
   }
 }
