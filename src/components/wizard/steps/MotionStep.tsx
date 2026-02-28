@@ -3,7 +3,7 @@
 import { useWizardStore } from '@/stores/wizard-store';
 import { MotionParams } from '@/types';
 import { useState } from 'react';
-import { useTranslations } from '@/i18n/use-translations';
+import { useTranslations } from 'next-intl';
 
 export function MotionStep() {
   const { input, setMotion, nextStep, prevStep } = useWizardStore();

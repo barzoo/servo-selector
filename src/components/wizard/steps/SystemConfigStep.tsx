@@ -4,7 +4,7 @@ import { useWizardStore } from '@/stores/wizard-store';
 import { SystemPreferences } from '@/types';
 import { useState } from 'react';
 import { SizingEngine } from '@/lib/calculations/sizing-engine';
-import { useTranslations } from '@/i18n/use-translations';
+import { useTranslations } from 'next-intl';
 
 export function SystemConfigStep() {
   const { input, setPreferences, setResult, nextStep, prevStep } = useWizardStore();

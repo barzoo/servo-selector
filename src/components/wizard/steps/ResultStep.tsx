@@ -2,7 +2,7 @@
 
 import { useWizardStore } from '@/stores/wizard-store';
 import { useState } from 'react';
-import { useTranslations } from '@/i18n/use-translations';
+import { useTranslations } from 'next-intl';
 
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
