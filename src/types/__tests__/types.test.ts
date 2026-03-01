@@ -3,6 +3,7 @@ import type {
   MC20Motor,
   SystemConfiguration,
   MotorRecommendation,
+  DutyConditions,
 } from '../index';
 
 describe('Type Definitions', () => {
@@ -81,5 +82,19 @@ describe('Type Definitions', () => {
     };
     expect(rec.availableOptions?.encoders).toContain('A');
     expect(rec.availableOptions?.encoders).toContain('B');
+  });
+
+  it('should validate DutyConditions with keyShaft', () => {
+    const duty: DutyConditions = {
+      ambientTemp: 40,
+      dutyCycle: 60,
+      mountingOrientation: 'HORIZONTAL',
+      ipRating: 'IP65',
+      brake: false,
+      keyShaft: 'L',
+    };
+
+    expect(duty.keyShaft).toBeDefined();
+    expect(['L', 'K']).toContain(duty.keyShaft);
   });
 });
