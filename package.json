@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "convert-data": "npx ts-node scripts/convert-product-data.ts",
     "validate-data": "npx ts-node scripts/validate-data.ts"
   },
