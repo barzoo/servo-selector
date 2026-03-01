@@ -110,11 +110,6 @@
     "title": "系统配置",
     "safetyFactor": "安全余量系数",
     "safetyFactorHint": "默认 1.5，推荐范围 1.2-2.0",
-    "encoderType": "编码器类型",
-    "encoderTypes": {
-      "singleTurn": "单圈绝对值",
-      "multiTurn": "多圈绝对值"
-    },
     "communication": "通讯接口",
     "communications": {
       "ethercat": "EtherCAT",

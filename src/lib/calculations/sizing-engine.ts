@@ -226,14 +226,6 @@ export class SizingEngine {
       };
     }
 
-    // 检查编码器匹配 (MC20 only has multi-turn encoders)
-    const isSingleTurnRequested = preferences.encoderType === 'SINGLE_TURN';
-    if (isSingleTurnRequested) {
-      return {
-        type: 'ENCODER',
-        message: 'MC20系列仅支持多圈编码器，请选择MULTI_TURN',
-      };
-    }
 
     return {
       type: 'TORQUE',
