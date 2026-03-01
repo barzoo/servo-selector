@@ -1,17 +1,28 @@
-# 项目定位
-根据机械负载和伺服运动控制的需求进行伺服系统选型计算的网页工具
+## 定位
+机械负载与伺服运动控制需求的选型计算 Web 工具。
 
-# 技术栈约束
-前端：Next.js 或 纯 HTML+TailwindCSS
-数据：直接写在 JSON 文件中（/data/motors.json）
-部署：Vercel
+## 技术约束
 
-# 强制规则
-- **IMPORTANT**: 所有算法模块必须包含论文引用和复杂度分析
-- **YOU MUST**: 数据预处理脚本必须包含数据溯源（provenance）记录
-- **NEVER**: 不得在生产代码中硬编码超参数
+**前端**: Next.js 或 HTML + TailwindCSS  
+**数据**: 静态 JSON `/data/motors.json`  
+**部署**: Vercel  
 
-# 文档规范
-- 需求文档：`docs/specs/tool-spec.md`
-- 算法设计：`docs/plans/sizing-algo.md`
-- 数据清单：`docs/data/servo-dataset.md`
+**开发命令**: `npm run dev` (开发), `npm run build` (构建)
+
+## 强制规则
+
+- **IMPORTANT**: 算法模块必须包含论文引用和复杂度分析
+- **YOU MUST**: 数据预处理脚本包含数据溯源（provenance）记录
+- **NEVER**: 生产代码禁止硬编码超参数
+
+## 文档索引
+
+- 需求: `docs/specs/`
+- 算法: `docs/plans/`
+- 数据: `docs/data/`
+
+## 工作流检查点
+
+- **UI 修复后**: 运行 Playwright 测试验证真实浏览器环境，不仅代码审查
+- **i18n 实施**: 使用 next-intl 时验证静态导出兼容性，构建测试通过后标记完成，注意 4.x API 破坏性变更
+- **服务器控制**: 尊重手动控制偏好，不自动启动开发服务器除非明确要求
