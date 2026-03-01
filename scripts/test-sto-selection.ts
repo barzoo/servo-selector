@@ -36,6 +36,7 @@ const baseInput: SizingInput = {
     dutyCycle: 80,
     mountingOrientation: 'HORIZONTAL',
     ipRating: 'IP65',
+    brake: false,
   },
   preferences: {
     safetyFactor: 1.5,
