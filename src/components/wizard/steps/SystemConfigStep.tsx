@@ -26,6 +26,7 @@ export function SystemConfigStep() {
       communication: 'ETHERCAT',
       safety: 'NONE',
       cableLength: 5,
+      encoderType: 'BOTH',
     }
   );
 
@@ -158,6 +159,27 @@ export function SystemConfigStep() {
             <option value={20}>20m</option>
             <option value="TERMINAL_ONLY">{t('cableLengthOptions.terminalOnly')}</option>
           </select>
+        </div>
+
+        {/* 编码器类型选择 */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            编码器类型
+          </label>
+          <select
+            value={formData.encoderType}
+            onChange={(e) =>
+              setFormData({ ...formData, encoderType: e.target.value as 'A' | 'B' | 'BOTH' })
+            }
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
+          >
+            <option value="BOTH">两者都可 (显示所有选项)</option>
+            <option value="A">A型 - 电池盒式多圈 (2.5Mbps)</option>
+            <option value="B">B型 - 机械式多圈 (5Mbps)</option>
+          </select>
+          <p className="mt-1 text-xs text-gray-500">
+            A型需要电池维护，B型为机械式免维护但价格较高
+          </p>
         </div>
       </div>
 
