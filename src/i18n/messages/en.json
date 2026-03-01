@@ -235,5 +235,77 @@
       "kgm2": "kg·m²",
       "ohm": "Ω"
     }
+  },
+  "systemSummary": {
+    "title": "System Configuration",
+    "configList": "System Configuration List",
+    "motorDetails": "Motor Details",
+    "driveDetails": "Drive Details",
+    "cableSpecs": "Cable Specifications",
+    "accessories": "Accessories",
+    "regeneration": "Regeneration Analysis",
+    "columns": {
+      "partNumber": "Part Number",
+      "type": "Type",
+      "description": "Description"
+    },
+    "labels": {
+      "ratedPower": "Rated Power",
+      "ratedSpeed": "Rated Speed",
+      "ratedTorque": "Rated Torque",
+      "peakTorque": "Peak Torque",
+      "maxSpeed": "Max Speed",
+      "ratedCurrent": "Rated Current",
+      "rotorInertia": "Rotor Inertia",
+      "torqueConstant": "Torque Constant",
+      "encoderType": "Encoder Type",
+      "brake": "Brake",
+      "shaftType": "Shaft Type",
+      "protection": "Protection",
+      "maxCurrent": "Max Current",
+      "overloadCapacity": "Overload Capacity",
+      "pwmFrequency": "PWM Frequency",
+      "communication": "Communication",
+      "panel": "Panel",
+      "safety": "Safety",
+      "cooling": "Cooling",
+      "internalResistance": "Internal Resistance",
+      "continuousPower": "Continuous Power",
+      "peakPower": "Peak Power",
+      "motorCable": "Motor Cable",
+      "encoderCable": "Encoder Cable",
+      "commCable": "Communication Cable",
+      "brakeResistor": "Brake Resistor",
+      "emcFilter": "EMC Filter",
+      "energyPerCycle": "Energy Per Cycle",
+      "brakingPower": "Braking Power",
+      "externalResistorRequired": "External Resistor Required",
+      "recommendedResistorPower": "Recommended Resistor Power"
+    },
+    "options": {
+      "batteryMultiTurn": "Battery Multi-turn",
+      "mechanicalMultiTurn": "Mechanical Multi-turn",
+      "typeA": "Type A",
+      "typeB": "Type B",
+      "yes": "Yes",
+      "no": "No",
+      "keyShaft": "Keyed Shaft",
+      "smoothShaft": "Smooth Shaft",
+      "withDisplay": "With Display",
+      "withoutDisplay": "Without Display",
+      "sto": "STO",
+      "none": "None",
+      "fan": "Fan",
+      "natural": "Natural",
+      "ethercat": "EtherCAT",
+      "profinet": "PROFINET",
+      "ethernetIp": "EtherNet/IP"
+    },
+    "cable": {
+      "spec": "Specification",
+      "length": "Length",
+      "lengthUnit": "m",
+      "terminalOnly": "Terminal Only"
+    }
   }
 }
