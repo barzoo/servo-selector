@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { MotorFilter } from '../motor-filter';
-import type { MechanicalResult, SystemPreferences } from '@/types';
+import type { MechanicalResult, SystemPreferences, DutyConditions } from '@/types';
 
 describe('MotorFilter with Inertia Matching', () => {
   const mockMechanical: MechanicalResult = {
@@ -136,5 +136,100 @@ describe('MotorFilter Encoder Type Filtering', () => {
     if (results.length > 0) {
       expect(hasBattery || hasMechanical).toBe(true);
     }
+  });
+});
+
+describe('MotorFilter keyShaft filtering', () => {
+  const baseMechanical: MechanicalResult = {
+    loadInertia: 0.0001,
+    totalInertia: 0.00012,
+    inertiaRatio: 5,
+    torques: {
+      accel: 0.5,
+      constant: 0.3,
+      decel: 0.4,
+      peak: 0.8,
+      rms: 0.4,
+    },
+    speeds: {
+      max: 2000,
+      rms: 1500,
+    },
+    powers: {
+      peak: 100,
+      continuous: 80,
+    },
+    regeneration: {
+      energyPerCycle: 0,
+      brakingPower: 0,
+      requiresExternalResistor: false,
+    },
+  };
+
+  const basePreferences: SystemPreferences = {
+    safetyFactor: 1.5,
+    maxInertiaRatio: 10,
+    targetInertiaRatio: 5,
+    communication: 'ETHERCAT',
+    safety: 'NONE',
+    cableLength: 5,
+    encoderType: 'BOTH',
+  };
+
+  it('should filter motors by smooth shaft (L)', () => {
+    const duty: DutyConditions = {
+      ambientTemp: 40,
+      dutyCycle: 60,
+      mountingOrientation: 'HORIZONTAL',
+      ipRating: 'IP65',
+      brake: false,
+      keyShaft: 'L',
+    };
+
+    const filter = new MotorFilter(baseMechanical, basePreferences, duty);
+    const results = filter.filter();
+
+    expect(results.length).toBeGreaterThan(0);
+    results.forEach(rec => {
+      expect(rec.motor.options.keyShaft.hasKey).toBe(false);
+      expect(rec.motor.options.keyShaft.code).toBe('L');
+    });
+  });
+
+  it('should filter motors by keyed shaft (K)', () => {
+    const duty: DutyConditions = {
+      ambientTemp: 40,
+      dutyCycle: 60,
+      mountingOrientation: 'HORIZONTAL',
+      ipRating: 'IP65',
+      brake: false,
+      keyShaft: 'K',
+    };
+
+    const filter = new MotorFilter(baseMechanical, basePreferences, duty);
+    const results = filter.filter();
+
+    expect(results.length).toBeGreaterThan(0);
+    results.forEach(rec => {
+      expect(rec.motor.options.keyShaft.hasKey).toBe(true);
+      expect(rec.motor.options.keyShaft.code).toBe('K');
+    });
+  });
+
+  it('should handle duty without keyShaft (backward compatibility)', () => {
+    const dutyWithoutKeyShaft = {
+      ambientTemp: 40,
+      dutyCycle: 60,
+      mountingOrientation: 'HORIZONTAL',
+      ipRating: 'IP65',
+      brake: false,
+      // keyShaft 未定义
+    } as DutyConditions;
+
+    const filter = new MotorFilter(baseMechanical, basePreferences, dutyWithoutKeyShaft);
+    const results = filter.filter();
+
+    // 不过滤，应该返回所有符合条件的电机
+    expect(results.length).toBeGreaterThan(0);
   });
 });
