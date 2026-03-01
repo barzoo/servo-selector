@@ -106,7 +106,7 @@ export interface CalculationDetails {
  * - 空间复杂度: O(1) - 返回固定结构的对象
  */
 export function extractCalculationDetails(
-  input: SizingInput,
+  input: Partial<SizingInput>,
   mechanical: MechanicalResult
 ): CalculationDetails {
   return {
@@ -130,7 +130,14 @@ export function extractCalculationDetails(
  * - 时间复杂度: O(1) - 基于 switch 的固定分支
  * - 空间复杂度: O(1) - 返回固定大小的参数数组
  */
-export function extractMechanismParams(input: SizingInput): CalculationDetails['mechanism'] {
+export function extractMechanismParams(input: Partial<SizingInput>): CalculationDetails['mechanism'] {
+  if (!input.mechanism) {
+    return {
+      type: 'BALL_SCREW',
+      typeLabel: '滚珠丝杠',
+      params: [{ label: '负载质量', value: 0, unit: 'kg' }],
+    };
+  }
   const { type, params } = input.mechanism;
 
   // 通用基础参数
@@ -268,9 +275,20 @@ export function extractMechanismParams(input: SizingInput): CalculationDetails['
  * - 梯形速度曲线计算参考《伺服系统运动控制技术》第3章
  */
 export function extractMotionParams(
-  input: SizingInput,
+  input: Partial<SizingInput>,
   mechanical: MechanicalResult
 ): CalculationDetails['motion'] {
+  if (!input.motion) {
+    return {
+      maxSpeed: mechanical.speeds.max,
+      accelTime: 0,
+      constantTime: 0,
+      decelTime: 0,
+      dwellTime: 0,
+      cycleTime: 0,
+      cyclesPerMinute: 0,
+    };
+  }
   const { motion } = input;
   const v = motion.maxVelocity * 1e-3;  // mm/s -> m/s
   const a = motion.maxAcceleration * 1e-3;  // mm/s² -> m/s²

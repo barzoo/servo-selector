@@ -3,6 +3,7 @@
 import { useWizardStore } from '@/stores/wizard-store';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { DetailedCalculations } from '../DetailedCalculations';
 
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
@@ -197,6 +198,14 @@ export function ResultStep() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* 详细计算信息 */}
+      {input && (
+        <DetailedCalculations
+          input={input}
+          mechanical={result.mechanical}
+        />
       )}
 
       <div className="flex justify-between">

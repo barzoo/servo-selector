@@ -28,7 +28,7 @@ import {
 } from '@/lib/calculations/calculation-details';
 
 interface DetailedCalculationsProps {
-  input: SizingInput;
+  input: Partial<SizingInput>;
   mechanical: MechanicalResult;
   defaultExpanded?: boolean;
 }
