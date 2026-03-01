@@ -88,6 +88,7 @@ export interface DutyConditions {
   dutyCycle: number;
   mountingOrientation: 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN';
   ipRating: 'IP54' | 'IP65' | 'IP67';
+  brake: boolean;
 }
 
 export interface SystemPreferences {

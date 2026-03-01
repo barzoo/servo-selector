@@ -1,17 +1,19 @@
 // 电机筛选模块
 
-import { MC20Motor, MechanicalResult, MotorRecommendation, SystemPreferences } from '@/types';
+import { MC20Motor, MechanicalResult, MotorRecommendation, SystemPreferences, DutyConditions } from '@/types';
 import motorsData from '@/data/motors.json';
 
 export class MotorFilter {
   private motors: MC20Motor[];
   private mechanical: MechanicalResult;
   private preferences: SystemPreferences;
+  private duty?: DutyConditions;
 
-  constructor(mechanical: MechanicalResult, preferences: SystemPreferences) {
+  constructor(mechanical: MechanicalResult, preferences: SystemPreferences, duty?: DutyConditions) {
     this.motors = motorsData.motors as unknown as MC20Motor[];
     this.mechanical = mechanical;
     this.preferences = preferences;
+    this.duty = duty;
   }
 
   filter(): MotorRecommendation[] {
@@ -22,7 +24,7 @@ export class MotorFilter {
     // 用户选择的目标惯量比，默认10
     const targetInertiaRatio = this.preferences.targetInertiaRatio || 10;
 
-    const candidates = this.motors.filter((motor) => {
+    let candidates = this.motors.filter((motor) => {
       if (motor.ratedTorque < requiredTorque) return false;
       if (motor.peakTorque < requiredPeakTorque) return false;
       if (motor.maxSpeed < requiredSpeed) return false;
@@ -33,6 +35,13 @@ export class MotorFilter {
 
       return true;
     });
+
+    // 根据刹车选项筛选
+    if (this.duty?.brake !== undefined) {
+      candidates = candidates.filter(motor =>
+        motor.options.brake.hasBrake === this.duty!.brake
+      );
+    }
 
     const scored = candidates.map((motor) =>
       this.calculateMatchScore(motor, requiredTorque, requiredSpeed, targetInertiaRatio)
