@@ -246,6 +246,109 @@ function getCableSpecs(powerKw: number, frameSize: number): { motorCable: string
 // Utility Functions
 // ============================================================================
 
+/**
+ * Generates a human-readable description for a motor.
+ *
+ * Format: {ratedTorque} N·m, {ratedSpeed} rpm, {encoderType}, {brakeStatus}, {keyStatus}
+ *
+ * Complexity: O(1) - constant time string concatenation
+ *
+ * @param motor - Motor object with ratedTorque, ratedSpeed, and options
+ * @returns Formatted description string in Chinese
+ */
+export function generateMotorDescription(motor: {
+  ratedTorque: number;
+  ratedSpeed: number;
+  options: {
+    encoder: {
+      type: 'BATTERY_MULTI_TURN' | 'MECHANICAL_MULTI_TURN';
+    };
+    brake: {
+      hasBrake: boolean;
+    };
+    keyShaft: {
+      hasKey: boolean;
+    };
+  };
+}): string {
+  const encoderType = motor.options.encoder.type === 'BATTERY_MULTI_TURN'
+    ? 'A型编码器'
+    : 'B型编码器';
+  const brakeStatus = motor.options.brake.hasBrake ? '带抱闸' : '无抱闸';
+  const keyStatus = motor.options.keyShaft.hasKey ? '带键轴' : '光轴';
+
+  return `${motor.ratedTorque} N·m, ${motor.ratedSpeed} rpm, ${encoderType}, ${brakeStatus}, ${keyStatus}`;
+}
+
+/**
+ * Generates a human-readable description for a drive.
+ *
+ * Format: {maxCurrent}A 峰值, {communicationType}, {stoStatus}
+ *
+ * Complexity: O(1) - constant time string concatenation
+ *
+ * @param drive - Drive object with maxCurrent, communication, and safety options
+ * @returns Formatted description string in Chinese
+ */
+export function generateDriveDescription(drive: {
+  maxCurrent: number;
+  communication: {
+    type: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP';
+  };
+  options: {
+    safety: {
+      code: string;
+    };
+  };
+}): string {
+  const communicationMap: Record<string, string> = {
+    'ETHERCAT': 'EtherCAT通讯',
+    'PROFINET': 'PROFINET通讯',
+    'ETHERNET_IP': 'EtherNet/IP通讯',
+  };
+
+  const communicationType = communicationMap[drive.communication.type];
+  const stoStatus = drive.options.safety.code === 'STO' ? '带STO' : '无STO';
+
+  return `${drive.maxCurrent}A 峰值, ${communicationType}, ${stoStatus}`;
+}
+
+/**
+ * Generates a human-readable description for a cable.
+ *
+ * Format: {cableType}, {length}m, {feature}
+ *
+ * Complexity: O(1) - constant time string concatenation
+ *
+ * @param type - Cable type: 'MOTOR', 'ENCODER', or 'COMM'
+ * @param length - Cable length in meters
+ * @param spec - Cable specification code (e.g., 'MCL22', 'MCE12', 'MCE02')
+ * @returns Formatted description string in Chinese
+ */
+export function generateCableDescription(
+  type: 'MOTOR' | 'ENCODER' | 'COMM',
+  length: number,
+  spec: string
+): string {
+  const typeMap: Record<string, string> = {
+    'MOTOR': '动力电缆',
+    'ENCODER': '编码器电缆',
+    'COMM': '通讯电缆',
+  };
+
+  let feature: string;
+  if (type === 'MOTOR') {
+    feature = '高柔性屏蔽';
+  } else if (type === 'ENCODER') {
+    // MCE12 has battery box, MCE02 is mechanical
+    feature = spec.includes('12') ? '电池盒式专用' : '机械式专用';
+  } else {
+    feature = 'EtherCAT专用';
+  }
+
+  return `${typeMap[type]}, ${length}m, ${feature}`;
+}
+
 function calculateChecksum(filePath: string): string {
   const content = fs.readFileSync(filePath);
   return crypto.createHash('sha256').update(content).digest('hex').substring(0, 16);
