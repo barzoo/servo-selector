@@ -43,6 +43,13 @@ export class MotorFilter {
       );
     }
 
+    // 根据电机轴类型筛选
+    if (this.duty?.keyShaft !== undefined) {
+      candidates = candidates.filter(motor =>
+        motor.options.keyShaft.hasKey === (this.duty!.keyShaft === 'K')
+      );
+    }
+
     // 根据编码器类型筛选
     if (this.preferences.encoderType && this.preferences.encoderType !== 'BOTH') {
       const targetEncoderType = this.preferences.encoderType === 'A'
