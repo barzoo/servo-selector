@@ -94,7 +94,6 @@ export interface SystemPreferences {
   safetyFactor: number;
   maxInertiaRatio: number;
   targetInertiaRatio: number;  // 新增: 目标惯量比
-  encoderType: 'SINGLE_TURN' | 'MULTI_TURN';
   communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
   safety: 'STO' | 'NONE';  // STO 安全功能选项
   cableLength: number | 'TERMINAL_ONLY';
