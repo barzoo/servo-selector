@@ -240,9 +240,16 @@ export class SizingEngine {
   }
 
   private matchDrive(motor: MC20Motor, preferences: SystemPreferences): XC20Drive {
-    // 从电机数据获取匹配的驱动器列表
+    // 从电机的 matchedDrives 中提取基础型号 (如 XC20-W0005CRN)
+    const matchedBaseModels = motor.matchedDrives.map(md => {
+      // 提取前两部分: XC20-W0005CRN
+      const parts = md.split('-');
+      return parts.slice(0, 2).join('-');
+    });
+
+    // 筛选匹配的驱动器
     const compatibleDrives = this.drives.filter((d) =>
-      motor.matchedDrives.includes(d.model)
+      matchedBaseModels.some(bm => d.baseModel === bm || d.model.startsWith(bm))
     );
 
     // 筛选支持所需通讯协议的驱动器
@@ -257,7 +264,14 @@ export class SizingEngine {
     );
 
     // 选择功率等级最小的满足需求的驱动器 (using maxCurrent as proxy for power rating)
-    return withSafety.sort((a, b) => a.maxCurrent - b.maxCurrent)[0];
+    const selected = withSafety.sort((a, b) => a.maxCurrent - b.maxCurrent)[0];
+
+    // 如果没有找到匹配的驱动器，返回第一个兼容的驱动器（降级处理）
+    if (!selected && compatibleDrives.length > 0) {
+      return compatibleDrives.sort((a, b) => a.maxCurrent - b.maxCurrent)[0];
+    }
+
+    return selected;
   }
 
   private calculateBrakeResistor(
