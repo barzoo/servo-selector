@@ -249,37 +249,37 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <span className="text-gray-500 block">额定功率</span>
-                <span className="font-medium">{motor.ratedPower} W</span>
+                <span className="font-medium text-gray-900">{motor.ratedPower} W</span>
               </div>
               <div>
                 <span className="text-gray-500 block">额定转速</span>
-                <span className="font-medium">{motor.ratedSpeed} rpm</span>
+                <span className="font-medium text-gray-900">{motor.ratedSpeed} rpm</span>
               </div>
               <div>
                 <span className="text-gray-500 block">额定扭矩</span>
-                <span className="font-medium">{motor.ratedTorque} N·m</span>
+                <span className="font-medium text-gray-900">{motor.ratedTorque} N·m</span>
               </div>
               <div>
                 <span className="text-gray-500 block">峰值扭矩</span>
-                <span className="font-medium">{motor.peakTorque} N·m</span>
+                <span className="font-medium text-gray-900">{motor.peakTorque} N·m</span>
               </div>
               <div>
                 <span className="text-gray-500 block">最大转速</span>
-                <span className="font-medium">{motor.maxSpeed} rpm</span>
+                <span className="font-medium text-gray-900">{motor.maxSpeed} rpm</span>
               </div>
               <div>
                 <span className="text-gray-500 block">额定电流</span>
-                <span className="font-medium">{motor.ratedCurrent} A</span>
+                <span className="font-medium text-gray-900">{motor.ratedCurrent} A</span>
               </div>
               <div>
                 <span className="text-gray-500 block">转子惯量</span>
-                <span className="font-medium">
+                <span className="font-medium text-gray-900">
                   {motor.rotorInertia.toExponential(5)} kg·m²
                 </span>
               </div>
               <div>
                 <span className="text-gray-500 block">扭矩常数</span>
-                <span className="font-medium">{motor.torqueConstant} N·m/A</span>
+                <span className="font-medium text-gray-900">{motor.torqueConstant} N·m/A</span>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
@@ -287,7 +287,7 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
                   <span className="text-gray-500 block">编码器类型</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {motor.options.encoder.type === 'BATTERY_MULTI_TURN'
                       ? '电池多圈'
                       : '机械多圈'}
@@ -296,19 +296,19 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                 </div>
                 <div>
                   <span className="text-gray-500 block">抱闸</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {motor.options.brake.hasBrake ? '有' : '无'}
                   </span>
                 </div>
                 <div>
                   <span className="text-gray-500 block">轴类型</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {motor.options.keyShaft.hasKey ? '带键槽' : '光轴'}
                   </span>
                 </div>
                 <div>
                   <span className="text-gray-500 block">防护等级</span>
-                  <span className="font-medium">{motor.options.protection.level}</span>
+                  <span className="font-medium text-gray-900">{motor.options.protection.level}</span>
                 </div>
               </div>
             </div>
@@ -326,19 +326,19 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <span className="text-gray-500 block">最大电流</span>
-                <span className="font-medium">{drive.maxCurrent} A</span>
+                <span className="font-medium text-gray-900">{drive.maxCurrent} A</span>
               </div>
               <div>
                 <span className="text-gray-500 block">额定电流</span>
-                <span className="font-medium">{drive.ratedCurrent} A</span>
+                <span className="font-medium text-gray-900">{drive.ratedCurrent} A</span>
               </div>
               <div>
                 <span className="text-gray-500 block">过载能力</span>
-                <span className="font-medium">{drive.overloadCapacity} 倍</span>
+                <span className="font-medium text-gray-900">{drive.overloadCapacity} 倍</span>
               </div>
               <div>
                 <span className="text-gray-500 block">PWM频率</span>
-                <span className="font-medium">{drive.ratedPwmFrequency} kHz</span>
+                <span className="font-medium text-gray-900">{drive.ratedPwmFrequency} kHz</span>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
@@ -346,7 +346,7 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
                   <span className="text-gray-500 block">通讯协议</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {drive.communication.type === 'ETHERCAT'
                       ? 'EtherCAT'
                       : drive.communication.type === 'PROFINET'
@@ -356,19 +356,19 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                 </div>
                 <div>
                   <span className="text-gray-500 block">面板</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {drive.options.panel.code === '01B' ? '带显示' : '无显示'}
                   </span>
                 </div>
                 <div>
                   <span className="text-gray-500 block">安全功能</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {drive.options.safety.code === 'ST' ? 'STO' : '无'}
                   </span>
                 </div>
                 <div>
                   <span className="text-gray-500 block">散热</span>
-                  <span className="font-medium">{drive.hasFan ? '风扇' : '自然冷却'}</span>
+                  <span className="font-medium text-gray-900">{drive.hasFan ? '风扇' : '自然冷却'}</span>
                 </div>
               </div>
             </div>
@@ -377,15 +377,15 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                 <div>
                   <span className="text-gray-500 block">内置电阻</span>
-                  <span className="font-medium">{drive.braking.internalResistance} Ω</span>
+                  <span className="font-medium text-gray-900">{drive.braking.internalResistance} Ω</span>
                 </div>
                 <div>
                   <span className="text-gray-500 block">连续功率</span>
-                  <span className="font-medium">{drive.braking.continuousPower} W</span>
+                  <span className="font-medium text-gray-900">{drive.braking.continuousPower} W</span>
                 </div>
                 <div>
                   <span className="text-gray-500 block">峰值功率</span>
-                  <span className="font-medium">{drive.braking.peakPower} W</span>
+                  <span className="font-medium text-gray-900">{drive.braking.peakPower} W</span>
                 </div>
               </div>
             </div>
@@ -504,13 +504,13 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
                 <span className="text-gray-500 block">单次制动能量</span>
-                <span className="font-medium">
+                <span className="font-medium text-gray-900">
                   {mechanical.regeneration.energyPerCycle.toFixed(1)} J
                 </span>
               </div>
               <div>
                 <span className="text-gray-500 block">平均制动功率</span>
-                <span className="font-medium">
+                <span className="font-medium text-gray-900">
                   {mechanical.regeneration.brakingPower.toFixed(1)} W
                 </span>
               </div>
@@ -529,7 +529,7 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               {mechanical.regeneration.recommendedResistor && (
                 <div>
                   <span className="text-gray-500 block">推荐电阻功率</span>
-                  <span className="font-medium">
+                  <span className="font-medium text-gray-900">
                     {mechanical.regeneration.recommendedResistor.minPower.toFixed(0)} W
                   </span>
                 </div>
