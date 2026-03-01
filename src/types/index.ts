@@ -98,6 +98,7 @@ export interface SystemPreferences {
   communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
   safety: 'STO' | 'NONE';  // STO 安全功能选项
   cableLength: number | 'TERMINAL_ONLY';
+  encoderType: 'A' | 'B' | 'BOTH';  // 新增: A=电池盒式, B=机械式, BOTH=两者都可
 }
 
 // 新增: Step 5 用户选择
