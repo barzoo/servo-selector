@@ -10,15 +10,16 @@ const BRAKE_OPTIONS = [
   { value: true, label: '带刹车', desc: '抱闸制动，适合垂直轴或需要保持力矩的应用' },
 ];
 
-const KEYSHAFT_OPTIONS = [
-  { value: 'L' as const, label: '光轴', desc: '标准光滑轴，适用于联轴器连接' },
-  { value: 'K' as const, label: '带键', desc: '带键槽轴，适用于需要传递大扭矩的场合' },
-];
-
 export function DutyStep() {
   const { input, setDuty, nextStep, prevStep } = useWizardStore();
   const t = useTranslations('duty');
   const commonT = useTranslations('common');
+
+  // 电机轴类型选项（使用翻译）
+  const keyShaftOptions = [
+    { value: 'L' as const, label: t('keyShaftOptions.smooth'), desc: t('keyShaftOptions.smoothDesc') },
+    { value: 'K' as const, label: t('keyShaftOptions.keyed'), desc: t('keyShaftOptions.keyedDesc') },
+  ];
 
   const [formData, setFormData] = useState<DutyConditions>(
     input.duty || {
@@ -157,10 +158,10 @@ export function DutyStep() {
       {/* 电机轴类型选项 */}
       <div className="space-y-3">
         <label className="block text-sm font-medium text-gray-700">
-          电机轴类型
+          {t('keyShaft')}
         </label>
         <div className="grid grid-cols-2 gap-3">
-          {KEYSHAFT_OPTIONS.map((opt) => (
+          {keyShaftOptions.map((opt) => (
             <label
               key={opt.value}
               className={`p-3 border rounded-lg cursor-pointer transition-colors ${
