@@ -4,6 +4,7 @@ import { SizingInput, SizingResult, SizingFailureReason, MC20Motor, XC20Drive, B
 import { MechanicalCalculator } from './mechanical';
 import { MotorFilter } from './motor-filter';
 import { PartNumberGenerator } from './part-number-generator';
+import { BrakingResistorCalculator } from './braking-resistor';
 import motorsData from '@/data/motors.json';
 import drivesData from '@/data/drives.json';
 import resistorsData from '@/data/resistors.json';
@@ -41,7 +42,7 @@ export class SizingEngine {
     // 4. 为每个推荐电机计算完整系统配置
     const recommendations = motorRecommendations.map((rec) => {
       const drive = this.matchDrive(rec.motor, input.preferences);
-      const brakeResistor = this.calculateBrakeResistor(mechanical, drive);
+      const brakeResistor = this.calculateBrakeResistor(mechanical, drive, input.motion.cycleTime);
 
       // 更新惯量比
       const inertiaRatio = mechanical.totalInertia / rec.motor.rotorInertia;
@@ -146,8 +147,9 @@ export class SizingEngine {
       selections.cables.encoderLength
     );
 
-    // 计算制动电阻
-    const brakeResistor = this.calculateBrakeResistor(mechanical, drive);
+    // 计算制动电阻 - 使用默认周期时间 2s 作为回退
+    const cycleTime = 2; // 默认值，因为 buildSystemConfiguration 没有访问 input 的权限
+    const brakeResistor = this.calculateBrakeResistor(mechanical, drive, cycleTime);
 
     return {
       motor: {
@@ -276,18 +278,34 @@ export class SizingEngine {
 
   private calculateBrakeResistor(
     mechanical: MechanicalResult,
-    drive: XC20Drive
+    drive: XC20Drive,
+    cycleTime: number
   ): BrakeResistor | undefined {
-    // 检查内置制动能力是否足够
-    if (mechanical.regeneration.brakingPower <= drive.braking.continuousPower) {
+    // 使用新的制动电阻计算器
+    const brakingCalculator = new BrakingResistorCalculator({
+      totalInertia: mechanical.totalInertia,
+      maxSpeed: mechanical.speeds.max,
+      brakingFrequency: 60 / cycleTime,
+      driveInternalPower: drive.braking.continuousPower,
+    });
+
+    // 执行制动电阻计算
+    const regenerationResult = brakingCalculator.calculate();
+
+    // 更新 mechanical 结果中的再生能量信息
+    mechanical.regeneration = {
+      ...mechanical.regeneration,
+      ...regenerationResult,
+    };
+
+    // 如果不需要外部电阻，返回 undefined
+    if (!regenerationResult.requiresExternalResistor) {
       return undefined;
     }
 
-    // 计算所需制动电阻规格
-    const requiredPower = mechanical.regeneration.brakingPower * 1.2;
-
     // 从电阻库中选择合适的型号
-    // Note: compatibleDrives check needs to be updated to use baseModel or id
+    const requiredPower = regenerationResult.recommendedResistor!.minPower;
+
     const suitableResistor = this.resistors
       .filter((r) => r.continuousPower >= requiredPower)
       .sort((a, b) => a.continuousPower - b.continuousPower)[0];
