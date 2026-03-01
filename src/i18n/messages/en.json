@@ -104,7 +104,14 @@
       "verticalUp": "Vertical Up",
       "verticalDown": "Vertical Down"
     },
-    "ipRating": "IP Rating"
+    "ipRating": "IP Rating",
+    "keyShaft": "Motor Shaft Type",
+    "keyShaftOptions": {
+      "smooth": "Smooth Shaft (L)",
+      "smoothDesc": "Standard smooth shaft for coupling connection",
+      "keyed": "Keyed Shaft (K)",
+      "keyedDesc": "Keyed shaft for high torque transmission"
+    }
   },
   "systemConfig": {
     "title": "System Configuration",

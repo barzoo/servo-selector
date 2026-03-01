@@ -104,7 +104,14 @@
       "verticalUp": "垂直向上",
       "verticalDown": "垂直向下"
     },
-    "ipRating": "防护等级"
+    "ipRating": "防护等级",
+    "keyShaft": "电机轴类型",
+    "keyShaftOptions": {
+      "smooth": "光轴 (L)",
+      "smoothDesc": "标准光滑轴，适用于联轴器连接",
+      "keyed": "带键 (K)",
+      "keyedDesc": "带键槽轴，适用于需要传递大扭矩的场合"
+    }
   },
   "systemConfig": {
     "title": "系统配置",
