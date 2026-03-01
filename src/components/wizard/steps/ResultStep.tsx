@@ -4,7 +4,9 @@ import { useWizardStore } from '@/stores/wizard-store';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { DetailedCalculations } from '../DetailedCalculations';
-import { SystemSummary, generateExportData } from '../SystemSummary';
+import { SystemSummary, findMotor, findDrive, buildSummaryItems } from '../SystemSummary';
+import { PdfExportButton } from '../PdfExportButton';
+import type { ReportData } from '@/lib/pdf/types';
 
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
@@ -88,13 +90,65 @@ export function ResultStep() {
     },
   } : null);
 
-  const handleExport = () => {
-    if (config) {
-      const exportData = generateExportData(config, tSystem, tLabels, result.mechanical);
+  const prepareReportData = (): ReportData | null => {
+    if (!config || !result) return null;
 
-      console.log('Export data:', exportData);
-      alert('导出数据已生成，PDF功能开发中...\n' + JSON.stringify(exportData.summary, null, 2));
-    }
+    const motor = findMotor(config.motor.partNumber);
+    const drive = findDrive(config.drive.partNumber);
+
+    return {
+      project: {
+        name: input.project?.name || '-',
+        customer: input.project?.customer || '-',
+        salesPerson: input.project?.salesPerson,
+        date: new Date().toLocaleDateString(),
+        notes: input.project?.notes,
+      },
+      calculations: {
+        loadInertia: result.mechanical.loadInertia.toExponential(3),
+        rmsTorque: result.mechanical.torques.rms.toFixed(2),
+        peakTorque: result.mechanical.torques.peak.toFixed(2),
+        maxSpeed: result.mechanical.speeds.max.toFixed(0),
+        regenPower: result.mechanical.regeneration.brakingPower.toFixed(1),
+        calcTime: result.metadata.calculationTime.toFixed(1),
+      },
+      systemConfig: {
+        items: buildSummaryItems(config, tSystem, tLabels),
+        motor,
+        drive,
+        cables: {
+          motor: {
+            partNumber: config.cables.motor.partNumber,
+            spec: config.cables.motor.spec,
+            length: config.cables.motor.length,
+          },
+          encoder: {
+            partNumber: config.cables.encoder.partNumber,
+            spec: config.cables.encoder.spec,
+            length: config.cables.encoder.length,
+          },
+          ...(config.cables.communication && {
+            communication: {
+              partNumber: config.cables.communication.partNumber,
+              length: config.cables.communication.length,
+            },
+          }),
+        },
+        accessories: {
+          ...(config.accessories.emcFilter && {
+            emcFilter: config.accessories.emcFilter,
+          }),
+          ...(config.accessories.brakeResistor && {
+            brakeResistor: config.accessories.brakeResistor,
+          }),
+        },
+      },
+      regeneration: result.mechanical.regeneration,
+      detailedCalculations: {
+        input,
+        mechanical: result.mechanical,
+      },
+    };
   };
 
   return (
@@ -250,12 +304,7 @@ export function ResultStep() {
           >
             {t('restart')}
           </button>
-          <button
-            onClick={handleExport}
-            className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
-          >
-            {t('exportPdf')}
-          </button>
+          <PdfExportButton data={prepareReportData()} disabled={!config} />
         </div>
       </div>
     </div>
