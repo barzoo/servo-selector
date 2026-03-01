@@ -122,10 +122,10 @@
       "ethernetIp": "EtherNet-IP",
       "analog": "Analog"
     },
-    "emcFilter": "EMC Filter",
-    "emcFilters": {
+    "safety": "Safety Function",
+    "safetyOptions": {
       "none": "None",
-      "c3": "Class C3"
+      "sto": "STO Safe Torque Off (SIL3/PLe)"
     },
     "cableLength": "Cable Length (m)",
     "cableLengthOptions": {

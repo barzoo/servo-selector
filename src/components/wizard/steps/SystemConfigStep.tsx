@@ -25,7 +25,7 @@ export function SystemConfigStep() {
       targetInertiaRatio: 5,
       encoderType: 'MULTI_TURN',
       communication: 'ETHERCAT',
-      emcFilter: 'NONE',
+      safety: 'NONE',
       cableLength: 5,
     }
   );
@@ -143,17 +143,17 @@ export function SystemConfigStep() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            {t('emcFilter')}
+            {t('safety')}
           </label>
           <select
-            value={formData.emcFilter}
+            value={formData.safety}
             onChange={(e) =>
-              setFormData({ ...formData, emcFilter: e.target.value as 'NONE' | 'C3' })
+              setFormData({ ...formData, safety: e.target.value as 'STO' | 'NONE' })
             }
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
           >
-            <option value="NONE">{t('emcFilters.none')}</option>
-            <option value="C3">{t('emcFilters.c3')}</option>
+            <option value="NONE">{t('safetyOptions.none')}</option>
+            <option value="STO">{t('safetyOptions.sto')}</option>
           </select>
         </div>
 

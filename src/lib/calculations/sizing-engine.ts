@@ -78,7 +78,6 @@ export class SizingEngine {
                   }
                 : undefined,
             brakeResistor,
-            emcFilter: input.preferences.emcFilter === 'C3' ? 'EMC-C3-004' : undefined,
           },
           calculations: {
             requiredTorque: mechanical.torques.rms * input.preferences.safetyFactor,
@@ -180,9 +179,6 @@ export class SizingEngine {
         }),
       },
       accessories: {
-        ...(selections.accessories.emcFilter !== 'NONE' && {
-          emcFilter: `EMC-${selections.accessories.emcFilter}`,
-        }),
         ...(brakeResistor && {
           brakeResistor: {
             model: brakeResistor.model,
@@ -254,8 +250,14 @@ export class SizingEngine {
       d.communication.type === preferences.communication
     );
 
+    // 根据 safety 选项筛选驱动器
+    const safetyCode = preferences.safety === 'STO' ? 'T0' : 'NN';
+    const withSafety = withComm.filter((d) =>
+      d.options.safety.code === safetyCode
+    );
+
     // 选择功率等级最小的满足需求的驱动器 (using maxCurrent as proxy for power rating)
-    return withComm.sort((a, b) => a.maxCurrent - b.maxCurrent)[0];
+    return withSafety.sort((a, b) => a.maxCurrent - b.maxCurrent)[0];
   }
 
   private calculateBrakeResistor(

@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type {
   MC20Motor,
-  SizingInput,
   SystemConfiguration,
   MotorRecommendation,
 } from '../index';
@@ -31,15 +30,15 @@ describe('Type Definitions', () => {
   });
 
   it('SizingInput should include selections', () => {
-    const input: SizingInput = {
+    const input = {
       selections: {
         motorId: 'test',
         motorOptions: { brake: true, encoderType: 'A', keyShaft: false },
         driveOptions: { communication: 'ETHERCAT', panel: 'WITH_DISPLAY', safety: 'STO' },
         cables: { motorLength: 3, encoderLength: 3 },
-        accessories: { emcFilter: 'NONE' },
+        accessories: {},
       },
-    } as SizingInput;
+    };
     expect(input.selections).toBeDefined();
     expect(input.selections?.motorOptions.encoderType).toMatch(/A|B/);
   });

@@ -122,10 +122,10 @@
       "ethernetIp": "EtherNet-IP",
       "analog": "模拟量"
     },
-    "emcFilter": "EMC 滤波器",
-    "emcFilters": {
-      "none": "无滤波器",
-      "c3": "C3 等级"
+    "safety": "安全功能",
+    "safetyOptions": {
+      "none": "无",
+      "sto": "STO 安全扭矩关断 (SIL3/PLe)"
     },
     "cableLength": "电缆长度 (m)",
     "cableLengthOptions": {

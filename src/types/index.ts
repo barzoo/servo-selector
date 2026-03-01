@@ -96,7 +96,7 @@ export interface SystemPreferences {
   targetInertiaRatio: number;  // 新增: 目标惯量比
   encoderType: 'SINGLE_TURN' | 'MULTI_TURN';
   communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
-  emcFilter: 'NONE' | 'C3';
+  safety: 'STO' | 'NONE';  // STO 安全功能选项
   cableLength: number | 'TERMINAL_ONLY';
 }
 
@@ -119,7 +119,6 @@ export interface MotorSelections {
     commLength?: 3 | 5 | 10 | 15 | 20 | 25 | 30;
   };
   accessories: {
-    emcFilter: 'NONE' | 'C3';
     brakeResistorOverride?: string;
   };
 }

@@ -40,7 +40,7 @@ describe('SizingEngine with System Configuration', () => {
       targetInertiaRatio: 10,
       encoderType: 'MULTI_TURN',
       communication: 'ETHERCAT',
-      emcFilter: 'NONE',
+      safety: 'NONE',
       cableLength: 3,
     },
   };
@@ -52,7 +52,7 @@ describe('SizingEngine with System Configuration', () => {
       motorOptions: { brake: true, encoderType: 'A', keyShaft: false },
       driveOptions: { communication: 'ETHERCAT', panel: 'WITH_DISPLAY', safety: 'STO' },
       cables: { motorLength: 5, encoderLength: 5 },
-      accessories: { emcFilter: 'NONE' },
+      accessories: {},
     },
   };
 

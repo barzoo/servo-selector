@@ -27,14 +27,14 @@ export default function Step5Page() {
       driveOptions: {
         communication: 'ETHERCAT',
         panel: 'WITH_DISPLAY',
-        safety: 'STO',
+        safety: 'NONE',
       },
       cables: {
         motorLength: 3,
         encoderLength: 3,
       },
       accessories: {
-        emcFilter: 'NONE',
+        // emcFilter removed - not available in XC20 drives
       },
     };
   });
