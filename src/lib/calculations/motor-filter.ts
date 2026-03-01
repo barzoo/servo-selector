@@ -43,6 +43,17 @@ export class MotorFilter {
       );
     }
 
+    // 根据编码器类型筛选
+    if (this.preferences.encoderType && this.preferences.encoderType !== 'BOTH') {
+      const targetEncoderType = this.preferences.encoderType === 'A'
+        ? 'BATTERY_MULTI_TURN'
+        : 'MECHANICAL_MULTI_TURN';
+
+      candidates = candidates.filter(motor =>
+        motor.options.encoder.type === targetEncoderType
+      );
+    }
+
     const scored = candidates.map((motor) =>
       this.calculateMatchScore(motor, requiredTorque, requiredSpeed, targetInertiaRatio)
     );
