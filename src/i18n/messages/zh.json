@@ -312,5 +312,23 @@
     "brakingCapability": "制动能力",
     "motor": "伺服电机",
     "drive": "伺服驱动器"
+  },
+  "pdf": {
+    "reportTitle": "伺服系统选型报告",
+    "project": "项目",
+    "generatedAt": "生成时间",
+    "sections": {
+      "projectInfo": "项目信息",
+      "calculationSummary": "计算摘要"
+    },
+    "projectInfo": {
+      "item": "项目",
+      "value": "值",
+      "name": "项目名称",
+      "customer": "客户名称",
+      "salesPerson": "销售人员",
+      "date": "日期",
+      "notes": "备注"
+    }
   }
 }

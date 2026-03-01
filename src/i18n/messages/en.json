@@ -312,5 +312,23 @@
     "brakingCapability": "Braking Capability",
     "motor": "Servo Motor",
     "drive": "Servo Drive"
+  },
+  "pdf": {
+    "reportTitle": "Servo System Sizing Report",
+    "project": "Project",
+    "generatedAt": "Generated At",
+    "sections": {
+      "projectInfo": "Project Information",
+      "calculationSummary": "Calculation Summary"
+    },
+    "projectInfo": {
+      "item": "Item",
+      "value": "Value",
+      "name": "Project Name",
+      "customer": "Customer",
+      "salesPerson": "Sales Person",
+      "date": "Date",
+      "notes": "Notes"
+    }
   }
 }
