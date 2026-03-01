@@ -240,26 +240,39 @@ export class MechanicalCalculator {
     };
   }
 
+  /**
+   * 计算每分钟制动次数
+   * 基于运动周期计算
+   *
+   * @returns 每分钟制动次数
+   */
+  private calculateCyclesPerMinute(): number {
+    const { motion } = this.input;
+    const cycleTimeSeconds = motion.cycleTime;
+
+    if (cycleTimeSeconds <= 0) return 0;
+
+    return 60 / cycleTimeSeconds;
+  }
+
   private calculateRegeneration() {
     const inertia = this.calculateInertia();
     const maxSpeedRad = this.getMaxAngularSpeed();
     const times = this.calculateMotionTimes();
 
+    // 计算每分钟制动次数
+    const cyclesPerMinute = this.calculateCyclesPerMinute();
+
+    // 计算单次制动能量
     const E_kinetic = 0.5 * inertia.total * maxSpeedRad * maxSpeedRad;
 
-    let E_gravity = 0;
-    if (this.input.duty.mountingOrientation === 'VERTICAL_DOWN') {
-      const mass = this.getLoadMass();
-      const stroke = this.input.motion.stroke * 1e-3;
-      E_gravity = mass * G * stroke;
-    }
-
-    const E_total = E_kinetic + E_gravity;
-    const P_brake = times.decel > 0 ? E_total / times.decel : 0;
+    // 计算平均制动功率（基于减速时间）
+    const P_brake = times.decel > 0 ? E_kinetic / times.decel : 0;
 
     return {
-      energyPerCycle: E_total,
+      energyPerCycle: E_kinetic,
       brakingPower: P_brake,
+      cyclesPerMinute,
       requiresExternalResistor: false,
     };
   }
