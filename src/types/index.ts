@@ -136,6 +136,12 @@ export interface SizingInput {
 
 // ============ 产品数据 ============
 
+// 产品描述
+export interface ProductDescription {
+  short: string;      // 简短描述（表格用）
+  detailed?: string;  // 详细描述（可选扩展）
+}
+
 /**
  * MC20电机完整数据接口
  * 基于产品目录和CSV数据生成
@@ -211,6 +217,7 @@ export interface MC20Motor {
     motorCable: string;
     encoderCable: string;
   };
+  description: ProductDescription;
 }
 
 /**
@@ -266,6 +273,7 @@ export interface XC20Drive {
   };
 
   compatibleMotors: string[];
+  description: ProductDescription;
 }
 
 export interface BrakeResistor {
@@ -429,4 +437,32 @@ export interface WizardState {
   result?: SizingResult;
   selectedMotor?: MC20Motor;
   isComplete: boolean;
+}
+
+// ============ 导出数据 ============
+
+export interface SummaryItem {
+  partNumber: string;
+  category: 'MOTOR' | 'DRIVE' | 'MOTOR_CABLE' | 'ENCODER_CABLE' | 'COMM_CABLE' | 'BRAKE_RESISTOR' | 'EMC_FILTER';
+  typeLabel: string;
+  description: string;
+}
+
+export interface SystemConfigExportData {
+  summary: SummaryItem[];
+  details: {
+    motor: MC20Motor | null;
+    drive: XC20Drive | null;
+    cables: {
+      motor: { model: string; length: number; description: string } | null;
+      encoder: { model: string; length: number; description: string } | null;
+      communication?: { length: number; description: string } | null;
+    };
+    accessories: {
+      brakeResistor?: { model: string; partNumber: string } | null;
+      emcFilter?: string | null;
+    };
+  };
+  calculations?: MechanicalResult;
+  project?: ProjectInfo;
 }
