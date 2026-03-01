@@ -414,7 +414,7 @@ export interface SizingResult {
 
 // ============ 向导状态 ============
 
-export type WizardStep = 1 | 2 | 3 | 4 | 5;
+export type WizardStep = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface WizardState {
   currentStep: WizardStep;

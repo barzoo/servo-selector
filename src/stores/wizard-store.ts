@@ -11,10 +11,12 @@ import {
   DutyConditions,
   SystemPreferences,
   SizingResult,
+  MotorSelections,
 } from '@/types';
 
 interface WizardStore extends WizardState {
   setStep: (step: WizardStep) => void;
+  goToStep: (step: number) => void;
   nextStep: () => void;
   prevStep: () => void;
   setProjectInfo: (info: ProjectInfo) => void;
@@ -22,6 +24,7 @@ interface WizardStore extends WizardState {
   setMotion: (motion: MotionParams) => void;
   setDuty: (duty: DutyConditions) => void;
   setPreferences: (preferences: SystemPreferences) => void;
+  setSelections: (selections: MotorSelections) => void;
   setResult: (result: SizingResult) => void;
   reset: () => void;
 }
@@ -39,6 +42,12 @@ export const useWizardStore = create<WizardStore>()(
       ...initialState,
 
       setStep: (step) => set({ currentStep: step }),
+
+      goToStep: (step) => {
+        if (step >= 1 && step <= 6) {
+          set({ currentStep: step as WizardStep });
+        }
+      },
 
       nextStep: () => {
         const { currentStep } = get();
@@ -85,7 +94,11 @@ export const useWizardStore = create<WizardStore>()(
       setResult: (result) =>
         set(() => ({
           result,
-          isComplete: true,
+        })),
+
+      setSelections: (selections) =>
+        set((state) => ({
+          input: { ...state.input, selections },
         })),
 
       reset: () => set(initialState),
