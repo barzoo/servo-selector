@@ -4,6 +4,7 @@ import { useWizardStore } from '@/stores/wizard-store';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { DetailedCalculations } from '../DetailedCalculations';
+import { SystemSummary, generateExportData } from '../SystemSummary';
 
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
@@ -32,7 +33,67 @@ export function ResultStep() {
   }
 
   const selectedRecommendation = result.motorRecommendations[selectedMotorIndex];
-  const { motor, safetyMargins, systemConfig } = selectedRecommendation;
+  const { motor, systemConfig } = selectedRecommendation;
+
+  // Use systemConfiguration from result if available, otherwise construct from selected recommendation
+  const config = result.systemConfiguration || (systemConfig ? {
+    motor: {
+      model: motor.baseModel,
+      partNumber: motor.model,
+      options: {
+        brake: motor.options.brake.hasBrake,
+        encoderType: motor.options.encoder.type === 'BATTERY_MULTI_TURN' ? 'A' : 'B',
+        keyShaft: motor.options.keyShaft.hasKey,
+      },
+    },
+    drive: {
+      model: systemConfig.drive.baseModel,
+      partNumber: systemConfig.drive.model,
+      options: {
+        communication: systemConfig.drive.communication.type,
+        panel: systemConfig.drive.options.panel.code === '01B' ? 'WITH_DISPLAY' : 'WITHOUT_DISPLAY',
+        safety: systemConfig.drive.options.safety.code === 'ST' ? 'STO' : 'NONE',
+      },
+    },
+    cables: {
+      motor: {
+        spec: systemConfig.accessories.motorCable.model,
+        length: typeof systemConfig.accessories.motorCable.length === 'number' ? systemConfig.accessories.motorCable.length : 3,
+        partNumber: `CAB-MOT-${systemConfig.accessories.motorCable.length}`,
+      },
+      encoder: {
+        spec: systemConfig.accessories.encoderCable.model,
+        length: typeof systemConfig.accessories.encoderCable.length === 'number' ? systemConfig.accessories.encoderCable.length : 3,
+        partNumber: `CAB-ENC-${systemConfig.accessories.encoderCable.length}`,
+      },
+      ...(systemConfig.accessories.commCable && {
+        communication: {
+          length: typeof systemConfig.accessories.commCable.length === 'number' ? systemConfig.accessories.commCable.length : 3,
+          partNumber: `CAB-COM-${systemConfig.accessories.commCable.model}`,
+        },
+      }),
+    },
+    accessories: {
+      ...(systemConfig.accessories.brakeResistor && {
+        brakeResistor: {
+          model: systemConfig.accessories.brakeResistor.model,
+          partNumber: systemConfig.accessories.brakeResistor.model,
+        },
+      }),
+      ...(systemConfig.accessories.emcFilter && {
+        emcFilter: systemConfig.accessories.emcFilter,
+      }),
+    },
+  } : null);
+
+  const handleExport = () => {
+    if (config) {
+      const exportData = generateExportData(config, result.mechanical);
+
+      console.log('Export data:', exportData);
+      alert('导出数据已生成，PDF功能开发中...\n' + JSON.stringify(exportData.summary, null, 2));
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -157,47 +218,12 @@ export function ResultStep() {
         </div>
       </div>
 
-      {/* 选中电机的详细配置 */}
-      {systemConfig && (
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <h3 className="font-semibold text-gray-800 mb-3">{t('systemConfigDetails')}</h3>
-
-          <div className="space-y-4">
-            <div>
-              <h4 className="font-medium text-gray-700 mb-2">{t('motor')}</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
-                <div><span className="text-gray-700">{t('motorModel')}</span> {motor.model}</div>
-                <div><span className="text-gray-700">{t('ratedTorque')}</span> {motor.ratedTorque} N·m</div>
-                <div><span className="text-gray-700">{t('peakTorque')}</span> {motor.peakTorque} N·m</div>
-                <div><span className="text-gray-700">{t('ratedSpeed')}</span> {motor.ratedSpeed} rpm</div>
-                <div><span className="text-gray-700">{t('rotorInertia')}</span> {motor.rotorInertia} kg·cm²</div>
-                <div><span className="text-gray-700">{t('inertiaRatio')}</span> {safetyMargins.inertia}:1</div>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-gray-700 mb-2">{t('drive')}</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
-                <div><span className="text-gray-700">{t('driveModel')}</span> {systemConfig.drive.model}</div>
-                <div><span className="text-gray-700">{t('ratedCurrent')}</span> {systemConfig.drive.ratedCurrent} A</div>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-medium text-gray-700 mb-2">{t('accessories')}</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
-                <div><span className="text-gray-700">{t('motorCable')}</span> {systemConfig.accessories.motorCable.model}</div>
-                <div><span className="text-gray-700">{t('encoderCable')}</span> {systemConfig.accessories.encoderCable.model}</div>
-                {systemConfig.accessories.brakeResistor && (
-                  <div><span className="text-gray-700">{t('brakeResistor')}</span> {systemConfig.accessories.brakeResistor.model}</div>
-                )}
-                {systemConfig.accessories.emcFilter && (
-                  <div><span className="text-gray-700">{t('emcFilter')}</span> {systemConfig.accessories.emcFilter}</div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* 系统配置详情 */}
+      {config && (
+        <SystemSummary
+          config={config}
+          mechanical={result.mechanical}
+        />
       )}
 
       {/* 详细计算信息 */}
@@ -223,7 +249,7 @@ export function ResultStep() {
             {t('restart')}
           </button>
           <button
-            onClick={() => alert(t('pdfExportInDevelopment'))}
+            onClick={handleExport}
             className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
           >
             {t('exportPdf')}
