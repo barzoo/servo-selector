@@ -12,6 +12,7 @@ import {
 } from '@/types';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { mechanismDiagrams } from '../mechanism-diagrams';
 
 const mechanismTypes: { value: MechanismType; labelKey: string }[] = [
   { value: 'BALL_SCREW', labelKey: 'ballScrew' },
@@ -783,6 +784,16 @@ export function MechanismStep() {
           ))}
         </select>
       </div>
+
+      {/* 传动机构示意图 */}
+      {(() => {
+        const DiagramComponent = mechanismDiagrams[formData.type];
+        return (
+          <div className="bg-gray-50 rounded-lg p-4 flex justify-center border border-gray-200">
+            <DiagramComponent className="w-full max-w-md h-auto" />
+          </div>
+        );
+      })()}
 
       {renderParamsForm()}
 
