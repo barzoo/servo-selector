@@ -89,6 +89,7 @@ export interface DutyConditions {
   mountingOrientation: 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN';
   ipRating: 'IP54' | 'IP65' | 'IP67';
   brake: boolean;
+  keyShaft: 'L' | 'K';  // 新增: L=光轴, K=带键
 }
 
 export interface SystemPreferences {
