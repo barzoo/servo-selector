@@ -319,8 +319,10 @@ function processMotorData(csvContent: string): MC20Motor[] {
     const maxSpeed = parseInt(row[6]);
     const ratedCurrent = parseFloat(row[7]);
     const peakCurrent = parseFloat(row[8]);
-    const rotorInertia = parseFloat(row[9]);
-    const rotorInertiaWithBrake = parseFloat(row[10]);
+    // Convert rotor inertia from kg·cm² (source data) to kg·m² (SI unit)
+    // Conversion factor: 1 kg·cm² = 1e-4 kg·m²
+    const rotorInertia = parseFloat(row[9]) * 1e-4;
+    const rotorInertiaWithBrake = parseFloat(row[10]) * 1e-4;
     const weight = parseFloat(row[11]);
     const weightWithBrake = parseFloat(row[12]);
     const frameSize = parseInt(row[13]);
