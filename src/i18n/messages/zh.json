@@ -235,5 +235,77 @@
       "kgm2": "kg·m²",
       "ohm": "Ω"
     }
+  },
+  "systemSummary": {
+    "title": "系统配置",
+    "configList": "系统配置清单",
+    "motorDetails": "电机详细参数",
+    "driveDetails": "驱动器详细参数",
+    "cableSpecs": "电缆规格",
+    "accessories": "配件信息",
+    "regeneration": "制动能量分析",
+    "columns": {
+      "partNumber": "订货号",
+      "type": "类型",
+      "description": "描述"
+    },
+    "labels": {
+      "ratedPower": "额定功率",
+      "ratedSpeed": "额定转速",
+      "ratedTorque": "额定扭矩",
+      "peakTorque": "峰值扭矩",
+      "maxSpeed": "最大转速",
+      "ratedCurrent": "额定电流",
+      "rotorInertia": "转子惯量",
+      "torqueConstant": "扭矩常数",
+      "encoderType": "编码器类型",
+      "brake": "抱闸",
+      "shaftType": "轴类型",
+      "protection": "防护等级",
+      "maxCurrent": "最大电流",
+      "overloadCapacity": "过载能力",
+      "pwmFrequency": "PWM频率",
+      "communication": "通讯协议",
+      "panel": "面板",
+      "safety": "安全功能",
+      "cooling": "散热",
+      "internalResistance": "内置电阻",
+      "continuousPower": "连续功率",
+      "peakPower": "峰值功率",
+      "motorCable": "动力电缆",
+      "encoderCable": "编码器电缆",
+      "commCable": "通讯电缆",
+      "brakeResistor": "制动电阻",
+      "emcFilter": "EMC滤波器",
+      "energyPerCycle": "单次制动能量",
+      "brakingPower": "平均制动功率",
+      "externalResistorRequired": "需要外部电阻",
+      "recommendedResistorPower": "推荐电阻功率"
+    },
+    "options": {
+      "batteryMultiTurn": "电池多圈",
+      "mechanicalMultiTurn": "机械多圈",
+      "typeA": "A型",
+      "typeB": "B型",
+      "yes": "有",
+      "no": "无",
+      "keyShaft": "带键槽",
+      "smoothShaft": "光轴",
+      "withDisplay": "带显示",
+      "withoutDisplay": "无显示",
+      "sto": "STO",
+      "none": "无",
+      "fan": "风扇",
+      "natural": "自然冷却",
+      "ethercat": "EtherCAT",
+      "profinet": "PROFINET",
+      "ethernetIp": "EtherNet/IP"
+    },
+    "cable": {
+      "spec": "规格",
+      "length": "长度",
+      "lengthUnit": "米",
+      "terminalOnly": "仅接线端子"
+    }
   }
 }
