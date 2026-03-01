@@ -10,7 +10,7 @@ interface CableConfigurationPanelProps {
   communicationType: string;
 }
 
-const LENGTH_OPTIONS = [3, 5, 10, 15, 20, 25, 30];
+const LENGTH_OPTIONS: Array<3 | 5 | 10 | 15 | 20 | 25 | 30> = [3, 5, 10, 15, 20, 25, 30];
 
 export function CableConfigurationPanel({
   motor,

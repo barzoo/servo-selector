@@ -1,9 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import type {
   MC20Motor,
-  XC20Drive,
   SizingInput,
-  MotorSelections,
   SystemConfiguration,
   MotorRecommendation,
 } from '../index';

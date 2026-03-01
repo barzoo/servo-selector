@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { PartNumberGenerator } from '../part-number-generator';
-import type { MC20Motor, XC20Drive } from '@/types';
+import type { MC20Motor } from '@/types';
 
 describe('PartNumberGenerator', () => {
   const generator = new PartNumberGenerator();

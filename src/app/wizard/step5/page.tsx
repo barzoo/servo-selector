@@ -7,7 +7,7 @@ import { MotorSelectionPanel } from '@/components/wizard/MotorSelectionPanel';
 import { DriveConfigurationPanel } from '@/components/wizard/DriveConfigurationPanel';
 import { CableConfigurationPanel } from '@/components/wizard/CableConfigurationPanel';
 import { SystemSummary } from '@/components/wizard/SystemSummary';
-import type { MotorSelections } from '@/types';
+import type { MotorSelections, XC20Drive } from '@/types';
 
 export default function Step5Page() {
   const { input, result, setResult, setSelections, goToStep } = useWizardStore();
@@ -39,12 +39,16 @@ export default function Step5Page() {
 
   // 当选择变化时重新计算
   useEffect(() => {
-    if (!input) return;
+    if (!input?.project || !input?.mechanism || !input?.motion || !input?.duty || !input?.preferences) return;
 
     setIsCalculating(true);
     const engine = new SizingEngine();
     const newResult = engine.calculate({
-      ...input,
+      project: input.project,
+      mechanism: input.mechanism,
+      motion: input.motion,
+      duty: input.duty,
+      preferences: input.preferences,
       selections,
     });
     setResult(newResult);
@@ -101,7 +105,7 @@ export default function Step5Page() {
 
       {selectedDrive && (
         <DriveConfigurationPanel
-          drive={selectedDrive as any}
+          drive={selectedDrive as XC20Drive}
           selectedOptions={selections.driveOptions}
           onOptionsChange={(opts) => setLocalSelections({ ...selections, driveOptions: opts })}
         />
