@@ -43,7 +43,6 @@ describe('SizingEngine with System Configuration', () => {
       communication: 'ETHERCAT',
       safety: 'NONE',
       cableLength: 3,
-      encoderType: 'BOTH',
     },
   };
 

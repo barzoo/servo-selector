@@ -50,16 +50,8 @@ export class MotorFilter {
       );
     }
 
-    // 根据编码器类型筛选
-    if (this.preferences.encoderType && this.preferences.encoderType !== 'BOTH') {
-      const targetEncoderType = this.preferences.encoderType === 'A'
-        ? 'BATTERY_MULTI_TURN'
-        : 'MECHANICAL_MULTI_TURN';
-
-      candidates = candidates.filter(motor =>
-        motor.options.encoder.type === targetEncoderType
-      );
-    }
+    // 编码器类型筛选已移至 MotorSelections 级别，此处不再根据 preferences 筛选
+    // MC20 系列只支持多圈编码器，具体 A/B 类型选择在电机选择步骤中处理
 
     const scored = candidates.map((motor) =>
       this.calculateMatchScore(motor, requiredTorque, requiredSpeed, targetInertiaRatio)

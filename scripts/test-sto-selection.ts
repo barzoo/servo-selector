@@ -46,7 +46,6 @@ const baseInput: SizingInput = {
     communication: 'ETHERCAT',
     safety: 'NONE', // Will be overridden in tests
     cableLength: 3,
-    encoderType: 'BOTH',
   },
 };
 
