@@ -1,7 +1,8 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { defaultTableStyles, getCurrentY, addSectionTitle, addSubsectionTitle } from '../styles';
-import type { TranslationFunction, SizingInput, MechanicalResult } from '../types';
+import type { TranslationFunction } from '../types';
+import type { SizingInput, MechanicalResult } from '@/types';
 import { extractCalculationDetails } from '@/lib/calculations/calculation-details';
 
 export function addDetailedCalculationsSection(

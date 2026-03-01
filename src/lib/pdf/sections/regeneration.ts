@@ -1,7 +1,8 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { defaultTableStyles, getCurrentY, addSectionTitle, colors } from '../styles';
-import type { TranslationFunction, MechanicalResult } from '../types';
+import type { TranslationFunction } from '../types';
+import type { MechanicalResult } from '@/types';
 
 export function addRegenerationSection(
   doc: jsPDF,

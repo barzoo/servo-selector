@@ -1,7 +1,8 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { defaultTableStyles, getCurrentY, addSectionTitle } from '../styles';
-import type { TranslationFunction, SummaryItem } from '../types';
+import type { TranslationFunction } from '../types';
+import type { SummaryItem } from '@/types';
 
 export function addSystemConfigSection(
   doc: jsPDF,

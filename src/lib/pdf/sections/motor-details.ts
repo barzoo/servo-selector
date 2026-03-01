@@ -1,7 +1,8 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { defaultTableStyles, getCurrentY, addSectionTitle } from '../styles';
-import type { TranslationFunction, MC20Motor } from '../types';
+import type { TranslationFunction } from '../types';
+import type { MC20Motor } from '@/types';
 
 export function addMotorDetailsSection(
   doc: jsPDF,

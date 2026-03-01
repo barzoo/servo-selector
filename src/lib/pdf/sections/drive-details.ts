@@ -1,7 +1,8 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { defaultTableStyles, getCurrentY, addSectionTitle } from '../styles';
-import type { TranslationFunction, XC20Drive } from '../types';
+import type { TranslationFunction } from '../types';
+import type { XC20Drive } from '@/types';
 
 export function addDriveDetailsSection(
   doc: jsPDF,
