@@ -41,9 +41,9 @@ export function ResultStep() {
       {input.project && (
         <div className="bg-gray-50 p-4 rounded-lg">
           <h3 className="font-semibold text-gray-700 mb-2">{t('projectInfo')}</h3>
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <div><span className="text-gray-500">{t('projectName')}</span> {input.project.name}</div>
-            <div><span className="text-gray-500">{t('customer')}</span> {input.project.customer}</div>
+          <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
+            <div><span className="text-gray-700">{t('projectName')}</span> {input.project.name}</div>
+            <div><span className="text-gray-700">{t('customer')}</span> {input.project.customer}</div>
           </div>
         </div>
       )}
@@ -53,28 +53,28 @@ export function ResultStep() {
         <h3 className="font-semibold text-blue-800 mb-2">{t('calculationSummary')}</h3>
         <div className="grid grid-cols-3 gap-4 text-sm">
           <div>
-            <div className="text-gray-600">{t('loadInertia')}</div>
-            <div className="font-medium">{result.mechanical.loadInertia.toExponential(3)} kg·m²</div>
+            <div className="text-gray-800">{t('loadInertia')}</div>
+            <div className="font-medium text-gray-900">{result.mechanical.loadInertia.toExponential(3)} kg·m²</div>
           </div>
           <div>
-            <div className="text-gray-600">{t('rmsTorque')}</div>
-            <div className="font-medium">{result.mechanical.torques.rms.toFixed(2)} N·m</div>
+            <div className="text-gray-800">{t('rmsTorque')}</div>
+            <div className="font-medium text-gray-900">{result.mechanical.torques.rms.toFixed(2)} N·m</div>
           </div>
           <div>
-            <div className="text-gray-600">{t('peakTorque')}</div>
-            <div className="font-medium">{result.mechanical.torques.peak.toFixed(2)} N·m</div>
+            <div className="text-gray-800">{t('peakTorque')}</div>
+            <div className="font-medium text-gray-900">{result.mechanical.torques.peak.toFixed(2)} N·m</div>
           </div>
           <div>
-            <div className="text-gray-600">{t('maxSpeed')}</div>
-            <div className="font-medium">{result.mechanical.speeds.max.toFixed(0)} rpm</div>
+            <div className="text-gray-800">{t('maxSpeed')}</div>
+            <div className="font-medium text-gray-900">{result.mechanical.speeds.max.toFixed(0)} rpm</div>
           </div>
           <div>
-            <div className="text-gray-600">{t('regenPower')}</div>
-            <div className="font-medium">{result.mechanical.regeneration.brakingPower.toFixed(1)} W</div>
+            <div className="text-gray-800">{t('regenPower')}</div>
+            <div className="font-medium text-gray-900">{result.mechanical.regeneration.brakingPower.toFixed(1)} W</div>
           </div>
           <div>
-            <div className="text-gray-600">{t('calcTime')}</div>
-            <div className="font-medium">{result.metadata.calculationTime.toFixed(1)} ms</div>
+            <div className="text-gray-800">{t('calcTime')}</div>
+            <div className="font-medium text-gray-900">{result.metadata.calculationTime.toFixed(1)} ms</div>
           </div>
         </div>
       </div>
@@ -95,14 +95,14 @@ export function ResultStep() {
             >
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
-                  <div className="font-semibold text-lg">{rec.motor.model}</div>
-                  <div className="text-sm text-gray-600">
+                  <div className="font-semibold text-lg text-gray-900">{rec.motor.model}</div>
+                  <div className="text-sm text-gray-800">
                     {rec.motor.ratedTorque} N·m / {rec.motor.ratedSpeed} rpm
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right">
-                    <div className="text-sm text-gray-500">{t('matchScore')}</div>
+                    <div className="text-sm text-gray-800">{t('matchScore')}</div>
                     <div className={`font-bold text-lg ${
                       rec.matchScore >= 80 ? 'text-green-600' : rec.matchScore >= 60 ? 'text-yellow-600' : 'text-red-600'
                     }`}>
@@ -140,34 +140,34 @@ export function ResultStep() {
           <div className="space-y-4">
             <div>
               <h4 className="font-medium text-gray-700 mb-2">{t('motor')}</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div><span className="text-gray-500">{t('motorModel')}</span> {motor.model}</div>
-                <div><span className="text-gray-500">{t('ratedTorque')}</span> {motor.ratedTorque} N·m</div>
-                <div><span className="text-gray-500">{t('peakTorque')}</span> {motor.peakTorque} N·m</div>
-                <div><span className="text-gray-500">{t('ratedSpeed')}</span> {motor.ratedSpeed} rpm</div>
-                <div><span className="text-gray-500">{t('rotorInertia')}</span> {motor.rotorInertia} kg·cm²</div>
-                <div><span className="text-gray-500">{t('inertiaRatio')}</span> {safetyMargins.inertia}:1</div>
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
+                <div><span className="text-gray-700">{t('motorModel')}</span> {motor.model}</div>
+                <div><span className="text-gray-700">{t('ratedTorque')}</span> {motor.ratedTorque} N·m</div>
+                <div><span className="text-gray-700">{t('peakTorque')}</span> {motor.peakTorque} N·m</div>
+                <div><span className="text-gray-700">{t('ratedSpeed')}</span> {motor.ratedSpeed} rpm</div>
+                <div><span className="text-gray-700">{t('rotorInertia')}</span> {motor.rotorInertia} kg·cm²</div>
+                <div><span className="text-gray-700">{t('inertiaRatio')}</span> {safetyMargins.inertia}:1</div>
               </div>
             </div>
 
             <div>
               <h4 className="font-medium text-gray-700 mb-2">{t('drive')}</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div><span className="text-gray-500">{t('driveModel')}</span> {systemConfig.drive.model}</div>
-                <div><span className="text-gray-500">{t('ratedCurrent')}</span> {systemConfig.drive.ratedOutputCurrent} A</div>
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
+                <div><span className="text-gray-700">{t('driveModel')}</span> {systemConfig.drive.model}</div>
+                <div><span className="text-gray-700">{t('ratedCurrent')}</span> {systemConfig.drive.ratedOutputCurrent} A</div>
               </div>
             </div>
 
             <div>
               <h4 className="font-medium text-gray-700 mb-2">{t('accessories')}</h4>
-              <div className="grid grid-cols-2 gap-2 text-sm">
-                <div><span className="text-gray-500">{t('motorCable')}</span> {systemConfig.accessories.motorCable.model}</div>
-                <div><span className="text-gray-500">{t('encoderCable')}</span> {systemConfig.accessories.encoderCable.model}</div>
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
+                <div><span className="text-gray-700">{t('motorCable')}</span> {systemConfig.accessories.motorCable.model}</div>
+                <div><span className="text-gray-700">{t('encoderCable')}</span> {systemConfig.accessories.encoderCable.model}</div>
                 {systemConfig.accessories.brakeResistor && (
-                  <div><span className="text-gray-500">{t('brakeResistor')}</span> {systemConfig.accessories.brakeResistor.model}</div>
+                  <div><span className="text-gray-700">{t('brakeResistor')}</span> {systemConfig.accessories.brakeResistor.model}</div>
                 )}
                 {systemConfig.accessories.emcFilter && (
-                  <div><span className="text-gray-500">{t('emcFilter')}</span> {systemConfig.accessories.emcFilter}</div>
+                  <div><span className="text-gray-700">{t('emcFilter')}</span> {systemConfig.accessories.emcFilter}</div>
                 )}
               </div>
             </div>

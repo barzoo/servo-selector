@@ -8,6 +8,10 @@
 
 # testing
 /coverage
+/e2e/screenshots/
+/e2e/*.json
+/playwright-report/
+/test-results/
 
 # next.js
 /.next/
@@ -38,3 +42,6 @@ next-env.d.ts
 
 # worktrees
 .worktrees/
+
+# claude local settings
+.claude/
