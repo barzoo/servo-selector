@@ -26,7 +26,7 @@ export function SystemConfigStep() {
       communication: 'ETHERCAT',
       safety: 'NONE',
       cableLength: 5,
-      encoderType: 'BOTH',
+      encoderType: 'A',
     }
   );
 
