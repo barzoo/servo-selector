@@ -19,26 +19,23 @@ export class MotorFilter {
     const requiredPeakTorque = this.mechanical.torques.peak * this.preferences.safetyFactor;
     const requiredSpeed = this.mechanical.speeds.max * 1.1;
 
+    // 用户选择的目标惯量比，默认10
+    const targetInertiaRatio = this.preferences.targetInertiaRatio || 10;
+
     const candidates = this.motors.filter((motor) => {
       if (motor.ratedTorque < requiredTorque) return false;
       if (motor.peakTorque < requiredPeakTorque) return false;
       if (motor.maxSpeed < requiredSpeed) return false;
 
-      // Map new encoder type to preferences
-      // BATTERY_MULTI_TURN and MECHANICAL_MULTI_TURN are both multi-turn encoders
-      const isMultiTurn = motor.options.encoder.type === 'BATTERY_MULTI_TURN' ||
-                          motor.options.encoder.type === 'MECHANICAL_MULTI_TURN';
-      const preferenceMultiTurn = this.preferences.encoderType === 'MULTI_TURN';
-
-      // If user wants multi-turn, either type works
-      // If user wants single-turn, we need to check (but MC20 only has multi-turn options)
-      if (!isMultiTurn && preferenceMultiTurn) return false;
+      // 惯量匹配筛选 - 使用用户选择的目标比例
+      const inertiaRatio = this.mechanical.totalInertia / motor.rotorInertia;
+      if (inertiaRatio > targetInertiaRatio) return false;
 
       return true;
     });
 
     const scored = candidates.map((motor) =>
-      this.calculateMatchScore(motor, requiredTorque, requiredSpeed)
+      this.calculateMatchScore(motor, requiredTorque, requiredSpeed, targetInertiaRatio)
     );
 
     scored.sort((a, b) => b.matchScore - a.matchScore);
@@ -68,10 +65,12 @@ export class MotorFilter {
   private calculateMatchScore(
     motor: MC20Motor,
     requiredTorque: number,
-    requiredSpeed: number
+    requiredSpeed: number,
+    targetInertiaRatio: number
   ): MotorRecommendation {
     const warnings: string[] = [];
 
+    // 扭矩匹配分数
     const torqueMargin = (motor.ratedTorque - requiredTorque) / requiredTorque;
     let torqueScore: number;
     if (torqueMargin >= 0.5) {
@@ -85,31 +84,47 @@ export class MotorFilter {
       torqueScore = 0;
     }
 
+    // 转速匹配分数
     const speedMargin = (motor.maxSpeed - requiredSpeed) / requiredSpeed;
     const speedScore = Math.min(100, speedMargin * 200);
 
+    // 惯量匹配分数 - 基于目标惯量比
     const inertiaRatio = this.mechanical.totalInertia / motor.rotorInertia;
     let inertiaScore: number;
-    if (inertiaRatio <= 3) {
-      inertiaScore = 100;
-    } else if (inertiaRatio <= 10) {
-      inertiaScore = 100 - (inertiaRatio - 3) * 5.7;
-    } else if (inertiaRatio <= 30) {
-      inertiaScore = 60 - (inertiaRatio - 10) * 2;
-      warnings.push(`惯量比 ${inertiaRatio.toFixed(1)}:1 偏高，可能影响动态性能`);
+
+    if (inertiaRatio <= targetInertiaRatio) {
+      // 在目标范围内，越接近目标值的60%分数越高（最佳工作点）
+      const optimalRatio = targetInertiaRatio * 0.6;
+      const ratioDeviation = Math.abs(inertiaRatio - optimalRatio) / optimalRatio;
+      inertiaScore = Math.max(60, 100 - ratioDeviation * 40);
     } else {
       inertiaScore = 0;
-      warnings.push(`惯量比 ${inertiaRatio.toFixed(1)}:1 过高，建议增加减速比`);
+      warnings.push(`惯量比 ${inertiaRatio.toFixed(1)}:1 超过目标值 ${targetInertiaRatio}:1`);
     }
 
+    // 效率分数（固定）
     const efficiencyScore = 100;
 
+    // 总分数
     const totalScore =
       torqueScore * 0.4 + speedScore * 0.2 + inertiaScore * 0.3 + efficiencyScore * 0.1;
 
+    // 可行性评估
     let feasibility: 'OK' | 'WARNING' | 'CRITICAL' = 'OK';
-    if (torqueMargin < 0.1 || inertiaRatio > 20) feasibility = 'CRITICAL';
-    else if (torqueMargin < 0.3 || inertiaRatio > 10) feasibility = 'WARNING';
+    if (torqueMargin < 0.1 || inertiaRatio > targetInertiaRatio * 0.9) {
+      feasibility = 'CRITICAL';
+    } else if (torqueMargin < 0.3 || inertiaRatio > targetInertiaRatio * 0.7) {
+      feasibility = 'WARNING';
+    }
+
+    // 提取可用的编码器类型
+    const availableEncoders: Array<'A' | 'B'> = [];
+    if (motor.cableSpecs.encoderCable.includes('MCE12') || motor.options.encoder.type === 'BATTERY_MULTI_TURN') {
+      availableEncoders.push('A');
+    }
+    if (motor.cableSpecs.encoderCable.includes('MCE02') || motor.options.encoder.type === 'MECHANICAL_MULTI_TURN') {
+      availableEncoders.push('B');
+    }
 
     return {
       motor,
@@ -121,6 +136,12 @@ export class MotorFilter {
       },
       feasibility,
       warnings,
+      availableOptions: {
+        encoders: availableEncoders.length > 0 ? availableEncoders : ['A', 'B'],
+        hasBrakeOption: motor.options.brake.hasBrake || motor.rotorInertiaWithBrake !== motor.rotorInertia,
+        hasKeyOption: motor.options.keyShaft.hasKey,
+        matchedDrives: motor.matchedDrives,
+      },
     };
   }
 }
