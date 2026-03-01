@@ -3,7 +3,6 @@ import type {
   XC20Drive,
   SummaryItem,
   MechanicalResult,
-  SystemConfiguration,
 } from '@/types';
 
 export interface ReportProjectInfo {

@@ -64,3 +64,6 @@ export const pageSize = {
   width: 210,
   height: 297,
 };
+
+// 从 utils.ts 重新导出这些函数以便在 sections 中使用
+export { addSectionTitle, addSubsectionTitle, getCurrentY } from './utils';

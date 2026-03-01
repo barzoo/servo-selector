@@ -114,8 +114,8 @@ export function ResultStep() {
       },
       systemConfig: {
         items: buildSummaryItems(config, tSystem, tLabels),
-        motor,
-        drive,
+        motor: motor || null,
+        drive: drive || null,
         cables: {
           motor: {
             partNumber: config.cables.motor.partNumber,
