@@ -110,11 +110,6 @@
     "title": "System Configuration",
     "safetyFactor": "Safety Factor",
     "safetyFactorHint": "Default 1.5, recommended range 1.2-2.0",
-    "encoderType": "Encoder Type",
-    "encoderTypes": {
-      "singleTurn": "Single Turn Absolute",
-      "multiTurn": "Multi Turn Absolute"
-    },
     "communication": "Communication",
     "communications": {
       "ethercat": "EtherCAT",
