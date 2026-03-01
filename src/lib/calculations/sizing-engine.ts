@@ -1,8 +1,9 @@
 // 选型引擎主类
 
-import { SizingInput, SizingResult, SizingFailureReason, MC20Motor, XC20Drive, BrakeResistor, SystemPreferences, MechanicalResult } from '@/types';
+import { SizingInput, SizingResult, SizingFailureReason, MC20Motor, XC20Drive, BrakeResistor, SystemPreferences, MechanicalResult, SystemConfiguration } from '@/types';
 import { MechanicalCalculator } from './mechanical';
 import { MotorFilter } from './motor-filter';
+import { PartNumberGenerator } from './part-number-generator';
 import motorsData from '@/data/motors.json';
 import drivesData from '@/data/drives.json';
 import resistorsData from '@/data/resistors.json';
@@ -11,11 +12,13 @@ export class SizingEngine {
   private motors: MC20Motor[];
   private drives: XC20Drive[];
   private resistors: BrakeResistor[];
+  private pnGenerator: PartNumberGenerator;
 
   constructor() {
     this.motors = motorsData.motors as unknown as MC20Motor[];
     this.drives = drivesData.drives as unknown as XC20Drive[];
     this.resistors = resistorsData.resistors as BrakeResistor[];
+    this.pnGenerator = new PartNumberGenerator();
   }
 
   calculate(input: SizingInput): SizingResult {
@@ -86,16 +89,106 @@ export class SizingEngine {
       };
     });
 
+    // 5. 如果用户已做选择，生成完整系统配置
+    let systemConfiguration: SystemConfiguration | undefined = undefined;
+    if (input.selections && motorRecommendations.length > 0) {
+      const selectedMotor = this.motors.find(m => m.id === input.selections!.motorId)
+        || motorRecommendations[0].motor;
+      systemConfiguration = this.buildSystemConfiguration(
+        selectedMotor,
+        input.selections,
+        mechanical
+      );
+    }
+
     const calculationTime = performance.now() - startTime;
 
     return {
       mechanical,
       motorRecommendations: recommendations,
-      failureReason,  // 新增
+      failureReason,
+      systemConfiguration,
       metadata: {
         calculationTime,
-        version: '1.0.0',
+        version: '2.0.0',
         timestamp: new Date().toISOString(),
+      },
+    };
+  }
+
+  private buildSystemConfiguration(
+    motor: MC20Motor,
+    selections: NonNullable<SizingInput['selections']>,
+    mechanical: MechanicalResult
+  ): SystemConfiguration {
+    // 找到匹配的驱动器
+    const drive = this.drives.find(d =>
+      motor.matchedDrives.some(md => d.baseModel.includes(md) || d.model.includes(md))
+    ) || this.drives[0];
+
+    // 生成订货号
+    const motorPN = this.pnGenerator.generateMotorPN(motor, selections.motorOptions);
+    const drivePN = this.pnGenerator.generateDrivePN(drive, selections.driveOptions);
+
+    // 确定电缆规格
+    const motorCableSpec = this.pnGenerator.getMotorCableSpec(motor.ratedPower);
+    const encoderCableSpec = this.pnGenerator.getEncoderCableSpec(selections.motorOptions.encoderType);
+
+    // 生成电缆订货号
+    const motorCablePN = this.pnGenerator.generateCablePN(
+      'motor',
+      motorCableSpec,
+      selections.cables.motorLength,
+      selections.motorOptions.brake
+    );
+    const encoderCablePN = this.pnGenerator.generateCablePN(
+      'encoder',
+      encoderCableSpec,
+      selections.cables.encoderLength
+    );
+
+    // 计算制动电阻
+    const brakeResistor = this.calculateBrakeResistor(mechanical, drive);
+
+    return {
+      motor: {
+        model: motor.baseModel,
+        partNumber: motorPN,
+        options: selections.motorOptions,
+      },
+      drive: {
+        model: drive.baseModel,
+        partNumber: drivePN,
+        options: selections.driveOptions,
+      },
+      cables: {
+        motor: {
+          spec: motorCableSpec,
+          length: selections.cables.motorLength,
+          partNumber: motorCablePN,
+        },
+        encoder: {
+          spec: encoderCableSpec,
+          length: selections.cables.encoderLength,
+          partNumber: encoderCablePN,
+        },
+        ...(selections.driveOptions.communication !== 'ANALOG' && {
+          communication: {
+            length: selections.cables.commLength || selections.cables.motorLength,
+            partNumber: `CAB-COM-${selections.driveOptions.communication}-${selections.cables.commLength || selections.cables.motorLength}`,
+          },
+        }),
+      },
+      accessories: {
+        ...(selections.accessories.emcFilter !== 'NONE' && {
+          emcFilter: `EMC-${selections.accessories.emcFilter}`,
+        }),
+        ...(brakeResistor && {
+          brakeResistor: {
+            model: brakeResistor.model,
+            partNumber: brakeResistor.model,
+          },
+        }),
       },
     };
   }
