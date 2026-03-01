@@ -10,6 +10,11 @@ const BRAKE_OPTIONS = [
   { value: true, label: '带刹车', desc: '抱闸制动，适合垂直轴或需要保持力矩的应用' },
 ];
 
+const KEYSHAFT_OPTIONS = [
+  { value: 'L' as const, label: '光轴', desc: '标准光滑轴，适用于联轴器连接' },
+  { value: 'K' as const, label: '带键', desc: '带键槽轴，适用于需要传递大扭矩的场合' },
+];
+
 export function DutyStep() {
   const { input, setDuty, nextStep, prevStep } = useWizardStore();
   const t = useTranslations('duty');
@@ -22,6 +27,7 @@ export function DutyStep() {
       mountingOrientation: 'HORIZONTAL',
       ipRating: 'IP65',
       brake: false,
+      keyShaft: 'L',
     }
   );
 
@@ -141,6 +147,45 @@ export function DutyStep() {
                 {opt.label}
               </div>
               <div className={`text-xs mt-1 ${formData.brake === opt.value ? 'text-blue-700' : 'text-gray-500'}`}>
+                {opt.desc}
+              </div>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      {/* 电机轴类型选项 */}
+      <div className="space-y-3">
+        <label className="block text-sm font-medium text-gray-700">
+          电机轴类型
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          {KEYSHAFT_OPTIONS.map((opt) => (
+            <label
+              key={opt.value}
+              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                formData.keyShaft === opt.value
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <input
+                type="radio"
+                name="keyShaft"
+                value={opt.value}
+                checked={formData.keyShaft === opt.value}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    keyShaft: e.target.value as 'L' | 'K',
+                  })
+                }
+                className="sr-only"
+              />
+              <div className={`font-medium text-sm ${formData.keyShaft === opt.value ? 'text-blue-900' : 'text-gray-900'}`}>
+                {opt.label}
+              </div>
+              <div className={`text-xs mt-1 ${formData.keyShaft === opt.value ? 'text-blue-700' : 'text-gray-500'}`}>
                 {opt.desc}
               </div>
             </label>
