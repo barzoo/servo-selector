@@ -93,10 +93,35 @@ export interface DutyConditions {
 export interface SystemPreferences {
   safetyFactor: number;
   maxInertiaRatio: number;
+  targetInertiaRatio: number;  // 新增: 目标惯量比
   encoderType: 'SINGLE_TURN' | 'MULTI_TURN';
   communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
   emcFilter: 'NONE' | 'C3';
   cableLength: number | 'TERMINAL_ONLY';
+}
+
+// 新增: Step 5 用户选择
+export interface MotorSelections {
+  motorId: string;
+  motorOptions: {
+    brake: boolean;
+    encoderType: 'A' | 'B';
+    keyShaft: boolean;
+  };
+  driveOptions: {
+    communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
+    panel: 'WITH_DISPLAY' | 'WITHOUT_DISPLAY';
+    safety: 'STO' | 'NONE';
+  };
+  cables: {
+    motorLength: 3 | 5 | 10 | 15 | 20 | 25 | 30;
+    encoderLength: 3 | 5 | 10 | 15 | 20 | 25 | 30;
+    commLength?: 3 | 5 | 10 | 15 | 20 | 25 | 30;
+  };
+  accessories: {
+    emcFilter: 'NONE' | 'C3';
+    brakeResistorOverride?: string;
+  };
 }
 
 export interface SizingInput {
@@ -105,6 +130,7 @@ export interface SizingInput {
   motion: MotionParams;
   duty: DutyConditions;
   preferences: SystemPreferences;
+  selections?: MotorSelections;  // 新增
 }
 
 // ============ 产品数据 ============
@@ -293,6 +319,14 @@ export interface MechanicalResult {
   regeneration: RegenerationResult;
 }
 
+// 新增: 电机可用选项
+export interface MotorAvailableOptions {
+  encoders: Array<'A' | 'B'>;
+  hasBrakeOption: boolean;
+  hasKeyOption: boolean;
+  matchedDrives: string[];
+}
+
 export interface MotorRecommendation {
   motor: MC20Motor;
   matchScore: number;
@@ -303,6 +337,7 @@ export interface MotorRecommendation {
   };
   feasibility: 'OK' | 'WARNING' | 'CRITICAL';
   warnings: string[];
+  availableOptions?: MotorAvailableOptions;  // 新增
   systemConfig?: CompleteSystemConfig;
 }
 
@@ -328,10 +363,48 @@ export interface CompleteSystemConfig {
   };
 }
 
+// 新增: 系统配置结果
+export interface SystemConfiguration {
+  motor: {
+    model: string;
+    partNumber: string;
+    options: MotorSelections['motorOptions'];
+  };
+  drive: {
+    model: string;
+    partNumber: string;
+    options: MotorSelections['driveOptions'];
+  };
+  cables: {
+    motor: {
+      spec: string;
+      length: number;
+      partNumber: string;
+    };
+    encoder: {
+      spec: string;
+      length: number;
+      partNumber: string;
+    };
+    communication?: {
+      length: number;
+      partNumber: string;
+    };
+  };
+  accessories: {
+    emcFilter?: string;
+    brakeResistor?: {
+      model: string;
+      partNumber: string;
+    };
+  };
+}
+
 export interface SizingResult {
   mechanical: MechanicalResult;
   motorRecommendations: MotorRecommendation[];
   failureReason?: SizingFailureReason;
+  systemConfiguration?: SystemConfiguration;  // 新增
   metadata: {
     calculationTime: number;
     version: string;
