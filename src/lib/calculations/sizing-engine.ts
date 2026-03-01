@@ -30,7 +30,7 @@ export class SizingEngine {
     const mechanical = mechanicalCalc.calculate();
 
     // 2. 电机筛选
-    const motorFilter = new MotorFilter(mechanical, input.preferences);
+    const motorFilter = new MotorFilter(mechanical, input.preferences, input.duty);
     const motorRecommendations = motorFilter.filter();
 
     // 3. 诊断无结果情况
