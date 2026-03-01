@@ -1,6 +1,7 @@
 import React from 'react';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { NextIntlClientProvider } from 'next-intl';
 import {
   SystemSummary,
   findMotor,
@@ -10,6 +11,7 @@ import {
   generateExportData,
 } from '../SystemSummary';
 import type { SystemConfiguration, MechanicalResult } from '@/types';
+import messages from '@/i18n/messages/zh.json';
 
 // Mock the JSON imports
 vi.mock('@/data/motors.json', () => ({
@@ -184,6 +186,37 @@ const mockMechanical: MechanicalResult = {
   },
 };
 
+// Helper to wrap component with i18n provider
+function renderWithIntl(component: React.ReactNode) {
+  return render(
+    <NextIntlClientProvider locale="zh" messages={messages}>
+      {component}
+    </NextIntlClientProvider>
+  );
+}
+
+// Mock translation functions for helper function tests
+const mockT = (key: string) => {
+  const keys: Record<string, string> = {
+    'cable.terminalOnly': '仅接线端子',
+    'cable.lengthUnit': '米',
+    motor: '伺服电机',
+    drive: '伺服驱动器',
+  };
+  return keys[key] || key;
+};
+
+const mockTLabels = (key: string) => {
+  const keys: Record<string, string> = {
+    motorCable: '动力电缆',
+    encoderCable: '编码器电缆',
+    commCable: '通讯电缆',
+    emcFilter: 'EMC滤波器',
+    brakeResistor: '制动电阻',
+  };
+  return keys[key] || key;
+};
+
 describe('SystemSummary Helper Functions', () => {
   describe('findMotor', () => {
     it('should find motor by part number', () => {
@@ -215,29 +248,29 @@ describe('SystemSummary Helper Functions', () => {
 
   describe('getCableDescription', () => {
     it('should generate description for motor cable', () => {
-      const desc = getCableDescription('MOTOR', 5, 'MCL22');
+      const desc = getCableDescription('MOTOR', 5, 'MCL22', mockT, mockTLabels);
       expect(desc).toBe('动力电缆 - MCL22, 5米');
     });
 
     it('should generate description for encoder cable', () => {
-      const desc = getCableDescription('ENCODER', 10, 'MCE02');
+      const desc = getCableDescription('ENCODER', 10, 'MCE02', mockT, mockTLabels);
       expect(desc).toBe('编码器电缆 - MCE02, 10米');
     });
 
     it('should generate description for communication cable', () => {
-      const desc = getCableDescription('COMMUNICATION', 3, 'COMM');
+      const desc = getCableDescription('COMMUNICATION', 3, 'COMM', mockT, mockTLabels);
       expect(desc).toBe('通讯电缆 - COMM, 3米');
     });
 
     it('should handle TERMINAL_ONLY length', () => {
-      const desc = getCableDescription('MOTOR', 'TERMINAL_ONLY', 'MCL22');
+      const desc = getCableDescription('MOTOR', 'TERMINAL_ONLY', 'MCL22', mockT, mockTLabels);
       expect(desc).toBe('MCL22 - 仅接线端子');
     });
   });
 
   describe('buildSummaryItems', () => {
     it('should build summary items for basic config', () => {
-      const items = buildSummaryItems(mockConfig);
+      const items = buildSummaryItems(mockConfig, mockT, mockTLabels);
 
       expect(items).toHaveLength(4);
       expect(items[0].category).toBe('MOTOR');
@@ -248,7 +281,7 @@ describe('SystemSummary Helper Functions', () => {
     });
 
     it('should build summary items with accessories', () => {
-      const items = buildSummaryItems(mockConfigWithAccessories);
+      const items = buildSummaryItems(mockConfigWithAccessories, mockT, mockTLabels);
 
       expect(items).toHaveLength(7);
       expect(items.some((i) => i.category === 'COMM_CABLE')).toBe(true);
@@ -259,7 +292,7 @@ describe('SystemSummary Helper Functions', () => {
 
   describe('generateExportData', () => {
     it('should generate complete export data', () => {
-      const data = generateExportData(mockConfig, mockMechanical);
+      const data = generateExportData(mockConfig, mockT, mockTLabels, mockMechanical);
 
       expect(data.summary).toHaveLength(4);
       expect(data.details.motor).toBeDefined();
@@ -270,7 +303,7 @@ describe('SystemSummary Helper Functions', () => {
     });
 
     it('should handle config without optional items', () => {
-      const data = generateExportData(mockConfig);
+      const data = generateExportData(mockConfig, mockT, mockTLabels);
 
       expect(data.details.cables.communication).toBeNull();
       expect(data.details.accessories.brakeResistor).toBeNull();
@@ -281,7 +314,7 @@ describe('SystemSummary Helper Functions', () => {
 
 describe('SystemSummary Component', () => {
   it('should render summary table with correct columns', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
     expect(screen.getByText('系统配置清单')).toBeInTheDocument();
     expect(screen.getByText('订货号')).toBeInTheDocument();
@@ -290,7 +323,7 @@ describe('SystemSummary Component', () => {
   });
 
   it('should render motor and drive part numbers in table', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
     expect(screen.getByText('MC20-060-3L30-N201-0APLNNNN')).toBeInTheDocument();
     expect(
@@ -299,7 +332,7 @@ describe('SystemSummary Component', () => {
   });
 
   it('should render motor details section', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
     expect(screen.getByText('电机详细参数')).toBeInTheDocument();
     expect(screen.getByText('额定功率')).toBeInTheDocument();
@@ -309,16 +342,16 @@ describe('SystemSummary Component', () => {
   });
 
   it('should render drive details section', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
-    expect(screen.getByText('驱动详细参数')).toBeInTheDocument();
+    expect(screen.getByText('驱动器详细参数')).toBeInTheDocument();
     expect(screen.getByText('最大电流')).toBeInTheDocument();
     expect(screen.getByText('5 A')).toBeInTheDocument();
     expect(screen.getByText('通讯协议')).toBeInTheDocument();
   });
 
   it('should render cable specifications section', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
     expect(screen.getByText('电缆规格')).toBeInTheDocument();
     // Use getAllByText since these appear in both table and cable section
@@ -330,7 +363,7 @@ describe('SystemSummary Component', () => {
   });
 
   it('should render communication cable when present', () => {
-    render(<SystemSummary config={mockConfigWithAccessories} />);
+    renderWithIntl(<SystemSummary config={mockConfigWithAccessories} />);
 
     // "通讯电缆" appears in both table and cable section
     expect(screen.getAllByText('通讯电缆').length).toBeGreaterThanOrEqual(1);
@@ -339,7 +372,7 @@ describe('SystemSummary Component', () => {
   });
 
   it('should render accessories section when present', () => {
-    render(<SystemSummary config={mockConfigWithAccessories} />);
+    renderWithIntl(<SystemSummary config={mockConfigWithAccessories} />);
 
     expect(screen.getByText('配件信息')).toBeInTheDocument();
     // "EMC滤波器" and "制动电阻" appear in both table and accessories section
@@ -348,13 +381,13 @@ describe('SystemSummary Component', () => {
   });
 
   it('should not render accessories section when empty', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
     expect(screen.queryByText('配件信息')).not.toBeInTheDocument();
   });
 
   it('should render regeneration info when provided', () => {
-    render(<SystemSummary config={mockConfig} mechanical={mockMechanical} />);
+    renderWithIntl(<SystemSummary config={mockConfig} mechanical={mockMechanical} />);
 
     expect(screen.getByText('制动能量分析')).toBeInTheDocument();
     expect(screen.getByText('单次制动能量')).toBeInTheDocument();
@@ -364,7 +397,7 @@ describe('SystemSummary Component', () => {
   });
 
   it('should not render regeneration info when not provided', () => {
-    render(<SystemSummary config={mockConfig} />);
+    renderWithIntl(<SystemSummary config={mockConfig} />);
 
     expect(screen.queryByText('制动能量分析')).not.toBeInTheDocument();
   });

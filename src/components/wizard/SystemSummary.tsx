@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import type {
   SystemConfiguration,
   MechanicalResult,
@@ -47,19 +48,21 @@ export function findDrive(partNumber: string): XC20Drive | undefined {
 export function getCableDescription(
   type: 'MOTOR' | 'ENCODER' | 'COMMUNICATION',
   length: number | 'TERMINAL_ONLY',
-  spec: string
+  spec: string,
+  t: (key: string) => string,
+  tLabels: (key: string) => string
 ): string {
   if (length === 'TERMINAL_ONLY') {
-    return `${spec} - 仅接线端子`;
+    return `${spec} - ${t('cable.terminalOnly')}`;
   }
 
   const typeLabels: Record<string, string> = {
-    MOTOR: '动力电缆',
-    ENCODER: '编码器电缆',
-    COMMUNICATION: '通讯电缆',
+    MOTOR: tLabels('motorCable'),
+    ENCODER: tLabels('encoderCable'),
+    COMMUNICATION: tLabels('commCable'),
   };
 
-  return `${typeLabels[type] || type} - ${spec}, ${length}米`;
+  return `${typeLabels[type] || type} - ${spec}, ${length}${t('cable.lengthUnit')}`;
 }
 
 /**
@@ -67,14 +70,18 @@ export function getCableDescription(
  * Time Complexity: O(1) - fixed number of items
  * Space Complexity: O(1) - fixed size array
  */
-export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
+export function buildSummaryItems(
+  config: SystemConfiguration,
+  t: (key: string) => string,
+  tLabels: (key: string) => string
+): SummaryItem[] {
   const items: SummaryItem[] = [];
 
   // Motor
   items.push({
     partNumber: config.motor.partNumber,
     category: 'MOTOR',
-    typeLabel: '伺服电机',
+    typeLabel: t('motor'),
     description: findMotor(config.motor.partNumber)?.description.short || '',
   });
 
@@ -82,7 +89,7 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
   items.push({
     partNumber: config.drive.partNumber,
     category: 'DRIVE',
-    typeLabel: '伺服驱动器',
+    typeLabel: t('drive'),
     description: findDrive(config.drive.partNumber)?.description.short || '',
   });
 
@@ -90,11 +97,13 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
   items.push({
     partNumber: config.cables.motor.partNumber,
     category: 'MOTOR_CABLE',
-    typeLabel: '动力电缆',
+    typeLabel: tLabels('motorCable'),
     description: getCableDescription(
       'MOTOR',
       config.cables.motor.length,
-      config.cables.motor.spec
+      config.cables.motor.spec,
+      t,
+      tLabels
     ),
   });
 
@@ -102,11 +111,13 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
   items.push({
     partNumber: config.cables.encoder.partNumber,
     category: 'ENCODER_CABLE',
-    typeLabel: '编码器电缆',
+    typeLabel: tLabels('encoderCable'),
     description: getCableDescription(
       'ENCODER',
       config.cables.encoder.length,
-      config.cables.encoder.spec
+      config.cables.encoder.spec,
+      t,
+      tLabels
     ),
   });
 
@@ -115,11 +126,13 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
     items.push({
       partNumber: config.cables.communication.partNumber,
       category: 'COMM_CABLE',
-      typeLabel: '通讯电缆',
+      typeLabel: tLabels('commCable'),
       description: getCableDescription(
         'COMMUNICATION',
         config.cables.communication.length,
-        '通讯线'
+        tLabels('commCable'),
+        t,
+        tLabels
       ),
     });
   }
@@ -129,8 +142,8 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
     items.push({
       partNumber: config.accessories.emcFilter,
       category: 'EMC_FILTER',
-      typeLabel: 'EMC滤波器',
-      description: 'EMC滤波器',
+      typeLabel: tLabels('emcFilter'),
+      description: tLabels('emcFilter'),
     });
   }
 
@@ -139,8 +152,8 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
     items.push({
       partNumber: config.accessories.brakeResistor.partNumber,
       category: 'BRAKE_RESISTOR',
-      typeLabel: '制动电阻',
-      description: `外部制动电阻 - ${config.accessories.brakeResistor.model}`,
+      typeLabel: tLabels('brakeResistor'),
+      description: `${tLabels('brakeResistor')} - ${config.accessories.brakeResistor.model}`,
     });
   }
 
@@ -154,13 +167,15 @@ export function buildSummaryItems(config: SystemConfiguration): SummaryItem[] {
  */
 export function generateExportData(
   config: SystemConfiguration,
+  t: (key: string) => string,
+  tLabels: (key: string) => string,
   mechanical?: MechanicalResult
 ): SystemConfigExportData {
   const motor = findMotor(config.motor.partNumber) || null;
   const drive = findDrive(config.drive.partNumber) || null;
 
   return {
-    summary: buildSummaryItems(config),
+    summary: buildSummaryItems(config, t, tLabels),
     details: {
       motor,
       drive,
@@ -171,7 +186,9 @@ export function generateExportData(
           description: getCableDescription(
             'MOTOR',
             config.cables.motor.length,
-            config.cables.motor.spec
+            config.cables.motor.spec,
+            t,
+            tLabels
           ),
         },
         encoder: {
@@ -180,7 +197,9 @@ export function generateExportData(
           description: getCableDescription(
             'ENCODER',
             config.cables.encoder.length,
-            config.cables.encoder.spec
+            config.cables.encoder.spec,
+            t,
+            tLabels
           ),
         },
         communication: config.cables.communication
@@ -189,7 +208,9 @@ export function generateExportData(
               description: getCableDescription(
                 'COMMUNICATION',
                 config.cables.communication.length,
-                '通讯线'
+                tLabels('commCable'),
+                t,
+                tLabels
               ),
             }
           : null,
@@ -204,7 +225,11 @@ export function generateExportData(
 }
 
 export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
-  const summaryItems = buildSummaryItems(config);
+  const t = useTranslations('systemSummary');
+  const tOptions = useTranslations('systemSummary.options');
+  const tLabels = useTranslations('systemSummary.labels');
+
+  const summaryItems = buildSummaryItems(config, t, tLabels);
   const motor = findMotor(config.motor.partNumber);
   const drive = findDrive(config.drive.partNumber);
 
@@ -213,15 +238,15 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       {/* Summary Table */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-          <h4 className="font-semibold text-gray-900">系统配置清单</h4>
+          <h4 className="font-semibold text-gray-900">{t('configList')}</h4>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-2 text-left font-medium text-gray-700">订货号</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-700">类型</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-700">描述</th>
+                <th className="px-4 py-2 text-left font-medium text-gray-900">{t('columns.partNumber')}</th>
+                <th className="px-4 py-2 text-left font-medium text-gray-900">{t('columns.type')}</th>
+                <th className="px-4 py-2 text-left font-medium text-gray-900">{t('columns.description')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
@@ -243,71 +268,71 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       {motor && (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 bg-blue-50 border-b border-blue-100">
-            <h4 className="font-semibold text-blue-900">电机详细参数</h4>
+            <h4 className="font-semibold text-blue-900">{t('motorDetails')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-500 block">额定功率</span>
+                <span className="text-gray-500 block">{tLabels('ratedPower')}</span>
                 <span className="font-medium text-gray-900">{motor.ratedPower} W</span>
               </div>
               <div>
-                <span className="text-gray-500 block">额定转速</span>
+                <span className="text-gray-500 block">{tLabels('ratedSpeed')}</span>
                 <span className="font-medium text-gray-900">{motor.ratedSpeed} rpm</span>
               </div>
               <div>
-                <span className="text-gray-500 block">额定扭矩</span>
+                <span className="text-gray-500 block">{tLabels('ratedTorque')}</span>
                 <span className="font-medium text-gray-900">{motor.ratedTorque} N·m</span>
               </div>
               <div>
-                <span className="text-gray-500 block">峰值扭矩</span>
+                <span className="text-gray-500 block">{tLabels('peakTorque')}</span>
                 <span className="font-medium text-gray-900">{motor.peakTorque} N·m</span>
               </div>
               <div>
-                <span className="text-gray-500 block">最大转速</span>
+                <span className="text-gray-500 block">{tLabels('maxSpeed')}</span>
                 <span className="font-medium text-gray-900">{motor.maxSpeed} rpm</span>
               </div>
               <div>
-                <span className="text-gray-500 block">额定电流</span>
+                <span className="text-gray-500 block">{tLabels('ratedCurrent')}</span>
                 <span className="font-medium text-gray-900">{motor.ratedCurrent} A</span>
               </div>
               <div>
-                <span className="text-gray-500 block">转子惯量</span>
+                <span className="text-gray-500 block">{tLabels('rotorInertia')}</span>
                 <span className="font-medium text-gray-900">
                   {motor.rotorInertia.toExponential(5)} kg·m²
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block">扭矩常数</span>
+                <span className="text-gray-500 block">{tLabels('torqueConstant')}</span>
                 <span className="font-medium text-gray-900">{motor.torqueConstant} N·m/A</span>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">电机选项</h5>
+              <h5 className="text-sm font-medium text-gray-700 mb-2">{t('motorOptions')}</h5>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">编码器类型</span>
+                  <span className="text-gray-500 block">{tLabels('encoderType')}</span>
                   <span className="font-medium text-gray-900">
                     {motor.options.encoder.type === 'BATTERY_MULTI_TURN'
-                      ? '电池多圈'
-                      : '机械多圈'}
+                      ? tOptions('batteryMultiTurn')
+                      : tOptions('mechanicalMultiTurn')}
                     ({motor.options.encoder.code}型)
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">抱闸</span>
+                  <span className="text-gray-500 block">{tLabels('brake')}</span>
                   <span className="font-medium text-gray-900">
-                    {motor.options.brake.hasBrake ? '有' : '无'}
+                    {motor.options.brake.hasBrake ? tOptions('yes') : tOptions('no')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">轴类型</span>
+                  <span className="text-gray-500 block">{tLabels('shaftType')}</span>
                   <span className="font-medium text-gray-900">
-                    {motor.options.keyShaft.hasKey ? '带键槽' : '光轴'}
+                    {motor.options.keyShaft.hasKey ? tOptions('keyShaft') : tOptions('smoothShaft')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">防护等级</span>
+                  <span className="text-gray-500 block">{tLabels('protection')}</span>
                   <span className="font-medium text-gray-900">{motor.options.protection.level}</span>
                 </div>
               </div>
@@ -320,71 +345,71 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       {drive && (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 bg-green-50 border-b border-green-100">
-            <h4 className="font-semibold text-green-900">驱动详细参数</h4>
+            <h4 className="font-semibold text-green-900">{t('driveDetails')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-500 block">最大电流</span>
+                <span className="text-gray-500 block">{tLabels('maxCurrent')}</span>
                 <span className="font-medium text-gray-900">{drive.maxCurrent} A</span>
               </div>
               <div>
-                <span className="text-gray-500 block">额定电流</span>
+                <span className="text-gray-500 block">{tLabels('ratedCurrent')}</span>
                 <span className="font-medium text-gray-900">{drive.ratedCurrent} A</span>
               </div>
               <div>
-                <span className="text-gray-500 block">过载能力</span>
+                <span className="text-gray-500 block">{tLabels('overloadCapacity')}</span>
                 <span className="font-medium text-gray-900">{drive.overloadCapacity} 倍</span>
               </div>
               <div>
-                <span className="text-gray-500 block">PWM频率</span>
+                <span className="text-gray-500 block">{tLabels('pwmFrequency')}</span>
                 <span className="font-medium text-gray-900">{drive.ratedPwmFrequency} kHz</span>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">驱动选项</h5>
+              <h5 className="text-sm font-medium text-gray-700 mb-2">{t('driveOptions')}</h5>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">通讯协议</span>
+                  <span className="text-gray-500 block">{tLabels('communication')}</span>
                   <span className="font-medium text-gray-900">
                     {drive.communication.type === 'ETHERCAT'
-                      ? 'EtherCAT'
+                      ? tOptions('ethercat')
                       : drive.communication.type === 'PROFINET'
-                        ? 'PROFINET'
-                        : 'EtherNet/IP'}
+                        ? tOptions('profinet')
+                        : tOptions('ethernetIp')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">面板</span>
+                  <span className="text-gray-500 block">{tLabels('panel')}</span>
                   <span className="font-medium text-gray-900">
-                    {drive.options.panel.code === '01B' ? '带显示' : '无显示'}
+                    {drive.options.panel.code === '01B' ? tOptions('withDisplay') : tOptions('withoutDisplay')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">安全功能</span>
+                  <span className="text-gray-500 block">{tLabels('safety')}</span>
                   <span className="font-medium text-gray-900">
-                    {drive.options.safety.code === 'ST' ? 'STO' : '无'}
+                    {drive.options.safety.code === 'ST' ? tOptions('sto') : tOptions('no')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">散热</span>
-                  <span className="font-medium text-gray-900">{drive.hasFan ? '风扇' : '自然冷却'}</span>
+                  <span className="text-gray-500 block">{tLabels('cooling')}</span>
+                  <span className="font-medium text-gray-900">{drive.hasFan ? tOptions('fan') : tOptions('natural')}</span>
                 </div>
               </div>
             </div>
             <div className="mt-4 pt-4 border-t border-gray-100">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">制动能力</h5>
+              <h5 className="text-sm font-medium text-gray-700 mb-2">{t('brakingCapability')}</h5>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">内置电阻</span>
+                  <span className="text-gray-500 block">{tLabels('internalResistance')}</span>
                   <span className="font-medium text-gray-900">{drive.braking.internalResistance} Ω</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">连续功率</span>
+                  <span className="text-gray-500 block">{tLabels('continuousPower')}</span>
                   <span className="font-medium text-gray-900">{drive.braking.continuousPower} W</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">峰值功率</span>
+                  <span className="text-gray-500 block">{tLabels('peakPower')}</span>
                   <span className="font-medium text-gray-900">{drive.braking.peakPower} W</span>
                 </div>
               </div>
@@ -396,57 +421,57 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       {/* Cable Specifications */}
       <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
         <div className="px-4 py-3 bg-purple-50 border-b border-purple-100">
-          <h4 className="font-semibold text-purple-900">电缆规格</h4>
+          <h4 className="font-semibold text-purple-900">{t('cableSpecs')}</h4>
         </div>
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-3 bg-gray-50 rounded-lg">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">动力电缆</h5>
+              <h5 className="text-sm font-medium text-gray-700 mb-2">{tLabels('motorCable')}</h5>
               <div className="text-sm space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">订货号:</span>
+                  <span className="text-gray-500">{t('columns.partNumber')}:</span>
                   <span className="font-mono text-xs text-gray-900">{config.cables.motor.partNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">规格:</span>
+                  <span className="text-gray-500">{t('cable.spec')}:</span>
                   <span className="text-gray-900">{config.cables.motor.spec}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">长度:</span>
-                  <span className="text-gray-900">{config.cables.motor.length} 米</span>
+                  <span className="text-gray-500">{t('cable.length')}:</span>
+                  <span className="text-gray-900">{config.cables.motor.length} {t('cable.lengthUnit')}</span>
                 </div>
               </div>
             </div>
             <div className="p-3 bg-gray-50 rounded-lg">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">编码器电缆</h5>
+              <h5 className="text-sm font-medium text-gray-700 mb-2">{tLabels('encoderCable')}</h5>
               <div className="text-sm space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">订货号:</span>
+                  <span className="text-gray-500">{t('columns.partNumber')}:</span>
                   <span className="font-mono text-xs text-gray-900">{config.cables.encoder.partNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">规格:</span>
+                  <span className="text-gray-500">{t('cable.spec')}:</span>
                   <span className="text-gray-900">{config.cables.encoder.spec}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">长度:</span>
-                  <span className="text-gray-900">{config.cables.encoder.length} 米</span>
+                  <span className="text-gray-500">{t('cable.length')}:</span>
+                  <span className="text-gray-900">{config.cables.encoder.length} {t('cable.lengthUnit')}</span>
                 </div>
               </div>
             </div>
             {config.cables.communication && (
               <div className="p-3 bg-gray-50 rounded-lg">
-                <h5 className="text-sm font-medium text-gray-700 mb-2">通讯电缆</h5>
+                <h5 className="text-sm font-medium text-gray-700 mb-2">{tLabels('commCable')}</h5>
                 <div className="text-sm space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-gray-500">订货号:</span>
+                    <span className="text-gray-500">{t('columns.partNumber')}:</span>
                     <span className="font-mono text-xs text-gray-900">
                       {config.cables.communication.partNumber}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">长度:</span>
-                    <span className="text-gray-900">{config.cables.communication.length} 米</span>
+                    <span className="text-gray-500">{t('cable.length')}:</span>
+                    <span className="text-gray-900">{config.cables.communication.length} {t('cable.lengthUnit')}</span>
                   </div>
                 </div>
               </div>
@@ -459,29 +484,29 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       {(config.accessories.emcFilter || config.accessories.brakeResistor) && (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 bg-orange-50 border-b border-orange-100">
-            <h4 className="font-semibold text-orange-900">配件信息</h4>
+            <h4 className="font-semibold text-orange-900">{t('accessories')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {config.accessories.emcFilter && (
                 <div className="p-3 bg-gray-50 rounded-lg">
-                  <h5 className="text-sm font-medium text-gray-700 mb-2">EMC滤波器</h5>
+                  <h5 className="text-sm font-medium text-gray-900 mb-2">{tLabels('emcFilter')}</h5>
                   <div className="text-sm">
-                    <span className="text-gray-500">订货号: </span>
+                    <span className="text-gray-500">{t('columns.partNumber')}: </span>
                     <span className="font-mono text-xs text-gray-900">{config.accessories.emcFilter}</span>
                   </div>
                 </div>
               )}
               {config.accessories.brakeResistor && (
                 <div className="p-3 bg-gray-50 rounded-lg">
-                  <h5 className="text-sm font-medium text-gray-700 mb-2">制动电阻</h5>
+                  <h5 className="text-sm font-medium text-gray-900 mb-2">{tLabels('brakeResistor')}</h5>
                   <div className="text-sm space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">型号:</span>
+                      <span className="text-gray-500">{t('columns.type')}:</span>
                       <span className="text-gray-900">{config.accessories.brakeResistor.model}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">订货号:</span>
+                      <span className="text-gray-500">{t('columns.partNumber')}:</span>
                       <span className="font-mono text-xs text-gray-900">
                         {config.accessories.brakeResistor.partNumber}
                       </span>
@@ -498,24 +523,24 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       {mechanical?.regeneration && (
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <div className="px-4 py-3 bg-red-50 border-b border-red-100">
-            <h4 className="font-semibold text-red-900">制动能量分析</h4>
+            <h4 className="font-semibold text-red-900">{t('regeneration')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-500 block">单次制动能量</span>
+                <span className="text-gray-500 block">{tLabels('energyPerCycle')}</span>
                 <span className="font-medium text-gray-900">
                   {mechanical.regeneration.energyPerCycle.toFixed(1)} J
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block">平均制动功率</span>
+                <span className="text-gray-500 block">{tLabels('brakingPower')}</span>
                 <span className="font-medium text-gray-900">
                   {mechanical.regeneration.brakingPower.toFixed(1)} W
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block">需要外部电阻</span>
+                <span className="text-gray-500 block">{tLabels('externalResistorRequired')}</span>
                 <span
                   className={`font-medium ${
                     mechanical.regeneration.requiresExternalResistor
@@ -523,12 +548,12 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                       : 'text-green-600'
                   }`}
                 >
-                  {mechanical.regeneration.requiresExternalResistor ? '是' : '否'}
+                  {mechanical.regeneration.requiresExternalResistor ? tOptions('yes') : tOptions('no')}
                 </span>
               </div>
               {mechanical.regeneration.recommendedResistor && (
                 <div>
-                  <span className="text-gray-500 block">推荐电阻功率</span>
+                  <span className="text-gray-500 block">{tLabels('recommendedResistorPower')}</span>
                   <span className="font-medium text-gray-900">
                     {mechanical.regeneration.recommendedResistor.minPower.toFixed(0)} W
                   </span>

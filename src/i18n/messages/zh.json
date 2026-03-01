@@ -306,6 +306,11 @@
       "length": "长度",
       "lengthUnit": "米",
       "terminalOnly": "仅接线端子"
-    }
+    },
+    "motorOptions": "电机选项",
+    "driveOptions": "驱动选项",
+    "brakingCapability": "制动能力",
+    "motor": "伺服电机",
+    "drive": "伺服驱动器"
   }
 }

@@ -9,6 +9,8 @@ import { SystemSummary, generateExportData } from '../SystemSummary';
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
   const t = useTranslations('result');
+  const tSystem = useTranslations('systemSummary');
+  const tLabels = useTranslations('systemSummary.labels');
   const [selectedMotorIndex, setSelectedMotorIndex] = useState(0);
 
   if (!result || result.motorRecommendations.length === 0) {
@@ -88,7 +90,7 @@ export function ResultStep() {
 
   const handleExport = () => {
     if (config) {
-      const exportData = generateExportData(config, result.mechanical);
+      const exportData = generateExportData(config, tSystem, tLabels, result.mechanical);
 
       console.log('Export data:', exportData);
       alert('导出数据已生成，PDF功能开发中...\n' + JSON.stringify(exportData.summary, null, 2));

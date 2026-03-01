@@ -306,6 +306,11 @@
       "length": "Length",
       "lengthUnit": "m",
       "terminalOnly": "Terminal Only"
-    }
+    },
+    "motorOptions": "Motor Options",
+    "driveOptions": "Drive Options",
+    "brakingCapability": "Braking Capability",
+    "motor": "Servo Motor",
+    "drive": "Servo Drive"
   }
 }
