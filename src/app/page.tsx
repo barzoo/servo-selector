@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useWizardStore } from '@/stores/wizard-store';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
 import { ProjectInfoStep } from '@/components/wizard/steps/ProjectInfoStep';
@@ -11,7 +12,15 @@ import { ResultStep } from '@/components/wizard/steps/ResultStep';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 export default function Home() {
-  const { currentStep, isComplete } = useWizardStore();
+  const { currentStep, isComplete, result, reset } = useWizardStore();
+
+  // Auto-reset wizard state when detecting inconsistent state
+  // (isComplete=true but result is undefined)
+  useEffect(() => {
+    if (isComplete && !result) {
+      reset();
+    }
+  }, [isComplete, result, reset]);
 
   const renderStep = () => {
     if (isComplete) {

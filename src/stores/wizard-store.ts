@@ -30,6 +30,7 @@ const initialState: WizardState = {
   currentStep: 1,
   input: {},
   isComplete: false,
+  result: undefined,
 };
 
 export const useWizardStore = create<WizardStore>()(
@@ -47,8 +48,11 @@ export const useWizardStore = create<WizardStore>()(
       },
 
       prevStep: () => {
-        const { currentStep } = get();
-        if (currentStep > 1) {
+        const { currentStep, isComplete } = get();
+        if (isComplete) {
+          // When coming back from results, just clear isComplete
+          set({ isComplete: false });
+        } else if (currentStep > 1) {
           set({ currentStep: (currentStep - 1) as WizardStep });
         }
       },
