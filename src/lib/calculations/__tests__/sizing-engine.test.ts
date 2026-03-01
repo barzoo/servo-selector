@@ -38,7 +38,6 @@ describe('SizingEngine with System Configuration', () => {
       safetyFactor: 1.5,
       maxInertiaRatio: 30,
       targetInertiaRatio: 10,
-      encoderType: 'MULTI_TURN',
       communication: 'ETHERCAT',
       safety: 'NONE',
       cableLength: 3,
