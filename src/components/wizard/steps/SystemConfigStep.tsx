@@ -23,7 +23,6 @@ export function SystemConfigStep() {
       safetyFactor: 1.5,
       maxInertiaRatio: 10,
       targetInertiaRatio: 5,
-      encoderType: 'MULTI_TURN',
       communication: 'ETHERCAT',
       safety: 'NONE',
       cableLength: 5,
@@ -105,22 +104,6 @@ export function SystemConfigStep() {
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
           />
           <p className="mt-1 text-xs text-gray-500">{t('safetyFactorHint')}</p>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('encoderType')}
-          </label>
-          <select
-            value={formData.encoderType}
-            onChange={(e) =>
-              setFormData({ ...formData, encoderType: e.target.value as 'SINGLE_TURN' | 'MULTI_TURN' })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          >
-            <option value="SINGLE_TURN">{t('encoderTypes.singleTurn')}</option>
-            <option value="MULTI_TURN">{t('encoderTypes.multiTurn')}</option>
-          </select>
         </div>
 
         <div>
