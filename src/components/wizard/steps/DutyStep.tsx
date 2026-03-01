@@ -5,6 +5,11 @@ import { DutyConditions } from '@/types';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
+const BRAKE_OPTIONS = [
+  { value: false, label: '无刹车', desc: '标准配置，适合水平轴应用' },
+  { value: true, label: '带刹车', desc: '抱闸制动，适合垂直轴或需要保持力矩的应用' },
+];
+
 export function DutyStep() {
   const { input, setDuty, nextStep, prevStep } = useWizardStore();
   const t = useTranslations('duty');
@@ -16,6 +21,7 @@ export function DutyStep() {
       dutyCycle: 60,
       mountingOrientation: 'HORIZONTAL',
       ipRating: 'IP65',
+      brake: false,
     }
   );
 
@@ -66,12 +72,14 @@ export function DutyStep() {
           </label>
           <select
             value={formData.mountingOrientation}
-            onChange={(e) =>
+            onChange={(e) => {
+              const newOrientation = e.target.value as 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN';
               setFormData({
                 ...formData,
-                mountingOrientation: e.target.value as 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN',
-              })
-            }
+                mountingOrientation: newOrientation,
+                brake: newOrientation.startsWith('VERTICAL'),
+              });
+            }}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
           >
             <option value="HORIZONTAL">{t('orientations.horizontal')}</option>
@@ -95,6 +103,48 @@ export function DutyStep() {
             <option value="IP65">IP65</option>
             <option value="IP67">IP67</option>
           </select>
+        </div>
+      </div>
+
+      {/* 刹车选项 */}
+      <div className="space-y-3">
+        <label className="block text-sm font-medium text-gray-700">
+          电机刹车
+          {formData.mountingOrientation.startsWith('VERTICAL') && (
+            <span className="ml-2 text-xs text-amber-600">(垂直轴建议带刹车)</span>
+          )}
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          {BRAKE_OPTIONS.map((opt) => (
+            <label
+              key={opt.value ? 'yes' : 'no'}
+              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                formData.brake === opt.value
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <input
+                type="radio"
+                name="brake"
+                value={opt.value ? 'true' : 'false'}
+                checked={formData.brake === opt.value}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    brake: e.target.value === 'true',
+                  })
+                }
+                className="sr-only"
+              />
+              <div className={`font-medium text-sm ${formData.brake === opt.value ? 'text-blue-900' : 'text-gray-900'}`}>
+                {opt.label}
+              </div>
+              <div className={`text-xs mt-1 ${formData.brake === opt.value ? 'text-blue-700' : 'text-gray-500'}`}>
+                {opt.desc}
+              </div>
+            </label>
+          ))}
         </div>
       </div>
 
