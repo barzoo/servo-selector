@@ -51,12 +51,12 @@ const DirectDriveDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
       <circle cx="240" cy="140" r="5" fill="white" opacity="0.4" />
       <circle cx="200" cy="100" r="5" fill="white" opacity="0.4" />
 
-      {/* 动力流向箭头 */}
-      <polygon points="62,155 72,150 72,160" fill={arrow} />
-      <line x1="30" y1="155" x2="67" y2="155" stroke={arrow} strokeWidth="2" />
+      {/* 动力流向箭头 - 指向右侧 */}
+      <polygon points="67,155 77,150 77,160" fill={arrow} />
+      <line x1="30" y1="155" x2="72" y2="155" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="160,155 170,150 170,160" fill={arrow} />
-      <line x1="95" y1="155" x2="165" y2="155" stroke={arrow} strokeWidth="2" />
+      <polygon points="165,155 175,150 175,160" fill={arrow} />
+      <line x1="95" y1="155" x2="170" y2="155" stroke={arrow} strokeWidth="2" />
     </svg>
   );
 };

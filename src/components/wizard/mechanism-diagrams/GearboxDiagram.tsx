@@ -54,15 +54,15 @@ const GearboxDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
       <rect x="240" y="70" width="20" height="15" fill="white" opacity="0.5" rx="2" />
       <rect x="270" y="110" width="18" height="15" fill="white" opacity="0.5" rx="2" />
 
-      {/* 动力流向箭头 */}
-      <polygon points="52,155 62,150 62,160" fill={arrow} />
-      <line x1="30" y1="155" x2="57" y2="155" stroke={arrow} strokeWidth="2" />
+      {/* 动力流向箭头 - 指向右侧 */}
+      <polygon points="57,155 67,150 67,160" fill={arrow} />
+      <line x1="30" y1="155" x2="62" y2="155" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="120,155 130,150 130,160" fill={arrow} />
-      <line x1="90" y1="155" x2="125" y2="155" stroke={arrow} strokeWidth="2" />
+      <polygon points="125,155 135,150 135,160" fill={arrow} />
+      <line x1="90" y1="155" x2="130" y2="155" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="205,155 215,150 215,160" fill={arrow} />
-      <line x1="150" y1="155" x2="210" y2="155" stroke={arrow} strokeWidth="2" />
+      <polygon points="210,155 220,150 220,160" fill={arrow} />
+      <line x1="150" y1="155" x2="215" y2="155" stroke={arrow} strokeWidth="2" />
     </svg>
   );
 };

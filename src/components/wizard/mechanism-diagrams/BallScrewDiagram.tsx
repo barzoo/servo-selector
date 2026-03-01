@@ -62,18 +62,18 @@ const BallScrewDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
       {/* 滑块与丝杠连接示意 */}
       <rect x="280" y="100" width="10" height="5" fill={frame} />
 
-      {/* 动力流向箭头 */}
-      <polygon points="45,140 55,135 55,145" fill={arrow} />
-      <line x1="20" y1="140" x2="50" y2="140" stroke={arrow} strokeWidth="2" />
+      {/* 动力流向箭头 - 指向右侧 */}
+      <polygon points="50,140 40,135 40,145" fill={arrow} />
+      <line x1="20" y1="140" x2="45" y2="140" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="92,140 102,135 102,145" fill={arrow} />
-      <line x1="75" y1="140" x2="97" y2="140" stroke={arrow} strokeWidth="2" />
+      <polygon points="97,140 87,135 87,145" fill={arrow} />
+      <line x1="75" y1="140" x2="92" y2="140" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="210,140 220,135 220,145" fill={arrow} />
-      <line x1="130" y1="140" x2="215" y2="140" stroke={arrow} strokeWidth="2" />
+      <polygon points="215,140 205,135 205,145" fill={arrow} />
+      <line x1="130" y1="140" x2="210" y2="140" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="285,140 295,135 295,145" fill={arrow} />
-      <line x1="220" y1="140" x2="290" y2="140" stroke={arrow} strokeWidth="2" />
+      <polygon points="290,140 280,135 280,145" fill={arrow} />
+      <line x1="220" y1="140" x2="285" y2="140" stroke={arrow} strokeWidth="2" />
     </svg>
   );
 };

@@ -59,15 +59,15 @@ const BeltDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
       {/* 连接轴 */}
       <line x1="302" y1="102" x2="310" y2="102" stroke={frame} strokeWidth="4" />
 
-      {/* 动力流向箭头 */}
-      <polygon points="40,150 50,145 50,155" fill={arrow} />
-      <line x1="20" y1="150" x2="45" y2="150" stroke={arrow} strokeWidth="2" />
+      {/* 动力流向箭头 - 指向右侧 */}
+      <polygon points="45,150 35,145 35,155" fill={arrow} />
+      <line x1="20" y1="150" x2="40" y2="150" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="185,150 195,145 195,155" fill={arrow} />
-      <line x1="90" y1="150" x2="190" y2="150" stroke={arrow} strokeWidth="2" />
+      <polygon points="190,150 180,145 180,155" fill={arrow} />
+      <line x1="90" y1="150" x2="185" y2="150" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="335,150 345,145 345,155" fill={arrow} />
-      <line x1="280" y1="150" x2="340" y2="150" stroke={arrow} strokeWidth="2" />
+      <polygon points="340,150 330,145 330,155" fill={arrow} />
+      <line x1="280" y1="150" x2="335" y2="150" stroke={arrow} strokeWidth="2" />
     </svg>
   );
 };

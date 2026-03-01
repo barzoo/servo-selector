@@ -6,10 +6,30 @@ import { MECHANISM_COLORS, CANVAS_CONFIG } from './constants';
 
 /**
  * 齿轮齿条传动示意图
- * 布局：[伺服电机+减速机] → [小齿轮] → [齿条+滑块]
+ * 布局：[伺服电机] → [减速机] → [小齿轮] → [齿条] → [滑台/负载]
+ * 小齿轮用节圆表示，齿条用带齿形的矩形长条
  */
 const RackPinionDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
   const { servo, transmission, load, frame, arrow } = MECHANISM_COLORS;
+
+  // 生成齿条的齿形路径
+  const generateRackTeeth = (startX: number, y: number, count: number, toothWidth: number, toothHeight: number) => {
+    const teeth = [];
+    for (let i = 0; i < count; i++) {
+      const x = startX + i * toothWidth * 2;
+      // 齿形：梯形
+      teeth.push(
+        <polygon
+          key={i}
+          points={`${x},${y} ${x + toothWidth * 0.3},${y - toothHeight} ${x + toothWidth * 0.7},${y - toothHeight} ${x + toothWidth},${y}`}
+          fill={load}
+          stroke="white"
+          strokeWidth="1"
+        />
+      );
+    }
+    return teeth;
+  };
 
   return (
     <svg
@@ -18,85 +38,96 @@ const RackPinionDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
       aria-label="齿轮齿条传动系统示意图"
       role="img"
     >
-      {/* 导轨 */}
+      {/* 底部导轨 */}
       <line
-        x1="160" y1="145" x2="360" y2="145"
+        x1="140" y1="155" x2="380" y2="155"
         stroke={frame}
         strokeWidth="3"
       />
 
       {/* 伺服电机 */}
       <rect
-        x="20" y="70" width="42" height="55"
+        x="15" y="65" width="45" height="60"
         fill={servo}
         rx="4"
       />
+      {/* 电机轴 */}
+      <rect x="60" y="88" width="12" height="14" fill={frame} />
 
       {/* 减速机 */}
       <polygon
-        points="62,75 100,70 100,125 62,120"
+        points="72,72 115,68 115,122 72,118"
         fill={transmission}
       />
+      {/* 减速机内部齿轮示意 */}
+      <circle cx="93" cy="95" r="15" fill="none" stroke="white" strokeWidth="1.5" opacity="0.6" />
+      <line x1="93" y1="80" x2="93" y2="110" stroke="white" strokeWidth="1.5" opacity="0.6" />
+      <line x1="78" y1="95" x2="108" y2="95" stroke="white" strokeWidth="1.5" opacity="0.6" />
 
-      {/* 小齿轮（输出） */}
+      {/* 减速机输出轴 */}
+      <rect x="115" y="90" width="15" height="10" fill={frame} />
+
+      {/* 小齿轮（节圆表示） */}
       <circle
-        cx="130"
-        cy="97"
-        r="20"
+        cx="155"
+        cy="95"
+        r="22"
         fill={transmission}
+        opacity="0.9"
       />
-      {/* 齿轮齿示意 */}
-      <circle cx="130" cy="97" r="15" fill="none" stroke="white" strokeWidth="2" />
-      {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => {
+      {/* 节圆 */}
+      <circle cx="155" cy="95" r="18" fill="none" stroke="white" strokeWidth="2" />
+      {/* 齿轮齿示意（简化） */}
+      {[0, 60, 120, 180, 240, 300].map((angle) => {
         const rad = (angle * Math.PI) / 180;
-        const x1 = 130 + 15 * Math.cos(rad);
-        const y1 = 97 + 15 * Math.sin(rad);
-        const x2 = 130 + 20 * Math.cos(rad);
-        const y2 = 97 + 20 * Math.sin(rad);
+        const x1 = 155 + 14 * Math.cos(rad);
+        const y1 = 95 + 14 * Math.sin(rad);
+        const x2 = 155 + 22 * Math.cos(rad);
+        const y2 = 95 + 22 * Math.sin(rad);
         return (
-          <line key={angle} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="2" />
+          <line key={angle} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="2.5" />
         );
       })}
+      {/* 齿轮中心 */}
+      <circle cx="155" cy="95" r="6" fill={frame} />
 
-      {/* 齿条 */}
+      {/* 齿条基体（矩形长条） */}
       <rect
-        x="160" y="105" width="160" height="12"
+        x="180" y="108" width="160" height="18"
         fill={load}
+        opacity="0.3"
         rx="2"
       />
-      {/* 齿条齿示意 */}
-      {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-        <line
-          key={i}
-          x1={170 + i * 20}
-          y1="105"
-          x2={170 + i * 20}
-          y2="100"
-          stroke="white"
-          strokeWidth="2"
-        />
-      ))}
 
-      {/* 滑块/负载 */}
+      {/* 齿条齿形 */}
+      {generateRackTeeth(175, 108, 8, 10, 6)}
+
+      {/* 滑台/负载（安装在齿条上） */}
       <rect
-        x="220" y="117" width="55" height="28"
+        x="230" y="75" width="70" height="35"
         fill={load}
-        opacity="0.8"
-        rx="3"
+        rx="4"
       />
+      {/* 滑台与齿条连接示意 */}
+      <rect x="255" y="108" width="20" height="8" fill={frame} />
+      {/* 滑台上的工件/负载示意 */}
+      <rect x="245" y="55" width="40" height="20" fill="white" opacity="0.4" rx="2" />
 
-      {/* 动力流向箭头 */}
-      <polygon points="41,160 51,155 51,165" fill={arrow} />
-      <line x1="20" y1="160" x2="46" y2="160" stroke={arrow} strokeWidth="2" />
+      {/* 动力流向箭头 - 指向右侧 */}
+      <polygon points="37,170 47,165 47,175" fill={arrow} />
+      <line x1="15" y1="170" x2="42" y2="170" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="81,160 91,155 91,165" fill={arrow} />
-      <line x1="62" y1="160" x2="86" y2="160" stroke={arrow} strokeWidth="2" />
+      <polygon points="93,170 103,165 103,175" fill={arrow} />
+      <line x1="72" y1="170" x2="98" y2="170" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="115,160 125,155 125,165" fill={arrow} />
-      <line x1="100" y1="160" x2="120" y2="160" stroke={arrow} strokeWidth="2" />
+      <polygon points="135,170 145,165 145,175" fill={arrow} />
+      <line x1="115" y1="170" x2="140" y2="170" stroke={arrow} strokeWidth="2" />
 
-      <polygon points="247,160 257,155 257,165" fill={arrow} />
-      <line x1="150" y1="160" x2="252" y2="160" stroke={arrow} strokeWidth="2" />
+      <polygon points="200,170 210,165 210,175" fill={arrow} />
+      <line x1="155" y1="170" x2="205" y2="170" stroke={arrow} strokeWidth="2" />
+
+      <polygon points="300,170 310,165 310,175" fill={arrow} />
+      <line x1="210" y1="170" x2="305" y2="170" stroke={arrow} strokeWidth="2" />
     </svg>
   );
 };
