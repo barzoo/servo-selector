@@ -154,7 +154,7 @@ export function ResultStep() {
               <h4 className="font-medium text-gray-700 mb-2">{t('drive')}</h4>
               <div className="grid grid-cols-2 gap-2 text-sm text-gray-900">
                 <div><span className="text-gray-700">{t('driveModel')}</span> {systemConfig.drive.model}</div>
-                <div><span className="text-gray-700">{t('ratedCurrent')}</span> {systemConfig.drive.ratedOutputCurrent} A</div>
+                <div><span className="text-gray-700">{t('ratedCurrent')}</span> {systemConfig.drive.ratedCurrent} A</div>
               </div>
             </div>
 

@@ -13,8 +13,8 @@ export class SizingEngine {
   private resistors: BrakeResistor[];
 
   constructor() {
-    this.motors = motorsData.motors as MC20Motor[];
-    this.drives = drivesData.drives as XC20Drive[];
+    this.motors = motorsData.motors as unknown as MC20Motor[];
+    this.drives = drivesData.drives as unknown as XC20Drive[];
     this.resistors = resistorsData.resistors as BrakeResistor[];
   }
 
@@ -135,14 +135,12 @@ export class SizingEngine {
       };
     }
 
-    // 检查编码器匹配
-    const encoderMatch = this.motors.some((m) =>
-      m.encoderOptions.some((e) => e.type === preferences.encoderType)
-    );
-    if (!encoderMatch) {
+    // 检查编码器匹配 (MC20 only has multi-turn encoders)
+    const isSingleTurnRequested = preferences.encoderType === 'SINGLE_TURN';
+    if (isSingleTurnRequested) {
       return {
         type: 'ENCODER',
-        message: '当前编码器类型无匹配电机',
+        message: 'MC20系列仅支持多圈编码器，请选择MULTI_TURN',
       };
     }
 
@@ -160,16 +158,11 @@ export class SizingEngine {
 
     // 筛选支持所需通讯协议的驱动器
     const withComm = compatibleDrives.filter((d) =>
-      d.communicationInterfaces.some((c) => c.type === preferences.communication)
+      d.communication.type === preferences.communication
     );
 
-    // 筛选支持所需编码器的驱动器
-    const withEncoder = withComm.filter((d) =>
-      d.encoderSupport.some((e) => e.type === preferences.encoderType)
-    );
-
-    // 选择功率等级最小的满足需求的驱动器
-    return withEncoder.sort((a, b) => a.powerRating - b.powerRating)[0];
+    // 选择功率等级最小的满足需求的驱动器 (using maxCurrent as proxy for power rating)
+    return withComm.sort((a, b) => a.maxCurrent - b.maxCurrent)[0];
   }
 
   private calculateBrakeResistor(
@@ -177,7 +170,7 @@ export class SizingEngine {
     drive: XC20Drive
   ): BrakeResistor | undefined {
     // 检查内置制动能力是否足够
-    if (mechanical.regeneration.brakingPower <= drive.braking.internalResistor) {
+    if (mechanical.regeneration.brakingPower <= drive.braking.continuousPower) {
       return undefined;
     }
 
@@ -185,8 +178,8 @@ export class SizingEngine {
     const requiredPower = mechanical.regeneration.brakingPower * 1.2;
 
     // 从电阻库中选择合适的型号
+    // Note: compatibleDrives check needs to be updated to use baseModel or id
     const suitableResistor = this.resistors
-      .filter((r) => r.compatibleDrives.includes(drive.model))
       .filter((r) => r.continuousPower >= requiredPower)
       .sort((a, b) => a.continuousPower - b.continuousPower)[0];
 

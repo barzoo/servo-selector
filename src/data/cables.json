@@ -1,0 +1,107 @@
+{
+  "_metadata": {
+    "version": "1.0.0",
+    "generatedAt": "2026-03-01T03:35:27.859Z",
+    "sources": [
+      {
+        "file": "docs/data/MC20_电机技术参数.csv",
+        "checksum": "d8797f1ceac523e0",
+        "description": "MC20电机技术参数表"
+      },
+      {
+        "file": "docs/data/XC20_驱动技术参数.csv",
+        "checksum": "fd8c50dabbf3660f",
+        "description": "XC20驱动技术参数表"
+      },
+      {
+        "file": "docs/data/XC20_MC20_产品目录.md",
+        "checksum": "manual-reference",
+        "description": "产品目录及型号命名规则"
+      }
+    ],
+    "generator": "scripts/convert-product-data.ts",
+    "motorCount": 216,
+    "driveCount": 18
+  },
+  "motorCables": {
+    "specs": [
+      {
+        "code": "22",
+        "modelPrefix": "MCL22",
+        "powerRange": "0.2-2kW",
+        "applicableFrames": [
+          60,
+          80,
+          100
+        ]
+      },
+      {
+        "code": "32",
+        "modelPrefix": "MCL32",
+        "powerRange": "2.5-3kW",
+        "applicableFrames": [
+          100,
+          130
+        ]
+      },
+      {
+        "code": "42",
+        "modelPrefix": "MCL42",
+        "powerRange": "3.3-7.5kW",
+        "applicableFrames": [
+          130,
+          180
+        ]
+      }
+    ],
+    "brakeOptions": [
+      {
+        "code": "0",
+        "hasBrake": false
+      },
+      {
+        "code": "1",
+        "hasBrake": true
+      }
+    ],
+    "standardLengths": [
+      3,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "maxCustomLength": 30,
+    "hasTerminalOnlyOption": true
+  },
+  "encoderCables": {
+    "specs": [
+      {
+        "code": "02",
+        "modelPrefix": "MCE02",
+        "encoderType": "MECHANICAL_MULTI_TURN",
+        "hasBatteryBox": false,
+        "baudRate": "5Mbps"
+      },
+      {
+        "code": "12",
+        "modelPrefix": "MCE12",
+        "encoderType": "BATTERY_MULTI_TURN",
+        "hasBatteryBox": true,
+        "baudRate": "2.5Mbps"
+      }
+    ],
+    "standardLengths": [
+      3,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "maxCustomLength": 30
+  }
+}

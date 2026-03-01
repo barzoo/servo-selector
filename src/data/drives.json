@@ -1,122 +1,1009 @@
 {
+  "_metadata": {
+    "version": "1.0.0",
+    "generatedAt": "2026-03-01T03:35:27.859Z",
+    "sources": [
+      {
+        "file": "docs/data/MC20_电机技术参数.csv",
+        "checksum": "d8797f1ceac523e0",
+        "description": "MC20电机技术参数表"
+      },
+      {
+        "file": "docs/data/XC20_驱动技术参数.csv",
+        "checksum": "fd8c50dabbf3660f",
+        "description": "XC20驱动技术参数表"
+      },
+      {
+        "file": "docs/data/XC20_MC20_产品目录.md",
+        "checksum": "manual-reference",
+        "description": "产品目录及型号命名规则"
+      }
+    ],
+    "generator": "scripts/convert-product-data.ts",
+    "motorCount": 216,
+    "driveCount": 18
+  },
   "drives": [
     {
-      "id": "xc20-004",
-      "model": "XC20-004",
+      "id": "xc20-w0005crn-ec",
+      "model": "XC20-W0005CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
+      "baseModel": "XC20-W0005CRN",
       "series": "XC20",
-      "powerRating": 400,
-      "ratedOutputCurrent": 2.8,
-      "peakOutputCurrent": 8.4,
-      "dcBusVoltage": 565,
+      "size": "XD",
+      "maxCurrent": 5,
+      "ratedCurrent": 1.5,
+      "overloadCapacity": 3.3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
       "braking": {
-        "internalResistor": 50,
-        "internalResistance": 100,
-        "maxExternalResistor": 200,
-        "minExternalResistance": 15
+        "internalResistance": 500,
+        "continuousPower": 14,
+        "peakPower": 754
       },
-      "communicationInterfaces": [
-        { "type": "ETHERCAT", "modelSuffix": "-EC" },
-        { "type": "PROFINET", "modelSuffix": "-PN" },
-        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" },
-        { "type": "ANALOG", "modelSuffix": "-AN" }
-      ],
-      "encoderSupport": [
-        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
-        { "type": "MULTI_TURN", "protocol": "BISS_C" }
-      ],
-      "emcFilter": {
-        "internal": true,
-        "externalOptions": [{ "class": "C3", "model": "EMC-C3-004" }]
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
       },
-      "compatibleMotors": ["MC20-004", "MC20-010", "MC20-020", "MC20-040"]
+      "communication": {
+        "type": "ETHERCAT",
+        "code": "ECT0",
+        "soeSupported": true,
+        "coeSupported": true
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN3"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-060-3L30-N201",
+        "MC20-060-3L30-N401"
+      ]
     },
     {
-      "id": "xc20-008",
-      "model": "XC20-008",
+      "id": "xc20-w0005crn-pn",
+      "model": "XC20-W0005CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
+      "baseModel": "XC20-W0005CRN",
       "series": "XC20",
-      "powerRating": 750,
-      "ratedOutputCurrent": 5.5,
-      "peakOutputCurrent": 16.5,
-      "dcBusVoltage": 565,
+      "size": "XD",
+      "maxCurrent": 5,
+      "ratedCurrent": 1.5,
+      "overloadCapacity": 3.3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
       "braking": {
-        "internalResistor": 50,
-        "internalResistance": 50,
-        "maxExternalResistor": 400,
-        "minExternalResistance": 10
+        "internalResistance": 500,
+        "continuousPower": 14,
+        "peakPower": 754
       },
-      "communicationInterfaces": [
-        { "type": "ETHERCAT", "modelSuffix": "-EC" },
-        { "type": "PROFINET", "modelSuffix": "-PN" },
-        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" },
-        { "type": "ANALOG", "modelSuffix": "-AN" }
-      ],
-      "encoderSupport": [
-        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
-        { "type": "MULTI_TURN", "protocol": "BISS_C" }
-      ],
-      "emcFilter": {
-        "internal": true,
-        "externalOptions": [{ "class": "C3", "model": "EMC-C3-008" }]
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
       },
-      "compatibleMotors": ["MC20-010", "MC20-020", "MC20-040", "MC20-060", "MC20-075"]
+      "communication": {
+        "type": "PROFINET",
+        "code": "PNT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN4"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-060-3L30-N201",
+        "MC20-060-3L30-N401"
+      ]
     },
     {
-      "id": "xc20-015",
-      "model": "XC20-015",
+      "id": "xc20-w0005crn-eip",
+      "model": "XC20-W0005CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
+      "baseModel": "XC20-W0005CRN",
       "series": "XC20",
-      "powerRating": 1500,
-      "ratedOutputCurrent": 9.5,
-      "peakOutputCurrent": 28.5,
-      "dcBusVoltage": 565,
+      "size": "XD",
+      "maxCurrent": 5,
+      "ratedCurrent": 1.5,
+      "overloadCapacity": 3.3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
       "braking": {
-        "internalResistor": 100,
-        "internalResistance": 30,
-        "maxExternalResistor": 800,
-        "minExternalResistance": 8
+        "internalResistance": 500,
+        "continuousPower": 14,
+        "peakPower": 754
       },
-      "communicationInterfaces": [
-        { "type": "ETHERCAT", "modelSuffix": "-EC" },
-        { "type": "PROFINET", "modelSuffix": "-PN" },
-        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" }
-      ],
-      "encoderSupport": [
-        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
-        { "type": "MULTI_TURN", "protocol": "BISS_C" }
-      ],
-      "emcFilter": {
-        "internal": true,
-        "externalOptions": [{ "class": "C3", "model": "EMC-C3-015" }]
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
       },
-      "compatibleMotors": ["MC20-060", "MC20-075", "MC20-100"]
+      "communication": {
+        "type": "ETHERNET_IP",
+        "code": "EIT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN5"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-060-3L30-N201",
+        "MC20-060-3L30-N401"
+      ]
     },
     {
-      "id": "xc20-030",
-      "model": "XC20-030",
+      "id": "xc20-w0007crn-ec",
+      "model": "XC20-W0007CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
+      "baseModel": "XC20-W0007CRN",
       "series": "XC20",
-      "powerRating": 3000,
-      "ratedOutputCurrent": 17.0,
-      "peakOutputCurrent": 51.0,
-      "dcBusVoltage": 565,
+      "size": "XD",
+      "maxCurrent": 7,
+      "ratedCurrent": 2,
+      "overloadCapacity": 3.5,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
       "braking": {
-        "internalResistor": 100,
-        "internalResistance": 20,
-        "maxExternalResistor": 1500,
-        "minExternalResistance": 6
+        "internalResistance": 160,
+        "continuousPower": 15,
+        "peakPower": 2312
       },
-      "communicationInterfaces": [
-        { "type": "ETHERCAT", "modelSuffix": "-EC" },
-        { "type": "PROFINET", "modelSuffix": "-PN" },
-        { "type": "ETHERNET_IP", "modelSuffix": "-EIP" }
-      ],
-      "encoderSupport": [
-        { "type": "SINGLE_TURN", "protocol": "BISS_C" },
-        { "type": "MULTI_TURN", "protocol": "BISS_C" }
-      ],
-      "emcFilter": {
-        "internal": true,
-        "externalOptions": [{ "class": "C3", "model": "EMC-C3-030" }]
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
       },
-      "compatibleMotors": ["MC20-100", "MC20-150", "MC20-200"]
+      "communication": {
+        "type": "ETHERCAT",
+        "code": "ECT0",
+        "soeSupported": true,
+        "coeSupported": true
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN3"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-080-3L30-N751"
+      ]
+    },
+    {
+      "id": "xc20-w0007crn-pn",
+      "model": "XC20-W0007CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
+      "baseModel": "XC20-W0007CRN",
+      "series": "XC20",
+      "size": "XD",
+      "maxCurrent": 7,
+      "ratedCurrent": 2,
+      "overloadCapacity": 3.5,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 160,
+        "continuousPower": 15,
+        "peakPower": 2312
+      },
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
+      },
+      "communication": {
+        "type": "PROFINET",
+        "code": "PNT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN4"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-080-3L30-N751"
+      ]
+    },
+    {
+      "id": "xc20-w0007crn-eip",
+      "model": "XC20-W0007CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
+      "baseModel": "XC20-W0007CRN",
+      "series": "XC20",
+      "size": "XD",
+      "maxCurrent": 7,
+      "ratedCurrent": 2,
+      "overloadCapacity": 3.5,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 160,
+        "continuousPower": 15,
+        "peakPower": 2312
+      },
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERNET_IP",
+        "code": "EIT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN5"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-080-3L30-N751"
+      ]
+    },
+    {
+      "id": "xc20-w0012crn-ec",
+      "model": "XC20-W0012CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
+      "baseModel": "XC20-W0012CRN",
+      "series": "XC20",
+      "size": "XD",
+      "maxCurrent": 12,
+      "ratedCurrent": 4,
+      "overloadCapacity": 3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 160,
+        "continuousPower": 15,
+        "peakPower": 2312
+      },
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERCAT",
+        "code": "ECT0",
+        "soeSupported": true,
+        "coeSupported": true
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN3"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-080-3L30-N102",
+        "MC20-130-3M15-N851",
+        "MC20-130-3M20-N102"
+      ]
+    },
+    {
+      "id": "xc20-w0012crn-pn",
+      "model": "XC20-W0012CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
+      "baseModel": "XC20-W0012CRN",
+      "series": "XC20",
+      "size": "XD",
+      "maxCurrent": 12,
+      "ratedCurrent": 4,
+      "overloadCapacity": 3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 160,
+        "continuousPower": 15,
+        "peakPower": 2312
+      },
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
+      },
+      "communication": {
+        "type": "PROFINET",
+        "code": "PNT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN4"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-080-3L30-N102",
+        "MC20-130-3M15-N851",
+        "MC20-130-3M20-N102"
+      ]
+    },
+    {
+      "id": "xc20-w0012crn-eip",
+      "model": "XC20-W0012CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
+      "baseModel": "XC20-W0012CRN",
+      "series": "XC20",
+      "size": "XD",
+      "maxCurrent": 12,
+      "ratedCurrent": 4,
+      "overloadCapacity": 3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 160,
+        "continuousPower": 15,
+        "peakPower": 2312
+      },
+      "dimensions": {
+        "width": 50,
+        "height": 178,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERNET_IP",
+        "code": "EIT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN5"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-080-3L30-N102",
+        "MC20-130-3M15-N851",
+        "MC20-130-3M20-N102"
+      ]
+    },
+    {
+      "id": "xc20-w0023crn-ec",
+      "model": "XC20-W0023CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
+      "baseModel": "XC20-W0023CRN",
+      "series": "XC20",
+      "size": "XE",
+      "maxCurrent": 23,
+      "ratedCurrent": 6.3,
+      "overloadCapacity": 3.7,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": true,
+      "braking": {
+        "internalResistance": 70,
+        "continuousPower": 30,
+        "peakPower": 5086
+      },
+      "dimensions": {
+        "width": 65,
+        "height": 188,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERCAT",
+        "code": "ECT0",
+        "soeSupported": true,
+        "coeSupported": true
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN3"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3M15-N132",
+        "MC20-100-3L30-N152",
+        "MC20-130-3M20-N152",
+        "MC20-130-3M15-N182",
+        "MC20-100-3L30-N202",
+        "MC20-130-3M20-N202",
+        "MC20-100-3L30-N252"
+      ]
+    },
+    {
+      "id": "xc20-w0023crn-pn",
+      "model": "XC20-W0023CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
+      "baseModel": "XC20-W0023CRN",
+      "series": "XC20",
+      "size": "XE",
+      "maxCurrent": 23,
+      "ratedCurrent": 6.3,
+      "overloadCapacity": 3.7,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": true,
+      "braking": {
+        "internalResistance": 70,
+        "continuousPower": 30,
+        "peakPower": 5086
+      },
+      "dimensions": {
+        "width": 65,
+        "height": 188,
+        "depth": 196
+      },
+      "communication": {
+        "type": "PROFINET",
+        "code": "PNT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN4"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3M15-N132",
+        "MC20-100-3L30-N152",
+        "MC20-130-3M20-N152",
+        "MC20-130-3M15-N182",
+        "MC20-100-3L30-N202",
+        "MC20-130-3M20-N202",
+        "MC20-100-3L30-N252"
+      ]
+    },
+    {
+      "id": "xc20-w0023crn-eip",
+      "model": "XC20-W0023CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
+      "baseModel": "XC20-W0023CRN",
+      "series": "XC20",
+      "size": "XE",
+      "maxCurrent": 23,
+      "ratedCurrent": 6.3,
+      "overloadCapacity": 3.7,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": true,
+      "braking": {
+        "internalResistance": 70,
+        "continuousPower": 30,
+        "peakPower": 5086
+      },
+      "dimensions": {
+        "width": 65,
+        "height": 188,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERNET_IP",
+        "code": "EIT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN5"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3M15-N132",
+        "MC20-100-3L30-N152",
+        "MC20-130-3M20-N152",
+        "MC20-130-3M15-N182",
+        "MC20-100-3L30-N202",
+        "MC20-130-3M20-N202",
+        "MC20-100-3L30-N252"
+      ]
+    },
+    {
+      "id": "xc20-w0033crn-ec",
+      "model": "XC20-W0033CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
+      "baseModel": "XC20-W0033CRN",
+      "series": "XC20",
+      "size": "XE",
+      "maxCurrent": 33,
+      "ratedCurrent": 10,
+      "overloadCapacity": 3.3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 27,
+        "continuousPower": 65,
+        "peakPower": 9896
+      },
+      "dimensions": {
+        "width": 65,
+        "height": 188,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERCAT",
+        "code": "ECT0",
+        "soeSupported": true,
+        "coeSupported": true
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN3"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3M20-N252",
+        "MC20-180-3M15-N292",
+        "MC20-130-3L30-N302",
+        "MC20-130-3M20-N302",
+        "MC20-180-3M15-N332",
+        "MC20-180-3M20-N352"
+      ]
+    },
+    {
+      "id": "xc20-w0033crn-pn",
+      "model": "XC20-W0033CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
+      "baseModel": "XC20-W0033CRN",
+      "series": "XC20",
+      "size": "XE",
+      "maxCurrent": 33,
+      "ratedCurrent": 10,
+      "overloadCapacity": 3.3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 27,
+        "continuousPower": 65,
+        "peakPower": 9896
+      },
+      "dimensions": {
+        "width": 65,
+        "height": 188,
+        "depth": 196
+      },
+      "communication": {
+        "type": "PROFINET",
+        "code": "PNT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN4"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3M20-N252",
+        "MC20-180-3M15-N292",
+        "MC20-130-3L30-N302",
+        "MC20-130-3M20-N302",
+        "MC20-180-3M15-N332",
+        "MC20-180-3M20-N352"
+      ]
+    },
+    {
+      "id": "xc20-w0033crn-eip",
+      "model": "XC20-W0033CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
+      "baseModel": "XC20-W0033CRN",
+      "series": "XC20",
+      "size": "XE",
+      "maxCurrent": 33,
+      "ratedCurrent": 10,
+      "overloadCapacity": 3.3,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 27,
+        "continuousPower": 65,
+        "peakPower": 9896
+      },
+      "dimensions": {
+        "width": 65,
+        "height": 188,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERNET_IP",
+        "code": "EIT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN5"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3M20-N252",
+        "MC20-180-3M15-N292",
+        "MC20-130-3L30-N302",
+        "MC20-130-3M20-N302",
+        "MC20-180-3M15-N332",
+        "MC20-180-3M20-N352"
+      ]
+    },
+    {
+      "id": "xc20-w0050crn-ec",
+      "model": "XC20-W0050CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
+      "baseModel": "XC20-W0050CRN",
+      "series": "XC20",
+      "size": "XF",
+      "maxCurrent": 50,
+      "ratedCurrent": 16,
+      "overloadCapacity": 3.1,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 27,
+        "continuousPower": 65,
+        "peakPower": 9896
+      },
+      "dimensions": {
+        "width": 80,
+        "height": 218,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERCAT",
+        "code": "ECT0",
+        "soeSupported": true,
+        "coeSupported": true
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN3"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3L30-N402",
+        "MC20-180-3M20-N402",
+        "MC20-180-3M15-N442",
+        "MC20-130-3L30-N502",
+        "MC20-180-3M20-N502",
+        "MC20-180-3M15-N552",
+        "MC20-180-3M20-N752",
+        "MC20-180-3M15-N752"
+      ]
+    },
+    {
+      "id": "xc20-w0050crn-pn",
+      "model": "XC20-W0050CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
+      "baseModel": "XC20-W0050CRN",
+      "series": "XC20",
+      "size": "XF",
+      "maxCurrent": 50,
+      "ratedCurrent": 16,
+      "overloadCapacity": 3.1,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 27,
+        "continuousPower": 65,
+        "peakPower": 9896
+      },
+      "dimensions": {
+        "width": 80,
+        "height": 218,
+        "depth": 196
+      },
+      "communication": {
+        "type": "PROFINET",
+        "code": "PNT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN4"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3L30-N402",
+        "MC20-180-3M20-N402",
+        "MC20-180-3M15-N442",
+        "MC20-130-3L30-N502",
+        "MC20-180-3M20-N502",
+        "MC20-180-3M15-N552",
+        "MC20-180-3M20-N752",
+        "MC20-180-3M15-N752"
+      ]
+    },
+    {
+      "id": "xc20-w0050crn-eip",
+      "model": "XC20-W0050CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
+      "baseModel": "XC20-W0050CRN",
+      "series": "XC20",
+      "size": "XF",
+      "maxCurrent": 50,
+      "ratedCurrent": 16,
+      "overloadCapacity": 3.1,
+      "pwmFrequencies": [
+        4,
+        8,
+        12,
+        16
+      ],
+      "ratedPwmFrequency": 8,
+      "hasFan": false,
+      "braking": {
+        "internalResistance": 27,
+        "continuousPower": 65,
+        "peakPower": 9896
+      },
+      "dimensions": {
+        "width": 80,
+        "height": 218,
+        "depth": 196
+      },
+      "communication": {
+        "type": "ETHERNET_IP",
+        "code": "EIT0",
+        "soeSupported": false,
+        "coeSupported": false
+      },
+      "options": {
+        "panel": {
+          "code": "01B"
+        },
+        "safety": {
+          "code": "NN"
+        },
+        "brakeResistor": {
+          "code": "R"
+        },
+        "firmware": {
+          "code": "SVSRSN5"
+        }
+      },
+      "compatibleMotors": [
+        "MC20-130-3L30-N402",
+        "MC20-180-3M20-N402",
+        "MC20-180-3M15-N442",
+        "MC20-130-3L30-N502",
+        "MC20-180-3M20-N502",
+        "MC20-180-3M15-N552",
+        "MC20-180-3M20-N752",
+        "MC20-180-3M15-N752"
+      ]
     }
   ]
 }

@@ -109,77 +109,135 @@ export interface SizingInput {
 
 // ============ 产品数据 ============
 
+/**
+ * MC20电机完整数据接口
+ * 基于产品目录和CSV数据生成
+ */
 export interface MC20Motor {
   id: string;
   model: string;
+  baseModel: string;
+
   series: string;
   frameSize: number;
+  inertiaType: 'LOW' | 'MEDIUM';
   ratedPower: number;
+  ratedSpeed: number;
   ratedTorque: number;
   peakTorque: number;
-  ratedSpeed: number;
   maxSpeed: number;
   ratedCurrent: number;
   peakCurrent: number;
+  rotorInertia: number;
+  rotorInertiaWithBrake: number;
+  weight: number;
+  weightWithBrake: number;
+
   torqueConstant: number;
   voltageConstant: number;
-  phaseResistance: number;
-  phaseInductance: number;
-  rotorInertia: number;
-  weight: number;
-  encoderOptions: {
-    type: 'SINGLE_TURN' | 'MULTI_TURN';
-    resolution: number;
-    protocol: string;
-    modelSuffix: string;
-  }[];
+  phaseResistance: number | null;
+  phaseInductance: number | null;
+
   options: {
     brake: {
-      available: boolean;
-      torque: number;
-      voltage: number;
-      power: number;
-      modelSuffix: string;
+      code: string;
+      hasBrake: boolean;
+      torque?: number;
+    };
+    encoder: {
+      code: string;
+      type: 'BATTERY_MULTI_TURN' | 'MECHANICAL_MULTI_TURN';
+      resolution: number;
     };
     keyShaft: {
-      available: boolean;
-      modelSuffix: string;
+      code: string;
+      hasKey: boolean;
+    };
+    cooling: {
+      code: string;
+    };
+    protection: {
+      code: string;
+      level: string;
+    };
+    connection: {
+      code: string;
+    };
+    temperatureSensor: {
+      code: string;
+    };
+    specialDesign: {
+      code: string;
     };
   };
+
   dimensions: {
+    flange: number;
+    length: number;
+    lengthWithBrake: number;
     shaftDiameter: number;
-    overallLength: number;
-    overallLengthWithBrake: number;
+    shaftLength: number;
   };
+
   matchedDrives: string[];
+  cableSpecs: {
+    motorCable: string;
+    encoderCable: string;
+  };
 }
 
+/**
+ * XC20驱动器完整数据接口
+ * 基于产品目录和CSV数据生成
+ */
 export interface XC20Drive {
   id: string;
   model: string;
+  baseModel: string;
+
   series: string;
-  powerRating: number;
-  ratedOutputCurrent: number;
-  peakOutputCurrent: number;
-  dcBusVoltage: number;
+  size: string;
+  maxCurrent: number;
+  ratedCurrent: number;
+  overloadCapacity: number;
+  pwmFrequencies: number[];
+  ratedPwmFrequency: number;
+  hasFan: boolean;
+
   braking: {
-    internalResistor: number;
     internalResistance: number;
-    maxExternalResistor: number;
-    minExternalResistance: number;
+    continuousPower: number;
+    peakPower: number;
   };
-  communicationInterfaces: {
-    type: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
-    modelSuffix: string;
-  }[];
-  encoderSupport: {
-    type: 'SINGLE_TURN' | 'MULTI_TURN';
-    protocol: string;
-  }[];
-  emcFilter: {
-    internal: boolean;
-    externalOptions: { class: 'C3'; model: string }[];
+
+  dimensions: {
+    width: number;
+    height: number;
+    depth: number;
   };
+
+  communication: {
+    type: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP';
+    code: string;
+    soeSupported?: boolean;
+    coeSupported?: boolean;
+  };
+
+  options: {
+    panel: {
+      code: string;
+    };
+    safety: {
+      code: string;
+    };
+    brakeResistor: {
+      code: string;
+    };
+    firmware: {
+      code: string;
+    };
+  };
+
   compatibleMotors: string[];
 }
 
@@ -273,7 +331,7 @@ export interface CompleteSystemConfig {
 export interface SizingResult {
   mechanical: MechanicalResult;
   motorRecommendations: MotorRecommendation[];
-  failureReason?: SizingFailureReason;  // 新增：仅当无推荐时存在
+  failureReason?: SizingFailureReason;
   metadata: {
     calculationTime: number;
     version: string;

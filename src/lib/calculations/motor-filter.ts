@@ -9,7 +9,7 @@ export class MotorFilter {
   private preferences: SystemPreferences;
 
   constructor(mechanical: MechanicalResult, preferences: SystemPreferences) {
-    this.motors = motorsData.motors as MC20Motor[];
+    this.motors = motorsData.motors as unknown as MC20Motor[];
     this.mechanical = mechanical;
     this.preferences = preferences;
   }
@@ -24,10 +24,15 @@ export class MotorFilter {
       if (motor.peakTorque < requiredPeakTorque) return false;
       if (motor.maxSpeed < requiredSpeed) return false;
 
-      const encoderMatch = motor.encoderOptions.some(
-        (e) => e.type === this.preferences.encoderType
-      );
-      if (!encoderMatch) return false;
+      // Map new encoder type to preferences
+      // BATTERY_MULTI_TURN and MECHANICAL_MULTI_TURN are both multi-turn encoders
+      const isMultiTurn = motor.options.encoder.type === 'BATTERY_MULTI_TURN' ||
+                          motor.options.encoder.type === 'MECHANICAL_MULTI_TURN';
+      const preferenceMultiTurn = this.preferences.encoderType === 'MULTI_TURN';
+
+      // If user wants multi-turn, either type works
+      // If user wants single-turn, we need to check (but MC20 only has multi-turn options)
+      if (!isMultiTurn && preferenceMultiTurn) return false;
 
       return true;
     });
