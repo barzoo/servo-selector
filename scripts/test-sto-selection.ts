@@ -41,7 +41,6 @@ const baseInput: SizingInput = {
     safetyFactor: 1.5,
     maxInertiaRatio: 30,
     targetInertiaRatio: 10,
-    encoderType: 'MULTI_TURN',
     communication: 'ETHERCAT',
     safety: 'NONE', // Will be overridden in tests
     cableLength: 3,
