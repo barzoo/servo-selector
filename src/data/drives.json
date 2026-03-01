@@ -1,7 +1,7 @@
 {
   "_metadata": {
     "version": "1.0.0",
-    "generatedAt": "2026-03-01T09:55:22.005Z",
+    "generatedAt": "2026-03-01T12:14:02.730Z",
     "sources": [
       {
         "file": "docs/data/MC20_电机技术参数.csv",
@@ -28,6 +28,9 @@
       "id": "xc20-w0005crn-ec",
       "model": "XC20-W0005CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
       "baseModel": "XC20-W0005CRN",
+      "description": {
+        "short": "5A 峰值, EtherCAT通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 5,
@@ -80,6 +83,9 @@
       "id": "xc20-w0005crn-pn",
       "model": "XC20-W0005CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
       "baseModel": "XC20-W0005CRN",
+      "description": {
+        "short": "5A 峰值, PROFINET通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 5,
@@ -132,6 +138,9 @@
       "id": "xc20-w0005crn-eip",
       "model": "XC20-W0005CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
       "baseModel": "XC20-W0005CRN",
+      "description": {
+        "short": "5A 峰值, EtherNet/IP通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 5,
@@ -184,6 +193,9 @@
       "id": "xc20-w0007crn-ec",
       "model": "XC20-W0007CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
       "baseModel": "XC20-W0007CRN",
+      "description": {
+        "short": "7A 峰值, EtherCAT通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 7,
@@ -235,6 +247,9 @@
       "id": "xc20-w0007crn-pn",
       "model": "XC20-W0007CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
       "baseModel": "XC20-W0007CRN",
+      "description": {
+        "short": "7A 峰值, PROFINET通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 7,
@@ -286,6 +301,9 @@
       "id": "xc20-w0007crn-eip",
       "model": "XC20-W0007CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
       "baseModel": "XC20-W0007CRN",
+      "description": {
+        "short": "7A 峰值, EtherNet/IP通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 7,
@@ -337,6 +355,9 @@
       "id": "xc20-w0012crn-ec",
       "model": "XC20-W0012CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
       "baseModel": "XC20-W0012CRN",
+      "description": {
+        "short": "12A 峰值, EtherCAT通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 12,
@@ -390,6 +411,9 @@
       "id": "xc20-w0012crn-pn",
       "model": "XC20-W0012CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
       "baseModel": "XC20-W0012CRN",
+      "description": {
+        "short": "12A 峰值, PROFINET通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 12,
@@ -443,6 +467,9 @@
       "id": "xc20-w0012crn-eip",
       "model": "XC20-W0012CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
       "baseModel": "XC20-W0012CRN",
+      "description": {
+        "short": "12A 峰值, EtherNet/IP通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XD",
       "maxCurrent": 12,
@@ -496,6 +523,9 @@
       "id": "xc20-w0023crn-ec",
       "model": "XC20-W0023CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
       "baseModel": "XC20-W0023CRN",
+      "description": {
+        "short": "23A 峰值, EtherCAT通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XE",
       "maxCurrent": 23,
@@ -553,6 +583,9 @@
       "id": "xc20-w0023crn-pn",
       "model": "XC20-W0023CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
       "baseModel": "XC20-W0023CRN",
+      "description": {
+        "short": "23A 峰值, PROFINET通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XE",
       "maxCurrent": 23,
@@ -610,6 +643,9 @@
       "id": "xc20-w0023crn-eip",
       "model": "XC20-W0023CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
       "baseModel": "XC20-W0023CRN",
+      "description": {
+        "short": "23A 峰值, EtherNet/IP通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XE",
       "maxCurrent": 23,
@@ -667,6 +703,9 @@
       "id": "xc20-w0033crn-ec",
       "model": "XC20-W0033CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
       "baseModel": "XC20-W0033CRN",
+      "description": {
+        "short": "33A 峰值, EtherCAT通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XE",
       "maxCurrent": 33,
@@ -723,6 +762,9 @@
       "id": "xc20-w0033crn-pn",
       "model": "XC20-W0033CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
       "baseModel": "XC20-W0033CRN",
+      "description": {
+        "short": "33A 峰值, PROFINET通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XE",
       "maxCurrent": 33,
@@ -779,6 +821,9 @@
       "id": "xc20-w0033crn-eip",
       "model": "XC20-W0033CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
       "baseModel": "XC20-W0033CRN",
+      "description": {
+        "short": "33A 峰值, EtherNet/IP通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XE",
       "maxCurrent": 33,
@@ -835,6 +880,9 @@
       "id": "xc20-w0050crn-ec",
       "model": "XC20-W0050CRN-01BECT0T0NNNN-SVSRSN3NNNNN",
       "baseModel": "XC20-W0050CRN",
+      "description": {
+        "short": "50A 峰值, EtherCAT通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XF",
       "maxCurrent": 50,
@@ -893,6 +941,9 @@
       "id": "xc20-w0050crn-pn",
       "model": "XC20-W0050CRN-01BPNT0T0NNNN-SVSRSN4NNNNN",
       "baseModel": "XC20-W0050CRN",
+      "description": {
+        "short": "50A 峰值, PROFINET通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XF",
       "maxCurrent": 50,
@@ -951,6 +1002,9 @@
       "id": "xc20-w0050crn-eip",
       "model": "XC20-W0050CRN-01BEIT0T0NNNN-SVSRSN5NNNNN",
       "baseModel": "XC20-W0050CRN",
+      "description": {
+        "short": "50A 峰值, EtherNet/IP通讯, 无STO"
+      },
       "series": "XC20",
       "size": "XF",
       "maxCurrent": 50,

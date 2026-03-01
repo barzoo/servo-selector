@@ -26,6 +26,10 @@ interface MC20Motor {
   model: string;
   baseModel: string;
 
+  description: {
+    short: string;
+  };
+
   series: string;
   frameSize: number;
   inertiaType: "LOW" | "MEDIUM";
@@ -98,6 +102,10 @@ interface XC20Drive {
   id: string;
   model: string;
   baseModel: string;
+
+  description: {
+    short: string;
+  };
 
   series: string;
   size: string;
@@ -486,6 +494,18 @@ function processMotorData(csvContent: string): MC20Motor[] {
             model: fullModel,
             baseModel: baseModel,
 
+            description: {
+              short: generateMotorDescription({
+                ratedTorque,
+                ratedSpeed,
+                options: {
+                  encoder: { type: encoder.type },
+                  brake: { hasBrake: brake.hasBrake },
+                  keyShaft: { hasKey: keyShaft.hasKey },
+                },
+              }),
+            },
+
             series: 'MC20',
             frameSize,
             inertiaType: inertiaType as 'LOW' | 'MEDIUM',
@@ -618,6 +638,16 @@ function processDriveData(csvContent: string): XC20Drive[] {
         id: generateDriveId(baseModel, comm.code),
         model: fullModel,
         baseModel: baseModel,
+
+        description: {
+          short: generateDriveDescription({
+            maxCurrent,
+            communication: { type: comm.type },
+            options: {
+              safety: { code: safetyCode },
+            },
+          }),
+        },
 
         series: 'XC20',
         size,
