@@ -34,6 +34,7 @@ describe('SizingEngine with System Configuration', () => {
       mountingOrientation: 'HORIZONTAL',
       ipRating: 'IP65',
       brake: false,
+      keyShaft: 'L',
     },
     preferences: {
       safetyFactor: 1.5,
@@ -42,6 +43,7 @@ describe('SizingEngine with System Configuration', () => {
       communication: 'ETHERCAT',
       safety: 'NONE',
       cableLength: 3,
+      encoderType: 'BOTH',
     },
   };
 

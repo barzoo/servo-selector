@@ -37,6 +37,7 @@ const baseInput: SizingInput = {
     mountingOrientation: 'HORIZONTAL',
     ipRating: 'IP65',
     brake: false,
+    keyShaft: 'L',
   },
   preferences: {
     safetyFactor: 1.5,
