@@ -26,6 +26,7 @@ interface WizardStore extends WizardState {
   setPreferences: (preferences: SystemPreferences) => void;
   setSelections: (selections: MotorSelections) => void;
   setResult: (result: SizingResult) => void;
+  completeWizard: () => void;
   reset: () => void;
 }
 
@@ -99,6 +100,11 @@ export const useWizardStore = create<WizardStore>()(
       setSelections: (selections) =>
         set((state) => ({
           input: { ...state.input, selections },
+        })),
+
+      completeWizard: () =>
+        set(() => ({
+          isComplete: true,
         })),
 
       reset: () => set(initialState),

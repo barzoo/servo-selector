@@ -7,7 +7,7 @@ import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { useTranslations } from 'next-intl';
 
 export function SystemConfigStep() {
-  const { input, setPreferences, setResult, nextStep, prevStep } = useWizardStore();
+  const { input, setPreferences, setResult, prevStep, completeWizard } = useWizardStore();
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
 
@@ -45,7 +45,7 @@ export function SystemConfigStep() {
         preferences: formData,
       });
       setResult(result);
-      nextStep();
+      completeWizard();
     }
   };
 
@@ -81,8 +81,8 @@ export function SystemConfigStep() {
                 }
                 className="sr-only"
               />
-              <div className="font-medium text-sm">{opt.label}</div>
-              <div className="text-xs text-gray-500 mt-1">{opt.desc}</div>
+              <div className={`font-medium text-sm ${formData.targetInertiaRatio === opt.ratio ? 'text-blue-900' : 'text-gray-900'}`}>{opt.label}</div>
+              <div className={`text-xs mt-1 ${formData.targetInertiaRatio === opt.ratio ? 'text-blue-700' : 'text-gray-500'}`}>{opt.desc}</div>
             </label>
           ))}
         </div>

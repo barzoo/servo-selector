@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useWizardStore } from '@/stores/wizard-store';
 import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { MotorSelectionPanel } from '@/components/wizard/MotorSelectionPanel';
@@ -10,7 +11,8 @@ import { SystemSummary } from '@/components/wizard/SystemSummary';
 import type { MotorSelections, XC20Drive } from '@/types';
 
 export default function Step5Page() {
-  const { input, result, setResult, setSelections, goToStep } = useWizardStore();
+  const router = useRouter();
+  const { input, result, setResult, setSelections, goToStep, completeWizard, isComplete } = useWizardStore();
   const [isCalculating, setIsCalculating] = useState(false);
 
   const [selections, setLocalSelections] = useState<MotorSelections>(() => {
@@ -65,6 +67,13 @@ export default function Step5Page() {
     : undefined;
 
   const isVerticalAxis = input?.duty?.mountingOrientation?.startsWith('VERTICAL');
+
+  // 当选型完成时，自动导航回主页显示结果
+  useEffect(() => {
+    if (isComplete) {
+      router.push('/');
+    }
+  }, [isComplete, router]);
 
   if (!result) {
     return (
@@ -133,7 +142,7 @@ export default function Step5Page() {
           上一步
         </button>
         <button
-          onClick={() => goToStep(6)}
+          onClick={() => completeWizard()}
           className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           生成规格书
