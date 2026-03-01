@@ -131,7 +131,7 @@ export default function Step5Page() {
       )}
 
       {result.systemConfiguration && (
-        <SystemSummary config={result.systemConfiguration} />
+        <SystemSummary config={result.systemConfiguration} mechanical={result.mechanical} />
       )}
 
       <div className="flex justify-between pt-6">

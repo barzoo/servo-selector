@@ -79,6 +79,30 @@ export function ResultStep() {
         </div>
       </div>
 
+      {/* 制动电阻警告 */}
+      {result.mechanical.regeneration.requiresExternalResistor && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-4">
+          <div className="flex items-start">
+            <span className="text-yellow-600 text-xl mr-2">⚠️</span>
+            <div>
+              <h4 className="font-semibold text-yellow-800">制动电阻警告</h4>
+              <p className="text-yellow-700 text-sm mt-1">
+                {result.mechanical.regeneration.warning}
+              </p>
+              {result.mechanical.regeneration.recommendedResistor && (
+                <div className="mt-2 text-sm text-yellow-700">
+                  <p>建议外部电阻规格：</p>
+                  <ul className="list-disc list-inside ml-2">
+                    <li>持续功率: ≥ {result.mechanical.regeneration.recommendedResistor.minPower.toFixed(0)}W</li>
+                    <li>阻值: ≈ {result.mechanical.regeneration.recommendedResistor.resistance}Ω</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 推荐电机列表 */}
       <div>
         <h3 className="font-semibold text-gray-800 mb-3">{t('recommendedMotors', { count: result.motorRecommendations.length })}</h3>

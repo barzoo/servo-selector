@@ -306,6 +306,12 @@ export interface RegenerationResult {
   energyPerCycle: number;
   brakingPower: number;
   requiresExternalResistor: boolean;
+  warning?: string;
+  recommendedResistor?: {
+    minPower: number;
+    resistance: number;
+    dutyCycle: number;
+  };
 }
 
 export interface MechanicalResult {
