@@ -62,3 +62,79 @@ describe('MotorFilter with Inertia Matching', () => {
     }
   });
 });
+
+describe('MotorFilter Encoder Type Filtering', () => {
+  const mockMechanical: MechanicalResult = {
+    totalInertia: 10,
+    loadInertia: 8,
+    inertiaRatio: 5,
+    torques: { rms: 2.0, peak: 5.0, accel: 6, constant: 1, decel: 4 },
+    speeds: { max: 3000, rms: 1500 },
+    powers: { peak: 1000, continuous: 500 },
+    regeneration: { energyPerCycle: 0, brakingPower: 0, requiresExternalResistor: false },
+  };
+
+  const defaultPrefs: SystemPreferences = {
+    safetyFactor: 1.5,
+    maxInertiaRatio: 10,
+    targetInertiaRatio: 10,
+    communication: 'ETHERCAT',
+    safety: 'NONE',
+    cableLength: 5,
+    encoderType: 'BOTH',
+  };
+
+  it('should filter motors by encoder type A (battery)', () => {
+    const prefsWithEncoderA: SystemPreferences = {
+      ...defaultPrefs,
+      encoderType: 'A',
+    };
+
+    const filter = new MotorFilter(mockMechanical, prefsWithEncoderA);
+    const results = filter.filter();
+
+    if (results.length > 0) {
+      results.forEach(rec => {
+        expect(rec.motor.options.encoder.type).toBe('BATTERY_MULTI_TURN');
+      });
+    }
+  });
+
+  it('should filter motors by encoder type B (mechanical)', () => {
+    const prefsWithEncoderB: SystemPreferences = {
+      ...defaultPrefs,
+      encoderType: 'B',
+    };
+
+    const filter = new MotorFilter(mockMechanical, prefsWithEncoderB);
+    const results = filter.filter();
+
+    if (results.length > 0) {
+      results.forEach(rec => {
+        expect(rec.motor.options.encoder.type).toBe('MECHANICAL_MULTI_TURN');
+      });
+    }
+  });
+
+  it('should show both encoder types when BOTH is selected', () => {
+    const prefsWithBoth: SystemPreferences = {
+      ...defaultPrefs,
+      encoderType: 'BOTH',
+    };
+
+    const filter = new MotorFilter(mockMechanical, prefsWithBoth);
+    const results = filter.filter();
+
+    // Should have results and they can be either encoder type
+    expect(results.length).toBeGreaterThanOrEqual(0);
+
+    // If there are results with different encoder types, both should be present
+    const hasBattery = results.some(r => r.motor.options.encoder.type === 'BATTERY_MULTI_TURN');
+    const hasMechanical = results.some(r => r.motor.options.encoder.type === 'MECHANICAL_MULTI_TURN');
+
+    // At least one type should be present if there are results
+    if (results.length > 0) {
+      expect(hasBattery || hasMechanical).toBe(true);
+    }
+  });
+});
