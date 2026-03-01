@@ -11,10 +11,18 @@ export function SystemConfigStep() {
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
 
+  const INERTIA_RATIO_OPTIONS = [
+    { ratio: 3, label: '高性能 (3:1)', desc: '最佳动态响应，适合高精度定位' },
+    { ratio: 5, label: '平衡型 (5:1)', desc: '性能与成本的平衡，适合大多数应用' },
+    { ratio: 10, label: '经济型 (10:1)', desc: '最大推荐惯量比，适合成本敏感应用' },
+    { ratio: 30, label: '极限型 (30:1)', desc: '系统允许的最大惯量比' },
+  ];
+
   const [formData, setFormData] = useState<SystemPreferences>(
     input.preferences || {
       safetyFactor: 1.5,
       maxInertiaRatio: 10,
+      targetInertiaRatio: 5,
       encoderType: 'MULTI_TURN',
       communication: 'ETHERCAT',
       emcFilter: 'NONE',
@@ -44,6 +52,41 @@ export function SystemConfigStep() {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
+
+      {/* 惯量匹配目标 */}
+      <div className="space-y-3">
+        <label className="block text-sm font-medium text-gray-700">
+          惯量匹配目标
+        </label>
+        <div className="grid grid-cols-2 gap-3">
+          {INERTIA_RATIO_OPTIONS.map((opt) => (
+            <label
+              key={opt.ratio}
+              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                formData.targetInertiaRatio === opt.ratio
+                  ? 'border-blue-500 bg-blue-50'
+                  : 'border-gray-200 hover:border-gray-300'
+              }`}
+            >
+              <input
+                type="radio"
+                name="targetInertiaRatio"
+                value={opt.ratio}
+                checked={formData.targetInertiaRatio === opt.ratio}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    targetInertiaRatio: Number(e.target.value),
+                  })
+                }
+                className="sr-only"
+              />
+              <div className="font-medium text-sm">{opt.label}</div>
+              <div className="text-xs text-gray-500 mt-1">{opt.desc}</div>
+            </label>
+          ))}
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
