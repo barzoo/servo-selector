@@ -405,15 +405,15 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               <div className="text-sm space-y-1">
                 <div className="flex justify-between">
                   <span className="text-gray-500">订货号:</span>
-                  <span className="font-mono text-xs">{config.cables.motor.partNumber}</span>
+                  <span className="font-mono text-xs text-gray-900">{config.cables.motor.partNumber}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">规格:</span>
-                  <span>{config.cables.motor.spec}</span>
+                  <span className="text-gray-900">{config.cables.motor.spec}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">长度:</span>
-                  <span>{config.cables.motor.length} 米</span>
+                  <span className="text-gray-900">{config.cables.motor.length} 米</span>
                 </div>
               </div>
             </div>
@@ -422,15 +422,15 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               <div className="text-sm space-y-1">
                 <div className="flex justify-between">
                   <span className="text-gray-500">订货号:</span>
-                  <span className="font-mono text-xs">{config.cables.encoder.partNumber}</span>
+                  <span className="font-mono text-xs text-gray-900">{config.cables.encoder.partNumber}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">规格:</span>
-                  <span>{config.cables.encoder.spec}</span>
+                  <span className="text-gray-900">{config.cables.encoder.spec}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-500">长度:</span>
-                  <span>{config.cables.encoder.length} 米</span>
+                  <span className="text-gray-900">{config.cables.encoder.length} 米</span>
                 </div>
               </div>
             </div>
@@ -440,13 +440,13 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                 <div className="text-sm space-y-1">
                   <div className="flex justify-between">
                     <span className="text-gray-500">订货号:</span>
-                    <span className="font-mono text-xs">
+                    <span className="font-mono text-xs text-gray-900">
                       {config.cables.communication.partNumber}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">长度:</span>
-                    <span>{config.cables.communication.length} 米</span>
+                    <span className="text-gray-900">{config.cables.communication.length} 米</span>
                   </div>
                 </div>
               </div>
@@ -468,7 +468,7 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                   <h5 className="text-sm font-medium text-gray-700 mb-2">EMC滤波器</h5>
                   <div className="text-sm">
                     <span className="text-gray-500">订货号: </span>
-                    <span className="font-mono text-xs">{config.accessories.emcFilter}</span>
+                    <span className="font-mono text-xs text-gray-900">{config.accessories.emcFilter}</span>
                   </div>
                 </div>
               )}
@@ -478,11 +478,11 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                   <div className="text-sm space-y-1">
                     <div className="flex justify-between">
                       <span className="text-gray-500">型号:</span>
-                      <span>{config.accessories.brakeResistor.model}</span>
+                      <span className="text-gray-900">{config.accessories.brakeResistor.model}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-500">订货号:</span>
-                      <span className="font-mono text-xs">
+                      <span className="font-mono text-xs text-gray-900">
                         {config.accessories.brakeResistor.partNumber}
                       </span>
                     </div>
