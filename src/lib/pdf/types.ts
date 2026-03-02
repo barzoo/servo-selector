@@ -65,3 +65,40 @@ export interface ReportData {
 }
 
 export type TranslationFunction = (key: string) => string;
+
+// ============ 多轴报告类型 ============
+
+export interface MultiAxisReportData {
+  project: {
+    name: string;
+    customer: string;
+    salesPerson: string;
+    date: string;
+    notes?: string;
+  };
+  axes: Array<{
+    name: string;
+    calculations: {
+      loadInertia: string;
+      rmsTorque: string;
+      peakTorque: string;
+      maxSpeed: string;
+    };
+    motor: {
+      model: string;
+      partNumber: string;
+      ratedTorque: number;
+      ratedSpeed: number;
+    } | null;
+    drive: {
+      model: string;
+      partNumber: string;
+    } | null;
+  }>;
+  bom: Array<{
+    partNumber: string;
+    description: string;
+    quantity: number;
+    usedIn: string[];
+  }>;
+}

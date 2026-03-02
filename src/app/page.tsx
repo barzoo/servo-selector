@@ -23,8 +23,6 @@ export default function Home() {
     switchAxis,
     addAxis,
     deleteAxis,
-    completeAxis,
-    canExportPdf,
     reset,
     createProject,
   } = useProjectStore();
@@ -50,11 +48,6 @@ export default function Home() {
   const handleAddAxis = () => {
     const newAxisId = addAxis(`轴-${project.axes.length + 1}`);
     switchAxis(newAxisId);
-  };
-
-  const handleExportPdf = () => {
-    // TODO: Implement multi-axis PDF export
-    console.log('Export PDF for project:', project.name);
   };
 
   const renderStep = () => {
@@ -90,8 +83,6 @@ export default function Home() {
           onSwitchAxis={switchAxis}
           onAddAxis={handleAddAxis}
           onDeleteAxis={deleteAxis}
-          onExportPdf={handleExportPdf}
-          canExportPdf={canExportPdf()}
         />
       </aside>
 
@@ -107,8 +98,6 @@ export default function Home() {
                 onSwitchAxis={switchAxis}
                 onAddAxis={handleAddAxis}
                 onDeleteAxis={deleteAxis}
-                onExportPdf={handleExportPdf}
-                canExportPdf={canExportPdf()}
               />
             </div>
 

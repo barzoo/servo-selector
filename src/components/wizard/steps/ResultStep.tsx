@@ -1,6 +1,7 @@
 'use client';
 
 import { useWizardStore } from '@/stores/wizard-store';
+import { useProjectStore } from '@/stores/project-store';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { DetailedCalculations } from '../DetailedCalculations';
@@ -10,10 +11,13 @@ import type { ReportData } from '@/lib/pdf/types';
 
 export function ResultStep() {
   const { result, input, reset, prevStep } = useWizardStore();
+  const { completeAxis, addAxis, switchAxis, project } = useProjectStore();
   const t = useTranslations('result');
   const tSystem = useTranslations('systemSummary');
   const tLabels = useTranslations('systemSummary.labels');
   const [selectedMotorIndex, setSelectedMotorIndex] = useState(0);
+  const [showSaveOptions, setShowSaveOptions] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   if (!result || result.motorRecommendations.length === 0) {
     return (
@@ -304,11 +308,66 @@ export function ResultStep() {
           >
             {t('restart')}
           </button>
+          <button
+            onClick={() => {
+              completeAxis();
+              setIsSaved(true);
+              setShowSaveOptions(true);
+            }}
+            disabled={isSaved}
+            className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <span>💾</span>
+            <span>{isSaved ? '已保存' : '保存到篮子'}</span>
+          </button>
           <div className="w-full sm:w-auto">
             <PdfExportButton data={prepareReportData()} disabled={!config} />
           </div>
         </div>
       </div>
+
+      {/* Save Options Dialog */}
+      {showSaveOptions && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold mb-4">轴已保存到篮子</h3>
+            <div className="space-y-2">
+              <button
+                onClick={() => {
+                  const currentAxisId = useProjectStore.getState().currentAxisId;
+                  const newAxisId = addAxis(`轴-${project.axes.length + 1}`, currentAxisId);
+                  switchAxis(newAxisId);
+                  setShowSaveOptions(false);
+                  reset();
+                }}
+                className="w-full p-3 text-left rounded-lg border hover:bg-gray-50 flex items-center gap-2"
+              >
+                <span>🔄</span>
+                <span>基于此轴创建新轴</span>
+              </button>
+              <button
+                onClick={() => {
+                  const newAxisId = addAxis(`轴-${project.axes.length + 1}`);
+                  switchAxis(newAxisId);
+                  setShowSaveOptions(false);
+                  reset();
+                }}
+                className="w-full p-3 text-left rounded-lg border hover:bg-gray-50 flex items-center gap-2"
+              >
+                <span>➕</span>
+                <span>添加空白新轴</span>
+              </button>
+              <button
+                onClick={() => setShowSaveOptions(false)}
+                className="w-full p-3 text-left rounded-lg border hover:bg-gray-50 flex items-center gap-2"
+              >
+                <span>📋</span>
+                <span>继续编辑当前轴</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

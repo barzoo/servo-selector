@@ -9,9 +9,7 @@ interface MobileAxisDrawerProps {
   currentAxisId: string;
   onSwitchAxis: (axisId: string) => void;
   onAddAxis: () => void;
-  onDeleteAxis: (axisId: string) => void;
-  onExportPdf: () => void;
-  canExportPdf: boolean;
+  onDeleteAxis?: (axisId: string) => void;
 }
 
 export function MobileAxisDrawer({
@@ -20,18 +18,11 @@ export function MobileAxisDrawer({
   onSwitchAxis,
   onAddAxis,
   onDeleteAxis,
-  onExportPdf,
-  canExportPdf,
 }: MobileAxisDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSwitchAxis = (axisId: string) => {
     onSwitchAxis(axisId);
-    setIsOpen(false);
-  };
-
-  const handleExportPdf = () => {
-    onExportPdf();
     setIsOpen(false);
   };
 
@@ -96,8 +87,6 @@ export function MobileAxisDrawer({
                 setIsOpen(false);
               }}
               onDeleteAxis={onDeleteAxis}
-              onExportPdf={handleExportPdf}
-              canExportPdf={canExportPdf}
             />
           </div>
         </>

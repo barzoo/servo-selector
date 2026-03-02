@@ -2,6 +2,7 @@
 
 import { AxisSidebarItem } from './AxisSidebarItem';
 import { AddAxisButton } from './AddAxisButton';
+import { ProjectPdfExport } from './ProjectPdfExport';
 import type { Project } from '@/types';
 
 interface AxisSidebarProps {
@@ -9,9 +10,7 @@ interface AxisSidebarProps {
   currentAxisId: string;
   onSwitchAxis: (axisId: string) => void;
   onAddAxis: () => void;
-  onDeleteAxis: (axisId: string) => void;
-  onExportPdf: () => void;
-  canExportPdf: boolean;
+  onDeleteAxis?: (axisId: string) => void;
 }
 
 export function AxisSidebar({
@@ -19,8 +18,6 @@ export function AxisSidebar({
   currentAxisId,
   onSwitchAxis,
   onAddAxis,
-  onExportPdf,
-  canExportPdf,
 }: AxisSidebarProps) {
   const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
 
@@ -60,24 +57,7 @@ export function AxisSidebar({
           <span className="text-sm font-medium text-gray-700">📋 项目篮子</span>
           <span className="text-xs text-gray-500">{completedCount} 个轴</span>
         </div>
-        <button
-          onClick={onExportPdf}
-          disabled={!canExportPdf}
-          className="
-            w-full px-4 py-2 bg-green-600 text-white rounded-md
-            hover:bg-green-700 transition-colors
-            disabled:bg-gray-400 disabled:cursor-not-allowed
-            text-sm font-medium flex items-center justify-center gap-2
-          "
-        >
-          <span>📄</span>
-          <span>导出项目PDF</span>
-        </button>
-        {!canExportPdf && (
-          <p className="text-xs text-gray-500 mt-2 text-center">
-            完成至少一个轴后可导出
-          </p>
-        )}
+        <ProjectPdfExport project={project} />
       </div>
     </div>
   );
