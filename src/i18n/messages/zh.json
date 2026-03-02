@@ -11,7 +11,8 @@
     "save": "保存",
     "loading": "加载中...",
     "error": "错误",
-    "success": "成功"
+    "success": "成功",
+    "close": "关闭"
   },
   "steps": {
     "projectInfo": "项目信息",
@@ -178,10 +179,12 @@
     "brakeResistor": "制动电阻：",
     "emcFilter": "EMC滤波器：",
     "restart": "重新开始",
-    "pdfExportInDevelopment": "PDF导出功能开发中..."
+    "pdfExportInDevelopment": "PDF导出功能开发中...",
+    "print": "打印"
   },
   "detailedCalculations": {
     "title": "详细计算信息",
+    "description": "详细计算数据请查看系统配置页面",
     "mechanism": "机械参数",
     "inertia": "惯量计算",
     "torques": "扭矩分析",

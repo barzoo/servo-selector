@@ -11,7 +11,8 @@
     "save": "Save",
     "loading": "Loading...",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "close": "Close"
   },
   "steps": {
     "projectInfo": "Project Info",
@@ -178,10 +179,12 @@
     "brakeResistor": "Brake Resistor: ",
     "emcFilter": "EMC Filter: ",
     "restart": "Restart",
-    "pdfExportInDevelopment": "PDF export feature is under development..."
+    "pdfExportInDevelopment": "PDF export feature is under development...",
+    "print": "Print"
   },
   "detailedCalculations": {
     "title": "Detailed Calculations",
+    "description": "Please refer to the system configuration page for detailed calculation data",
     "mechanism": "Mechanism Parameters",
     "inertia": "Inertia Calculation",
     "torques": "Torque Analysis",
