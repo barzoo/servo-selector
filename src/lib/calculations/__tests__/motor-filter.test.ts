@@ -74,28 +74,57 @@ describe('MotorFilter Encoder Type Filtering', () => {
     regeneration: { energyPerCycle: 0, brakingPower: 0, requiresExternalResistor: false },
   };
 
-  const defaultPrefs: SystemPreferences = {
+  const basePrefs: SystemPreferences = {
     safetyFactor: 1.5,
     maxInertiaRatio: 10,
     targetInertiaRatio: 10,
     communication: 'ETHERCAT',
     safety: 'NONE',
     cableLength: 5,
+    encoderType: 'BOTH',
   };
 
-  it('should return motors without encoder type filtering', () => {
-    // encoderType has been removed from SystemPreferences
-    // filtering now happens at MotorSelections level
-    const filter = new MotorFilter(mockMechanical, defaultPrefs);
+  it('should filter motors by encoder type A (battery)', () => {
+    const prefsWithEncoderA: SystemPreferences = {
+      ...basePrefs,
+      encoderType: 'A',
+    };
+
+    const filter = new MotorFilter(mockMechanical, prefsWithEncoderA);
     const results = filter.filter();
 
-    // Should return results with both encoder types
-    expect(results.length).toBeGreaterThanOrEqual(0);
+    if (results.length > 0) {
+      results.forEach(rec => {
+        expect(rec.motor.options.encoder.type).toBe('BATTERY_MULTI_TURN');
+      });
+    }
+  });
+
+  it('should filter motors by encoder type B (mechanical)', () => {
+    const prefsWithEncoderB: SystemPreferences = {
+      ...basePrefs,
+      encoderType: 'B',
+    };
+
+    const filter = new MotorFilter(mockMechanical, prefsWithEncoderB);
+    const results = filter.filter();
+
+    if (results.length > 0) {
+      results.forEach(rec => {
+        expect(rec.motor.options.encoder.type).toBe('MECHANICAL_MULTI_TURN');
+      });
+    }
+  });
+
+  it('should show both encoder types when BOTH is selected', () => {
+    const filter = new MotorFilter(mockMechanical, basePrefs);
+    const results = filter.filter();
 
     const hasBattery = results.some(r => r.motor.options.encoder.type === 'BATTERY_MULTI_TURN');
     const hasMechanical = results.some(r => r.motor.options.encoder.type === 'MECHANICAL_MULTI_TURN');
 
-    // At least one type should be present if there are results
+    // When BOTH is selected, results can contain either type
+    expect(results.length).toBeGreaterThanOrEqual(0);
     if (results.length > 0) {
       expect(hasBattery || hasMechanical).toBe(true);
     }
@@ -136,6 +165,7 @@ describe('MotorFilter keyShaft filtering', () => {
     communication: 'ETHERCAT',
     safety: 'NONE',
     cableLength: 5,
+    encoderType: 'BOTH',
   };
 
   it('should filter motors by smooth shaft (L)', () => {
