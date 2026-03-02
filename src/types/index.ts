@@ -466,3 +466,63 @@ export interface SystemConfigExportData {
   calculations?: MechanicalResult;
   project?: ProjectInfo;
 }
+
+// ============ 多轴功能类型 ============
+
+export type AxisStatus = 'CONFIGURING' | 'COMPLETED' | 'ABANDONED';
+
+export interface AxisConfig {
+  id: string;
+  name: string;
+  status: AxisStatus;
+  createdAt: string;
+  completedAt?: string;
+  input: Partial<SizingInput>;
+  result?: SizingResult;
+  selectedMotorIndex?: number;
+}
+
+export interface Project {
+  id: string;
+  name: string;
+  customer: string;
+  salesPerson: string;
+  notes?: string;
+  createdAt: string;
+  axes: AxisConfig[];
+}
+
+export interface MultiAxisReportData {
+  project: {
+    name: string;
+    customer: string;
+    salesPerson: string;
+    date: string;
+    notes?: string;
+  };
+  axes: Array<{
+    name: string;
+    calculations: {
+      loadInertia: string;
+      rmsTorque: string;
+      peakTorque: string;
+      maxSpeed: string;
+    };
+    motor: {
+      model: string;
+      partNumber: string;
+      ratedTorque: number;
+      ratedSpeed: number;
+    };
+    drive: {
+      model: string;
+      partNumber: string;
+    };
+  }>;
+  bom: Array<{
+    partNumber: string;
+    description: string;
+    quantity: number;
+    usedIn: string[];
+  }>;
+}
