@@ -98,7 +98,7 @@ export function MechanismStep() {
     const params = formData.params as BallScrewParams;
 
     return (
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('params.loadMass')} <span className="text-red-500">*</span>
@@ -248,7 +248,7 @@ export function MechanismStep() {
     const params = formData.params as GearboxParams;
 
     return (
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('params.loadMass')} <span className="text-red-500">*</span>
@@ -402,7 +402,7 @@ export function MechanismStep() {
     const params = formData.params as DirectDriveParams;
 
     return (
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('params.driveType')} <span className="text-red-500">*</span>
@@ -504,7 +504,7 @@ export function MechanismStep() {
     const params = formData.params as BeltParams;
 
     return (
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('params.loadMass')} <span className="text-red-500">*</span>
@@ -635,7 +635,7 @@ export function MechanismStep() {
     const params = formData.params as RackPinionParams;
 
     return (
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('params.loadMass')} <span className="text-red-500">*</span>
@@ -797,17 +797,17 @@ export function MechanismStep() {
 
       {renderParamsForm()}
 
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between gap-3">
         <button
           type="button"
           onClick={prevStep}
-          className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
         >
           {commonT('back')}
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           {commonT('next')}
         </button>
