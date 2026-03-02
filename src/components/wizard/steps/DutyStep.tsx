@@ -42,7 +42,7 @@ export function DutyStep() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('ambientTemp')}
@@ -194,17 +194,17 @@ export function DutyStep() {
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between gap-3">
         <button
           type="button"
           onClick={prevStep}
-          className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
         >
           {commonT('back')}
         </button>
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           {commonT('next')}
         </button>
