@@ -169,7 +169,7 @@ export function ResultStep() {
       {/* 计算摘要 */}
       <div className="bg-blue-50 p-4 rounded-lg">
         <h3 className="font-semibold text-blue-800 mb-2">{t('calculationSummary')}</h3>
-        <div className="grid grid-cols-3 gap-4 text-sm">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 text-sm">
           <div>
             <div className="text-gray-800">{t('loadInertia')}</div>
             <div className="font-medium text-gray-900">{result.mechanical.loadInertia.toExponential(3)} kg·m²</div>
@@ -290,21 +290,23 @@ export function ResultStep() {
         />
       )}
 
-      <div className="flex justify-between">
+      <div className="flex flex-col sm:flex-row justify-between gap-3">
         <button
           onClick={prevStep}
-          className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
         >
           {t('backToEdit')}
         </button>
-        <div className="space-x-3">
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={reset}
-            className="px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+            className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
           >
             {t('restart')}
           </button>
-          <PdfExportButton data={prepareReportData()} disabled={!config} />
+          <div className="w-full sm:w-auto">
+            <PdfExportButton data={prepareReportData()} disabled={!config} />
+          </div>
         </div>
       </div>
     </div>
