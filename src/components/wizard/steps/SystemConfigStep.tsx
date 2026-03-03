@@ -1,13 +1,13 @@
 'use client';
 
-import { useWizardStore } from '@/stores/wizard-store';
+import { useProjectStore } from '@/stores/project-store';
 import { SystemPreferences } from '@/types';
 import { useState } from 'react';
 import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { useTranslations } from 'next-intl';
 
 export function SystemConfigStep() {
-  const { input, setPreferences, setResult, prevStep, completeWizard } = useWizardStore();
+  const { input, setPreferences, setResult, prevStep, completeWizard } = useProjectStore();
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useWizardStore } from '@/stores/wizard-store';
+import { useProjectStore } from '@/stores/project-store';
 import { DutyConditions } from '@/types';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
@@ -11,7 +11,7 @@ const BRAKE_OPTIONS = [
 ];
 
 export function DutyStep() {
-  const { input, setDuty, nextStep, prevStep } = useWizardStore();
+  const { input, setDuty, nextStep, prevStep } = useProjectStore();
   const t = useTranslations('duty');
   const commonT = useTranslations('common');
 

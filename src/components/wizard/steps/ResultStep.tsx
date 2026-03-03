@@ -1,6 +1,5 @@
 'use client';
 
-import { useWizardStore } from '@/stores/wizard-store';
 import { useProjectStore } from '@/stores/project-store';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
@@ -10,7 +9,7 @@ import { PdfExportButton } from '../PdfExportButton';
 import type { ReportData } from '@/lib/pdf/types';
 
 export function ResultStep() {
-  const { result, input, reset, prevStep } = useWizardStore();
+  const { result, input, reset, prevStep } = useProjectStore();
   const { completeAxis, addAxis, switchAxis, project } = useProjectStore();
   const t = useTranslations('result');
   const tSystem = useTranslations('systemSummary');

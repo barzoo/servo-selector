@@ -1,6 +1,6 @@
 'use client';
 
-import { useWizardStore } from '@/stores/wizard-store';
+import { useProjectStore } from '@/stores/project-store';
 import {
   MechanismConfig,
   MechanismType,
@@ -72,7 +72,7 @@ const defaultParams = {
 export function MechanismStep() {
   const t = useTranslations('mechanism');
   const commonT = useTranslations('common');
-  const { input, setMechanism, nextStep, prevStep } = useWizardStore();
+  const { input, setMechanism, nextStep, prevStep } = useProjectStore();
 
   const [formData, setFormData] = useState<MechanismConfig>(
     input.mechanism || {

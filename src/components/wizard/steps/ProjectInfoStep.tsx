@@ -1,12 +1,12 @@
 'use client';
 
-import { useWizardStore } from '@/stores/wizard-store';
+import { useProjectStore } from '@/stores/project-store';
 import { ProjectInfo } from '@/types';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 export function ProjectInfoStep() {
-  const { input, setProjectInfo, nextStep } = useWizardStore();
+  const { input, setProjectInfo, nextStep } = useProjectStore();
   const [errors, setErrors] = useState<Partial<Record<keyof ProjectInfo, string>>>({});
   const t = useTranslations('projectInfo');
   const commonT = useTranslations('common');

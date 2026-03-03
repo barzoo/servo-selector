@@ -10,6 +10,11 @@ import {
   SizingInput,
   SizingResult,
   ProjectInfo,
+  MechanismConfig,
+  MotionParams,
+  DutyConditions,
+  SystemPreferences,
+  MotorSelections,
 } from '@/types';
 
 // ============ ID Generation ============
@@ -110,6 +115,15 @@ interface ProjectStore {
   nextStep: () => void;
   prevStep: () => void;
   reset: () => void;
+
+  // Individual input setters (for compatibility with existing components)
+  setProjectInfo: (info: ProjectInfo) => void;
+  setMechanism: (mechanism: MechanismConfig) => void;
+  setMotion: (motion: MotionParams) => void;
+  setDuty: (duty: DutyConditions) => void;
+  setPreferences: (preferences: SystemPreferences) => void;
+  setSelections: (selections: MotorSelections) => void;
+  completeWizard: () => void;
 
   // Queries
   getCurrentAxis: () => AxisConfig;
@@ -290,6 +304,39 @@ export const useProjectStore = create<ProjectStore>()(
           currentAxisId: newProject.axes[0].id,
         });
       },
+
+      // Individual input setters (for compatibility with existing components)
+      setProjectInfo: (project) =>
+        set((state) => ({
+          input: { ...state.input, project },
+        })),
+
+      setMechanism: (mechanism) =>
+        set((state) => ({
+          input: { ...state.input, mechanism },
+        })),
+
+      setMotion: (motion) =>
+        set((state) => ({
+          input: { ...state.input, motion },
+        })),
+
+      setDuty: (duty) =>
+        set((state) => ({
+          input: { ...state.input, duty },
+        })),
+
+      setPreferences: (preferences) =>
+        set((state) => ({
+          input: { ...state.input, preferences },
+        })),
+
+      setSelections: (selections) =>
+        set((state) => ({
+          input: { ...state.input, selections },
+        })),
+
+      completeWizard: () => set({ isComplete: true }),
 
       // Queries
       getCurrentAxis: () => {

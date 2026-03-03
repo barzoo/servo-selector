@@ -1,12 +1,12 @@
 'use client';
 
-import { useWizardStore } from '@/stores/wizard-store';
+import { useProjectStore } from '@/stores/project-store';
 import { MotionParams } from '@/types';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 export function MotionStep() {
-  const { input, setMotion, nextStep, prevStep } = useWizardStore();
+  const { input, setMotion, nextStep, prevStep } = useProjectStore();
   const t = useTranslations('motion');
   const commonT = useTranslations('common');
 
