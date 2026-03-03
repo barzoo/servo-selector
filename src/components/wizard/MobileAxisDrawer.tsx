@@ -10,6 +10,8 @@ interface MobileAxisDrawerProps {
   onSwitchAxis: (axisId: string) => void;
   onAddAxis: () => void;
   onDeleteAxis?: (axisId: string) => void;
+  onReeditAxis?: (axisId: string) => void;
+  onUpdateAxisName?: (axisId: string, name: string) => void;
 }
 
 export function MobileAxisDrawer({
@@ -18,6 +20,8 @@ export function MobileAxisDrawer({
   onSwitchAxis,
   onAddAxis,
   onDeleteAxis,
+  onReeditAxis,
+  onUpdateAxisName,
 }: MobileAxisDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -87,6 +91,8 @@ export function MobileAxisDrawer({
                 setIsOpen(false);
               }}
               onDeleteAxis={onDeleteAxis}
+              onReeditAxis={onReeditAxis}
+              onUpdateAxisName={onUpdateAxisName}
             />
           </div>
         </>

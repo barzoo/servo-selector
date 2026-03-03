@@ -49,7 +49,7 @@ describe('generateProjectId', () => {
 describe('createInitialAxis', () => {
   it('should create axis with default name', () => {
     const axis = createInitialAxis();
-    expect(axis.name).toBe('轴 1');
+    expect(axis.name).toBe('轴-1');
     expect(axis.status).toBe('CONFIGURING');
     expect(axis.id).toMatch(/^axis_/);
     expect(axis.createdAt).toBeDefined();
@@ -95,7 +95,7 @@ describe('createInitialProject', () => {
   it('should create project with one initial axis', () => {
     const project = createInitialProject();
     expect(project.axes).toHaveLength(1);
-    expect(project.axes[0].name).toBe('轴 1');
+    expect(project.axes[0].name).toBe('轴-1');
     expect(project.axes[0].status).toBe('CONFIGURING');
   });
 });

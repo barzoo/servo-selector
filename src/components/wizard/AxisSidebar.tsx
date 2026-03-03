@@ -11,6 +11,8 @@ interface AxisSidebarProps {
   onSwitchAxis: (axisId: string) => void;
   onAddAxis: () => void;
   onDeleteAxis?: (axisId: string) => void;
+  onReeditAxis?: (axisId: string) => void;
+  onUpdateAxisName?: (axisId: string, name: string) => void;
 }
 
 export function AxisSidebar({
@@ -18,6 +20,9 @@ export function AxisSidebar({
   currentAxisId,
   onSwitchAxis,
   onAddAxis,
+  onDeleteAxis,
+  onReeditAxis,
+  onUpdateAxisName,
 }: AxisSidebarProps) {
   const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
 
@@ -42,6 +47,10 @@ export function AxisSidebar({
             axis={axis}
             isActive={axis.id === currentAxisId}
             onClick={() => onSwitchAxis(axis.id)}
+            onDelete={onDeleteAxis ? () => onDeleteAxis(axis.id) : undefined}
+            onReedit={onReeditAxis ? () => onReeditAxis(axis.id) : undefined}
+            onUpdateName={onUpdateAxisName ? (name) => onUpdateAxisName(axis.id, name) : undefined}
+            canDelete={project.axes.length > 1}
           />
         ))}
       </div>

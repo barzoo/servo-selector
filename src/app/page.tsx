@@ -22,6 +22,8 @@ export default function Home() {
     switchAxis,
     addAxis,
     deleteAxis,
+    updateAxisName,
+    reeditAxis,
     createProject,
   } = useProjectStore();
 
@@ -81,6 +83,8 @@ export default function Home() {
           onSwitchAxis={switchAxis}
           onAddAxis={handleAddAxis}
           onDeleteAxis={deleteAxis}
+          onReeditAxis={reeditAxis}
+          onUpdateAxisName={updateAxisName}
         />
       </aside>
 
@@ -96,6 +100,8 @@ export default function Home() {
                 onSwitchAxis={switchAxis}
                 onAddAxis={handleAddAxis}
                 onDeleteAxis={deleteAxis}
+                onReeditAxis={reeditAxis}
+                onUpdateAxisName={updateAxisName}
               />
             </div>
 

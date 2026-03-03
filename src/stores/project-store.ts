@@ -55,7 +55,7 @@ export function generateProjectId(): string {
  * @returns Initial AxisConfig object
  * Complexity: O(1)
  */
-export function createInitialAxis(name: string = '轴 1'): AxisConfig {
+export function createInitialAxis(name: string = '轴-1'): AxisConfig {
   return {
     id: generateId(),
     name,
@@ -124,6 +124,9 @@ interface ProjectStore {
   setPreferences: (preferences: SystemPreferences) => void;
   setSelections: (selections: MotorSelections) => void;
   completeWizard: () => void;
+
+  // Re-edit completed axis
+  reeditAxis: (axisId: string) => void;
 
   // Queries
   getCurrentAxis: () => AxisConfig;
@@ -213,11 +216,13 @@ export const useProjectStore = create<ProjectStore>()(
         }
 
         // Load new axis state
+        // Keep the current project info when switching axes
+        const currentProject = get().input.project;
         set({
           currentAxisId: axisId,
           currentStep: axis.status === 'COMPLETED' ? 6 : 1,
           isComplete: axis.status === 'COMPLETED',
-          input: axis.input,
+          input: { ...axis.input, project: currentProject || axis.input.project },
           result: axis.result,
         });
       },
@@ -262,7 +267,8 @@ export const useProjectStore = create<ProjectStore>()(
                     ...a,
                     status: 'COMPLETED' as AxisStatus,
                     completedAt: new Date().toISOString(),
-                    input: state.input,
+                    // Don't save project info in axis input - it's shared at project level
+                    input: { ...state.input, project: undefined },
                     result: state.result,
                   }
                 : a
@@ -306,9 +312,16 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       // Individual input setters (for compatibility with existing components)
-      setProjectInfo: (project) =>
+      setProjectInfo: (projectInfo) =>
         set((state) => ({
-          input: { ...state.input, project },
+          project: {
+            ...state.project,
+            name: projectInfo.name,
+            customer: projectInfo.customer,
+            salesPerson: projectInfo.salesPerson,
+            notes: projectInfo.notes,
+          },
+          input: { ...state.input, project: projectInfo },
         })),
 
       setMechanism: (mechanism) =>
@@ -337,6 +350,32 @@ export const useProjectStore = create<ProjectStore>()(
         })),
 
       completeWizard: () => set({ isComplete: true }),
+
+      // Re-edit completed axis
+      reeditAxis: (axisId) => {
+        const state = get();
+        const axis = state.project.axes.find((a) => a.id === axisId);
+        if (!axis || axis.status !== 'COMPLETED') return;
+
+        // Update axis status back to CONFIGURING
+        set((state) => ({
+          project: {
+            ...state.project,
+            axes: state.project.axes.map((a) =>
+              a.id === axisId
+                ? {
+                    ...a,
+                    status: 'CONFIGURING' as AxisStatus,
+                    completedAt: undefined,
+                  }
+                : a
+            ),
+          },
+        }));
+
+        // Switch to this axis
+        get().switchAxis(axisId);
+      },
 
       // Queries
       getCurrentAxis: () => {
