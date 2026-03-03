@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import {
   generateId,
   generateProjectId,
@@ -6,7 +6,6 @@ import {
   createInitialProject,
   migrateLegacyData,
 } from '../project-store';
-import { AxisConfig, Project } from '@/types';
 
 // Mock localStorage
 const localStorageMock = {

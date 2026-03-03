@@ -19,11 +19,9 @@ export default function Home() {
     currentAxisId,
     currentStep,
     isComplete,
-    result,
     switchAxis,
     addAxis,
     deleteAxis,
-    reset,
     createProject,
   } = useProjectStore();
 

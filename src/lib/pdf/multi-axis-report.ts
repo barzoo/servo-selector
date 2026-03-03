@@ -2,6 +2,20 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import type { MultiAxisReportData } from './types';
 
+// Extend jsPDF type for autotable
+declare module 'jspdf' {
+  interface jsPDF {
+    autoTable: (options: {
+      startY?: number;
+      head?: string[][];
+      body?: string[][];
+      theme?: string;
+      headStyles?: { fillColor?: number[] };
+    }) => void;
+    lastAutoTable: { finalY: number };
+  }
+}
+
 export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
@@ -25,7 +39,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
     ['已完成轴数', data.axes.length.toString()],
   ];
 
-  (doc as any).autoTable({
+  doc.autoTable({
     startY: 80,
     head: [['项目', '数值']],
     body: overviewData,
@@ -34,7 +48,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
   });
 
   // Each Axis
-  let currentY = (doc as any).lastAutoTable.finalY + 15;
+  let currentY = doc.lastAutoTable.finalY + 15;
 
   data.axes.forEach((axis, index) => {
     // Check if need new page
@@ -56,7 +70,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
       ['最大速度', `${axis.calculations.maxSpeed} rpm`],
     ];
 
-    (doc as any).autoTable({
+    doc.autoTable({
       startY: currentY,
       head: [['参数', '数值']],
       body: calcData,
@@ -64,7 +78,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
       headStyles: { fillColor: [37, 99, 235] },
     });
 
-    currentY = (doc as any).lastAutoTable.finalY + 10;
+    currentY = doc.lastAutoTable.finalY + 10;
 
     // Motor & Drive
     if (axis.motor && axis.drive) {
@@ -75,7 +89,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
         ['驱动器料号', axis.drive.partNumber],
       ];
 
-      (doc as any).autoTable({
+      doc.autoTable({
         startY: currentY,
         head: [['类型', '型号/料号']],
         body: motorDriveData,
@@ -83,7 +97,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
         headStyles: { fillColor: [37, 99, 235] },
       });
 
-      currentY = (doc as any).lastAutoTable.finalY + 15;
+      currentY = doc.lastAutoTable.finalY + 15;
     }
   });
 
@@ -104,7 +118,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
     item.usedIn.join(', '),
   ]);
 
-  (doc as any).autoTable({
+  doc.autoTable({
     startY: currentY,
     head: [['料号', '描述', '数量', '用于']],
     body: bomData,
