@@ -328,8 +328,8 @@ export function ResultStep() {
       {/* Save Options Dialog */}
       {showSaveOptions && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold mb-4">轴已保存到篮子</h3>
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4 shadow-xl">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">轴已保存到篮子</h3>
             <div className="space-y-2">
               <button
                 onClick={() => {
@@ -339,10 +339,10 @@ export function ResultStep() {
                   setShowSaveOptions(false);
                   reset();
                 }}
-                className="w-full p-3 text-left rounded-lg border hover:bg-gray-50 flex items-center gap-2"
+                className="w-full p-3 text-left rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center gap-2 text-gray-900 bg-white"
               >
                 <span>🔄</span>
-                <span>基于此轴创建新轴</span>
+                <span className="text-gray-900">基于此轴创建新轴</span>
               </button>
               <button
                 onClick={() => {
@@ -351,17 +351,17 @@ export function ResultStep() {
                   setShowSaveOptions(false);
                   reset();
                 }}
-                className="w-full p-3 text-left rounded-lg border hover:bg-gray-50 flex items-center gap-2"
+                className="w-full p-3 text-left rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center gap-2 text-gray-900 bg-white"
               >
                 <span>➕</span>
-                <span>添加空白新轴</span>
+                <span className="text-gray-900">添加空白新轴</span>
               </button>
               <button
                 onClick={() => setShowSaveOptions(false)}
-                className="w-full p-3 text-left rounded-lg border hover:bg-gray-50 flex items-center gap-2"
+                className="w-full p-3 text-left rounded-lg border border-gray-300 hover:bg-gray-50 flex items-center gap-2 text-gray-900 bg-white"
               >
                 <span>📋</span>
-                <span>继续编辑当前轴</span>
+                <span className="text-gray-900">继续编辑当前轴</span>
               </button>
             </div>
           </div>

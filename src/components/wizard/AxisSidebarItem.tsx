@@ -112,7 +112,7 @@ export function AxisSidebarItem({
             className="fixed inset-0 z-10"
             onClick={() => setShowMenu(false)}
           />
-          <div className="absolute right-2 top-8 z-20 bg-white border rounded-lg shadow-lg py-1 min-w-[120px]">
+          <div className="absolute right-2 top-8 z-20 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[120px]">
             {axis.status === 'COMPLETED' && onReedit && (
               <button
                 onClick={(e) => {
@@ -120,7 +120,7 @@ export function AxisSidebarItem({
                   onReedit();
                   setShowMenu(false);
                 }}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+                className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-100 flex items-center gap-2"
               >
                 <span>✏️</span>
                 <span>重新编辑</span>
@@ -132,7 +132,7 @@ export function AxisSidebarItem({
                 setIsEditing(true);
                 setShowMenu(false);
               }}
-              className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 flex items-center gap-2"
+              className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-100 flex items-center gap-2"
             >
               <span>🏷️</span>
               <span>重命名</span>
@@ -146,7 +146,7 @@ export function AxisSidebarItem({
                   }
                   setShowMenu(false);
                 }}
-                className="w-full px-3 py-2 text-left text-sm hover:bg-gray-100 text-red-600 flex items-center gap-2"
+                className="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
               >
                 <span>🗑️</span>
                 <span>删除</span>

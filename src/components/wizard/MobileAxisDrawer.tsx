@@ -60,9 +60,9 @@ export function MobileAxisDrawer({
             className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="md:hidden fixed left-0 top-0 h-full w-64 bg-white z-50 shadow-xl">
+          <div className="md:hidden fixed left-0 top-0 h-full w-64 bg-white z-50 shadow-xl text-gray-900">
             <div className="flex items-center justify-between p-4 border-b">
-              <span className="font-semibold">轴列表</span>
+              <span className="font-semibold text-gray-900">轴列表</span>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 rounded hover:bg-gray-100"
