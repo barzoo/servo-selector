@@ -87,7 +87,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
               )}
 
               {/* 电缆 */}
-              {systemConfig.cables && (
+              {systemConfig.accessories && (
                 <>
                   <div className="border rounded-lg overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 font-medium border-b">
@@ -96,11 +96,15 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
                     <div className="p-4 grid grid-cols-1 gap-2">
                       <div>
                         <span className="text-gray-600 text-sm">{t('systemSummary.columns.partNumber')}:</span>
-                        <span className="ml-2 font-mono text-sm">{systemConfig.cables.motor.partNumber}</span>
+                        <span className="ml-2 font-mono text-sm">{systemConfig.accessories.motorCable.model}</span>
                       </div>
                       <div>
-                        <span className="text-gray-600 text-sm">{t('systemSummary.cable.spec')}:</span>
-                        <span className="ml-2">{systemConfig.cables.motor.spec}</span>
+                        <span className="text-gray-600 text-sm">{t('systemSummary.cable.length')}:</span>
+                        <span className="ml-2">
+                          {typeof systemConfig.accessories.motorCable.length === 'number'
+                            ? `${systemConfig.accessories.motorCable.length} m`
+                            : t('systemSummary.cable.terminalOnly')}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -112,11 +116,15 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
                     <div className="p-4 grid grid-cols-1 gap-2">
                       <div>
                         <span className="text-gray-600 text-sm">{t('systemSummary.columns.partNumber')}:</span>
-                        <span className="ml-2 font-mono text-sm">{systemConfig.cables.encoder.partNumber}</span>
+                        <span className="ml-2 font-mono text-sm">{systemConfig.accessories.encoderCable.model}</span>
                       </div>
                       <div>
-                        <span className="text-gray-600 text-sm">{t('systemSummary.cable.spec')}:</span>
-                        <span className="ml-2">{systemConfig.cables.encoder.spec}</span>
+                        <span className="text-gray-600 text-sm">{t('systemSummary.cable.length')}:</span>
+                        <span className="ml-2">
+                          {typeof systemConfig.accessories.encoderCable.length === 'number'
+                            ? `${systemConfig.accessories.encoderCable.length} m`
+                            : t('systemSummary.cable.terminalOnly')}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -160,15 +168,15 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
       )}
 
       {/* 制动能量分析 */}
-      {result.regeneration && (
+      {result.mechanical.regeneration && (
         <Section title={t('systemSummary.regeneration')}>
           <div className="border rounded-lg overflow-hidden">
             <div className="p-4 grid grid-cols-1 gap-2">
-              <ParamRow label={t('systemSummary.labels.energyPerCycle')} value={`${result.regeneration.energyPerCycle.toFixed(1)} J`} />
-              <ParamRow label={t('systemSummary.labels.brakingPower')} value={`${result.regeneration.brakingPower.toFixed(1)} W`} />
+              <ParamRow label={t('systemSummary.labels.energyPerCycle')} value={`${result.mechanical.regeneration.energyPerCycle.toFixed(1)} J`} />
+              <ParamRow label={t('systemSummary.labels.brakingPower')} value={`${result.mechanical.regeneration.brakingPower.toFixed(1)} W`} />
               <ParamRow
                 label={t('systemSummary.labels.externalResistorRequired')}
-                value={result.regeneration.requiresExternalResistor ? t('systemSummary.options.yes') : t('systemSummary.options.no')}
+                value={result.mechanical.regeneration.requiresExternalResistor ? t('systemSummary.options.yes') : t('systemSummary.options.no')}
               />
             </div>
           </div>
