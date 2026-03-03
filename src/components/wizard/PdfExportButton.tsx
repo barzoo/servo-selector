@@ -2,20 +2,19 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import type { ReportData } from '@/lib/pdf/types';
-import { PrintReportView } from './PrintReportView';
+import { useProjectStore } from '@/stores/project-store';
+import { MultiAxisPrintView } from './MultiAxisPrintView';
 
 interface PdfExportButtonProps {
-  data: ReportData | null;
   disabled?: boolean;
 }
 
-export function PdfExportButton({ data, disabled }: PdfExportButtonProps) {
+export function PdfExportButton({ disabled }: PdfExportButtonProps) {
   const t = useTranslations();
   const [showPrintView, setShowPrintView] = useState(false);
+  const { project } = useProjectStore();
 
   const handleExport = () => {
-    if (!data) return;
     setShowPrintView(true);
   };
 
@@ -23,19 +22,21 @@ export function PdfExportButton({ data, disabled }: PdfExportButtonProps) {
     setShowPrintView(false);
   };
 
+  const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
+
   return (
     <>
       <button
         onClick={handleExport}
-        disabled={disabled || !data}
+        disabled={disabled || completedCount === 0}
         className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center gap-2"
       >
         <span>📄</span>
         {t('result.exportPdf')}
       </button>
 
-      {showPrintView && data && (
-        <PrintReportView data={data} onClose={handleClose} />
+      {showPrintView && (
+        <MultiAxisPrintView project={project} onClose={handleClose} />
       )}
     </>
   );

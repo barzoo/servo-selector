@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import { DetailedCalculations } from '../DetailedCalculations';
 import { SystemSummary, findMotor, findDrive, buildSummaryItems } from '../SystemSummary';
 import { PdfExportButton } from '../PdfExportButton';
-import type { ReportData } from '@/lib/pdf/types';
 
 export function ResultStep() {
   const { result, input, reset, prevStep } = useProjectStore();
@@ -92,67 +91,6 @@ export function ResultStep() {
       }),
     },
   } : null);
-
-  const prepareReportData = (): ReportData | null => {
-    if (!config || !result) return null;
-
-    const motor = findMotor(config.motor.partNumber);
-    const drive = findDrive(config.drive.partNumber);
-
-    return {
-      project: {
-        name: input.project?.name || '-',
-        customer: input.project?.customer || '-',
-        salesPerson: input.project?.salesPerson,
-        date: new Date().toLocaleDateString(),
-        notes: input.project?.notes,
-      },
-      calculations: {
-        loadInertia: result.mechanical.loadInertia.toExponential(3),
-        rmsTorque: result.mechanical.torques.rms.toFixed(2),
-        peakTorque: result.mechanical.torques.peak.toFixed(2),
-        maxSpeed: result.mechanical.speeds.max.toFixed(0),
-        regenPower: result.mechanical.regeneration.brakingPower.toFixed(1),
-        calcTime: result.metadata.calculationTime.toFixed(1),
-      },
-      systemConfig: {
-        items: buildSummaryItems(config, tSystem, tLabels),
-        motor: motor || null,
-        drive: drive || null,
-        cables: {
-          motor: {
-            partNumber: config.cables.motor.partNumber,
-            spec: config.cables.motor.spec,
-            length: config.cables.motor.length,
-          },
-          encoder: {
-            partNumber: config.cables.encoder.partNumber,
-            spec: config.cables.encoder.spec,
-            length: config.cables.encoder.length,
-          },
-          ...(config.cables.communication && {
-            communication: {
-              partNumber: config.cables.communication.partNumber,
-              length: config.cables.communication.length,
-            },
-          }),
-        },
-        accessories: {
-          ...(config.accessories.emcFilter && {
-            emcFilter: config.accessories.emcFilter,
-          }),
-          ...(config.accessories.brakeResistor && {
-            brakeResistor: config.accessories.brakeResistor,
-          }),
-        },
-      },
-      regeneration: result.mechanical.regeneration,
-      detailedCalculations: {
-        input,
-        mechanical: result.mechanical,
-      },
-    };
-  };
 
   return (
     <div className="space-y-6">
@@ -320,7 +258,7 @@ export function ResultStep() {
             <span>{isSaved ? '已保存' : '保存到篮子'}</span>
           </button>
           <div className="w-full sm:w-auto">
-            <PdfExportButton data={prepareReportData()} disabled={!config} />
+            <PdfExportButton disabled={!config} />
           </div>
         </div>
       </div>
