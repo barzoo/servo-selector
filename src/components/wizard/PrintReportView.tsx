@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import { useTranslations } from 'next-intl';
 import type { ReportData } from '@/lib/pdf/types';
 
@@ -11,25 +12,25 @@ interface PrintReportViewProps {
 
 export function PrintReportView({ data, onClose }: PrintReportViewProps) {
   const t = useTranslations();
+  const printRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // 自动触发打印
-    const timer = setTimeout(() => {
-      window.print();
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handlePrint = () => {
-    window.print();
-  };
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: `${data.project.name || '选型报告'}.pdf`,
+    onAfterPrint: () => {
+      console.log('打印完成');
+    },
+    onPrintError: (error) => {
+      console.error('打印错误:', error);
+    },
+  });
 
   return (
-    <>
-      {/* 打印控制按钮 - 打印时隐藏 */}
-      <div className="fixed top-4 right-4 z-50 flex gap-2 print:hidden">
+    <div className="fixed inset-0 bg-white z-50 flex flex-col">
+      {/* 打印控制按钮 */}
+      <div className="flex justify-end gap-2 p-4 border-b bg-gray-50 print:hidden">
         <button
-          onClick={handlePrint}
+          onClick={() => handlePrint()}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         >
           🖨️ {t('result.print')}
@@ -42,9 +43,17 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
         </button>
       </div>
 
-      {/* 打印内容 */}
-      <div className="fixed inset-0 bg-white z-40 overflow-auto print:static print:overflow-visible">
-        <div className="max-w-[210mm] mx-auto p-[15mm] print:p-0">
+      {/* 打印内容预览 */}
+      <div className="flex-1 overflow-auto p-4 bg-gray-100">
+        <div
+          ref={printRef}
+          className="bg-white mx-auto p-8 shadow-lg"
+          style={{
+            width: '210mm',
+            minHeight: '297mm',
+            maxWidth: '100%',
+          }}
+        >
           {/* 报告标题 */}
           <div className="text-center border-b-2 border-gray-300 pb-6 mb-8">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -62,7 +71,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
 
           {/* 项目信息 - 纵向卡片布局 */}
           <Section title={t('pdf.sections.projectInfo')}>
-            <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+            <div className="border rounded-lg overflow-hidden">
               <div className="p-4 grid grid-cols-1 gap-3">
                 <div>
                   <span className="text-gray-600 text-sm">{t('pdf.projectInfo.name')}:</span>
@@ -110,7 +119,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
           <Section title={t('systemSummary.configList')}>
             <div className="space-y-4">
               {data.systemConfig.items.map((item, index) => (
-                <div key={index} className="border rounded-lg overflow-hidden print:break-inside-avoid">
+                <div key={index} className="border rounded-lg overflow-hidden">
                   <div className="bg-gray-100 px-4 py-2 font-medium border-b">
                     {item.typeLabel}
                   </div>
@@ -230,7 +239,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
           <Section title={t('systemSummary.cableSpecs')}>
             <div className="space-y-4">
               {/* 动力电缆 */}
-              <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+              <div className="border rounded-lg overflow-hidden">
                 <div className="bg-gray-100 px-4 py-2 font-medium border-b">
                   {t('systemSummary.labels.motorCable')}
                 </div>
@@ -255,7 +264,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
               </div>
 
               {/* 编码器电缆 */}
-              <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+              <div className="border rounded-lg overflow-hidden">
                 <div className="bg-gray-100 px-4 py-2 font-medium border-b">
                   {t('systemSummary.labels.encoderCable')}
                 </div>
@@ -281,7 +290,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
 
               {/* 通讯电缆 */}
               {data.systemConfig.cables.communication && (
-                <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+                <div className="border rounded-lg overflow-hidden">
                   <div className="bg-gray-100 px-4 py-2 font-medium border-b">
                     {t('systemSummary.labels.commCable')}
                   </div>
@@ -309,7 +318,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
             <Section title={t('systemSummary.accessories')}>
               <div className="space-y-4">
                 {data.systemConfig.accessories.emcFilter && (
-                  <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+                  <div className="border rounded-lg overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 font-medium border-b">
                       {t('systemSummary.labels.emcFilter')}
                     </div>
@@ -319,7 +328,7 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
                   </div>
                 )}
                 {data.systemConfig.accessories.brakeResistor && (
-                  <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+                  <div className="border rounded-lg overflow-hidden">
                     <div className="bg-gray-100 px-4 py-2 font-medium border-b">
                       {t('systemSummary.labels.brakeResistor')}
                     </div>
@@ -474,69 +483,14 @@ export function PrintReportView({ data, onClose }: PrintReportViewProps) {
           </Section>
         </div>
       </div>
-
-      {/* 打印样式 */}
-      <style jsx global>{`
-        @media print {
-          @page {
-            size: A4;
-            margin: 15mm;
-          }
-          body * {
-            visibility: hidden;
-          }
-          .print\:static,
-          .print\:static * {
-            visibility: visible;
-          }
-          .print\:static {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-          /* 严格限制内容宽度为A4可打印区域 (考虑边距后约170mm) */
-          .max-w-\[210mm\],
-          .max-w-\[210mm\] > * {
-            max-width: 170mm !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-          }
-          /* 确保所有直接子元素不溢出 */
-          .max-w-\[210mm\] > div,
-          .max-w-\[210mm\] > section,
-          .max-w-\[210mm\] > section > div {
-            max-width: 170mm !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-          }
-          /* 确保卡片布局在打印时正确显示 */
-          .border {
-            border: 1px solid #d1d5db !important;
-          }
-          .rounded-lg {
-            border-radius: 0.5rem !important;
-          }
-          /* 强制分页控制 */
-          .print\:break-inside-avoid {
-            break-inside: avoid;
-            page-break-inside: avoid;
-          }
-          /* 确保文本换行 */
-          * {
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-          }
-        }
-      `}</style>
-    </>
+    </div>
   );
 }
 
 // 辅助组件
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mb-8 print:mb-6">
+    <div className="mb-8">
       <h2 className="text-lg font-bold text-gray-900 border-b-2 border-gray-300 pb-2 mb-4">
         {title}
       </h2>

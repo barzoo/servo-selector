@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useRef } from 'react';
+import { useReactToPrint } from 'react-to-print';
 import { useTranslations } from 'next-intl';
 import type { Project, AxisConfig } from '@/types';
 
@@ -11,27 +12,46 @@ interface MultiAxisPrintViewProps {
 
 export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps) {
   const t = useTranslations();
+  const printRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      window.print();
-    }, 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handlePrint = () => {
-    window.print();
-  };
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+    documentTitle: `${project.name || '选型报告'}.pdf`,
+    onAfterPrint: () => {
+      console.log('打印完成');
+    },
+    onPrintError: (error) => {
+      console.error('打印错误:', error);
+    },
+  });
 
   const completedAxes = project.axes.filter((a) => a.status === 'COMPLETED');
   const bom = buildBom(completedAxes);
 
+  // 如果没有已完成的轴，显示提示
+  if (completedAxes.length === 0) {
+    return (
+      <div className="fixed inset-0 bg-white z-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-500 text-lg">没有已完成的轴可供导出</p>
+          <p className="text-gray-400 text-sm mt-2">请至少完成一个轴的配置</p>
+          <button
+            onClick={onClose}
+            className="mt-4 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+          >
+            关闭
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <>
-      {/* 打印控制按钮 - 打印时隐藏 */}
-      <div className="fixed top-4 right-4 z-50 flex gap-2 print:hidden">
+    <div className="fixed inset-0 bg-white z-50 flex flex-col">
+      {/* 打印控制按钮 */}
+      <div className="flex justify-end gap-2 p-4 border-b bg-gray-50 print:hidden">
         <button
-          onClick={handlePrint}
+          onClick={() => handlePrint()}
           className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
         >
           🖨️ {t('result.print')}
@@ -44,9 +64,17 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
         </button>
       </div>
 
-      {/* 打印内容 */}
-      <div className="fixed inset-0 bg-white z-40 overflow-auto print:static print:overflow-visible">
-        <div className="max-w-[210mm] mx-auto p-[15mm] print:p-0">
+      {/* 打印内容预览 */}
+      <div className="flex-1 overflow-auto p-4 bg-gray-100">
+        <div
+          ref={printRef}
+          className="bg-white mx-auto p-8 shadow-lg"
+          style={{
+            width: '210mm',
+            minHeight: '297mm',
+            maxWidth: '100%',
+          }}
+        >
           {/* 报告标题 */}
           <div className="text-center border-b-2 border-gray-300 pb-6 mb-8">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -64,7 +92,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
 
           {/* 项目信息 */}
           <Section title="项目信息">
-            <div className="border rounded-lg overflow-hidden print:break-inside-avoid">
+            <div className="border rounded-lg overflow-hidden">
               <div className="p-4 grid grid-cols-1 gap-3">
                 <div>
                   <span className="text-gray-600 text-sm">项目名称:</span>
@@ -98,7 +126,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
           <Section title="轴配置摘要">
             <div className="space-y-4">
               {completedAxes.map((axis, index) => (
-                <div key={axis.id} className="border rounded-lg overflow-hidden print:break-inside-avoid">
+                <div key={axis.id} className="border rounded-lg overflow-hidden">
                   <div className="bg-gray-100 px-4 py-2 font-medium border-b flex items-center justify-between">
                     <span>轴 {index + 1}: {axis.name}</span>
                     <span className="text-sm text-gray-500">{axis.completedAt ? new Date(axis.completedAt).toLocaleDateString() : '-'}</span>
@@ -148,19 +176,19 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
           {bom.length > 0 && (
             <Section title="物料清单 (BOM)">
               <div className="border rounded-lg overflow-hidden">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm border-collapse">
                   <thead className="bg-gray-100">
                     <tr>
-                      <th className="px-4 py-2 text-left font-medium border-b">序号</th>
-                      <th className="px-4 py-2 text-left font-medium border-b">料号</th>
-                      <th className="px-4 py-2 text-left font-medium border-b">描述</th>
-                      <th className="px-4 py-2 text-center font-medium border-b">数量</th>
-                      <th className="px-4 py-2 text-left font-medium border-b">用于轴</th>
+                      <th className="px-4 py-2 text-left font-medium border-b border-gray-300">序号</th>
+                      <th className="px-4 py-2 text-left font-medium border-b border-gray-300">料号</th>
+                      <th className="px-4 py-2 text-left font-medium border-b border-gray-300">描述</th>
+                      <th className="px-4 py-2 text-center font-medium border-b border-gray-300">数量</th>
+                      <th className="px-4 py-2 text-left font-medium border-b border-gray-300">用于轴</th>
                     </tr>
                   </thead>
                   <tbody>
                     {bom.map((item, index) => (
-                      <tr key={item.partNumber} className="border-b last:border-b-0">
+                      <tr key={item.partNumber} className="border-b border-gray-200 last:border-b-0">
                         <td className="px-4 py-2">{index + 1}</td>
                         <td className="px-4 py-2 font-mono text-xs">{item.partNumber}</td>
                         <td className="px-4 py-2">{item.description}</td>
@@ -181,57 +209,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
           </div>
         </div>
       </div>
-
-      {/* 打印样式 */}
-      <style jsx global>{`
-        @media print {
-          @page {
-            size: A4;
-            margin: 15mm;
-          }
-          body * {
-            visibility: hidden;
-          }
-          .print\:static,
-          .print\:static * {
-            visibility: visible;
-          }
-          .print\:static {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-          }
-          .max-w-\[210mm\],
-          .max-w-\[210mm\] > * {
-            max-width: 170mm !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-          }
-          .max-w-\[210mm\] > div,
-          .max-w-\[210mm\] > section,
-          .max-w-\[210mm\] > section > div {
-            max-width: 170mm !important;
-            width: 100% !important;
-            box-sizing: border-box !important;
-          }
-          .border {
-            border: 1px solid #d1d5db !important;
-          }
-          .rounded-lg {
-            border-radius: 0.5rem !important;
-          }
-          .print\:break-inside-avoid {
-            break-inside: avoid;
-            page-break-inside: avoid;
-          }
-          * {
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-          }
-        }
-      `}</style>
-    </>
+    </div>
   );
 }
 
@@ -287,7 +265,7 @@ function buildBom(axes: AxisConfig[]) {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mb-8 print:mb-6">
+    <div className="mb-8">
       <h2 className="text-lg font-bold text-gray-900 border-b-2 border-gray-300 pb-2 mb-4">
         {title}
       </h2>
