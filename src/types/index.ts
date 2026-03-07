@@ -84,22 +84,34 @@ export interface MotionParams {
 }
 
 export interface DutyConditions {
-  ambientTemp: number;
+  // 轴特有参数
   dutyCycle: number;
   mountingOrientation: 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN';
-  ipRating: 'IP54' | 'IP65' | 'IP67';
   brake: boolean;
-  keyShaft: 'L' | 'K';  // 新增: L=光轴, K=带键
+  keyShaft: 'L' | 'K';  // L=光轴, K=带键
+  // 移除: ambientTemp, ipRating（移到 CommonParams）
 }
 
 export interface SystemPreferences {
+  // 保留轴特有参数
+  encoderType: 'A' | 'B' | 'BOTH';  // 新增: A=电池盒式, B=机械式, BOTH=两者都可
+  safety: 'STO' | 'NONE';  // STO 安全功能选项
+  // 移除: safetyFactor, maxInertiaRatio, targetInertiaRatio, communication, cableLength（移到 CommonParams）
+}
+
+// ============ 公共参数（项目级，所有轴共享） ============
+
+export interface CommonParams {
+  // 环境条件
+  ambientTemp: number;        // 环境温度 (°C)
+  ipRating: 'IP54' | 'IP65' | 'IP67';
+
+  // 系统偏好
+  communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
+  cableLength: number | 'TERMINAL_ONLY';
   safetyFactor: number;
   maxInertiaRatio: number;
-  targetInertiaRatio: number;  // 新增: 目标惯量比
-  communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
-  safety: 'STO' | 'NONE';  // STO 安全功能选项
-  cableLength: number | 'TERMINAL_ONLY';
-  encoderType: 'A' | 'B' | 'BOTH';  // 新增: A=电池盒式, B=机械式, BOTH=两者都可
+  targetInertiaRatio: number;
 }
 
 // 新增: Step 5 用户选择
@@ -477,7 +489,13 @@ export interface AxisConfig {
   status: AxisStatus;
   createdAt: string;
   completedAt?: string;
-  input: Partial<SizingInput>;
+  input: {
+    mechanism?: MechanismConfig;
+    motion?: MotionParams;
+    dutyConditions?: DutyConditions;  // 简化后的工作条件
+    preferences?: SystemPreferences;  // 简化后的系统偏好
+    selections?: MotorSelections;
+  };
   result?: SizingResult;
   selectedMotorIndex?: number;
 }
@@ -489,6 +507,7 @@ export interface Project {
   salesPerson: string;
   notes?: string;
   createdAt: string;
+  commonParams: CommonParams;  // 新增
   axes: AxisConfig[];
 }
 
