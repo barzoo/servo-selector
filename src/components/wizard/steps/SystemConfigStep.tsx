@@ -7,26 +7,14 @@ import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { useTranslations } from 'next-intl';
 
 export function SystemConfigStep() {
-  const { input, setPreferences, setResult, prevStep, completeWizard } = useProjectStore();
+  const { project, input, setPreferences, setResult, prevStep, completeWizard } = useProjectStore();
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
 
-  const INERTIA_RATIO_OPTIONS = [
-    { ratio: 3, label: '高性能 (3:1)', desc: '最佳动态响应，适合高精度定位' },
-    { ratio: 5, label: '平衡型 (5:1)', desc: '性能与成本的平衡，适合大多数应用' },
-    { ratio: 10, label: '经济型 (10:1)', desc: '最大推荐惯量比，适合成本敏感应用' },
-    { ratio: 30, label: '极限型 (30:1)', desc: '系统允许的最大惯量比' },
-  ];
-
   const [formData, setFormData] = useState<SystemPreferences>(
     input.preferences || {
-      safetyFactor: 1.5,
-      maxInertiaRatio: 10,
-      targetInertiaRatio: 5,
-      communication: 'ETHERCAT',
-      safety: 'NONE',
-      cableLength: 5,
       encoderType: 'BOTH',
+      safety: 'NONE',
     }
   );
 
@@ -34,7 +22,7 @@ export function SystemConfigStep() {
     e.preventDefault();
     setPreferences(formData);
 
-    // 执行选型计算
+    // 执行选型计算 - 合并公共参数和轴特有参数
     if (input.project && input.mechanism && input.motion && input.duty) {
       const engine = new SizingEngine();
       const result = engine.calculate({
@@ -42,7 +30,17 @@ export function SystemConfigStep() {
         mechanism: input.mechanism,
         motion: input.motion,
         duty: input.duty,
-        preferences: formData,
+        preferences: {
+          // 公共参数
+          safetyFactor: project.commonParams.safetyFactor,
+          maxInertiaRatio: project.commonParams.maxInertiaRatio,
+          targetInertiaRatio: project.commonParams.targetInertiaRatio,
+          communication: project.commonParams.communication,
+          cableLength: project.commonParams.cableLength,
+          // 轴特有参数
+          encoderType: formData.encoderType,
+          safety: formData.safety,
+        },
       });
       setResult(result);
       completeWizard();
@@ -53,78 +51,25 @@ export function SystemConfigStep() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
 
-      {/* 惯量匹配目标 */}
-      <div className="space-y-3">
-        <label className="block text-sm font-medium text-gray-700">
-          惯量匹配目标
-        </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {INERTIA_RATIO_OPTIONS.map((opt) => (
-            <label
-              key={opt.ratio}
-              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                formData.targetInertiaRatio === opt.ratio
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <input
-                type="radio"
-                name="targetInertiaRatio"
-                value={opt.ratio}
-                checked={formData.targetInertiaRatio === opt.ratio}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    targetInertiaRatio: Number(e.target.value),
-                  })
-                }
-                className="sr-only"
-              />
-              <div className={`font-medium text-sm ${formData.targetInertiaRatio === opt.ratio ? 'text-blue-900' : 'text-gray-900'}`}>{opt.label}</div>
-              <div className={`text-xs mt-1 ${formData.targetInertiaRatio === opt.ratio ? 'text-blue-700' : 'text-gray-500'}`}>{opt.desc}</div>
-            </label>
-          ))}
-        </div>
+      {/* 公共参数提示 */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <p className="text-sm text-blue-800">
+          <strong>公共参数（所有轴共享）：</strong>
+          安全系数 {project.commonParams.safetyFactor}、
+          目标惯量比 {project.commonParams.targetInertiaRatio}:1、
+          通信协议 {project.commonParams.communication}、
+          电缆长度 {typeof project.commonParams.cableLength === 'number' ? `${project.commonParams.cableLength}m` : '仅接线端子'}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-project-settings'))}
+            className="ml-2 text-blue-600 hover:underline"
+          >
+            修改
+          </button>
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('safetyFactor')}
-          </label>
-          <input
-            type="number"
-            step="0.1"
-            min="1"
-            max="3"
-            value={formData.safetyFactor}
-            onChange={(e) =>
-              setFormData({ ...formData, safetyFactor: parseFloat(e.target.value) || 1.5 })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          />
-          <p className="mt-1 text-xs text-gray-500">{t('safetyFactorHint')}</p>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('communication')}
-          </label>
-          <select
-            value={formData.communication}
-            onChange={(e) =>
-              setFormData({ ...formData, communication: e.target.value as 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG' })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          >
-            <option value="ETHERCAT">{t('communications.ethercat')}</option>
-            <option value="PROFINET">{t('communications.profinet')}</option>
-            <option value="ETHERNET_IP">{t('communications.ethernetIp')}</option>
-            <option value="ANALOG">{t('communications.analog')}</option>
-          </select>
-        </div>
-
         <div>
           <label className="block text-sm font-medium text-gray-700">
             {t('safety')}
@@ -138,26 +83,6 @@ export function SystemConfigStep() {
           >
             <option value="NONE">{t('safetyOptions.none')}</option>
             <option value="STO">{t('safetyOptions.sto')}</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('cableLength')}
-          </label>
-          <select
-            value={formData.cableLength}
-            onChange={(e) =>
-              setFormData({ ...formData, cableLength: e.target.value === 'TERMINAL_ONLY' ? 'TERMINAL_ONLY' : parseInt(e.target.value) })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          >
-            <option value={3}>3m</option>
-            <option value={5}>5m</option>
-            <option value={10}>10m</option>
-            <option value={15}>15m</option>
-            <option value={20}>20m</option>
-            <option value="TERMINAL_ONLY">{t('cableLengthOptions.terminalOnly')}</option>
           </select>
         </div>
 
@@ -180,7 +105,6 @@ export function SystemConfigStep() {
             A型需要电池维护，B型为机械式免维护但价格较高
           </p>
         </div>
-
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between gap-3">

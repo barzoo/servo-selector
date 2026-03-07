@@ -137,13 +137,23 @@ export interface MotorSelections {
   };
 }
 
+// 完整的选型输入（用于计算）- 合并公共参数和轴特有参数
 export interface SizingInput {
   project: ProjectInfo;
   mechanism: MechanismConfig;
   motion: MotionParams;
-  duty: DutyConditions;
-  preferences: SystemPreferences;
-  selections?: MotorSelections;  // 新增
+  duty: DutyConditions & {
+    ambientTemp: number;
+    ipRating: 'IP54' | 'IP65' | 'IP67';
+  };
+  preferences: SystemPreferences & {
+    safetyFactor: number;
+    maxInertiaRatio: number;
+    targetInertiaRatio: number;
+    communication: 'ETHERCAT' | 'PROFINET' | 'ETHERNET_IP' | 'ANALOG';
+    cableLength: number | 'TERMINAL_ONLY';
+  };
+  selections?: MotorSelections;
 }
 
 // ============ 产品数据 ============

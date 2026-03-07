@@ -83,6 +83,7 @@ const mockInput: SizingInput = {
     mountingOrientation: 'HORIZONTAL',
     ipRating: 'IP65',
     brake: false,
+    keyShaft: 'L',
   },
   preferences: {
     safetyFactor: 1.5,
@@ -91,6 +92,7 @@ const mockInput: SizingInput = {
     communication: 'ETHERCAT',
     safety: 'NONE',
     cableLength: 3,
+    encoderType: 'BOTH',
   },
 };
 
