@@ -247,9 +247,10 @@ export const useProjectStore = create<ProjectStore>()(
 
         // Load new axis state
         // Project info is now at project level, not axis level
+        // Simplified 4-step wizard: 1=Mechanism, 2=Motion, 3=Duty, 4=SystemConfig
         set({
           currentAxisId: axisId,
-          currentStep: axis.status === 'COMPLETED' ? 6 : 1,
+          currentStep: axis.status === 'COMPLETED' ? 5 : 1,
           isComplete: axis.status === 'COMPLETED',
           input: {},
           result: axis.result,
@@ -317,7 +318,7 @@ export const useProjectStore = create<ProjectStore>()(
 
       nextStep: () => {
         const { currentStep } = get();
-        if (currentStep < 5) {
+        if (currentStep < 4) {
           set({ currentStep: (currentStep + 1) as WizardStep });
         }
       },

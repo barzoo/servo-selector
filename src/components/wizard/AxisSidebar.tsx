@@ -9,23 +9,31 @@ import type { Project } from '@/types';
 interface AxisSidebarProps {
   project: Project;
   currentAxisId: string;
+  currentStep?: number;
+  isComplete?: boolean;
+  mainViewMode?: 'wizard' | 'edit-project' | 'edit-common';
   onSwitchAxis: (axisId: string) => void;
   onAddAxis: () => void;
   onDeleteAxis?: (axisId: string) => void;
   onReeditAxis?: (axisId: string) => void;
   onUpdateAxisName?: (axisId: string, name: string) => void;
   onOpenProjectSettings?: () => void;
+  onOpenCommonParams?: () => void;
 }
 
 export function AxisSidebar({
   project,
   currentAxisId,
+  currentStep,
+  isComplete,
+  mainViewMode,
   onSwitchAxis,
   onAddAxis,
   onDeleteAxis,
   onReeditAxis,
   onUpdateAxisName,
   onOpenProjectSettings,
+  onOpenCommonParams,
 }: AxisSidebarProps) {
   const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
   const configCount = project.axes.filter((a) => a.status === 'CONFIGURING').length;
@@ -41,10 +49,14 @@ export function AxisSidebar({
           </span>
           <button
             onClick={onOpenProjectSettings}
-            className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
+            className={`text-xs flex items-center gap-1 ${
+              mainViewMode === 'edit-project'
+                ? 'text-blue-800 font-semibold'
+                : 'text-blue-600 hover:text-blue-800'
+            }`}
           >
             <Edit className="w-3 h-3" />
-            编辑
+            {mainViewMode === 'edit-project' ? '编辑中...' : '编辑'}
           </button>
         </div>
         <h3 className="font-semibold text-gray-900 truncate" title={project.name}>
@@ -105,11 +117,15 @@ export function AxisSidebar({
               <span className="text-gray-700">{project.commonParams.targetInertiaRatio}:1</span>
             </div>
             <button
-              onClick={onOpenProjectSettings}
-              className="mt-2 text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1"
+              onClick={onOpenCommonParams}
+              className={`mt-2 text-xs flex items-center gap-1 ${
+                mainViewMode === 'edit-common'
+                  ? 'text-blue-800 font-semibold'
+                  : 'text-blue-600 hover:text-blue-800'
+              }`}
             >
               <Edit className="w-3 h-3" />
-              编辑公共参数
+              {mainViewMode === 'edit-common' ? '编辑中...' : '编辑公共参数'}
             </button>
           </div>
         )}

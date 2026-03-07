@@ -6,14 +6,14 @@ import { useProjectStore, migrateLegacyData, migrateToSharedParams } from '@/sto
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
-import { ProjectInfoStep } from '@/components/wizard/steps/ProjectInfoStep';
 import { MechanismStep } from '@/components/wizard/steps/MechanismStep';
 import { MotionStep } from '@/components/wizard/steps/MotionStep';
 import { DutyStep } from '@/components/wizard/steps/DutyStep';
 import { SystemConfigStep } from '@/components/wizard/steps/SystemConfigStep';
 import { ResultStep } from '@/components/wizard/steps/ResultStep';
+import { ProjectInfoEditStep } from '@/components/wizard/steps/ProjectInfoEditStep';
+import { CommonParamsEditStep } from '@/components/wizard/steps/CommonParamsEditStep';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { ProjectSettingsModal } from '@/components/wizard/ProjectSettingsModal';
 
 export default function Home() {
   const {
@@ -29,8 +29,8 @@ export default function Home() {
     createProject,
   } = useProjectStore();
 
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [settingsTab, setSettingsTab] = useState<'project' | 'common'>('project');
+  // Main view mode: 'wizard' | 'edit-project' | 'edit-common'
+  const [mainViewMode, setMainViewMode] = useState<'wizard' | 'edit-project' | 'edit-common'>('wizard');
 
   // Migrate legacy data on first load
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function Home() {
           useProjectStore.setState({
             project: migrated,
             currentAxisId: migrated.axes[0]?.id || '',
-            currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 6 : 1,
+            currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 5 : 1,
             isComplete: migrated.axes[0]?.status === 'COMPLETED',
           });
           return;
@@ -60,34 +60,23 @@ export default function Home() {
       useProjectStore.setState({
         project: migrated,
         currentAxisId: migrated.axes[0].id,
-        currentStep: migrated.axes[0].status === 'COMPLETED' ? 6 : 1,
+        currentStep: migrated.axes[0].status === 'COMPLETED' ? 5 : 1,
         isComplete: migrated.axes[0].status === 'COMPLETED',
       });
     } else if (!project.name) {
       // Initialize with empty project if no data
       createProject({ name: '', customer: '', salesPerson: '' });
     }
-
-    // Listen for open project settings event
-    const handleOpenSettings = (e: CustomEvent) => {
-      setSettingsTab(e.detail?.tab || 'project');
-      setIsSettingsOpen(true);
-    };
-    window.addEventListener('open-project-settings', handleOpenSettings as EventListener);
-
-    return () => {
-      window.removeEventListener('open-project-settings', handleOpenSettings as EventListener);
-    };
   }, []);
 
   const handleAddAxis = () => {
     const newAxisId = addAxis(`轴-${project.axes.length + 1}`);
     switchAxis(newAxisId);
+    setMainViewMode('wizard');
 
     // If this is the first axis and project name is empty, prompt user to fill project info
     if (project.axes.length === 0 && !project.name) {
-      setSettingsTab('project');
-      setIsSettingsOpen(true);
+      setMainViewMode('edit-project');
     }
   };
 
@@ -96,24 +85,41 @@ export default function Home() {
       return <ResultStep />;
     }
 
+    // Simplified 4-step wizard (removed ProjectInfoStep)
     switch (currentStep) {
       case 1:
-        return <ProjectInfoStep />;
-      case 2:
         return <MechanismStep />;
-      case 3:
+      case 2:
         return <MotionStep />;
-      case 4:
+      case 3:
         return <DutyStep />;
-      case 5:
+      case 4:
         return <SystemConfigStep />;
       default:
-        return <ProjectInfoStep />;
+        return <MechanismStep />;
     }
   };
 
   const renderMainContent = () => {
-    // If no axes, show empty state
+    // Edit project info mode
+    if (mainViewMode === 'edit-project') {
+      return (
+        <ProjectInfoEditStep
+          onComplete={() => setMainViewMode('wizard')}
+        />
+      );
+    }
+
+    // Edit common params mode
+    if (mainViewMode === 'edit-common') {
+      return (
+        <CommonParamsEditStep
+          onComplete={() => setMainViewMode('wizard')}
+        />
+      );
+    }
+
+    // Empty state - no axes
     if (project.axes.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
@@ -133,8 +139,7 @@ export default function Home() {
           <button
             onClick={() => {
               if (!project.name) {
-                setSettingsTab('project');
-                setIsSettingsOpen(true);
+                setMainViewMode('edit-project');
               } else {
                 handleAddAxis();
               }
@@ -148,7 +153,7 @@ export default function Home() {
       );
     }
 
-    // Otherwise show the step content
+    // Wizard mode - show the step content
     return renderStep();
   };
 
@@ -161,15 +166,22 @@ export default function Home() {
         <AxisSidebar
           project={project}
           currentAxisId={currentAxisId}
-          onSwitchAxis={switchAxis}
+          currentStep={currentStep}
+          isComplete={isComplete}
+          mainViewMode={mainViewMode}
+          onSwitchAxis={(axisId) => {
+            switchAxis(axisId);
+            setMainViewMode('wizard');
+          }}
           onAddAxis={handleAddAxis}
           onDeleteAxis={deleteAxis}
-          onReeditAxis={reeditAxis}
-          onUpdateAxisName={updateAxisName}
-          onOpenProjectSettings={() => {
-            setSettingsTab('project');
-            setIsSettingsOpen(true);
+          onReeditAxis={(axisId) => {
+            reeditAxis(axisId);
+            setMainViewMode('wizard');
           }}
+          onUpdateAxisName={updateAxisName}
+          onOpenProjectSettings={() => setMainViewMode('edit-project')}
+          onOpenCommonParams={() => setMainViewMode('edit-common')}
         />
       </aside>
 
@@ -218,17 +230,10 @@ export default function Home() {
           </header>
 
           <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8">
-            {project.axes.length > 0 && <StepIndicator currentStep={currentStep} />}
+            {project.axes.length > 0 && mainViewMode === 'wizard' && <StepIndicator currentStep={currentStep} />}
             <div className={project.axes.length > 0 ? 'mt-8' : ''}>{renderMainContent()}</div>
           </div>
         </div>
-
-        {/* Project Settings Modal */}
-        <ProjectSettingsModal
-          isOpen={isSettingsOpen}
-          onClose={() => setIsSettingsOpen(false)}
-          initialTab={settingsTab}
-        />
       </main>
     </div>
   );

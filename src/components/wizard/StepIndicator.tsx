@@ -7,7 +7,8 @@ interface StepIndicatorProps {
   currentStep: WizardStep;
 }
 
-const stepKeys = ['projectInfo', 'mechanism', 'motion', 'duty', 'systemConfig'] as const;
+// Simplified 4-step wizard (removed projectInfo step)
+const stepKeys = ['mechanism', 'motion', 'duty', 'systemConfig'] as const;
 
 export function StepIndicator({ currentStep }: StepIndicatorProps) {
   const t = useTranslations('steps');
