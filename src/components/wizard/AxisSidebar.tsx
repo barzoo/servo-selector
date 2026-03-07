@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { ChevronDown, ChevronUp, Edit, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { AxisSidebarItem } from './AxisSidebarItem';
 import { ProjectPdfExport } from './ProjectPdfExport';
 import type { Project } from '@/types';
@@ -37,7 +36,6 @@ export function AxisSidebar({
 }: AxisSidebarProps) {
   const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
   const configCount = project.axes.filter((a) => a.status === 'CONFIGURING').length;
-  const [isCommonParamsExpanded, setIsCommonParamsExpanded] = useState(true);
 
   return (
     <div className="h-full flex flex-col bg-gray-50">
@@ -63,65 +61,24 @@ export function AxisSidebar({
         </button>
       </div>
 
-      {/* 公共参数区域 */}
-      <div className="border-b border-gray-200 bg-blue-50">
+      {/* 公共参数区域 - 简化为Item模式 */}
+      <div className="p-2 border-b border-gray-200 bg-blue-50">
         <button
-          onClick={() => setIsCommonParamsExpanded(!isCommonParamsExpanded)}
-          className="w-full px-4 py-3 flex items-center justify-between text-left"
+          onClick={onOpenCommonParams}
+          className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-colors text-left ${
+            mainViewMode === 'edit-common'
+              ? 'bg-blue-100 border-blue-500 shadow-sm'
+              : 'bg-white border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+          }`}
         >
-          <span className="text-xs font-medium text-blue-700 uppercase tracking-wider">
-            公共参数
-          </span>
-          {isCommonParamsExpanded ? (
-            <ChevronUp className="w-4 h-4 text-blue-500" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-blue-500" />
-          )}
-        </button>
-
-        {isCommonParamsExpanded && (
-          <div className="px-4 pb-3 space-y-1">
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">环境温度:</span>
-              <span className="text-gray-700">{project.commonParams.ambientTemp}C</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">防护等级:</span>
-              <span className="text-gray-700">{project.commonParams.ipRating}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">通信协议:</span>
-              <span className="text-gray-700">{project.commonParams.communication}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">电缆长度:</span>
-              <span className="text-gray-700">
-                {typeof project.commonParams.cableLength === 'number'
-                  ? `${project.commonParams.cableLength}m`
-                  : '仅接线端子'}
-              </span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">安全系数:</span>
-              <span className="text-gray-700">{project.commonParams.safetyFactor}</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-gray-500">目标惯量比:</span>
-              <span className="text-gray-700">{project.commonParams.targetInertiaRatio}:1</span>
-            </div>
-            <button
-              onClick={onOpenCommonParams}
-              className={`mt-2 text-xs flex items-center gap-1 ${
-                mainViewMode === 'edit-common'
-                  ? 'text-blue-800 font-semibold'
-                  : 'text-blue-600 hover:text-blue-800'
-              }`}
-            >
-              <Edit className="w-3 h-3" />
-              {mainViewMode === 'edit-common' ? '编辑中...' : '编辑公共参数'}
-            </button>
+          <span className="flex-shrink-0 text-lg">⚙️</span>
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-gray-900">公共参数</p>
+            {mainViewMode === 'edit-common' && (
+              <p className="text-xs text-blue-600">编辑中...</p>
+            )}
           </div>
-        )}
+        </button>
       </div>
 
       {/* 轴列表区域 */}
