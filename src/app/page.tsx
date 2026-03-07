@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useProjectStore, migrateLegacyData } from '@/stores/project-store';
+import { useProjectStore, migrateLegacyData, migrateToSharedParams } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
@@ -32,6 +32,27 @@ export default function Home() {
 
   // Migrate legacy data on first load
   useEffect(() => {
+    // Try new migration first
+    const stored = localStorage.getItem('servo-selector-project');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        const migrated = migrateToSharedParams(parsed);
+        if (migrated && !project.name) {
+          useProjectStore.setState({
+            project: migrated,
+            currentAxisId: migrated.axes[0]?.id || '',
+            currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 6 : 1,
+            isComplete: migrated.axes[0]?.status === 'COMPLETED',
+          });
+          return;
+        }
+      } catch {
+        // Ignore parse errors
+      }
+    }
+
+    // Fall back to legacy migration
     const migrated = migrateLegacyData();
     if (migrated) {
       useProjectStore.setState({
@@ -39,8 +60,6 @@ export default function Home() {
         currentAxisId: migrated.axes[0].id,
         currentStep: migrated.axes[0].status === 'COMPLETED' ? 6 : 1,
         isComplete: migrated.axes[0].status === 'COMPLETED',
-        input: migrated.axes[0].input,
-        result: migrated.axes[0].result,
       });
     } else if (!project.name) {
       // Initialize with empty project if no data

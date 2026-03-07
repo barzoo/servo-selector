@@ -473,6 +473,24 @@ export const useProjectStore = create<ProjectStore>()(
     }),
     {
       name: 'servo-selector-project',
+      version: 2, // 增加版本号
+      migrate: (persistedState: any, version: number) => {
+        if (version < 2) {
+          // 从旧版本迁移
+          const migrated = migrateToSharedParams(persistedState);
+          if (migrated) {
+            return {
+              project: migrated,
+              currentAxisId: migrated.axes[0]?.id || '',
+              currentStep: 1,
+              isComplete: false,
+              input: {},
+              result: undefined,
+            };
+          }
+        }
+        return persistedState;
+      },
     }
   )
 );
@@ -527,6 +545,83 @@ export function migrateLegacyData(): Project | null {
 
     return project;
   } catch {
+    return null;
+  }
+}
+
+/**
+ * 从旧数据结构迁移到新的共享参数结构
+ * @param oldData - 旧格式的项目数据
+ * @returns 新格式的 Project 对象
+ */
+export function migrateToSharedParams(oldData: any): Project | null {
+  if (!oldData) return null;
+
+  // 检查是否已经是新结构
+  if (oldData.project?.commonParams) {
+    return oldData.project;
+  }
+
+  try {
+    // 从旧结构提取数据
+    const oldProject = oldData.project || oldData;
+    const firstAxis = oldProject.axes?.[0];
+    const oldInput = firstAxis?.input || oldData.input || {};
+
+    // 提取公共参数（从第一个轴或旧输入）
+    const commonParams: CommonParams = {
+      ambientTemp: oldInput.duty?.ambientTemp ?? 25,
+      ipRating: oldInput.duty?.ipRating ?? 'IP65',
+      communication: oldInput.preferences?.communication ?? 'ETHERCAT',
+      cableLength: oldInput.preferences?.cableLength ?? 5,
+      safetyFactor: oldInput.preferences?.safetyFactor ?? 1.5,
+      maxInertiaRatio: oldInput.preferences?.maxInertiaRatio ?? 10,
+      targetInertiaRatio: oldInput.preferences?.targetInertiaRatio ?? 5,
+    };
+
+    // 迁移轴数据
+    const axes: AxisConfig[] = (oldProject.axes || []).map((oldAxis: any) => ({
+      id: oldAxis.id || generateId(),
+      name: oldAxis.name || '轴-1',
+      status: oldAxis.status || 'CONFIGURING',
+      createdAt: oldAxis.createdAt || new Date().toISOString(),
+      completedAt: oldAxis.completedAt,
+      input: {
+        mechanism: oldAxis.input?.mechanism,
+        motion: oldAxis.input?.motion,
+        dutyConditions: oldAxis.input?.duty ? {
+          dutyCycle: oldAxis.input.duty.dutyCycle ?? 100,
+          mountingOrientation: oldAxis.input.duty.mountingOrientation ?? 'HORIZONTAL',
+          brake: oldAxis.input.duty.brake ?? false,
+          keyShaft: oldAxis.input.duty.keyShaft ?? 'L',
+        } : undefined,
+        preferences: oldAxis.input?.preferences ? {
+          encoderType: oldAxis.input.preferences.encoderType ?? 'BOTH',
+          safety: oldAxis.input.preferences.safety ?? 'NONE',
+        } : undefined,
+        selections: oldAxis.input?.selections,
+      },
+      result: oldAxis.result,
+      selectedMotorIndex: oldAxis.selectedMotorIndex,
+    }));
+
+    // 如果没有轴，创建一个默认轴
+    if (axes.length === 0) {
+      axes.push(createInitialAxis());
+    }
+
+    return {
+      id: oldProject.id || generateProjectId(),
+      name: oldProject.name || oldInput.project?.name || '未命名项目',
+      customer: oldProject.customer || oldInput.project?.customer || '',
+      salesPerson: oldProject.salesPerson || oldInput.project?.salesPerson || '',
+      notes: oldProject.notes || oldInput.project?.notes,
+      createdAt: oldProject.createdAt || new Date().toISOString(),
+      commonParams,
+      axes,
+    };
+  } catch (error) {
+    console.error('Migration failed:', error);
     return null;
   }
 }
