@@ -356,11 +356,27 @@ export const useProjectStore = create<ProjectStore>()(
       setMechanism: (mechanism) =>
         set((state) => ({
           input: { ...state.input, mechanism },
+          project: {
+            ...state.project,
+            axes: state.project.axes.map((a) =>
+              a.id === state.currentAxisId
+                ? { ...a, input: { ...a.input, mechanism } }
+                : a
+            ),
+          },
         })),
 
       setMotion: (motion) =>
         set((state) => ({
           input: { ...state.input, motion },
+          project: {
+            ...state.project,
+            axes: state.project.axes.map((a) =>
+              a.id === state.currentAxisId
+                ? { ...a, input: { ...a.input, motion } }
+                : a
+            ),
+          },
         })),
 
       setDuty: (duty) =>
