@@ -114,6 +114,25 @@
       "keyedDesc": "Keyed shaft for high torque transmission"
     }
   },
+  "projectSettings": {
+    "title": "Project Settings",
+    "projectInfo": "Project Information",
+    "projectName": "Project Name",
+    "customer": "Customer Name",
+    "salesPerson": "Sales Person",
+    "notes": "Project Notes",
+    "commonParams": "Common Parameters",
+    "commonParamsDescription": "These parameters will be applied to all axes",
+    "ambientTemp": "Ambient Temperature",
+    "ipRating": "IP Rating",
+    "communication": "Communication Protocol",
+    "cableLength": "Cable Length",
+    "safetyFactor": "Safety Factor",
+    "maxInertiaRatio": "Max Inertia Ratio",
+    "terminalOnly": "Terminal Only",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
   "systemConfig": {
     "title": "System Configuration",
     "safetyFactor": "Safety Factor",

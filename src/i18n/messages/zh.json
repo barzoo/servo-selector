@@ -114,6 +114,25 @@
       "keyedDesc": "带键槽轴，适用于需要传递大扭矩的场合"
     }
   },
+  "projectSettings": {
+    "title": "项目设置",
+    "projectInfo": "项目信息",
+    "projectName": "项目名称",
+    "customer": "客户名称",
+    "salesPerson": "销售人员",
+    "notes": "项目备注",
+    "commonParams": "公共参数",
+    "commonParamsDescription": "这些参数将应用于所有轴",
+    "ambientTemp": "环境温度",
+    "ipRating": "防护等级",
+    "communication": "通信协议",
+    "cableLength": "电缆长度",
+    "safetyFactor": "安全系数",
+    "maxInertiaRatio": "最大惯量比",
+    "terminalOnly": "仅接线端子",
+    "cancel": "取消",
+    "save": "保存"
+  },
   "systemConfig": {
     "title": "系统配置",
     "safetyFactor": "安全余量系数",
