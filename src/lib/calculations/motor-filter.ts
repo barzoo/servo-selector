@@ -1,15 +1,18 @@
 // 电机筛选模块
 
-import { MC20Motor, MechanicalResult, MotorRecommendation, SystemPreferences, DutyConditions } from '@/types';
+import { MC20Motor, MechanicalResult, MotorRecommendation, DutyConditions, SizingInput } from '@/types';
 import motorsData from '@/data/motors.json';
+
+// Full preferences type including common params (safetyFactor, etc.)
+type FullPreferences = SizingInput['preferences'];
 
 export class MotorFilter {
   private motors: MC20Motor[];
   private mechanical: MechanicalResult;
-  private preferences: SystemPreferences;
+  private preferences: FullPreferences;
   private duty?: DutyConditions;
 
-  constructor(mechanical: MechanicalResult, preferences: SystemPreferences, duty?: DutyConditions) {
+  constructor(mechanical: MechanicalResult, preferences: FullPreferences, duty?: DutyConditions) {
     this.motors = motorsData.motors as unknown as MC20Motor[];
     this.mechanical = mechanical;
     this.preferences = preferences;

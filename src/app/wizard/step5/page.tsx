@@ -45,12 +45,27 @@ export default function Step5Page() {
 
     setIsCalculating(true);
     const engine = new SizingEngine();
+    // Merge duty with default common params for SizingInput
+    const duty = {
+      ...input.duty,
+      ambientTemp: 25,
+      ipRating: 'IP65' as const,
+    };
+    // Merge preferences with default common params for SizingInput
+    const preferences = {
+      ...input.preferences,
+      safetyFactor: 1.5,
+      maxInertiaRatio: 10,
+      targetInertiaRatio: 5,
+      communication: 'ETHERCAT' as const,
+      cableLength: 5 as const,
+    };
     const newResult = engine.calculate({
       project: input.project,
       mechanism: input.mechanism,
       motion: input.motion,
-      duty: input.duty,
-      preferences: input.preferences,
+      duty,
+      preferences,
       selections,
     });
     setResult(newResult);

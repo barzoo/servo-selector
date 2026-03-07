@@ -19,6 +19,12 @@ import {
 } from '@/types';
 import { buildSizingInput } from '@/lib/calculations/build-sizing-input';
 
+// Flexible input type for store - allows partial duty/preferences without common params
+type StoreInput = Partial<Omit<SizingInput, 'duty' | 'preferences'>> & {
+  duty?: DutyConditions;
+  preferences?: SystemPreferences;
+};
+
 // ============ ID Generation ============
 
 /**
@@ -105,7 +111,7 @@ interface ProjectStore {
   currentAxisId: string;
   currentStep: WizardStep;
   isComplete: boolean;
-  input: Partial<SizingInput>;
+  input: StoreInput;
   result?: SizingResult;
 
   // Project operations

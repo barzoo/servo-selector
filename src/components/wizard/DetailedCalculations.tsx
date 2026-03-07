@@ -16,7 +16,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import type { SizingInput, MechanicalResult } from '@/types';
+import type { SizingInput, MechanicalResult, DutyConditions, SystemPreferences } from '@/types';
 import {
   extractCalculationDetails,
   formatInertia,
@@ -27,8 +27,14 @@ import {
   formatEnergy,
 } from '@/lib/calculations/calculation-details';
 
+// Flexible input type that matches store's StoreInput
+type StoreInput = Partial<Omit<SizingInput, 'duty' | 'preferences'>> & {
+  duty?: DutyConditions;
+  preferences?: SystemPreferences;
+};
+
 interface DetailedCalculationsProps {
-  input: Partial<SizingInput>;
+  input: StoreInput;
   mechanical: MechanicalResult;
   defaultExpanded?: boolean;
 }

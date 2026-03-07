@@ -1,6 +1,9 @@
 // 选型引擎主类
 
-import { SizingInput, SizingResult, SizingFailureReason, MC20Motor, XC20Drive, BrakeResistor, SystemPreferences, MechanicalResult, SystemConfiguration } from '@/types';
+import { SizingInput, SizingResult, SizingFailureReason, MC20Motor, XC20Drive, BrakeResistor, MechanicalResult, SystemConfiguration } from '@/types';
+
+// Full preferences type including common params (safetyFactor, etc.)
+type FullPreferences = SizingInput['preferences'];
 import { MechanicalCalculator } from './mechanical';
 import { MotorFilter } from './motor-filter';
 import { PartNumberGenerator } from './part-number-generator';
@@ -193,7 +196,7 @@ export class SizingEngine {
 
   private diagnoseFailure(
     mechanical: MechanicalResult,
-    preferences: SystemPreferences
+    preferences: FullPreferences
   ): SizingFailureReason {
     const requiredTorque = mechanical.torques.rms * preferences.safetyFactor;
     const requiredPeakTorque = mechanical.torques.peak * preferences.safetyFactor;
@@ -233,7 +236,7 @@ export class SizingEngine {
     };
   }
 
-  private matchDrive(motor: MC20Motor, preferences: SystemPreferences): XC20Drive {
+  private matchDrive(motor: MC20Motor, preferences: FullPreferences): XC20Drive {
     // 从电机的 matchedDrives 中提取基础型号 (如 XC20-W0005CRN)
     const matchedBaseModels = motor.matchedDrives.map(md => {
       // 提取前两部分: XC20-W0005CRN

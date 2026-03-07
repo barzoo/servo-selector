@@ -12,9 +12,21 @@ import {
   SystemPreferences,
   SizingResult,
   MotorSelections,
+  SizingInput,
 } from '@/types';
 
-interface WizardStore extends WizardState {
+// Flexible input type for store - allows partial duty/preferences without common params
+type StoreInput = Partial<Omit<SizingInput, 'duty' | 'preferences'>> & {
+  duty?: DutyConditions;
+  preferences?: SystemPreferences;
+};
+
+// Override the input type in WizardState
+interface WizardStateWithFlexibleInput extends Omit<WizardState, 'input'> {
+  input: StoreInput;
+}
+
+interface WizardStore extends WizardStateWithFlexibleInput {
   setStep: (step: WizardStep) => void;
   goToStep: (step: number) => void;
   nextStep: () => void;

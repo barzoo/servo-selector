@@ -22,7 +22,15 @@ import type {
   DirectDriveParams,
   BeltParams,
   RackPinionParams,
+  DutyConditions,
+  SystemPreferences,
 } from '@/types';
+
+// Flexible input type that matches store's StoreInput
+type StoreInput = Partial<Omit<SizingInput, 'duty' | 'preferences'>> & {
+  duty?: DutyConditions;
+  preferences?: SystemPreferences;
+};
 
 // ============ 类型定义 ============
 
@@ -106,7 +114,7 @@ export interface CalculationDetails {
  * - 空间复杂度: O(1) - 返回固定结构的对象
  */
 export function extractCalculationDetails(
-  input: Partial<SizingInput>,
+  input: StoreInput,
   mechanical: MechanicalResult
 ): CalculationDetails {
   return {
@@ -130,7 +138,7 @@ export function extractCalculationDetails(
  * - 时间复杂度: O(1) - 基于 switch 的固定分支
  * - 空间复杂度: O(1) - 返回固定大小的参数数组
  */
-export function extractMechanismParams(input: Partial<SizingInput>): CalculationDetails['mechanism'] {
+export function extractMechanismParams(input: StoreInput): CalculationDetails['mechanism'] {
   if (!input.mechanism) {
     return {
       type: 'BALL_SCREW',
@@ -275,7 +283,7 @@ export function extractMechanismParams(input: Partial<SizingInput>): Calculation
  * - 梯形速度曲线计算参考《伺服系统运动控制技术》第3章
  */
 export function extractMotionParams(
-  input: Partial<SizingInput>,
+  input: StoreInput,
   mechanical: MechanicalResult
 ): CalculationDetails['motion'] {
   if (!input.motion) {

@@ -3,814 +3,864 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎭 伺服选型工具的故事 - 一段数据的奇妙旅程</title>
+    <title>伺服选型工具 · 项目特刊</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Noto Sans SC', sans-serif;
-        }
-
         :root {
-            --user-color: #3b82f6;
-            --data-color: #8b5cf6;
-            --engine-color: #f97316;
-            --result-color: #10b981;
-            --system-color: #06b6d4;
+            --color-bg: #FDF6E3;
+            --color-text: #2C3E50;
+            --color-accent: #E74C3C;
+            --color-secondary: #3498DB;
+            --color-highlight: #F1C40F;
+            --color-dark: #1A1A2E;
+            --font-display: 'Noto Serif SC', serif;
+            --font-body: 'Noto Sans SC', sans-serif;
+            --font-mono: 'Space Mono', monospace;
         }
 
-        .hero-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .character-card {
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        .character-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-        }
-
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--user-color), var(--data-color), var(--engine-color), var(--result-color));
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 2rem;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -38px;
-            top: 5px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: white;
-            border: 4px solid var(--data-color);
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2);
-        }
-
-        .chat-bubble {
-            max-width: 80%;
-            padding: 12px 16px;
-            border-radius: 20px;
-            margin-bottom: 12px;
-            position: relative;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .chat-left {
-            background: #f3f4f6;
-            margin-right: auto;
-            border-bottom-left-radius: 4px;
-        }
-
-        .chat-right {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            margin-left: auto;
-            border-bottom-right-radius: 4px;
-        }
-
-        .story-card {
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .story-preview {
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
-            background: white;
-        }
-
-        .story-content {
-            padding: 0 20px 20px;
-            background: white;
-            display: none;
-        }
-
-        .story-content.active {
-            display: block;
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; max-height: 0; }
-            to { opacity: 1; max-height: 1000px; }
-        }
-
-        .tech-egg {
-            margin-top: 16px;
-            padding: 16px;
-            background: #1e293b;
-            border-radius: 12px;
-            color: #e2e8f0;
-        }
-
-        .tech-egg summary {
-            cursor: pointer;
-            font-weight: 600;
-            color: #fbbf24;
-        }
-
-        .tech-egg pre {
-            margin-top: 12px;
-            overflow-x: auto;
-            font-size: 0.875rem;
-        }
-
-        .floating-emoji {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .role-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .nav-pill {
+        /* 粗野主义边框 */
+        .brutal-border {
+            border: 4px solid var(--color-dark);
+            box-shadow: 8px 8px 0 var(--color-dark);
             transition: all 0.2s ease;
         }
 
-        .nav-pill:hover {
-            transform: scale(1.05);
+        .brutal-border:hover {
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 var(--color-dark);
         }
 
-        .scene-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 20px;
-            padding: 24px;
+        .brutal-border-sm {
+            border: 3px solid var(--color-dark);
+            box-shadow: 4px 4px 0 var(--color-dark);
+        }
+
+        /* 杂志标题 */
+        .magazine-title {
+            font-family: var(--font-display);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.02em;
+        }
+
+        .magazine-subtitle {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        /* 高亮标记 */
+        .highlight {
+            background: var(--color-highlight);
+            padding: 0 8px;
+            transform: rotate(-2deg);
+            display: inline-block;
+        }
+
+        .highlight-red {
+            background: var(--color-accent);
+            color: white;
+            padding: 0 8px;
+        }
+
+        /* 角色卡片 */
+        .character-card {
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(0,0,0,0.03) 10px,
+                rgba(0,0,0,0.03) 20px
+            );
+            pointer-events: none;
+        }
+
+        .character-number {
+            font-family: var(--font-mono);
+            font-size: 8rem;
+            font-weight: 700;
+            color: rgba(0,0,0,0.05);
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            line-height: 1;
+        }
+
+        /* 时间线 */
+        .timeline-container {
+            position: relative;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--color-dark);
+        }
+
+        .timeline-dot {
+            width: 20px;
+            height: 20px;
+            background: var(--color-accent);
+            border: 4px solid var(--color-dark);
+            border-radius: 50%;
+            position: absolute;
+            left: 22px;
+            top: 24px;
+        }
+
+        /* 对话气泡 */
+        .chat-bubble {
+            position: relative;
+            padding: 20px 24px;
             margin-bottom: 20px;
+        }
+
+        .chat-bubble::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: inherit;
+            border: inherit;
+            border-top: none;
+            border-right: none;
+        }
+
+        .chat-left {
+            background: white;
+            border: 3px solid var(--color-dark);
+            margin-right: 60px;
+        }
+
+        .chat-left::before {
+            bottom: -12px;
+            left: 30px;
+            transform: rotate(-45deg);
+            background: white;
+        }
+
+        .chat-right {
+            background: var(--color-dark);
+            color: white;
+            border: 3px solid var(--color-dark);
+            margin-left: 60px;
+        }
+
+        .chat-right::before {
+            bottom: -12px;
+            right: 30px;
+            transform: rotate(135deg);
+            background: var(--color-dark);
+        }
+
+        /* 滚动动画 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 代码块 */
+        .code-block {
+            font-family: var(--font-mono);
+            background: var(--color-dark);
+            color: #FDF6E3;
+            padding: 24px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 工具标签 */
+        .tool-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: white;
+            border: 3px solid var(--color-dark);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin: 4px;
+            transition: all 0.2s;
+        }
+
+        .tool-tag:hover {
+            background: var(--color-dark);
+            color: white;
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--color-accent);
+        }
+
+        /* 网格背景 */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* 导航 */
+        .nav-fixed {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: white;
+            padding: 16px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: var(--color-dark);
+            font-weight: 700;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            border-bottom-color: var(--color-accent);
+            color: var(--color-accent);
+        }
+
+        /* 场景卡片 */
+        .scene-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .magazine-title {
+                font-size: 2.5rem !important;
+            }
+
+            .nav-fixed {
+                display: none;
+            }
+
+            .brutal-border {
+                box-shadow: 4px 4px 0 var(--color-dark);
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            .nav-fixed {
+                display: none;
+            }
+
+            .brutal-border {
+                box-shadow: none;
+                border: 2px solid black;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50">
-
-    <!-- 🎬 开场：项目剧场 -->
-    <header class="hero-gradient text-white py-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <div class="floating-emoji text-6xl mb-6">🎭</div>
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">伺服选型工具的故事</h1>
-            <p class="text-xl md:text-2xl text-blue-100 mb-8">一段数据如何帮你选出完美的电机</p>
-
-            <!-- 角色介绍 -->
-            <div class="flex flex-wrap justify-center gap-4 mt-12">
-                <div class="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 text-center">
-                    <div class="text-4xl mb-2">👤</div>
-                    <div class="font-medium">你（用户）</div>
-                    <div class="text-sm text-blue-200">发起者</div>
-                </div>
-                <div class="text-3xl self-center">→</div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 text-center">
-                    <div class="text-4xl mb-2">📦</div>
-                    <div class="font-medium">小D（数据）</div>
-                    <div class="text-sm text-blue-200">主角</div>
-                </div>
-                <div class="text-3xl self-center">→</div>
-                <div class="bg-white/20 backdrop-blur-sm rounded-2xl px-6 py-4 text-center">
-                    <div class="text-4xl mb-2">🎯</div>
-                    <div class="font-medium">选型结果</div>
-                    <div class="text-sm text-blue-200">终点</div>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- 导航 -->
-    <nav class="bg-white shadow-sm sticky top-0 z-50 py-4">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="flex flex-wrap gap-2 text-sm">
-                <a href="#story" class="nav-pill px-4 py-2 bg-purple-100 text-purple-700 rounded-full font-medium">📖 故事</a>
-                <a href="#characters" class="nav-pill px-4 py-2 bg-gray-100 text-gray-700 rounded-full">👥 角色</a>
-                <a href="#journey" class="nav-pill px-4 py-2 bg-gray-100 text-gray-700 rounded-full">🗺️ 旅程</a>
-                <a href="#scenes" class="nav-pill px-4 py-2 bg-gray-100 text-gray-700 rounded-full">🎬 场景</a>
-                <a href="#tools" class="nav-pill px-4 py-2 bg-gray-100 text-gray-700 rounded-full">🧰 工具箱</a>
-            </div>
-        </div>
+<body>
+    <!-- 固定导航 -->
+    <nav class="nav-fixed brutal-border-sm">
+        <div class="text-xs font-mono mb-2 text-gray-500">目录</div>
+        <a href="#cover" class="nav-link">封面</a>
+        <a href="#intro" class="nav-link">导读</a>
+        <a href="#characters" class="nav-link">人物</a>
+        <a href="#story" class="nav-link">故事</a>
+        <a href="#scenes" class="nav-link">场景</a>
+        <a href="#tools" class="nav-link">工具</a>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-12">
-
-        <!-- 📖 第一幕：故事简介 -->
-        <section id="story" class="mb-16">
-            <div class="bg-white rounded-3xl shadow-lg p-8 md:p-12">
-                <div class="text-center mb-8">
-                    <span class="text-5xl">📖</span>
-                    <h2 class="text-3xl font-bold text-gray-800 mt-4">第一幕：这是讲什么的？</h2>
+    <!-- 封面 -->
+    <section id="cover" class="min-h-screen flex items-center justify-center p-8 grid-bg">
+        <div class="max-w-5xl w-full">
+            <!-- 杂志头部 -->
+            <div class="flex justify-between items-end mb-8 border-b-4 border-black pb-4">
+                <div>
+                    <div class="font-mono text-sm">VOL. 2026.03</div>
+                    <div class="font-mono text-sm">PROJECT ARCHITECTURE</div>
                 </div>
-
-                <div class="prose max-w-none text-gray-600 leading-relaxed text-lg">
-                    <p class="mb-6">
-                        想象你是一位<strong>销售工程师</strong>，客户问你："我需要选一个伺服电机来驱动我的设备，你能帮我算算该用哪款吗？"
-                    </p>
-
-                    <div class="bg-blue-50 border-l-4 border-blue-500 p-6 my-8 rounded-r-xl">
-                        <p class="text-blue-800 text-lg">
-                            <strong>传统方式：</strong>你拿出计算器，翻产品手册，花2小时算啊算...<br>
-                            <strong>现在：</strong>打开这个工具，5分钟搞定，还能生成漂亮的报告！
-                        </p>
-                    </div>
-
-                    <p class="mb-6">
-                        这个工具就像一位<strong>24小时在线的选型专家</strong>。你告诉它：
-                    </p>
-
-                    <div class="grid md:grid-cols-2 gap-4 my-8">
-                        <div class="bg-gray-50 rounded-xl p-5 flex items-start gap-3">
-                            <span class="text-2xl">⚖️</span>
-                            <div>
-                                <strong class="text-gray-800">我的负载有多重？</strong>
-                                <p class="text-sm text-gray-500 mt-1">比如：10公斤的工作台</p>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl p-5 flex items-start gap-3">
-                            <span class="text-2xl">🚀</span>
-                            <div>
-                                <strong class="text-gray-800">要跑多快？</strong>
-                                <p class="text-sm text-gray-500 mt-1">比如：每秒1米的速度</p>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl p-5 flex items-start gap-3">
-                            <span class="text-2xl">⚙️</span>
-                            <div>
-                                <strong class="text-gray-800">用什么传动？</strong>
-                                <p class="text-sm text-gray-500 mt-1">比如：丝杠、减速机、皮带...</p>
-                            </div>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl p-5 flex items-start gap-3">
-                            <span class="text-2xl">🌍</span>
-                            <div>
-                                <strong class="text-gray-800">环境怎么样？</strong>
-                                <p class="text-sm text-gray-500 mt-1">比如：温度、防护等级</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p class="text-center text-xl text-gray-700 font-medium">
-                        然后... <span class="text-purple-600">魔法发生了！</span> ✨
-                    </p>
+                <div class="text-right">
+                    <div class="font-mono text-sm">博世力士乐</div>
+                    <div class="font-mono text-sm text-red-600">特别报道</div>
                 </div>
             </div>
-        </section>
 
-        <!-- 👥 第二幕：认识角色 -->
-        <section id="characters" class="mb-16">
-            <div class="text-center mb-8">
-                <span class="text-5xl">👥</span>
-                <h2 class="text-3xl font-bold text-gray-800 mt-4">第二幕：认识我们的团队</h2>
-                <p class="text-gray-600 mt-2">每个模块都有自己的性格和职责</p>
+            <!-- 主标题 -->
+            <div class="relative">
+                <h1 class="magazine-title text-6xl md:text-8xl lg:text-9xl mb-4">
+                    伺服选型<br>
+                    <span class="highlight">工具的故事</span>
+                </h1>
+
+                <div class="absolute -top-4 -right-4 bg-red-600 text-white p-4 brutal-border-sm transform rotate-6">
+                    <div class="font-mono text-sm">FEATURE</div>
+                    <div class="font-bold text-xl">独家揭秘</div>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-6">
+            <!-- 副标题 -->
+            <p class="magazine-subtitle text-2xl md:text-3xl mt-8 max-w-2xl">
+                一段数据如何帮你选出完美的电机：<br>
+                从代码到现实的奇妙旅程
+            </p>
 
+            <!-- 角色预览 -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-6 gap-4">
+                <div class="text-center">
+                    <div class="text-4xl mb-2">💁‍♀️</div>
+                    <div class="font-mono text-xs">小美</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">📦</div>
+                    <div class="font-mono text-xs">老Z</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">🧮</div>
+                    <div class="font-mono text-xs">小明</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">🎯</div>
+                    <div class="font-mono text-xs">小红</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">🔧</div>
+                    <div class="font-mono text-xs">小张</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl mb-2">📄</div>
+                    <div class="font-mono text-xs">小PDF</div>
+                </div>
+            </div>
+
+            <!-- 滚动提示 -->
+            <div class="mt-20 text-center">
+                <div class="inline-block animate-bounce">
+                    <span class="font-mono text-sm">↓ 向下滚动开始阅读</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 导读 -->
+    <section id="intro" class="py-20 px-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="reveal">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-16 h-1 bg-black"></div>
+                    <span class="font-mono text-sm">EDITOR'S NOTE</span>
+                </div>
+
+                <h2 class="magazine-title text-5xl md:text-6xl mb-8">
+                    这是讲什么的？
+                </h2>
+
+                <div class="prose prose-lg max-w-none">
+                    <p class="text-xl leading-relaxed mb-6">
+                        想象你是一位<span class="highlight">销售工程师</span>，客户问你：
+                        <em>"我需要选一个伺服电机来驱动我的设备，你能帮我算算该用哪款吗？"</em>
+                    </p>
+
+                    <div class="brutal-border bg-white p-8 my-10">
+                        <div class="flex items-start gap-6">
+                            <div class="text-4xl">💡</div>
+                            <div>
+                                <h3 class="font-bold text-xl mb-2">传统方式 vs 现在</h3>
+                                <p class="text-gray-600">
+                                    <strong>以前：</strong>拿出计算器，翻产品手册，花2小时算啊算...<br>
+                                    <strong>现在：</strong>打开这个工具，5分钟搞定，还能生成漂亮的报告！
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-lg">
+                        这个工具就像一位<span class="highlight-red">24小时在线的选型专家</span>。
+                        你告诉它负载有多重、要跑多快、用什么传动，它就能算出需要什么样的电机、
+                        配什么样的驱动器、用什么电缆...
+                    </p>
+                </div>
+
+                <!-- 功能亮点 -->
+                <div class="grid md:grid-cols-2 gap-6 mt-12">
+                    <div class="brutal-border bg-yellow-50 p-6">
+                        <div class="text-3xl mb-3">⚖️</div>
+                        <h4 class="font-bold text-lg mb-2">负载计算</h4>
+                        <p class="text-sm text-gray-600">支持丝杠、减速机、皮带、直驱、齿轮齿条5种传动方式</p>
+                    </div>
+                    <div class="brutal-border bg-blue-50 p-6">
+                        <div class="text-3xl mb-3">🚀</div>
+                        <h4 class="font-bold text-lg mb-2">运动分析</h4>
+                        <p class="text-sm text-gray-600">根据速度、加速度计算所需扭矩和功率</p>
+                    </div>
+                    <div class="brutal-border bg-green-50 p-6">
+                        <div class="text-3xl mb-3">🎯</div>
+                        <h4 class="font-bold text-lg mb-2">智能匹配</h4>
+                        <p class="text-sm text-gray-600">从数据库中筛选最合适的电机，给出匹配度评分</p>
+                    </div>
+                    <div class="brutal-border bg-purple-50 p-6">
+                        <div class="text-3xl mb-3">📄</div>
+                        <h4 class="font-bold text-lg mb-2">一键导出</h4>
+                        <p class="text-sm text-gray-600">生成包含订货号的完整PDF报告</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 人物介绍 -->
+    <section id="characters" class="py-20 px-8 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="reveal">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-16 h-1 bg-black"></div>
+                    <span class="font-mono text-sm">CHARACTERS</span>
+                </div>
+
+                <h2 class="magazine-title text-5xl md:text-6xl mb-4">
+                    认识我们的团队
+                </h2>
+                <p class="text-xl text-gray-600 mb-12 max-w-2xl">
+                    每个模块都有自己的性格和职责，他们一起协作完成选型任务
+                </p>
+            </div>
+
+            <!-- 角色卡片网格 -->
+            <div class="grid md:grid-cols-2 gap-8">
                 <!-- 前台小美 -->
-                <div class="character-card bg-white p-6" style="border-left: 5px solid var(--user-color);" onclick="toggleStory(this)">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-5xl">💁‍♀️</span>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">前台小美</h3>
-                            <p class="text-blue-600 font-medium">"您好，请问需要什么帮助？"</p>
+                <div class="character-card brutal-border p-8 reveal">
+                    <div class="character-number">01</div>
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4">💁‍♀️</div>
+                        <h3 class="magazine-subtitle text-3xl mb-2">前台小美</h3>
+                        <p class="text-red-600 font-mono text-sm mb-4">"您好，请问需要什么帮助？"</p>
+                        <p class="text-gray-600 mb-4">
+                            小美是用户第一眼看到的界面。她负责接待每一位"客人"，
+                            引导他们填写需求表单，确保所有必要信息都收集到位。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tool-tag">React组件</span>
+                            <span class="tool-tag">表单收集</span>
+                            <span class="tool-tag">步骤向导</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        小美是用户第一眼看到的界面。她负责接待每一位"客人"，引导他们填写需求表单。
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="role-badge bg-blue-100 text-blue-700">📱 界面组件</span>
-                        <span class="role-badge bg-blue-100 text-blue-700">📝 表单收集</span>
-                    </div>
-
-                    <details class="tech-egg mt-4">
-                        <summary>🥚 技术彩蛋：小美的工作笔记</summary>
-                        <pre><code>// 小美 = React 组件
-// 位于 src/components/wizard/steps/
-
-function ProjectInfoStep() {
-  // 引导用户填写项目信息
-}
-
-function MechanismStep() {
-  // 选择传动方式
-}</code></pre>
-                    </details>
                 </div>
 
                 <!-- 仓库管理员老Z -->
-                <div class="character-card bg-white p-6" style="border-left: 5px solid var(--data-color);" onclick="toggleStory(this)">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-5xl">📦</span>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">仓库管理员老Z</h3>
-                            <p class="text-purple-600 font-medium">"我帮你存着，随时来取！"</p>
+                <div class="character-card brutal-border p-8 reveal" style="background: #F3E5F5;">
+                    <div class="character-number">02</div>
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4">📦</div>
+                        <h3 class="magazine-subtitle text-3xl mb-2">仓库管理员老Z</h3>
+                        <p class="text-purple-600 font-mono text-sm mb-4">"我帮你存着，随时来取！"</p>
+                        <p class="text-gray-600 mb-4">
+                            老Z是状态管理专家。所有数据都经过他的手分类存放，贴上标签。
+                            他能瞬间找到任何信息，还能记住多个项目的进度。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tool-tag">Zustand</span>
+                            <span class="tool-tag">状态管理</span>
+                            <span class="tool-tag">数据持久化</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        老Z是状态管理专家。所有数据都经过他的手分类存放，贴上标签。他能瞬间找到任何信息。
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="role-badge bg-purple-100 text-purple-700">💾 状态管理</span>
-                        <span class="role-badge bg-purple-100 text-purple-700">🔍 数据查询</span>
-                    </div>
-
-                    <details class="tech-egg mt-4">
-                        <summary>🥚 技术彩蛋：老Z的仓库系统</summary>
-                        <pre><code>// 老Z = Zustand Store
-// 位于 src/stores/project-store.ts
-
-interface ProjectStore {
-  project: Project;        // 项目信息
-  currentAxisId: string;   // 当前轴ID
-  input: SizingInput;      // 用户输入
-  result?: SizingResult;   // 计算结果
-}</code></pre>
-                    </details>
                 </div>
 
                 <!-- 算法师小明 -->
-                <div class="character-card bg-white p-6" style="border-left: 5px solid var(--engine-color);" onclick="toggleStory(this)">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-5xl">🧮</span>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">算法师小明</h3>
-                            <p class="text-orange-600 font-medium">"让我来算一算..."</p>
+                <div class="character-card brutal-border p-8 reveal" style="background: #FFF3E0;">
+                    <div class="character-number">03</div>
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4">🧮</div>
+                        <h3 class="magazine-subtitle text-3xl mb-2">算法师小明</h3>
+                        <p class="text-orange-600 font-mono text-sm mb-4">"让我来算一算..."</p>
+                        <p class="text-gray-600 mb-4">
+                            小明是数学天才。他精通各种物理公式，能把"10公斤负载、1米/秒速度"
+                            换算成"需要多大的电机"。他的计算器从不出错。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tool-tag">机械计算</span>
+                            <span class="tool-tag">物理公式</span>
+                            <span class="tool-tag">扭矩分析</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        小明是数学天才。他精通各种物理公式，能把"10公斤负载、1米/秒速度"换算成"需要多大的电机"。
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="role-badge bg-orange-100 text-orange-700">⚡ 惯量计算</span>
-                        <span class="role-badge bg-orange-100 text-orange-700">💪 扭矩计算</span>
-                        <span class="role-badge bg-orange-100 text-orange-700">🚀 转速计算</span>
-                    </div>
-
-                    <details class="tech-egg mt-4">
-                        <summary>🥚 技术彩蛋：小明的公式本</summary>
-                        <pre><code>// 小明 = MechanicalCalculator
-// 位于 src/lib/calculations/mechanical.ts
-
-// 丝杠传动惯量计算
-J_load = mass × (lead / 2π / ratio)²
-
-// 扭矩计算
-T = J × α + T_friction + T_gravity</code></pre>
-                    </details>
                 </div>
 
                 <!-- 红娘小红 -->
-                <div class="character-card bg-white p-6" style="border-left: 5px solid var(--result-color);" onclick="toggleStory(this)">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-5xl">🎯</span>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">红娘小红</h3>
-                            <p class="text-green-600 font-medium">"我来帮你找个完美的对象！"</p>
+                <div class="character-card brutal-border p-8 reveal" style="background: #E8F5E9;">
+                    <div class="character-number">04</div>
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4">🎯</div>
+                        <h3 class="magazine-subtitle text-3xl mb-2">红娘小红</h3>
+                        <p class="text-green-600 font-mono text-sm mb-4">"我来帮你找个完美的对象！"</p>
+                        <p class="text-gray-600 mb-4">
+                            小红是匹配专家。她在电机数据库里翻找，根据你的需求
+                            （扭矩、转速、惯量）找出最合适的"对象"，还会给匹配度打分。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tool-tag">电机筛选</span>
+                            <span class="tool-tag">智能评分</span>
+                            <span class="tool-tag">匹配算法</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        小红是匹配专家。她在电机数据库里翻找，根据你的需求（扭矩、转速、惯量）找出最合适的"对象"。
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="role-badge bg-green-100 text-green-700">🔍 电机筛选</span>
-                        <span class="role-badge bg-green-100 text-green-700">⭐ 智能评分</span>
-                        <span class="role-badge bg-green-100 text-green-700">💯 匹配度</span>
-                    </div>
-
-                    <details class="tech-egg mt-4">
-                        <summary>🥚 技术彩蛋：小红的评分标准</summary>
-                        <pre><code>// 小红 = MotorFilter
-// 位于 src/lib/calculations/motor-filter.ts
-
-评分维度：
-- 扭矩余量（40%）
-- 惯量比（30%）
-- 转速余量（20%）
-- 效率（10%）</code></pre>
-                    </details>
                 </div>
 
                 <!-- 装配师小张 -->
-                <div class="character-card bg-white p-6" style="border-left: 5px solid var(--system-color);" onclick="toggleStory(this)">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-5xl">🔧</span>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">装配师小张</h3>
-                            <p class="text-cyan-600 font-medium">"电机找到了，还需要配点什么？"</p>
+                <div class="character-card brutal-border p-8 reveal" style="background: #E0F7FA;">
+                    <div class="character-number">05</div>
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4">🔧</div>
+                        <h3 class="magazine-subtitle text-3xl mb-2">装配师小张</h3>
+                        <p class="text-cyan-600 font-mono text-sm mb-4">"电机找到了，还需要配点什么？"</p>
+                        <p class="text-gray-600 mb-4">
+                            小张负责组装完整方案。电机选好了，他还要配上驱动器、电缆、
+                            制动电阻，生成完整的订货清单。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tool-tag">系统配置</span>
+                            <span class="tool-tag">订货号生成</span>
+                            <span class="tool-tag">配件匹配</span>
                         </div>
                     </div>
-                    <p class="text-gray-600 mb-4">
-                        小张负责组装完整方案。电机选好了，他还要配上驱动器、电缆、制动电阻，生成完整的订货清单。
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="role-badge bg-cyan-100 text-cyan-700">🔌 驱动器匹配</span>
-                        <span class="role-badge bg-cyan-100 text-cyan-700">🔋 电缆配置</span>
-                        <span class="role-badge bg-cyan-100 text-cyan-700">🏷️ 订货号生成</span>
-                    </div>
-
-                    <details class="tech-egg mt-4">
-                        <summary>🥚 技术彩蛋：小张的装配清单</summary>
-                        <pre><code>// 小张 = SizingEngine
-// 位于 src/lib/calculations/sizing-engine.ts
-
-完整系统配置：
-- 电机 + 选项（制动/编码器/键轴）
-- 驱动器 + 通讯协议
-- 动力电缆 + 编码器电缆
-- 制动电阻（如需要）</code></pre>
-                    </details>
                 </div>
 
                 <!-- 快递小PDF -->
-                <div class="character-card bg-white p-6" style="border-left: 5px solid #ef4444;" onclick="toggleStory(this)">
-                    <div class="flex items-center gap-4 mb-4">
-                        <span class="text-5xl">📄</span>
-                        <div>
-                            <h3 class="text-xl font-bold text-gray-800">快递小PDF</h3>
-                            <p class="text-red-600 font-medium">"您的报告已送达，请签收！"</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-4">
-                        小PDF是最后的快递员。他把所有结果打包成一份漂亮的 PDF 报告，包含所有技术参数和订货号。
-                    </p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="role-badge bg-red-100 text-red-700">📑 PDF生成</span>
-                        <span class="role-badge bg-red-100 text-red-700">🖨️ 报告打印</span>
-                    </div>
-
-                    <details class="tech-egg mt-4">
-                        <summary>🥚 技术彩蛋：小PDF的打包流程</summary>
-                        <pre><code>// 小PDF = PDF Generator
-// 位于 src/lib/pdf/
-
-报告内容：
-- 项目信息
-- 机械计算结果
-- 电机推荐列表
-- 系统配置清单
-- 订货号汇总</code></pre>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🗺️ 第三幕：数据的一天 -->
-        <section id="journey" class="mb-16">
-            <div class="bg-white rounded-3xl shadow-lg p-8 md:p-12">
-                <div class="text-center mb-10">
-                    <span class="text-5xl">🗺️</span>
-                    <h2 class="text-3xl font-bold text-gray-800 mt-4">第三幕：小D的一天</h2>
-                    <p class="text-gray-600 mt-2">一段数据的奇妙旅程</p>
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="bg-blue-50 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="text-3xl">🌅</span>
-                                <span class="font-bold text-gray-800">早上 8:00</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-blue-700 mb-2">用户打开应用</h4>
-                            <p class="text-gray-600">
-                                销售工程师小王打开电脑，准备为客户做一个选型方案。他打开工具，点击"新建项目"。
-                            </p>
-                            <div class="mt-3 flex gap-2">
-                                <span class="role-badge bg-blue-100 text-blue-700">👤 前台小美接待</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="bg-purple-50 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="text-3xl">📝</span>
-                                <span class="font-bold text-gray-800">上午 9:00</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-purple-700 mb-2">小D诞生了！</h4>
-                            <p class="text-gray-600">
-                                小王填写表单：负载10kg、丝杠导程10mm、速度1m/s... 随着每一个输入，我（数据小D）逐渐成形。
-                            </p>
-                            <div class="mt-3 flex gap-2">
-                                <span class="role-badge bg-purple-100 text-purple-700">📦 老Z把我存进仓库</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="bg-orange-50 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="text-3xl">⚙️</span>
-                                <span class="font-bold text-gray-800">中午 12:00</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-orange-700 mb-2">工厂加工时间</h4>
-                            <p class="text-gray-600">
-                                小明拿到我的信息，开始疯狂计算：<br>
-                                "惯量 = 10 × (0.01 / 6.28)² = ..."<br>
-                                "扭矩 = 惯量 × 加速度 + 摩擦力 = ..."<br>
-                                我变成了一个"计算结果"！
-                            </p>
-                            <div class="mt-3 flex gap-2">
-                                <span class="role-badge bg-orange-100 text-orange-700">🧮 小明疯狂按计算器</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="bg-green-50 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="text-3xl">🎯</span>
-                                <span class="font-bold text-gray-800">下午 2:00</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-green-700 mb-2">相亲大会</h4>
-                            <p class="text-gray-600">
-                                小红拿着我的"择偶标准"（需要2.5Nm扭矩、3000rpm转速），在电机数据库里翻找：<br>
-                                "这款扭矩不够，淘汰！"<br>
-                                "这款转速不够，淘汰！"<br>
-                                "这款... 哇，匹配度95%！"
-                            </p>
-                            <div class="mt-3 flex gap-2">
-                                <span class="role-badge bg-green-100 text-green-700">💘 小红牵线成功</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="bg-cyan-50 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="text-3xl">🔧</span>
-                                <span class="font-bold text-gray-800">下午 3:30</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-cyan-700 mb-2">组装完整方案</h4>
-                            <p class="text-gray-600">
-                                小张出马："电机选好了，还要配个驱动器... 嗯，XC20-W0018合适。电缆要5米的... 制动电阻需要吗？让我算算再生能量..."
-                            </p>
-                            <div class="mt-3 flex gap-2">
-                                <span class="role-badge bg-cyan-100 text-cyan-700">📋 小张生成配置清单</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item">
-                        <div class="bg-red-50 rounded-2xl p-6">
-                            <div class="flex items-center gap-3 mb-3">
-                                <span class="text-3xl">📄</span>
-                                <span class="font-bold text-gray-800">下午 4:00</span>
-                            </div>
-                            <h4 class="text-lg font-semibold text-red-700 mb-2">快递送达！</h4>
-                            <p class="text-gray-600">
-                                小PDF把一切都打包好：项目信息、计算过程、推荐电机、系统配置、订货号... 一份漂亮的报告生成！小王满意地点击"下载PDF"。
-                            </p>
-                            <div class="mt-3 flex gap-2">
-                                <span class="role-badge bg-red-100 text-red-700">🎉 任务完成！</span>
-                            </div>
+                <div class="character-card brutal-border p-8 reveal" style="background: #FFEBEE;">
+                    <div class="character-number">06</div>
+                    <div class="relative z-10">
+                        <div class="text-6xl mb-4">📄</div>
+                        <h3 class="magazine-subtitle text-3xl mb-2">快递小PDF</h3>
+                        <p class="text-red-600 font-mono text-sm mb-4">"您的报告已送达，请签收！"</p>
+                        <p class="text-gray-600 mb-4">
+                            小PDF是最后的快递员。他把所有结果打包成一份漂亮的PDF报告，
+                            包含所有技术参数和订货号，一键下载。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tool-tag">PDF生成</span>
+                            <span class="tool-tag">报告排版</span>
+                            <span class="tool-tag">文件导出</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- 🎬 第四幕：场景演示 -->
-        <section id="scenes" class="mb-16">
-            <div class="text-center mb-8">
-                <span class="text-5xl">🎬</span>
-                <h2 class="text-3xl font-bold text-gray-800 mt-4">第四幕：场景演示</h2>
-                <p class="text-gray-600 mt-2">看看实际使用中会发生什么</p>
+    <!-- 故事线 -->
+    <section id="story" class="py-20 px-8" style="background: #1A1A2E; color: #FDF6E3;">
+        <div class="max-w-4xl mx-auto">
+            <div class="reveal">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-16 h-1 bg-white"></div>
+                    <span class="font-mono text-sm text-gray-400">THE JOURNEY</span>
+                </div>
+
+                <h2 class="magazine-title text-5xl md:text-6xl mb-4">
+                    小D的一天
+                </h2>
+                <p class="text-xl text-gray-400 mb-12">
+                    一段数据的奇妙旅程
+                </p>
             </div>
 
-            <!-- 场景一 -->
-            <div class="scene-card mb-6">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">场景一</span>
-                    <h3 class="text-xl font-bold text-gray-800">新来的客户</h3>
+            <div class="timeline-container relative pl-16">
+                <div class="timeline-line"></div>
+
+                <!-- 时间点1 -->
+                <div class="reveal mb-12 relative">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-white text-black brutal-border p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🌅</span>
+                            <span class="font-mono text-sm text-gray-500">08:00 AM</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">用户打开应用</h3>
+                        <p class="text-gray-600">
+                            销售工程师小王打开电脑，准备为客户做一个选型方案。
+                            他打开工具，点击"新建项目"。
+                        </p>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <div class="chat-bubble chat-left">
-                        <span class="font-bold">👤 客户：</span>我需要选一个伺服电机，驱动一个10公斤的工作台，用丝杠传动。
-                    </div>
-                    <div class="chat-bubble chat-right">
-                        <span class="font-bold">🤖 系统：</span>好的！请告诉我丝杠的导程是多少？还有工作台需要跑多快？
-                    </div>
-                    <div class="chat-bubble chat-left">
-                        <span class="font-bold">👤 客户：</span>导程10mm，速度大概每秒0.5米吧。
-                    </div>
-                    <div class="chat-bubble chat-right">
-                        <span class="font-bold">🤖 系统：</span>收到！让我算一下... （小明正在疯狂计算中）
-                    </div>
-                    <div class="text-center mt-4 p-4 bg-green-50 rounded-xl">
-                        <span class="text-2xl">✨</span>
-                        <p class="text-green-700 font-medium">30秒后...</p>
-                        <p class="text-gray-600">"推荐电机：MS2N04-D1BNN，匹配度92%！"</p>
+                <!-- 时间点2 -->
+                <div class="reveal mb-12 relative">
+                    <div class="timeline-dot" style="background: #9C27B0;"></div>
+                    <div class="bg-purple-100 text-black brutal-border p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">📝</span>
+                            <span class="font-mono text-sm text-gray-500">09:00 AM</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">小D诞生了！</h3>
+                        <p class="text-gray-600">
+                            小王填写表单：负载10kg、丝杠导程10mm、速度1m/s...
+                            随着每一个输入，我（数据小D）逐渐成形。
+                        </p>
                     </div>
                 </div>
-            </div>
 
-            <!-- 场景二 -->
-            <div class="scene-card mb-6">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold">场景二</span>
-                    <h3 class="text-xl font-bold text-gray-800">多轴项目</h3>
+                <!-- 时间点3 -->
+                <div class="reveal mb-12 relative">
+                    <div class="timeline-dot" style="background: #FF9800;"></div>
+                    <div class="bg-orange-100 text-black brutal-border p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">⚙️</span>
+                            <span class="font-mono text-sm text-gray-500">12:00 PM</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">工厂加工时间</h3>
+                        <p class="text-gray-600">
+                            小明拿到我的信息，开始疯狂计算：<br>
+                            "惯量 = 10 × (0.01 / 6.28)² = ..."<br>
+                            "扭矩 = 惯量 × 加速度 + 摩擦力 = ..."
+                        </p>
+                    </div>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <p class="text-gray-600 mb-4">
-                        客户有一个复杂的设备，需要<strong>3个伺服轴</strong>同时工作：X轴、Y轴、Z轴。
-                    </p>
-
-                    <div class="grid md:grid-cols-3 gap-4">
-                        <div class="bg-blue-50 rounded-xl p-4 text-center">
-                            <div class="text-3xl mb-2">↔️</div>
-                            <div class="font-bold text-blue-700">X轴</div>
-                            <div class="text-sm text-gray-600">水平移动</div>
-                            <div class="text-xs text-blue-600 mt-1">MS2N04-D1BNN</div>
+                <!-- 时间点4 -->
+                <div class="reveal mb-12 relative">
+                    <div class="timeline-dot" style="background: #4CAF50;"></div>
+                    <div class="bg-green-100 text-black brutal-border p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🎯</span>
+                            <span class="font-mono text-sm text-gray-500">02:00 PM</span>
                         </div>
-                        <div class="bg-purple-50 rounded-xl p-4 text-center">
-                            <div class="text-3xl mb-2">↕️</div>
-                            <div class="font-bold text-purple-700">Y轴</div>
-                            <div class="text-sm text-gray-600">垂直移动</div>
-                            <div class="text-xs text-purple-600 mt-1">MS2N04-D1BNN</div>
-                        </div>
-                        <div class="bg-green-50 rounded-xl p-4 text-center">
-                            <div class="text-3xl mb-2">⬆️</div>
-                            <div class="font-bold text-green-700">Z轴</div>
-                            <div class="text-sm text-gray-600">升降</div>
-                            <div class="text-xs text-green-600 mt-1">MS2N04-D1BNN</div>
-                        </div>
+                        <h3 class="font-bold text-xl mb-2">相亲大会</h3>
+                        <p class="text-gray-600">
+                            小红拿着我的"择偶标准"，在电机数据库里翻找：<br>
+                            "这款扭矩不够，淘汰！"<br>
+                            "这款... 哇，匹配度95%！"
+                        </p>
                     </div>
+                </div>
 
-                    <div class="mt-4 p-4 bg-gray-50 rounded-xl">
-                        <p class="text-sm text-gray-600">
-                            <strong>💡 系统提示：</strong>已为您配置3个轴，可以分别设置每个轴的参数，最后生成一份包含所有轴的完整报告。
+                <!-- 时间点5 -->
+                <div class="reveal mb-12 relative">
+                    <div class="timeline-dot" style="background: #00BCD4;"></div>
+                    <div class="bg-cyan-100 text-black brutal-border p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🔧</span>
+                            <span class="font-mono text-sm text-gray-500">03:30 PM</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">组装完整方案</h3>
+                        <p class="text-gray-600">
+                            小张出马："电机选好了，还要配个驱动器...
+                            电缆要5米的... 制动电阻需要吗？"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 时间点6 -->
+                <div class="reveal relative">
+                    <div class="timeline-dot" style="background: #F44336;"></div>
+                    <div class="bg-red-100 text-black brutal-border p-6">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">📄</span>
+                            <span class="font-mono text-sm text-gray-500">04:00 PM</span>
+                        </div>
+                        <h3 class="font-bold text-xl mb-2">快递送达！</h3>
+                        <p class="text-gray-600">
+                            小PDF把一切都打包好，一份漂亮的报告生成！
+                            小王满意地点击"下载PDF"。
                         </p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- 场景三 -->
-            <div class="scene-card">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-bold">场景三</span>
-                    <h3 class="text-xl font-bold text-gray-800">导出报告</h3>
+    <!-- 场景演示 -->
+    <section id="scenes" class="py-20 px-8">
+        <div class="max-w-5xl mx-auto">
+            <div class="reveal">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-16 h-1 bg-black"></div>
+                    <span class="font-mono text-sm">SCENES</span>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <div class="flex items-center justify-center gap-4 mb-6">
-                        <div class="text-center">
-                            <div class="text-4xl mb-2">📊</div>
-                            <div class="text-sm text-gray-600">计算结果</div>
+                <h2 class="magazine-title text-5xl md:text-6xl mb-12">
+                    场景演示
+                </h2>
+            </div>
+
+            <!-- 场景1 -->
+            <div class="scene-card brutal-border p-8 mb-8 reveal text-white">
+                <div class="relative z-10">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="bg-white text-black px-4 py-2 font-mono font-bold">场景一</span>
+                        <h3 class="text-2xl font-bold">新来的客户</h3>
+                    </div>
+
+                    <div class="space-y-4 max-w-2xl">
+                        <div class="chat-bubble chat-left">
+                            <strong>👤 客户：</strong>我需要选一个伺服电机，驱动一个10公斤的工作台，用丝杠传动。
                         </div>
-                        <span class="text-2xl text-gray-400">+</span>
-                        <div class="text-center">
-                            <div class="text-4xl mb-2">🎯</div>
-                            <div class="text-sm text-gray-600">推荐电机</div>
+                        <div class="chat-bubble chat-right">
+                            <strong>🤖 系统：</strong>好的！请告诉我丝杠的导程是多少？还有工作台需要跑多快？
                         </div>
-                        <span class="text-2xl text-gray-400">+</span>
-                        <div class="text-center">
-                            <div class="text-4xl mb-2">🔧</div>
-                            <div class="text-sm text-gray-600">系统配置</div>
+                        <div class="chat-bubble chat-left">
+                            <strong>👤 客户：</strong>导程10mm，速度大概每秒0.5米吧。
                         </div>
-                        <span class="text-2xl text-gray-400">=</span>
-                        <div class="text-center">
-                            <div class="text-4xl mb-2">📄</div>
-                            <div class="text-sm text-gray-600">PDF报告</div>
+                        <div class="chat-bubble chat-right">
+                            <strong>🤖 系统：</strong>收到！让我算一下...
                         </div>
                     </div>
 
-                    <div class="bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl p-4 text-white text-center">
-                        <p class="font-medium">报告包含：项目信息 | 计算过程 | 电机参数 | 订货号清单 | BOM表</p>
+                    <div class="mt-6 inline-block bg-white text-black px-6 py-3 brutal-border-sm">
+                        <span class="font-bold">30秒后...</span>
+                        <span class="ml-2">推荐电机：MS2N04-D1BNN，匹配度92%！</span>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- 🧰 第五幕：工具箱 -->
-        <section id="tools" class="mb-16">
-            <div class="bg-white rounded-3xl shadow-lg p-8 md:p-12">
-                <div class="text-center mb-10">
-                    <span class="text-5xl">🧰</span>
-                    <h2 class="text-3xl font-bold text-gray-800 mt-4">第五幕：我们的工具箱</h2>
-                    <p class="text-gray-600 mt-2">这些技术帮我们实现了这个故事</p>
+            <!-- 场景2 -->
+            <div class="brutal-border bg-white p-8 mb-8 reveal">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="bg-purple-600 text-white px-4 py-2 font-mono font-bold">场景二</span>
+                    <h3 class="text-2xl font-bold">多轴项目</h3>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                        <div class="text-4xl mb-4">⚛️</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Next.js 14</h3>
-                        <p class="text-gray-600 text-sm mb-3">React 全栈框架，负责搭建整个舞台</p>
-                        <div class="text-xs text-gray-500">角色：舞台搭建师</div>
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                        <div class="text-4xl mb-4">🎨</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">TailwindCSS</h3>
-                        <p class="text-gray-600 text-sm mb-3">原子化 CSS，让一切变得好看</p>
-                        <div class="text-xs text-gray-500">角色：化妆师</div>
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                        <div class="text-4xl mb-4">📘</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">TypeScript</h3>
-                        <p class="text-gray-600 text-sm mb-3">类型安全，保证不会算错</p>
-                        <div class="text-xs text-gray-500">角色：质检员</div>
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                        <div class="text-4xl mb-4">📦</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">Zustand</h3>
-                        <p class="text-gray-600 text-sm mb-3">轻量级状态管理，老Z的好帮手</p>
-                        <div class="text-xs text-gray-500">角色：仓库系统</div>
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                        <div class="text-4xl mb-4">🌍</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">next-intl</h3>
-                        <p class="text-gray-600 text-sm mb-3">国际化方案，支持多语言</p>
-                        <div class="text-xs text-gray-500">角色：翻译官</div>
-                    </div>
-
-                    <div class="bg-gray-50 rounded-2xl p-6 hover:shadow-lg transition-shadow">
-                        <div class="text-4xl mb-4">📄</div>
-                        <h3 class="text-lg font-bold text-gray-800 mb-2">jsPDF</h3>
-                        <p class="text-gray-600 text-sm mb-3">客户端 PDF 生成，小PDF的魔法</p>
-                        <div class="text-xs text-gray-500">角色：印刷机</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 🎬 尾声 -->
-        <section class="mb-16">
-            <div class="bg-gradient-to-br from-purple-500 to-pink-500 rounded-3xl shadow-lg p-8 md:p-12 text-white text-center">
-                <span class="text-6xl mb-6 block">🎬</span>
-                <h2 class="text-3xl font-bold mb-4">尾声</h2>
-                <p class="text-xl text-purple-100 mb-6">
-                    这就是伺服选型工具的故事。<br>
-                    从一段简单的输入，到一份完整的报告，<br>
-                    每个角色都在自己的岗位上默默工作。
+                <p class="text-gray-600 mb-6">
+                    客户有一个复杂的设备，需要<strong>3个伺服轴</strong>同时工作：
                 </p>
-                <div class="flex flex-wrap justify-center gap-4 text-4xl">
-                    <span>💁‍♀️</span>
-                    <span>📦</span>
-                    <span>🧮</span>
-                    <span>🎯</span>
-                    <span>🔧</span>
-                    <span>📄</span>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="brutal-border-sm bg-blue-50 p-6 text-center">
+                        <div class="text-4xl mb-3">↔️</div>
+                        <div class="font-bold text-lg">X轴</div>
+                        <div class="text-sm text-gray-600">水平移动</div>
+                        <div class="mt-2 font-mono text-xs text-blue-600">MS2N04-D1BNN</div>
+                    </div>
+                    <div class="brutal-border-sm bg-purple-50 p-6 text-center">
+                        <div class="text-4xl mb-3">↕️</div>
+                        <div class="font-bold text-lg">Y轴</div>
+                        <div class="text-sm text-gray-600">垂直移动</div>
+                        <div class="mt-2 font-mono text-xs text-purple-600">MS2N04-D1BNN</div>
+                    </div>
+                    <div class="brutal-border-sm bg-green-50 p-6 text-center">
+                        <div class="text-4xl mb-3">⬆️</div>
+                        <div class="font-bold text-lg">Z轴</div>
+                        <div class="text-sm text-gray-600">升降</div>
+                        <div class="mt-2 font-mono text-xs text-green-600">MS2N04-D1BNN</div>
+                    </div>
                 </div>
-                <p class="mt-6 text-purple-200">
-                    感谢观看！现在你对这个系统有了解了吗？
+            </div>
+
+            <!-- 场景3 -->
+            <div class="brutal-border bg-gradient-to-br from-yellow-100 to-orange-100 p-8 reveal">
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="bg-orange-600 text-white px-4 py-2 font-mono font-bold">场景三</span>
+                    <h3 class="text-2xl font-bold">导出报告</h3>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 mb-6">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">📊</div>
+                        <div class="text-sm">计算结果</div>
+                    </div>
+                    <span class="text-2xl">+</span>
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🎯</div>
+                        <div class="text-sm">推荐电机</div>
+                    </div>
+                    <span class="text-2xl">+</span>
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🔧</div>
+                        <div class="text-sm">系统配置</div>
+                    </div>
+                    <span class="text-2xl">=</span>
+                    <div class="text-center brutal-border-sm bg-white p-4">
+                        <div class="text-4xl mb-2">📄</div>
+                        <div class="text-sm font-bold">PDF报告</div>
+                    </div>
+                </div>
+
+                <div class="bg-black text-white p-4 font-mono text-sm">
+                    报告包含：项目信息 | 计算过程 | 电机参数 | 订货号清单 | BOM表
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术栈 -->
+    <section id="tools" class="py-20 px-8 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <div class="reveal">
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-16 h-1 bg-black"></div>
+                    <span class="font-mono text-sm">TOOLBOX</span>
+                </div>
+
+                <h2 class="magazine-title text-5xl md:text-6xl mb-4">
+                    我们的工具箱
+                </h2>
+                <p class="text-xl text-gray-600 mb-12">
+                    这些技术帮我们实现了这个故事
                 </p>
             </div>
-        </section>
 
-        <!-- 幕后花絮 -->
-        <section class="mb-16">
-            <div class="bg-gray-900 rounded-3xl shadow-lg p-8 md:p-12 text-gray-300">
-                <div class="text-center mb-8">
-                    <span class="text-4xl">🎪</span>
-                    <h2 class="text-2xl font-bold text-white mt-4">幕后花絮</h2>
-                    <p class="text-gray-500 mt-2">给开发者看的技术细节</p>
+            <div class="reveal">
+                <div class="flex flex-wrap gap-3">
+                    <span class="tool-tag">Next.js 14</span>
+                    <span class="tool-tag">React 18</span>
+                    <span class="tool-tag">TypeScript</span>
+                    <span class="tool-tag">TailwindCSS</span>
+                    <span class="tool-tag">Zustand</span>
+                    <span class="tool-tag">next-intl</span>
+                    <span class="tool-tag">jsPDF</span>
+                    <span class="tool-tag">Vitest</span>
+                    <span class="tool-tag">Playwright</span>
                 </div>
 
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <h3 class="text-white font-bold mb-3">📁 项目结构</h3>
-                        <pre class="text-sm bg-gray-800 p-4 rounded-xl overflow-x-auto"><code>src/
+                <div class="mt-12 grid md:grid-cols-2 gap-6">
+                    <div class="brutal-border p-6">
+                        <h4 class="font-bold text-lg mb-2">📁 项目结构</h4>
+                        <div class="code-block text-xs">
+src/
 ├── app/           # Next.js 页面
 ├── components/    # React 组件
 ├── lib/           # 工具库
@@ -818,11 +868,13 @@ T = J × α + T_friction + T_gravity</code></pre>
 │   └── pdf/           # PDF生成
 ├── stores/        # Zustand 状态
 ├── types/         # TypeScript 类型
-└── data/          # 静态数据</code></pre>
+└── data/          # 静态数据
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-white font-bold mb-3">🚀 快速开始</h3>
-                        <pre class="text-sm bg-gray-800 p-4 rounded-xl overflow-x-auto"><code># 安装依赖
+                    <div class="brutal-border p-6">
+                        <h4 class="font-bold text-lg mb-2">🚀 快速开始</h4>
+                        <div class="code-block text-xs">
+# 安装依赖
 npm install
 
 # 开发模式
@@ -832,20 +884,70 @@ npm run dev
 npm run build
 
 # 测试
-npm run test</code></pre>
+npm run test
+                        </div>
                     </div>
                 </div>
-
-                <div class="mt-8 pt-8 border-t border-gray-700 text-center text-sm text-gray-500">
-                    <p>本文档由 architecture-doc-generator skill 自动生成</p>
-                    <p class="mt-1">生成时间：2026年3月7日</p>
-                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-    </main>
+    <!-- 结尾 -->
+    <section class="py-20 px-8" style="background: #1A1A2E; color: #FDF6E3;">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="reveal">
+                <div class="text-6xl mb-8">🎬</div>
+                <h2 class="magazine-title text-5xl mb-6">尾声</h2>
+                <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                    这就是伺服选型工具的故事。<br>
+                    从一段简单的输入，到一份完整的报告，<br>
+                    每个角色都在自己的岗位上默默工作。
+                </p>
+                <div class="flex justify-center gap-4 text-4xl mb-8">
+                    <span>💁‍♀️</span>
+                    <span>📦</span>
+                    <span>🧮</span>
+                    <span>🎯</span>
+                    <span>🔧</span>
+                    <span>📄</span>
+                </div>
+                <p class="text-gray-500">感谢观看</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="py-8 px-8 border-t-4 border-black">
+        <div class="max-w-4xl mx-auto flex flex-wrap justify-between items-center gap-4">
+            <div class="font-mono text-sm">
+                <span class="font-bold">伺服选型工具</span>
+                <span class="text-gray-500">· 项目特刊</span>
+            </div>
+            <div class="font-mono text-xs text-gray-500">
+                Generated by architecture-doc-generator · 2026.03
+            </div>
+        </div>
+    </footer>
 
     <script>
+        // 滚动动画
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
         // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -859,43 +961,6 @@ npm run test</code></pre>
                 }
             });
         });
-
-        // 故事卡片展开/收起
-        function toggleStory(element) {
-            // 如果点击的是 details 元素，不执行切换
-            if (event.target.closest('details') || event.target.tagName === 'SUMMARY') {
-                return;
-            }
-
-            const content = element.querySelector('.story-content');
-            if (content) {
-                content.classList.toggle('active');
-            }
-        }
-
-        // 添加滚动动画
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // 观察所有卡片
-        document.querySelectorAll('.character-card, .timeline-item, .scene-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
     </script>
-
 </body>
 </html>

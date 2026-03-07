@@ -7,7 +7,7 @@ import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { useTranslations } from 'next-intl';
 
 export function SystemConfigStep() {
-  const { project, currentAxisId, input, setPreferences, setResult, prevStep, completeWizard } = useProjectStore();
+  const { project, currentAxisId, input, setPreferences, setResult, prevStep, completeWizard, updateAxisName } = useProjectStore();
   const currentAxis = project.axes.find(a => a.id === currentAxisId);
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
@@ -18,6 +18,7 @@ export function SystemConfigStep() {
       safety: 'NONE',
     }
   );
+  const [axisName, setAxisName] = useState(currentAxis?.name || '');
 
   const [error, setError] = useState<string | null>(null);
 
@@ -93,6 +94,10 @@ export function SystemConfigStep() {
       });
       console.log('Calculation result:', result);
       setResult(result);
+      // Save axis name
+      if (axisName.trim() && updateAxisName) {
+        updateAxisName(currentAxisId, axisName.trim());
+      }
       completeWizard();
     } catch (err) {
       console.error('Calculation failed:', err);
@@ -153,6 +158,26 @@ export function SystemConfigStep() {
           </select>
           <p className="mt-1 text-xs text-gray-500">
             A型需要电池维护，B型为机械式免维护但价格较高
+          </p>
+        </div>
+      </div>
+
+      {/* 轴名称确认 */}
+      <div className="border-t border-gray-200 pt-6 mt-6">
+        <h3 className="text-lg font-medium text-gray-900 mb-4">轴名称确认</h3>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            轴名称
+          </label>
+          <input
+            type="text"
+            value={axisName}
+            onChange={(e) => setAxisName(e.target.value)}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
+            placeholder="请输入轴名称"
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            此名称将用于标识该轴，可在侧边栏随时修改
           </p>
         </div>
       </div>
