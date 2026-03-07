@@ -218,7 +218,7 @@ export default function Home() {
             </div>
 
             {/* Current Axis Indicator */}
-            {currentAxis && (
+            {currentAxis && mainViewMode === 'wizard' && (
               <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
                 <span>🛠️</span>
                 <span>当前配置: {currentAxis.name}</span>
