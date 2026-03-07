@@ -41,33 +41,26 @@ export function AxisSidebar({
 
   return (
     <div className="h-full flex flex-col bg-gray-50">
-      {/* 项目信息区域 */}
-      <div className="p-4 border-b border-gray-200 bg-white">
-        <div className="flex items-center justify-between mb-2">
-          <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-            项目信息
-          </span>
-          <button
-            onClick={onOpenProjectSettings}
-            className={`text-xs flex items-center gap-1 ${
-              mainViewMode === 'edit-project'
-                ? 'text-blue-800 font-semibold'
-                : 'text-blue-600 hover:text-blue-800'
-            }`}
-          >
-            <Edit className="w-3 h-3" />
-            {mainViewMode === 'edit-project' ? '编辑中...' : '编辑'}
-          </button>
-        </div>
-        <h3 className="font-semibold text-gray-900 truncate" title={project.name}>
-          {project.name || '未命名项目'}
-        </h3>
-        {project.customer && (
-          <p className="text-sm text-gray-500 mt-1">客户: {project.customer}</p>
-        )}
-        {project.salesPerson && (
-          <p className="text-sm text-gray-500">销售: {project.salesPerson}</p>
-        )}
+      {/* 项目信息区域 - 简化为Item模式 */}
+      <div className="p-2 border-b border-gray-200 bg-white">
+        <button
+          onClick={onOpenProjectSettings}
+          className={`w-full flex items-center gap-3 p-3 rounded-lg border transition-colors text-left ${
+            mainViewMode === 'edit-project'
+              ? 'bg-blue-50 border-blue-500 shadow-sm'
+              : 'bg-white border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+          }`}
+        >
+          <span className="flex-shrink-0 text-lg">📁</span>
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-gray-900 truncate">
+              {project.name || '未命名项目'}
+            </p>
+            {mainViewMode === 'edit-project' && (
+              <p className="text-xs text-blue-600">编辑中...</p>
+            )}
+          </div>
+        </button>
       </div>
 
       {/* 公共参数区域 */}
