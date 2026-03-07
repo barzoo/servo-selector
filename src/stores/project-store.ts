@@ -15,7 +15,9 @@ import {
   DutyConditions,
   SystemPreferences,
   MotorSelections,
+  CommonParams,
 } from '@/types';
+import { buildSizingInput } from '@/lib/calculations/build-sizing-input';
 
 // ============ ID Generation ============
 
@@ -82,6 +84,15 @@ export function createInitialProject(
     salesPerson: info.salesPerson ?? '',
     notes: info.notes,
     createdAt: now,
+    commonParams: {
+      ambientTemp: 25,
+      ipRating: 'IP65',
+      communication: 'ETHERCAT',
+      cableLength: 5,
+      safetyFactor: 1.5,
+      maxInertiaRatio: 10,
+      targetInertiaRatio: 5,
+    },
     axes: [createInitialAxis()],
   };
 }
@@ -100,6 +111,7 @@ interface ProjectStore {
   // Project operations
   createProject: (info: ProjectInfo) => void;
   updateProjectInfo: (info: Partial<ProjectInfo>) => void;
+  updateCommonParams: (params: Partial<CommonParams>) => void;
 
   // Axis operations
   addAxis: (name: string, copyFrom?: string) => string;
@@ -127,6 +139,13 @@ interface ProjectStore {
 
   // Re-edit completed axis
   reeditAxis: (axisId: string) => void;
+
+  // Axis-level operations (simplified)
+  updateAxisDutyConditions: (duty: DutyConditions) => void;
+  updateAxisPreferences: (preferences: SystemPreferences) => void;
+
+  // Get merged sizing input
+  getSizingInput: () => SizingInput;
 
   // Queries
   getCurrentAxis: () => AxisConfig;
@@ -169,6 +188,17 @@ export const useProjectStore = create<ProjectStore>()(
           project: {
             ...state.project,
             ...info,
+          },
+        })),
+
+      updateCommonParams: (params) =>
+        set((state) => ({
+          project: {
+            ...state.project,
+            commonParams: {
+              ...state.project.commonParams,
+              ...params,
+            },
           },
         })),
 
@@ -216,13 +246,12 @@ export const useProjectStore = create<ProjectStore>()(
         }
 
         // Load new axis state
-        // Keep the current project info when switching axes
-        const currentProject = get().input.project;
+        // Project info is now at project level, not axis level
         set({
           currentAxisId: axisId,
           currentStep: axis.status === 'COMPLETED' ? 6 : 1,
           isComplete: axis.status === 'COMPLETED',
-          input: { ...axis.input, project: currentProject || axis.input.project },
+          input: {},
           result: axis.result,
         });
       },
@@ -377,6 +406,52 @@ export const useProjectStore = create<ProjectStore>()(
         get().switchAxis(axisId);
       },
 
+      // Update axis duty conditions (axis-specific only)
+      updateAxisDutyConditions: (duty) =>
+        set((state) => ({
+          project: {
+            ...state.project,
+            axes: state.project.axes.map((a) =>
+              a.id === state.currentAxisId
+                ? {
+                    ...a,
+                    input: {
+                      ...a.input,
+                      dutyConditions: duty,
+                    },
+                  }
+                : a
+            ),
+          },
+        })),
+
+      // Update axis system preferences (axis-specific only)
+      updateAxisPreferences: (preferences) =>
+        set((state) => ({
+          project: {
+            ...state.project,
+            axes: state.project.axes.map((a) =>
+              a.id === state.currentAxisId
+                ? {
+                    ...a,
+                    input: {
+                      ...a.input,
+                      preferences: preferences,
+                    },
+                  }
+                : a
+            ),
+          },
+        })),
+
+      // Get merged SizingInput
+      getSizingInput: () => {
+        const state = get();
+        const axis = state.project.axes.find((a) => a.id === state.currentAxisId);
+        if (!axis) throw new Error('Axis not found');
+        return buildSizingInput(state.project, axis);
+      },
+
       // Queries
       getCurrentAxis: () => {
         const state = get();
@@ -425,6 +500,15 @@ export function migrateLegacyData(): Project | null {
       salesPerson: parsed.input?.project?.salesPerson || '',
       notes: parsed.input?.project?.notes,
       createdAt: new Date().toISOString(),
+      commonParams: {
+        ambientTemp: 25,
+        ipRating: 'IP65',
+        communication: 'ETHERCAT',
+        cableLength: 5,
+        safetyFactor: 1.5,
+        maxInertiaRatio: 10,
+        targetInertiaRatio: 5,
+      },
       axes: [
         {
           id: generateId(),
