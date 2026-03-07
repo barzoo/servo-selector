@@ -18,12 +18,42 @@ export function SystemConfigStep() {
     }
   );
 
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
+
+    // Debug logging
+    console.log('Form submitted', { input });
+
+    // Check if all required data is present
+    if (!input.project) {
+      console.error('Missing project info');
+      setError('缺少项目信息，请返回第一步填写');
+      return;
+    }
+    if (!input.mechanism) {
+      console.error('Missing mechanism');
+      setError('缺少机械结构信息，请返回第二步填写');
+      return;
+    }
+    if (!input.motion) {
+      console.error('Missing motion');
+      setError('缺少运动参数信息，请返回第三步填写');
+      return;
+    }
+    if (!input.duty) {
+      console.error('Missing duty');
+      setError('缺少工作条件信息，请返回第四步填写');
+      return;
+    }
+
+    // Save preferences
     setPreferences(formData);
 
-    // 执行选型计算 - 合并公共参数和轴特有参数
-    if (input.project && input.mechanism && input.motion && input.duty) {
+    // Execute sizing calculation - merge common params and axis-specific params
+    try {
       const engine = new SizingEngine();
       const result = engine.calculate({
         project: input.project,
@@ -31,19 +61,23 @@ export function SystemConfigStep() {
         motion: input.motion,
         duty: input.duty,
         preferences: {
-          // 公共参数
+          // Common params (shared across all axes)
           safetyFactor: project.commonParams.safetyFactor,
           maxInertiaRatio: project.commonParams.maxInertiaRatio,
           targetInertiaRatio: project.commonParams.targetInertiaRatio,
           communication: project.commonParams.communication,
           cableLength: project.commonParams.cableLength,
-          // 轴特有参数
+          // Axis-specific params
           encoderType: formData.encoderType,
           safety: formData.safety,
         },
       });
+      console.log('Calculation result:', result);
       setResult(result);
       completeWizard();
+    } catch (err) {
+      console.error('Calculation failed:', err);
+      setError('选型计算失败，请检查输入参数');
     }
   };
 
@@ -51,23 +85,20 @@ export function SystemConfigStep() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
 
-      {/* 公共参数提示 */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-800">
-          <strong>公共参数（所有轴共享）：</strong>
-          安全系数 {project.commonParams.safetyFactor}、
-          目标惯量比 {project.commonParams.targetInertiaRatio}:1、
-          通信协议 {project.commonParams.communication}、
-          电缆长度 {typeof project.commonParams.cableLength === 'number' ? `${project.commonParams.cableLength}m` : '仅接线端子'}
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('open-project-settings'))}
-            className="ml-2 text-blue-600 hover:underline"
-          >
-            修改
-          </button>
+      {/* Simplified hint - common params are shown in sidebar */}
+      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+        <p className="text-sm text-gray-600">
+          请确认轴特有的系统配置选项。
+          公共参数（安全系数、惯量比、通信协议等）可在侧边栏查看和修改。
         </p>
       </div>
+
+      {/* Error message */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <p className="text-sm text-red-800">{error}</p>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
