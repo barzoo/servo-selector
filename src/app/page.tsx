@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Plus } from 'lucide-react';
 import { useProjectStore, migrateLegacyData, migrateToSharedParams } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
@@ -29,6 +30,7 @@ export default function Home() {
   } = useProjectStore();
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<'project' | 'common'>('project');
 
   // Migrate legacy data on first load
   useEffect(() => {
@@ -65,11 +67,28 @@ export default function Home() {
       // Initialize with empty project if no data
       createProject({ name: '', customer: '', salesPerson: '' });
     }
+
+    // Listen for open project settings event
+    const handleOpenSettings = (e: CustomEvent) => {
+      setSettingsTab(e.detail?.tab || 'project');
+      setIsSettingsOpen(true);
+    };
+    window.addEventListener('open-project-settings', handleOpenSettings as EventListener);
+
+    return () => {
+      window.removeEventListener('open-project-settings', handleOpenSettings as EventListener);
+    };
   }, []);
 
   const handleAddAxis = () => {
     const newAxisId = addAxis(`轴-${project.axes.length + 1}`);
     switchAxis(newAxisId);
+
+    // If this is the first axis and project name is empty, prompt user to fill project info
+    if (project.axes.length === 0 && !project.name) {
+      setSettingsTab('project');
+      setIsSettingsOpen(true);
+    }
   };
 
   const renderStep = () => {
@@ -93,6 +112,46 @@ export default function Home() {
     }
   };
 
+  const renderMainContent = () => {
+    // If no axes, show empty state
+    if (project.axes.length === 0) {
+      return (
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
+          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+            <Plus className="w-8 h-8 text-blue-600" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            欢迎使用伺服选型工具
+          </h2>
+          <p className="text-gray-600 mb-6 max-w-md">
+            请从侧边栏开始：
+            <br />
+            1. 确认项目信息和公共参数
+            <br />
+            2. 点击"添加第一个轴"开始配置
+          </p>
+          <button
+            onClick={() => {
+              if (!project.name) {
+                setSettingsTab('project');
+                setIsSettingsOpen(true);
+              } else {
+                handleAddAxis();
+              }
+            }}
+            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="w-5 h-5" />
+            {project.name ? '添加第一个轴' : '先设置项目信息'}
+          </button>
+        </div>
+      );
+    }
+
+    // Otherwise show the step content
+    return renderStep();
+  };
+
   const currentAxis = project.axes.find((a) => a.id === currentAxisId);
 
   return (
@@ -107,6 +166,10 @@ export default function Home() {
           onDeleteAxis={deleteAxis}
           onReeditAxis={reeditAxis}
           onUpdateAxisName={updateAxisName}
+          onOpenProjectSettings={() => {
+            setSettingsTab('project');
+            setIsSettingsOpen(true);
+          }}
         />
       </aside>
 
@@ -127,18 +190,8 @@ export default function Home() {
               />
             </div>
 
-            {/* Desktop: Language Switcher + Project Settings */}
+            {/* Desktop: Language Switcher */}
             <div className="hidden md:flex absolute right-0 top-0 items-center gap-2">
-              <button
-                onClick={() => setIsSettingsOpen(true)}
-                className="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                项目设置
-              </button>
               <LanguageSwitcher />
             </div>
 
@@ -147,18 +200,8 @@ export default function Home() {
             </h1>
             <p className="mt-2 text-gray-600">XC20 + MC20 伺服系统选型向导</p>
 
-            {/* Mobile: Project Settings + Language Switcher */}
+            {/* Mobile: Language Switcher */}
             <div className="md:hidden mt-4 flex justify-center gap-2">
-              <button
-                onClick={() => setIsSettingsOpen(true)}
-                className="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-                设置
-              </button>
               <LanguageSwitcher />
             </div>
 
@@ -175,8 +218,8 @@ export default function Home() {
           </header>
 
           <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8">
-            <StepIndicator currentStep={currentStep} />
-            <div className="mt-8">{renderStep()}</div>
+            {project.axes.length > 0 && <StepIndicator currentStep={currentStep} />}
+            <div className={project.axes.length > 0 ? 'mt-8' : ''}>{renderMainContent()}</div>
           </div>
         </div>
 
@@ -184,6 +227,7 @@ export default function Home() {
         <ProjectSettingsModal
           isOpen={isSettingsOpen}
           onClose={() => setIsSettingsOpen(false)}
+          initialTab={settingsTab}
         />
       </main>
     </div>
