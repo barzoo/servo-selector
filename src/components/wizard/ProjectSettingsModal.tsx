@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useProjectStore } from '@/stores/project-store';
 import { ProjectInfo, CommonParams } from '@/types';
 import { useTranslations } from 'next-intl';
@@ -8,9 +8,11 @@ import { useTranslations } from 'next-intl';
 interface ProjectSettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialTab?: 'project' | 'common';
 }
 
-export function ProjectSettingsModal({ isOpen, onClose }: ProjectSettingsModalProps) {
+export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }: ProjectSettingsModalProps) {
+  const [activeTab, setActiveTab] = useState<'project' | 'common'>(initialTab);
   const { project, updateProjectInfo, updateCommonParams } = useProjectStore();
   const t = useTranslations('projectSettings');
 
@@ -22,6 +24,19 @@ export function ProjectSettingsModal({ isOpen, onClose }: ProjectSettingsModalPr
   });
 
   const [commonParams, setCommonParams] = useState<CommonParams>(project.commonParams);
+
+  useEffect(() => {
+    const handleOpenSettings = (e: CustomEvent) => {
+      if (e.detail?.tab) {
+        setActiveTab(e.detail.tab);
+      }
+    };
+
+    window.addEventListener('open-project-settings', handleOpenSettings as EventListener);
+    return () => {
+      window.removeEventListener('open-project-settings', handleOpenSettings as EventListener);
+    };
+  }, []);
 
   const handleSave = () => {
     updateProjectInfo(projectInfo);
@@ -47,10 +62,33 @@ export function ProjectSettingsModal({ isOpen, onClose }: ProjectSettingsModalPr
           </button>
         </div>
 
+        {/* Tabs */}
+        <div className="flex border-b">
+          <button
+            onClick={() => setActiveTab('project')}
+            className={`flex-1 py-3 text-sm font-medium ${
+              activeTab === 'project'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Project Info
+          </button>
+          <button
+            onClick={() => setActiveTab('common')}
+            className={`flex-1 py-3 text-sm font-medium ${
+              activeTab === 'common'
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            Common Params
+          </button>
+        </div>
+
         {/* Content */}
-        <div className="p-6 space-y-8">
-          {/* 项目信息 */}
-          <section>
+        {activeTab === 'project' ? (
+          <section className="p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('projectInfo')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -99,12 +137,10 @@ export function ProjectSettingsModal({ isOpen, onClose }: ProjectSettingsModalPr
               </div>
             </div>
           </section>
-
-          {/* 公共参数 */}
-          <section>
+        ) : (
+          <section className="p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">{t('commonParams')}</h3>
             <p className="text-sm text-gray-500 mb-4">{t('commonParamsDescription')}</p>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -203,7 +239,7 @@ export function ProjectSettingsModal({ isOpen, onClose }: ProjectSettingsModalPr
               </div>
             </div>
           </section>
-        </div>
+        )}
 
         {/* Footer */}
         <div className="flex justify-end gap-3 p-6 border-t bg-gray-50">
