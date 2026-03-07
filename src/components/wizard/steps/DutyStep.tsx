@@ -11,9 +11,11 @@ const BRAKE_OPTIONS = [
 ];
 
 export function DutyStep() {
-  const { input, setDuty, nextStep, prevStep } = useProjectStore();
+  const { project, currentAxisId, updateAxisDutyConditions, nextStep, prevStep } = useProjectStore();
   const t = useTranslations('duty');
   const commonT = useTranslations('common');
+
+  const currentAxis = project.axes.find(a => a.id === currentAxisId);
 
   // 电机轴类型选项（使用翻译）
   const keyShaftOptions = [
@@ -22,11 +24,9 @@ export function DutyStep() {
   ];
 
   const [formData, setFormData] = useState<DutyConditions>(
-    input.duty || {
-      ambientTemp: 40,
-      dutyCycle: 60,
+    currentAxis?.input.dutyConditions || {
+      dutyCycle: 100,
       mountingOrientation: 'HORIZONTAL',
-      ipRating: 'IP65',
       brake: false,
       keyShaft: 'L',
     }
@@ -34,48 +34,51 @@ export function DutyStep() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setDuty(formData);
+    updateAxisDutyConditions(formData);
     nextStep();
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
+      {/* 标题和提示 */}
+      <div>
+        <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
+        <p className="mt-2 text-sm text-gray-500">
+          环境参数（温度 {project.commonParams.ambientTemp}°C，防护等级 {project.commonParams.ipRating}）
+          已在项目设置中配置，
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('open-project-settings'))}
+            className="text-blue-600 hover:underline"
+          >
+            点击修改
+          </button>
+        </p>
+      </div>
 
+      {/* 轴特有参数 */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* dutyCycle */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            {t('ambientTemp')}
+            {t('dutyCycle')} <span className="text-red-500">*</span>
           </label>
-          <input
-            type="number"
-            value={formData.ambientTemp}
-            onChange={(e) =>
-              setFormData({ ...formData, ambientTemp: parseFloat(e.target.value) || 0 })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('dutyCycle')}
-          </label>
-          <input
-            type="number"
-            min="0"
-            max="100"
+          <select
             value={formData.dutyCycle}
-            onChange={(e) =>
-              setFormData({ ...formData, dutyCycle: parseFloat(e.target.value) || 0 })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          />
+            onChange={(e) => setFormData({ ...formData, dutyCycle: parseInt(e.target.value) })}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+          >
+            <option value={100}>S1 (100% - 连续工作)</option>
+            <option value={60}>S2 (60% - 短时工作)</option>
+            <option value={40}>S3 (40% - 间歇工作)</option>
+            <option value={25}>S4 (25% - 频繁启停)</option>
+          </select>
         </div>
 
+        {/* mountingOrientation */}
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            {t('mountingOrientation')}
+            {t('mountingOrientation')} <span className="text-red-500">*</span>
           </label>
           <select
             value={formData.mountingOrientation}
@@ -87,28 +90,11 @@ export function DutyStep() {
                 brake: newOrientation.startsWith('VERTICAL'),
               });
             }}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
           >
             <option value="HORIZONTAL">{t('orientations.horizontal')}</option>
             <option value="VERTICAL_UP">{t('orientations.verticalUp')}</option>
             <option value="VERTICAL_DOWN">{t('orientations.verticalDown')}</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('ipRating')}
-          </label>
-          <select
-            value={formData.ipRating}
-            onChange={(e) =>
-              setFormData({ ...formData, ipRating: e.target.value as 'IP54' | 'IP65' | 'IP67' })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          >
-            <option value="IP54">IP54</option>
-            <option value="IP65">IP65</option>
-            <option value="IP67">IP67</option>
           </select>
         </div>
       </div>
@@ -194,6 +180,7 @@ export function DutyStep() {
         </div>
       </div>
 
+      {/* 按钮 */}
       <div className="flex flex-col sm:flex-row justify-between gap-3">
         <button
           type="button"
