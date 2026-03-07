@@ -66,7 +66,7 @@ export function DutyStep() {
           <select
             value={formData.dutyCycle}
             onChange={(e) => setFormData({ ...formData, dutyCycle: parseInt(e.target.value) })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
           >
             <option value={100}>S1 (100% - 连续工作)</option>
             <option value={60}>S2 (60% - 短时工作)</option>
@@ -90,7 +90,7 @@ export function DutyStep() {
                 brake: newOrientation.startsWith('VERTICAL'),
               });
             }}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
           >
             <option value="HORIZONTAL">{t('orientations.horizontal')}</option>
             <option value="VERTICAL_UP">{t('orientations.verticalUp')}</option>

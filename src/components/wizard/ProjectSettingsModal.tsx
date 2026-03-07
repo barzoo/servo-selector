@@ -99,7 +99,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                   type="text"
                   value={projectInfo.name}
                   onChange={(e) => setProjectInfo({ ...projectInfo, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 />
               </div>
               <div>
@@ -110,7 +110,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                   type="text"
                   value={projectInfo.customer}
                   onChange={(e) => setProjectInfo({ ...projectInfo, customer: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 />
               </div>
               <div>
@@ -121,7 +121,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                   type="text"
                   value={projectInfo.salesPerson}
                   onChange={(e) => setProjectInfo({ ...projectInfo, salesPerson: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 />
               </div>
               <div className="md:col-span-2">
@@ -132,7 +132,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                   value={projectInfo.notes}
                   onChange={(e) => setProjectInfo({ ...projectInfo, notes: e.target.value })}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 />
               </div>
             </div>
@@ -151,7 +151,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                     type="number"
                     value={commonParams.ambientTemp}
                     onChange={(e) => setCommonParams({ ...commonParams, ambientTemp: parseFloat(e.target.value) || 0 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                   />
                   <span className="ml-2 text-gray-500">°C</span>
                 </div>
@@ -164,7 +164,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                 <select
                   value={commonParams.ipRating}
                   onChange={(e) => setCommonParams({ ...commonParams, ipRating: e.target.value as CommonParams['ipRating'] })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 >
                   <option value="IP54">IP54</option>
                   <option value="IP65">IP65</option>
@@ -179,7 +179,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                 <select
                   value={commonParams.communication}
                   onChange={(e) => setCommonParams({ ...commonParams, communication: e.target.value as CommonParams['communication'] })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 >
                   <option value="ETHERCAT">EtherCAT</option>
                   <option value="PROFINET">PROFINET</option>
@@ -195,7 +195,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                 <select
                   value={commonParams.cableLength}
                   onChange={(e) => setCommonParams({ ...commonParams, cableLength: e.target.value === 'TERMINAL_ONLY' ? 'TERMINAL_ONLY' : parseInt(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 >
                   <option value="TERMINAL_ONLY">{t('terminalOnly')}</option>
                   <option value={3}>3m</option>
@@ -218,7 +218,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                   min="1"
                   value={commonParams.safetyFactor}
                   onChange={(e) => setCommonParams({ ...commonParams, safetyFactor: parseFloat(e.target.value) || 1 })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                 />
               </div>
 
@@ -232,7 +232,7 @@ export function ProjectSettingsModal({ isOpen, onClose, initialTab = 'project' }
                     min="1"
                     value={commonParams.maxInertiaRatio}
                     onChange={(e) => setCommonParams({ ...commonParams, maxInertiaRatio: parseInt(e.target.value) || 10 })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 text-gray-900 bg-white"
                   />
                   <span className="ml-2 text-gray-500">:1</span>
                 </div>

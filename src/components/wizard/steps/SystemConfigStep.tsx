@@ -7,7 +7,8 @@ import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { useTranslations } from 'next-intl';
 
 export function SystemConfigStep() {
-  const { project, input, setPreferences, setResult, prevStep, completeWizard } = useProjectStore();
+  const { project, currentAxisId, input, setPreferences, setResult, prevStep, completeWizard } = useProjectStore();
+  const currentAxis = project.axes.find(a => a.id === currentAxisId);
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
 
@@ -28,24 +29,25 @@ export function SystemConfigStep() {
     console.log('Form submitted', { input });
 
     // Check if all required data is present
-    if (!input.project) {
+    // Project info is now at project level (shared)
+    if (!project.name) {
       console.error('Missing project info');
-      setError('缺少项目信息，请返回第一步填写');
+      setError('缺少项目信息，请在侧边栏填写');
       return;
     }
-    if (!input.mechanism) {
+    if (!currentAxis?.input.mechanism) {
       console.error('Missing mechanism');
-      setError('缺少机械结构信息，请返回第二步填写');
+      setError('缺少机械结构信息，请返回第一步填写');
       return;
     }
-    if (!input.motion) {
+    if (!currentAxis?.input.motion) {
       console.error('Missing motion');
-      setError('缺少运动参数信息，请返回第三步填写');
+      setError('缺少运动参数信息，请返回第二步填写');
       return;
     }
-    if (!input.duty) {
+    if (!currentAxis?.input.dutyConditions) {
       console.error('Missing duty');
-      setError('缺少工作条件信息，请返回第四步填写');
+      setError('缺少工作条件信息，请返回第三步填写');
       return;
     }
 
@@ -55,11 +57,28 @@ export function SystemConfigStep() {
     // Execute sizing calculation - merge common params and axis-specific params
     try {
       const engine = new SizingEngine();
+      // Build project info from project level
+      const projectInfo = {
+        name: project.name,
+        customer: project.customer,
+        salesPerson: project.salesPerson,
+        notes: project.notes,
+      };
+      // Convert dutyConditions to duty format expected by engine
+      const dutyConditions = currentAxis.input.dutyConditions!;
+      const duty = {
+        ambientTemp: project.commonParams.ambientTemp,
+        dutyCycle: dutyConditions.dutyCycle,
+        mountingOrientation: dutyConditions.mountingOrientation,
+        ipRating: project.commonParams.ipRating,
+        brake: dutyConditions.brake,
+        keyShaft: dutyConditions.keyShaft,
+      };
       const result = engine.calculate({
-        project: input.project,
-        mechanism: input.mechanism,
-        motion: input.motion,
-        duty: input.duty,
+        project: projectInfo,
+        mechanism: currentAxis.input.mechanism,
+        motion: currentAxis.input.motion,
+        duty: duty,
         preferences: {
           // Common params (shared across all axes)
           safetyFactor: project.commonParams.safetyFactor,
