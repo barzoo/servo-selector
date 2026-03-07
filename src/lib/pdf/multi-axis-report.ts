@@ -30,9 +30,41 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
   doc.text(`客户: ${data.project.customer}`, 20, 48);
   doc.text(`日期: ${data.project.date}`, 20, 56);
 
-  // Overview
+  // Common Params
+  let currentY = 75;
+
   doc.setFontSize(14);
-  doc.text('📊 项目概览', 20, 75);
+  doc.text('公共参数（适用于所有轴）', 20, currentY);
+  currentY += 10;
+
+  const commonParamsData = [
+    ['环境温度', `${data.commonParams.ambientTemp}°C`],
+    ['防护等级', data.commonParams.ipRating],
+    ['通信协议', data.commonParams.communication],
+    ['电缆长度', data.commonParams.cableLength],
+    ['安全系数', data.commonParams.safetyFactor.toString()],
+    ['最大惯量比', `${data.commonParams.maxInertiaRatio}:1`],
+  ];
+
+  doc.autoTable({
+    startY: currentY,
+    head: [['参数', '数值']],
+    body: commonParamsData,
+    theme: 'striped',
+    headStyles: { fillColor: [37, 99, 235] },
+  });
+
+  // Overview
+  currentY = doc.lastAutoTable.finalY + 15;
+
+  if (currentY > 250) {
+    doc.addPage();
+    currentY = 20;
+  }
+
+  doc.setFontSize(14);
+  doc.text('项目概览', 20, currentY);
+  currentY += 10;
 
   const overviewData = [
     ['总轴数', data.axes.length.toString()],
@@ -40,7 +72,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
   ];
 
   doc.autoTable({
-    startY: 80,
+    startY: currentY,
     head: [['项目', '数值']],
     body: overviewData,
     theme: 'striped',
@@ -48,7 +80,7 @@ export function generateMultiAxisPdf(data: MultiAxisReportData): jsPDF {
   });
 
   // Each Axis
-  let currentY = doc.lastAutoTable.finalY + 15;
+  currentY = doc.lastAutoTable.finalY + 15;
 
   data.axes.forEach((axis, index) => {
     // Check if need new page

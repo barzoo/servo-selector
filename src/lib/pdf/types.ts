@@ -76,6 +76,17 @@ export interface MultiAxisReportData {
     date: string;
     notes?: string;
   };
+
+  // 公共参数（适用于所有轴）
+  commonParams: {
+    ambientTemp: number;
+    ipRating: string;
+    communication: string;
+    cableLength: string;
+    safetyFactor: number;
+    maxInertiaRatio: number;
+  };
+
   axes: Array<{
     name: string;
     calculations: {

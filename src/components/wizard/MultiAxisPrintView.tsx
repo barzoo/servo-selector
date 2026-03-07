@@ -142,6 +142,42 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
               </div>
             </Section>
 
+            {/* 公共参数 */}
+            <Section title="公共参数（适用于所有轴）">
+              <div className="border rounded-lg overflow-hidden">
+                <div className="p-4 grid grid-cols-2 gap-3">
+                  <div>
+                    <span className="text-gray-600 text-sm">环境温度:</span>
+                    <span className="ml-2">{project.commonParams.ambientTemp}°C</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 text-sm">防护等级:</span>
+                    <span className="ml-2">{project.commonParams.ipRating}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 text-sm">通信协议:</span>
+                    <span className="ml-2">{project.commonParams.communication}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 text-sm">电缆长度:</span>
+                    <span className="ml-2">
+                      {typeof project.commonParams.cableLength === 'number'
+                        ? `${project.commonParams.cableLength}m`
+                        : '仅接线端子'}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 text-sm">安全系数:</span>
+                    <span className="ml-2">{project.commonParams.safetyFactor}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600 text-sm">最大惯量比:</span>
+                    <span className="ml-2">{project.commonParams.maxInertiaRatio}:1</span>
+                  </div>
+                </div>
+              </div>
+            </Section>
+
             {/* 汇总BOM */}
             {bom.length > 0 && (
               <Section title="物料清单 (BOM)">
