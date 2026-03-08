@@ -1,9 +1,12 @@
 'use client';
 
-import { Plus, FileText, Settings, ChevronRight, Download } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { Plus, FileText, Settings, ChevronRight, Download, Upload } from 'lucide-react';
+import { useTranslations, useLocale } from 'next-intl';
 import { AxisSidebarItem } from './AxisSidebarItem';
 import { ProjectPdfExport } from './ProjectPdfExport';
+import { ExportDialog } from '@/components/project-data/ExportDialog';
+import { ImportDialog } from '@/components/project-data/ImportDialog';
+import { useState } from 'react';
 import type { Project } from '@/types';
 
 interface AxisSidebarProps {
@@ -36,6 +39,9 @@ export function AxisSidebar({
   onOpenCommonParams,
 }: AxisSidebarProps) {
   const t = useTranslations('sidebar');
+  const resultT = useTranslations('result');
+  const [showExportDialog, setShowExportDialog] = useState(false);
+  const [showImportDialog, setShowImportDialog] = useState(false);
   const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
   const configCount = project.axes.filter((a) => a.status === 'CONFIGURING').length;
 
@@ -180,6 +186,36 @@ export function AxisSidebar({
         </div>
 
         <ProjectPdfExport project={project} />
+
+        {/* Export/Import Buttons */}
+        <div className="grid grid-cols-2 gap-2 mt-3">
+          <button
+            onClick={() => setShowExportDialog(true)}
+            className="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-[var(--foreground-secondary)] bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-lg hover:bg-[var(--background-elevated)] hover:border-[var(--border-hover)] transition-all duration-200"
+            title={resultT('exportProject')}
+          >
+            <Download className="w-4 h-4" />
+            <span className="hidden lg:inline">{resultT('exportProject')}</span>
+          </button>
+
+          <button
+            onClick={() => setShowImportDialog(true)}
+            className="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-[var(--foreground-secondary)] bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-lg hover:bg-[var(--background-elevated)] hover:border-[var(--border-hover)] transition-all duration-200"
+            title={resultT('importProject')}
+          >
+            <Upload className="w-4 h-4" />
+            <span className="hidden lg:inline">{resultT('importProject')}</span>
+          </button>
+        </div>
+
+        <ExportDialog
+          isOpen={showExportDialog}
+          onClose={() => setShowExportDialog(false)}
+        />
+        <ImportDialog
+          isOpen={showImportDialog}
+          onClose={() => setShowImportDialog(false)}
+        />
       </div>
     </div>
   );

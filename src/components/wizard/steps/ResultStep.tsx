@@ -7,8 +7,6 @@ import { DetailedCalculations } from '../DetailedCalculations';
 import { SystemSummary, findMotor, findDrive, buildSummaryItems } from '../SystemSummary';
 import { PdfExportButton } from '../PdfExportButton';
 import { SaveToBasketMenu } from '../SaveToBasketMenu';
-import { ExportDialog } from '@/components/project-data/ExportDialog';
-import { ImportDialog } from '@/components/project-data/ImportDialog';
 import {
   Trophy,
   AlertTriangle,
@@ -25,9 +23,7 @@ import {
   TrendingUp,
   ChevronRight,
   ChevronUp,
-  ChevronDown,
-  Download,
-  Upload
+  ChevronDown
 } from 'lucide-react';
 
 export function ResultStep() {
@@ -39,8 +35,6 @@ export function ResultStep() {
   const [selectedMotorIndex, setSelectedMotorIndex] = useState(0);
   const [showSaveMenu, setShowSaveMenu] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [showExportDialog, setShowExportDialog] = useState(false);
-  const [showImportDialog, setShowImportDialog] = useState(false);
   const saveButtonRef = useRef<HTMLButtonElement>(null);
 
 
@@ -412,36 +406,9 @@ export function ResultStep() {
             />
           </div>
 
-          <button
-            onClick={() => setShowExportDialog(true)}
-            className="btn btn-secondary"
-            title={t('exportProject')}
-          >
-            <Download className="w-4 h-4" />
-            {t('exportProject')}
-          </button>
-
-          <button
-            onClick={() => setShowImportDialog(true)}
-            className="btn btn-secondary"
-            title={t('importProject')}
-          >
-            <Upload className="w-4 h-4" />
-            {t('importProject')}
-          </button>
-
           <PdfExportButton disabled={!config} />
         </div>
       </div>
-
-      <ExportDialog
-        isOpen={showExportDialog}
-        onClose={() => setShowExportDialog(false)}
-      />
-      <ImportDialog
-        isOpen={showImportDialog}
-        onClose={() => setShowImportDialog(false)}
-      />
     </div>
   );
 }
