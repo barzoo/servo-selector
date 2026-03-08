@@ -1,5 +1,7 @@
 'use client';
 
+import React from 'react';
+import { useTranslations } from 'next-intl';
 import { useState, useRef, useEffect } from 'react';
 import { CheckCircle, RotateCcw, Plus, FileText } from 'lucide-react';
 
@@ -20,6 +22,7 @@ export function SaveToBasketMenu({
   onContinueEditing,
   triggerRef,
 }: SaveToBasketMenuProps) {
+  const t = useTranslations('result');
   const [placement, setPlacement] = useState<'top' | 'bottom'>('bottom');
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -77,7 +80,7 @@ export function SaveToBasketMenu({
           <div className="px-4 py-3 bg-[var(--green-500)]/5 border-b border-[var(--border-subtle)]">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-[var(--green-400)]" />
-              <span className="font-medium text-[var(--foreground)] text-sm">轴已保存到篮子</span>
+              <span className="font-medium text-[var(--foreground)] text-sm">{t('savedToBasket')}</span>
             </div>
           </div>
 
@@ -85,24 +88,24 @@ export function SaveToBasketMenu({
           <div className="py-1">
             <MenuItem
               icon={<RotateCcw className="w-4 h-4 text-[var(--primary-400)]" />}
-              title="基于此轴创建新轴"
-              description="复制当前配置作为起点"
+              title={t('saveToBasketMenu.cloneAxis')}
+              description={t('saveToBasketMenu.cloneAxisDesc')}
               onClick={onCloneAxis}
               iconBg="bg-[var(--primary-500)]/10"
             />
 
             <MenuItem
               icon={<Plus className="w-4 h-4 text-[var(--green-400)]" />}
-              title="添加空白新轴"
-              description="从头开始配置新轴"
+              title={t('saveToBasketMenu.addNewAxis')}
+              description={t('saveToBasketMenu.addNewAxisDesc')}
               onClick={onAddNewAxis}
               iconBg="bg-[var(--green-500)]/10"
             />
 
             <MenuItem
               icon={<FileText className="w-4 h-4 text-[var(--foreground-muted)]" />}
-              title="继续编辑当前轴"
-              description="返回查看或修改配置"
+              title={t('saveToBasketMenu.continueEditing')}
+              description={t('saveToBasketMenu.continueEditingDesc')}
               onClick={onContinueEditing}
               iconBg="bg-[var(--background-tertiary)]"
             />

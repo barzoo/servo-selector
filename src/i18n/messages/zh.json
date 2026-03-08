@@ -322,6 +322,15 @@
     },
     "saved": "已保存",
     "saveToBasket": "保存到篮子",
+    "savedToBasket": "轴已保存到篮子",
+    "saveToBasketMenu": {
+      "cloneAxis": "基于此轴创建新轴",
+      "cloneAxisDesc": "复制当前配置作为起点",
+      "addNewAxis": "添加空白新轴",
+      "addNewAxisDesc": "从头开始配置新轴",
+      "continueEditing": "继续编辑当前轴",
+      "continueEditingDesc": "返回查看或修改配置"
+    },
     "axisName": "轴-{index}",
     "systemConfigDetails": "系统配置详情",
     "motor": "电机",

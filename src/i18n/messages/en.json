@@ -322,6 +322,15 @@
     },
     "saved": "Saved",
     "saveToBasket": "Save to Basket",
+    "savedToBasket": "Axis saved to basket",
+    "saveToBasketMenu": {
+      "cloneAxis": "Create new axis based on this",
+      "cloneAxisDesc": "Copy current configuration as starting point",
+      "addNewAxis": "Add blank new axis",
+      "addNewAxisDesc": "Configure new axis from scratch",
+      "continueEditing": "Continue editing current axis",
+      "continueEditingDesc": "Return to view or modify configuration"
+    },
     "axisName": "Axis-{index}",
     "systemConfigDetails": "System Configuration Details",
     "motor": "Motor",
