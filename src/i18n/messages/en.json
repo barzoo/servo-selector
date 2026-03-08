@@ -538,5 +538,48 @@
       "date": "Date",
       "notes": "Notes"
     }
+  },
+  "projectData": {
+    "menu": {
+      "title": "Tools",
+      "exportProject": "Export Project",
+      "importProject": "Import Project",
+      "exportPdf": "Export PDF",
+      "noCompletedAxes": "No completed axes"
+    },
+    "export": {
+      "title": "Export Project",
+      "projectSummary": "Project Summary",
+      "projectName": "Project Name",
+      "unnamed": "Unnamed",
+      "axisCount": "Axis Count",
+      "filename": "Filename",
+      "exportButton": "Export",
+      "noDataWarning": "No data to export. Please add at least one axis first."
+    },
+    "import": {
+      "title": "Import Project",
+      "dragDrop": "Drop JSON file here",
+      "or": "or",
+      "selectFile": "Select File",
+      "projectName": "Project Name",
+      "axisCount": "Axis Count",
+      "exportedAt": "Exported At",
+      "unnamed": "Unnamed",
+      "warning": "Import will overwrite current project data",
+      "confirmTitle": "Confirm Import",
+      "confirmMessage": "This action cannot be undone. Current project data will be replaced. Continue?",
+      "importButton": "Confirm Import",
+      "nextButton": "Next",
+      "validation": {
+        "valid": "File validation passed"
+      }
+    },
+    "errors": {
+      "invalidJson": "Invalid file format. Please check if it's a valid JSON file.",
+      "missingFields": "Invalid file format. Required data fields are missing.",
+      "unsupportedVersion": "Unsupported file version. Please update the app and try again.",
+      "corruptedData": "Project data is incomplete or corrupted."
+    }
   }
 }
