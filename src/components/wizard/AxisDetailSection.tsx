@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import type { AxisConfig } from '@/types';
 
 interface AxisDetailSectionProps {
@@ -11,6 +11,7 @@ interface AxisDetailSectionProps {
 
 export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const result = axis.result;
   const recommendation = result?.motorRecommendations[0];
   const systemConfig = recommendation?.systemConfig;
@@ -21,7 +22,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
 
   return (
     <div>
-      {/* 轴标题 */}
+      {/* Axis Title */}
       <div style={{
         textAlign: 'center',
         borderBottom: '3px solid #1e40af',
@@ -34,7 +35,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
           color: '#1e3a8a',
           margin: 0
         }}>
-          轴 {axisIndex + 1}: {axis.name}
+          {t('result.axisName', { index: axisIndex + 1, name: axis.name })}
         </h2>
         {axis.completedAt && (
           <p style={{
@@ -42,13 +43,13 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
             color: '#6b7280',
             marginTop: '0.25rem'
           }}>
-            完成时间: {new Date(axis.completedAt).toLocaleDateString('zh-CN')}
+            {t('result.completedAt')}: {new Date(axis.completedAt).toLocaleDateString(locale)}
           </p>
         )}
       </div>
 
-      {/* 计算摘要 */}
-      <Section title={t('pdf.sections.calculationSummary')}>
+      {/* Calculation Summary */}
+      <Section title={t('result.calculationSummary')}>
         <div style={{
           border: '1px solid #d1d5db',
           borderRadius: '8px',
@@ -80,7 +81,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {systemConfig && (
             <>
-              {/* 电机 */}
+              {/* Motor */}
               <div style={{
                 border: '1px solid #d1d5db',
                 borderRadius: '8px',
@@ -108,7 +109,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
                 </div>
               </div>
 
-              {/* 驱动器 */}
+              {/* Drive */}
               {systemConfig.drive && (
                 <div style={{
                   border: '1px solid #d1d5db',
@@ -138,7 +139,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
                 </div>
               )}
 
-              {/* 电缆 */}
+              {/* Cables */}
               {systemConfig.accessories && (
                 <>
                   <div style={{
@@ -205,7 +206,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
         </div>
       </Section>
 
-      {/* 电机详细参数 */}
+      {/* Motor Details */}
       {recommendation.motor && (
         <Section title={t('systemSummary.motorDetails')}>
           <div style={{
@@ -251,7 +252,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
         </Section>
       )}
 
-      {/* 驱动器详细参数 */}
+      {/* Drive Details */}
       {systemConfig?.drive && (
         <Section title={t('systemSummary.driveDetails')}>
           <div style={{
@@ -281,7 +282,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
         </Section>
       )}
 
-      {/* 制动能量分析 */}
+      {/* Regeneration Analysis */}
       {result.mechanical.regeneration && (
         <Section title={t('systemSummary.regeneration')}>
           <div style={{
@@ -312,7 +313,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
   );
 }
 
-// 辅助组件
+// Helper Components
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div style={{ marginBottom: '1.5rem' }}>

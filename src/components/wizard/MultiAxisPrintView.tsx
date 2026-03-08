@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState } from 'react';
 import { useReactToPrint } from 'react-to-print';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import type { Project, AxisConfig } from '@/types';
 import { AxisDetailSection } from './AxisDetailSection';
 import { createPortal } from 'react-dom';
@@ -14,6 +14,7 @@ interface MultiAxisPrintViewProps {
 
 export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps) {
   const t = useTranslations();
+  const locale = useLocale();
   const printRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -27,12 +28,12 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
 
   const handlePrint = useReactToPrint({
     contentRef: printRef,
-    documentTitle: `${project.name || '选型报告'}.pdf`,
+    documentTitle: `${project.name || t('result.reportTitle')}.pdf`,
     onAfterPrint: () => {
-      console.log('打印完成');
+      console.log('Print completed');
     },
     onPrintError: (error) => {
-      console.error('打印错误:', error);
+      console.error('Print error:', error);
     },
   });
 
@@ -46,10 +47,10 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
         <div className="text-center p-8 rounded-lg shadow-lg"
              style={{ background: 'white', border: '1px solid #e0e0e0' }}>
           <p style={{ color: '#374151', fontSize: '1.125rem', fontWeight: 500 }}>
-            没有已完成的轴可供导出
+            {t('result.noCompletedAxes')}
           </p>
           <p style={{ color: '#6b7280', fontSize: '0.875rem', marginTop: '0.5rem' }}>
-            请至少完成一个轴的配置
+            {t('result.completeOneAxis')}
           </p>
           <button
             onClick={onClose}
@@ -63,7 +64,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
               cursor: 'pointer'
             }}
           >
-            关闭
+            {t('common.close')}
           </button>
         </div>
       </div>
@@ -74,7 +75,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
   const content = (
     <div className="fixed inset-0 z-[9999] flex flex-col"
          style={{ background: '#f5f5f5' }}>
-      {/* 打印控制按钮 */}
+      {/* Print Control Buttons */}
       <div className="flex justify-end gap-3 p-4 border-b print:hidden"
            style={{ background: 'white', borderColor: '#e5e7eb' }}>
         <button
@@ -133,9 +134,9 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
         >
           <PrintStyles />
 
-          {/* 第1页：项目信息 + 汇总BOM */}
+          {/* Page 1: Project Info + BOM Summary */}
           <div style={{ padding: '20mm' }}>
-            {/* 报告标题 */}
+            {/* Report Title */}
             <div style={{
               textAlign: 'center',
               borderBottom: '3px solid #1e40af',
@@ -149,7 +150,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
                 marginBottom: '0.5rem',
                 letterSpacing: '0.05em'
               }}>
-                博世力士乐伺服选型报告
+                {t('result.reportTitle')}
               </div>
               {project.name && (
                 <div style={{
@@ -157,7 +158,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
                   color: '#374151',
                   fontWeight: 500
                 }}>
-                  项目: {project.name}
+                  {t('result.projectName')} {project.name}
                 </div>
               )}
               <div style={{
@@ -165,7 +166,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
                 color: '#6b7280',
                 marginTop: '0.5rem'
               }}>
-                生成时间: {new Date().toLocaleDateString('zh-CN', {
+                {t('result.generatedAt')}: {new Date().toLocaleDateString(locale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -173,8 +174,8 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
               </div>
             </div>
 
-            {/* 项目信息 */}
-            <PrintSection title="项目信息">
+            {/* Project Info */}
+            <PrintSection title={t('result.projectInfo')}>
               <div style={{
                 border: '1px solid #d1d5db',
                 borderRadius: '8px',
@@ -182,14 +183,14 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
               }}>
                 <div style={{ padding: '1rem' }}>
                   <InfoGrid>
-                    <InfoItem label="项目名称" value={project.name || '-'} />
-                    <InfoItem label="客户" value={project.customer || '-'} />
+                    <InfoItem label={t('result.labels.projectName')} value={project.name || '-'} />
+                    <InfoItem label={t('result.labels.customer')} value={project.customer || '-'} />
                     {project.salesPerson && (
-                      <InfoItem label="销售人员" value={project.salesPerson} />
+                      <InfoItem label={t('result.labels.salesPerson')} value={project.salesPerson} />
                     )}
                     <InfoItem
-                      label="轴数量"
-                      value={`${completedAxes.length} 个已完成 / ${project.axes.length} 个总计`}
+                      label={t('result.labels.axisCount')}
+                      value={`${completedAxes.length} / ${project.axes.length}`}
                     />
                   </InfoGrid>
                   {project.notes && (
@@ -203,7 +204,7 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
                         color: '#6b7280',
                         display: 'block',
                         marginBottom: '0.25rem'
-                      }}>备注:</span>
+                      }}>{t('projectInfo.notes')}:</span>
                       <p style={{
                         color: '#374151',
                         whiteSpace: 'pre-wrap',
@@ -216,8 +217,8 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
               </div>
             </PrintSection>
 
-            {/* 公共参数 */}
-            <PrintSection title="公共参数（适用于所有轴）">
+            {/* Common Parameters */}
+            <PrintSection title={t('result.commonParams')}>
               <div style={{
                 border: '1px solid #d1d5db',
                 borderRadius: '8px',
@@ -225,25 +226,25 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
               }}>
                 <div style={{ padding: '1rem' }}>
                   <InfoGrid cols={2}>
-                    <InfoItem label="环境温度" value={`${project.commonParams.ambientTemp}°C`} />
-                    <InfoItem label="防护等级" value={project.commonParams.ipRating} />
-                    <InfoItem label="通信协议" value={project.commonParams.communication} />
+                    <InfoItem label={t('result.labels.ambientTemp')} value={`${project.commonParams.ambientTemp}°C`} />
+                    <InfoItem label={t('result.labels.ipRating')} value={project.commonParams.ipRating} />
+                    <InfoItem label={t('result.labels.communication')} value={project.commonParams.communication} />
                     <InfoItem
-                      label="电缆长度"
+                      label={t('result.labels.cableLength')}
                       value={typeof project.commonParams.cableLength === 'number'
                         ? `${project.commonParams.cableLength}m`
-                        : '仅接线端子'}
+                        : t('result.labels.terminalOnly')}
                     />
-                    <InfoItem label="安全系数" value={String(project.commonParams.safetyFactor)} />
-                    <InfoItem label="最大惯量比" value={`${project.commonParams.maxInertiaRatio}:1`} />
+                    <InfoItem label={t('result.labels.safetyFactor')} value={String(project.commonParams.safetyFactor)} />
+                    <InfoItem label={t('result.labels.maxInertiaRatio')} value={`${project.commonParams.maxInertiaRatio}:1`} />
                   </InfoGrid>
                 </div>
               </div>
             </PrintSection>
 
-            {/* 汇总BOM */}
+            {/* BOM Summary */}
             {bom.length > 0 && (
-              <PrintSection title="物料清单 (BOM)">
+              <PrintSection title={t('result.bom')}>
                 <div style={{
                   border: '1px solid #d1d5db',
                   borderRadius: '8px',
@@ -262,35 +263,35 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
                           fontWeight: 600,
                           color: '#374151',
                           borderBottom: '2px solid #d1d5db'
-                        }}>序号</th>
+                        }}>{t('result.columns.index')}</th>
                         <th style={{
                           padding: '0.75rem 1rem',
                           textAlign: 'left',
                           fontWeight: 600,
                           color: '#374151',
                           borderBottom: '2px solid #d1d5db'
-                        }}>料号</th>
+                        }}>{t('result.columns.partNumber')}</th>
                         <th style={{
                           padding: '0.75rem 1rem',
                           textAlign: 'left',
                           fontWeight: 600,
                           color: '#374151',
                           borderBottom: '2px solid #d1d5db'
-                        }}>描述</th>
+                        }}>{t('result.columns.description')}</th>
                         <th style={{
                           padding: '0.75rem 1rem',
                           textAlign: 'center',
                           fontWeight: 600,
                           color: '#374151',
                           borderBottom: '2px solid #d1d5db'
-                        }}>数量</th>
+                        }}>{t('result.columns.quantity')}</th>
                         <th style={{
                           padding: '0.75rem 1rem',
                           textAlign: 'left',
                           fontWeight: 600,
                           color: '#374151',
                           borderBottom: '2px solid #d1d5db'
-                        }}>用于轴</th>
+                        }}>{t('result.columns.usedIn')}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -336,14 +337,14 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
             )}
           </div>
 
-          {/* 各轴详细配置 - 每轴一页 */}
+          {/* Axis Detail Pages */}
           {completedAxes.map((axis, index) => (
             <div key={axis.id} className="axis-page" style={{ padding: '20mm' }}>
               <AxisDetailSection axis={axis} axisIndex={index} />
             </div>
           ))}
 
-          {/* 最后页：页脚 */}
+          {/* Footer Page */}
           <div style={{ padding: '20mm' }}>
             <div style={{
               marginTop: '3rem',
@@ -355,17 +356,17 @@ export function MultiAxisPrintView({ project, onClose }: MultiAxisPrintViewProps
                 fontSize: '0.875rem',
                 color: '#6b7280',
                 margin: '0.25rem 0'
-              }}>博世力士乐伺服选型工具生成</p>
+              }}>{t('result.footer.generatedBy')}</p>
               <p style={{
                 fontSize: '0.875rem',
                 color: '#6b7280',
                 margin: '0.25rem 0'
-              }}>XC20 + MC20 伺服系统</p>
+              }}>{t('result.footer.system')}</p>
               <p style={{
                 fontSize: '0.75rem',
                 color: '#9ca3af',
                 margin: '0.25rem 0'
-              }}>{new Date().toLocaleString('zh-CN')}</p>
+              }}>{new Date().toLocaleString(locale)}</p>
             </div>
           </div>
         </div>
@@ -400,7 +401,7 @@ function PrintStyles() {
         .print-content {
           padding-top: 5mm;
         }
-        /* 确保打印时颜色正确 */
+        /* Ensure correct colors when printing */
         * {
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
