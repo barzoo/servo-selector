@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import type {
   SystemConfiguration,
   MechanicalResult,
@@ -73,24 +73,33 @@ export function getCableDescription(
 export function buildSummaryItems(
   config: SystemConfiguration,
   t: (key: string) => string,
-  tLabels: (key: string) => string
+  tLabels: (key: string) => string,
+  locale: string = 'zh'
 ): SummaryItem[] {
   const items: SummaryItem[] = [];
 
   // Motor
+  const motor = findMotor(config.motor.partNumber);
+  const motorDesc = motor?.description.shortEn && locale === 'en'
+    ? motor.description.shortEn
+    : motor?.description.short || '';
   items.push({
     partNumber: config.motor.partNumber,
     category: 'MOTOR',
     typeLabel: t('motor'),
-    description: findMotor(config.motor.partNumber)?.description.short || '',
+    description: motorDesc,
   });
 
   // Drive
+  const drive = findDrive(config.drive.partNumber);
+  const driveDesc = drive?.description.shortEn && locale === 'en'
+    ? drive.description.shortEn
+    : drive?.description.short || '';
   items.push({
     partNumber: config.drive.partNumber,
     category: 'DRIVE',
     typeLabel: t('drive'),
-    description: findDrive(config.drive.partNumber)?.description.short || '',
+    description: driveDesc,
   });
 
   // Motor cable
@@ -169,13 +178,14 @@ export function generateExportData(
   config: SystemConfiguration,
   t: (key: string) => string,
   tLabels: (key: string) => string,
-  mechanical?: MechanicalResult
+  mechanical?: MechanicalResult,
+  locale: string = 'zh'
 ): SystemConfigExportData {
   const motor = findMotor(config.motor.partNumber) || null;
   const drive = findDrive(config.drive.partNumber) || null;
 
   return {
-    summary: buildSummaryItems(config, t, tLabels),
+    summary: buildSummaryItems(config, t, tLabels, locale),
     details: {
       motor,
       drive,
@@ -228,35 +238,36 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
   const t = useTranslations('systemSummary');
   const tOptions = useTranslations('systemSummary.options');
   const tLabels = useTranslations('systemSummary.labels');
+  const locale = useLocale();
 
-  const summaryItems = buildSummaryItems(config, t, tLabels);
+  const summaryItems = buildSummaryItems(config, t, tLabels, locale);
   const motor = findMotor(config.motor.partNumber);
   const drive = findDrive(config.drive.partNumber);
 
   return (
     <div className="space-y-6">
       {/* Summary Table */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="px-4 py-3 bg-gray-50 border-b border-gray-200">
-          <h4 className="font-semibold text-gray-900">{t('configList')}</h4>
+      <div className="card overflow-hidden">
+        <div className="px-4 py-3 bg-[var(--background-tertiary)] border-b border-[var(--border-default)]">
+          <h4 className="font-semibold text-[var(--foreground)]">{t('configList')}</h4>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50">
+            <thead className="bg-[var(--background-tertiary)]">
               <tr>
-                <th className="px-4 py-2 text-left font-medium text-gray-900">{t('columns.partNumber')}</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-900">{t('columns.type')}</th>
-                <th className="px-4 py-2 text-left font-medium text-gray-900">{t('columns.description')}</th>
+                <th className="px-4 py-2 text-left font-medium text-[var(--foreground-secondary)]">{t('columns.partNumber')}</th>
+                <th className="px-4 py-2 text-left font-medium text-[var(--foreground-secondary)]">{t('columns.type')}</th>
+                <th className="px-4 py-2 text-left font-medium text-[var(--foreground-secondary)]">{t('columns.description')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-[var(--border-subtle)]">
               {summaryItems.map((item, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 font-mono text-xs text-gray-900">
+                <tr key={index} className="hover:bg-[var(--background-tertiary)]/50 transition-colors">
+                  <td className="px-4 py-3 font-mono text-xs text-[var(--primary-300)]">
                     {item.partNumber}
                   </td>
-                  <td className="px-4 py-3 text-gray-700">{item.typeLabel}</td>
-                  <td className="px-4 py-3 text-gray-600">{item.description}</td>
+                  <td className="px-4 py-3 text-[var(--foreground-secondary)]">{item.typeLabel}</td>
+                  <td className="px-4 py-3 text-[var(--foreground-muted)]">{item.description}</td>
                 </tr>
               ))}
             </tbody>
@@ -266,53 +277,53 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
 
       {/* Motor Details */}
       {motor && (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <div className="px-4 py-3 bg-blue-50 border-b border-blue-100">
-            <h4 className="font-semibold text-blue-900">{t('motorDetails')}</h4>
+        <div className="card overflow-hidden">
+          <div className="px-4 py-3 bg-[var(--primary-500)]/10 border-b border-[var(--primary-500)]/20">
+            <h4 className="font-semibold text-[var(--primary-300)]">{t('motorDetails')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-500 block">{tLabels('ratedPower')}</span>
-                <span className="font-medium text-gray-900">{motor.ratedPower} W</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('ratedPower')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.ratedPower} W</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('ratedSpeed')}</span>
-                <span className="font-medium text-gray-900">{motor.ratedSpeed} rpm</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('ratedSpeed')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.ratedSpeed} rpm</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('ratedTorque')}</span>
-                <span className="font-medium text-gray-900">{motor.ratedTorque} N·m</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('ratedTorque')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.ratedTorque} N·m</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('peakTorque')}</span>
-                <span className="font-medium text-gray-900">{motor.peakTorque} N·m</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('peakTorque')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.peakTorque} N·m</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('maxSpeed')}</span>
-                <span className="font-medium text-gray-900">{motor.maxSpeed} rpm</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('maxSpeed')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.maxSpeed} rpm</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('ratedCurrent')}</span>
-                <span className="font-medium text-gray-900">{motor.ratedCurrent} A</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('ratedCurrent')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.ratedCurrent} A</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('rotorInertia')}</span>
-                <span className="font-medium text-gray-900">
+                <span className="text-[var(--foreground-muted)] block">{tLabels('rotorInertia')}</span>
+                <span className="font-medium text-[var(--foreground)]">
                   {motor.rotorInertia.toExponential(5)} kg·m²
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('torqueConstant')}</span>
-                <span className="font-medium text-gray-900">{motor.torqueConstant} N·m/A</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('torqueConstant')}</span>
+                <span className="font-medium text-[var(--foreground)]">{motor.torqueConstant} N·m/A</span>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">{t('motorOptions')}</h5>
+            <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
+              <h5 className="text-sm font-medium text-[var(--foreground-secondary)] mb-2">{t('motorOptions')}</h5>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">{tLabels('encoderType')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('encoderType')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {motor.options.encoder.type === 'BATTERY_MULTI_TURN'
                       ? tOptions('batteryMultiTurn')
                       : tOptions('mechanicalMultiTurn')}
@@ -320,20 +331,20 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('brake')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('brake')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {motor.options.brake.hasBrake ? tOptions('yes') : tOptions('no')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('shaftType')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('shaftType')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {motor.options.keyShaft.hasKey ? tOptions('keyShaft') : tOptions('smoothShaft')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('protection')}</span>
-                  <span className="font-medium text-gray-900">{motor.options.protection.level}</span>
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('protection')}</span>
+                  <span className="font-medium text-[var(--foreground)]">{motor.options.protection.level}</span>
                 </div>
               </div>
             </div>
@@ -343,35 +354,35 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
 
       {/* Drive Details */}
       {drive && (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <div className="px-4 py-3 bg-green-50 border-b border-green-100">
-            <h4 className="font-semibold text-green-900">{t('driveDetails')}</h4>
+        <div className="card overflow-hidden">
+          <div className="px-4 py-3 bg-[var(--green-500)]/10 border-b border-[var(--green-500)]/20">
+            <h4 className="font-semibold text-[var(--green-400)]">{t('driveDetails')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-500 block">{tLabels('maxCurrent')}</span>
-                <span className="font-medium text-gray-900">{drive.maxCurrent} A</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('maxCurrent')}</span>
+                <span className="font-medium text-[var(--foreground)]">{drive.maxCurrent} A</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('ratedCurrent')}</span>
-                <span className="font-medium text-gray-900">{drive.ratedCurrent} A</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('ratedCurrent')}</span>
+                <span className="font-medium text-[var(--foreground)]">{drive.ratedCurrent} A</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('overloadCapacity')}</span>
-                <span className="font-medium text-gray-900">{drive.overloadCapacity} 倍</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('overloadCapacity')}</span>
+                <span className="font-medium text-[var(--foreground)]">{drive.overloadCapacity} 倍</span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('pwmFrequency')}</span>
-                <span className="font-medium text-gray-900">{drive.ratedPwmFrequency} kHz</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('pwmFrequency')}</span>
+                <span className="font-medium text-[var(--foreground)]">{drive.ratedPwmFrequency} kHz</span>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">{t('driveOptions')}</h5>
+            <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
+              <h5 className="text-sm font-medium text-[var(--foreground-secondary)] mb-2">{t('driveOptions')}</h5>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">{tLabels('communication')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('communication')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {drive.communication.type === 'ETHERCAT'
                       ? tOptions('ethercat')
                       : drive.communication.type === 'PROFINET'
@@ -380,37 +391,37 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('panel')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('panel')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {drive.options.panel.code === '01B' ? tOptions('withDisplay') : tOptions('withoutDisplay')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('safety')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('safety')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {drive.options.safety.code === 'ST' ? tOptions('sto') : tOptions('no')}
                   </span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('cooling')}</span>
-                  <span className="font-medium text-gray-900">{drive.hasFan ? tOptions('fan') : tOptions('natural')}</span>
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('cooling')}</span>
+                  <span className="font-medium text-[var(--foreground)]">{drive.hasFan ? tOptions('fan') : tOptions('natural')}</span>
                 </div>
               </div>
             </div>
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">{t('brakingCapability')}</h5>
+            <div className="mt-4 pt-4 border-t border-[var(--border-subtle)]">
+              <h5 className="text-sm font-medium text-[var(--foreground-secondary)] mb-2">{t('brakingCapability')}</h5>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                 <div>
-                  <span className="text-gray-500 block">{tLabels('internalResistance')}</span>
-                  <span className="font-medium text-gray-900">{drive.braking.internalResistance} Ω</span>
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('internalResistance')}</span>
+                  <span className="font-medium text-[var(--foreground)]">{drive.braking.internalResistance} Ω</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('continuousPower')}</span>
-                  <span className="font-medium text-gray-900">{drive.braking.continuousPower} W</span>
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('continuousPower')}</span>
+                  <span className="font-medium text-[var(--foreground)]">{drive.braking.continuousPower} W</span>
                 </div>
                 <div>
-                  <span className="text-gray-500 block">{tLabels('peakPower')}</span>
-                  <span className="font-medium text-gray-900">{drive.braking.peakPower} W</span>
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('peakPower')}</span>
+                  <span className="font-medium text-[var(--foreground)]">{drive.braking.peakPower} W</span>
                 </div>
               </div>
             </div>
@@ -419,59 +430,59 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
       )}
 
       {/* Cable Specifications */}
-      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-        <div className="px-4 py-3 bg-purple-50 border-b border-purple-100">
-          <h4 className="font-semibold text-purple-900">{t('cableSpecs')}</h4>
+      <div className="card overflow-hidden">
+        <div className="px-4 py-3 bg-[var(--primary-500)]/10 border-b border-[var(--primary-500)]/20">
+          <h4 className="font-semibold text-[var(--primary-300)]">{t('cableSpecs')}</h4>
         </div>
         <div className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">{tLabels('motorCable')}</h5>
+            <div className="p-3 bg-[var(--background-tertiary)] rounded-lg">
+              <h5 className="text-sm font-medium text-[var(--foreground-secondary)] mb-2">{tLabels('motorCable')}</h5>
               <div className="text-sm space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">{t('columns.partNumber')}:</span>
-                  <span className="font-mono text-xs text-gray-900">{config.cables.motor.partNumber}</span>
+                  <span className="text-[var(--foreground-muted)]">{t('columns.partNumber')}:</span>
+                  <span className="font-mono text-xs text-[var(--primary-300)]">{config.cables.motor.partNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">{t('cable.spec')}:</span>
-                  <span className="text-gray-900">{config.cables.motor.spec}</span>
+                  <span className="text-[var(--foreground-muted)]">{t('cable.spec')}:</span>
+                  <span className="text-[var(--foreground)]">{config.cables.motor.spec}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">{t('cable.length')}:</span>
-                  <span className="text-gray-900">{config.cables.motor.length} {t('cable.lengthUnit')}</span>
+                  <span className="text-[var(--foreground-muted)]">{t('cable.length')}:</span>
+                  <span className="text-[var(--foreground)]">{config.cables.motor.length} {t('cable.lengthUnit')}</span>
                 </div>
               </div>
             </div>
-            <div className="p-3 bg-gray-50 rounded-lg">
-              <h5 className="text-sm font-medium text-gray-700 mb-2">{tLabels('encoderCable')}</h5>
+            <div className="p-3 bg-[var(--background-tertiary)] rounded-lg">
+              <h5 className="text-sm font-medium text-[var(--foreground-secondary)] mb-2">{tLabels('encoderCable')}</h5>
               <div className="text-sm space-y-1">
                 <div className="flex justify-between">
-                  <span className="text-gray-500">{t('columns.partNumber')}:</span>
-                  <span className="font-mono text-xs text-gray-900">{config.cables.encoder.partNumber}</span>
+                  <span className="text-[var(--foreground-muted)]">{t('columns.partNumber')}:</span>
+                  <span className="font-mono text-xs text-[var(--primary-300)]">{config.cables.encoder.partNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">{t('cable.spec')}:</span>
-                  <span className="text-gray-900">{config.cables.encoder.spec}</span>
+                  <span className="text-[var(--foreground-muted)]">{t('cable.spec')}:</span>
+                  <span className="text-[var(--foreground)]">{config.cables.encoder.spec}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-500">{t('cable.length')}:</span>
-                  <span className="text-gray-900">{config.cables.encoder.length} {t('cable.lengthUnit')}</span>
+                  <span className="text-[var(--foreground-muted)]">{t('cable.length')}:</span>
+                  <span className="text-[var(--foreground)]">{config.cables.encoder.length} {t('cable.lengthUnit')}</span>
                 </div>
               </div>
             </div>
             {config.cables.communication && (
-              <div className="p-3 bg-gray-50 rounded-lg">
-                <h5 className="text-sm font-medium text-gray-700 mb-2">{tLabels('commCable')}</h5>
+              <div className="p-3 bg-[var(--background-tertiary)] rounded-lg">
+                <h5 className="text-sm font-medium text-[var(--foreground-secondary)] mb-2">{tLabels('commCable')}</h5>
                 <div className="text-sm space-y-1">
                   <div className="flex justify-between">
-                    <span className="text-gray-500">{t('columns.partNumber')}:</span>
-                    <span className="font-mono text-xs text-gray-900">
+                    <span className="text-[var(--foreground-muted)]">{t('columns.partNumber')}:</span>
+                    <span className="font-mono text-xs text-[var(--primary-300)]">
                       {config.cables.communication.partNumber}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">{t('cable.length')}:</span>
-                    <span className="text-gray-900">{config.cables.communication.length} {t('cable.lengthUnit')}</span>
+                    <span className="text-[var(--foreground-muted)]">{t('cable.length')}:</span>
+                    <span className="text-[var(--foreground)]">{config.cables.communication.length} {t('cable.lengthUnit')}</span>
                   </div>
                 </div>
               </div>
@@ -482,32 +493,32 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
 
       {/* Accessories */}
       {(config.accessories.emcFilter || config.accessories.brakeResistor) && (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <div className="px-4 py-3 bg-orange-50 border-b border-orange-100">
-            <h4 className="font-semibold text-orange-900">{t('accessories')}</h4>
+        <div className="card overflow-hidden">
+          <div className="px-4 py-3 bg-[var(--amber-500)]/10 border-b border-[var(--amber-500)]/20">
+            <h4 className="font-semibold text-[var(--amber-400)]">{t('accessories')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {config.accessories.emcFilter && (
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <h5 className="text-sm font-medium text-gray-900 mb-2">{tLabels('emcFilter')}</h5>
+                <div className="p-3 bg-[var(--background-tertiary)] rounded-lg">
+                  <h5 className="text-sm font-medium text-[var(--foreground)] mb-2">{tLabels('emcFilter')}</h5>
                   <div className="text-sm">
-                    <span className="text-gray-500">{t('columns.partNumber')}: </span>
-                    <span className="font-mono text-xs text-gray-900">{config.accessories.emcFilter}</span>
+                    <span className="text-[var(--foreground-muted)]">{t('columns.partNumber')}: </span>
+                    <span className="font-mono text-xs text-[var(--primary-300)]">{config.accessories.emcFilter}</span>
                   </div>
                 </div>
               )}
               {config.accessories.brakeResistor && (
-                <div className="p-3 bg-gray-50 rounded-lg">
-                  <h5 className="text-sm font-medium text-gray-900 mb-2">{tLabels('brakeResistor')}</h5>
+                <div className="p-3 bg-[var(--background-tertiary)] rounded-lg">
+                  <h5 className="text-sm font-medium text-[var(--foreground)] mb-2">{tLabels('brakeResistor')}</h5>
                   <div className="text-sm space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('columns.type')}:</span>
-                      <span className="text-gray-900">{config.accessories.brakeResistor.model}</span>
+                      <span className="text-[var(--foreground-muted)]">{t('columns.type')}:</span>
+                      <span className="text-[var(--foreground)]">{config.accessories.brakeResistor.model}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-500">{t('columns.partNumber')}:</span>
-                      <span className="font-mono text-xs text-gray-900">
+                      <span className="text-[var(--foreground-muted)]">{t('columns.partNumber')}:</span>
+                      <span className="font-mono text-xs text-[var(--primary-300)]">
                         {config.accessories.brakeResistor.partNumber}
                       </span>
                     </div>
@@ -521,31 +532,31 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
 
       {/* Regeneration Info */}
       {mechanical?.regeneration && (
-        <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-          <div className="px-4 py-3 bg-red-50 border-b border-red-100">
-            <h4 className="font-semibold text-red-900">{t('regeneration')}</h4>
+        <div className="card overflow-hidden">
+          <div className="px-4 py-3 bg-[var(--red-500)]/10 border-b border-[var(--red-500)]/20">
+            <h4 className="font-semibold text-[var(--red-400)]">{t('regeneration')}</h4>
           </div>
           <div className="p-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-gray-500 block">{tLabels('energyPerCycle')}</span>
-                <span className="font-medium text-gray-900">
+                <span className="text-[var(--foreground-muted)] block">{tLabels('energyPerCycle')}</span>
+                <span className="font-medium text-[var(--foreground)]">
                   {mechanical.regeneration.energyPerCycle.toFixed(1)} J
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('brakingPower')}</span>
-                <span className="font-medium text-gray-900">
+                <span className="text-[var(--foreground-muted)] block">{tLabels('brakingPower')}</span>
+                <span className="font-medium text-[var(--foreground)]">
                   {mechanical.regeneration.brakingPower.toFixed(1)} W
                 </span>
               </div>
               <div>
-                <span className="text-gray-500 block">{tLabels('externalResistorRequired')}</span>
+                <span className="text-[var(--foreground-muted)] block">{tLabels('externalResistorRequired')}</span>
                 <span
                   className={`font-medium ${
                     mechanical.regeneration.requiresExternalResistor
-                      ? 'text-red-600'
-                      : 'text-green-600'
+                      ? 'text-[var(--red-400)]'
+                      : 'text-[var(--green-400)]'
                   }`}
                 >
                   {mechanical.regeneration.requiresExternalResistor ? tOptions('yes') : tOptions('no')}
@@ -553,15 +564,15 @@ export function SystemSummary({ config, mechanical }: SystemSummaryProps) {
               </div>
               {mechanical.regeneration.recommendedResistor && (
                 <div>
-                  <span className="text-gray-500 block">{tLabels('recommendedResistorPower')}</span>
-                  <span className="font-medium text-gray-900">
+                  <span className="text-[var(--foreground-muted)] block">{tLabels('recommendedResistorPower')}</span>
+                  <span className="font-medium text-[var(--foreground)]">
                     {mechanical.regeneration.recommendedResistor.minPower.toFixed(0)} W
                   </span>
                 </div>
               )}
             </div>
             {mechanical.regeneration.warning && (
-              <div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800">
+              <div className="mt-3 p-3 bg-[var(--amber-500)]/10 border border-[var(--amber-500)]/30 rounded text-sm text-[var(--amber-400)]">
                 {mechanical.regeneration.warning}
               </div>
             )}

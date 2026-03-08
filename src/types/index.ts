@@ -161,6 +161,7 @@ export interface SizingInput {
 // 产品描述
 export interface ProductDescription {
   short: string;      // 简短描述（表格用）
+  shortEn?: string;   // 英文简短描述
   detailed?: string;  // 详细描述（可选扩展）
 }
 
