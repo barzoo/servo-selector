@@ -19,6 +19,37 @@ import {
 } from '@/types';
 import { buildSizingInput } from '@/lib/calculations/build-sizing-input';
 
+// ============ Locale-Aware Default Names ============
+
+/**
+ * Get the current locale from localStorage
+ * @returns 'en' | 'zh' - defaults to 'zh' if not found
+ */
+function getCurrentLocale(): 'en' | 'zh' {
+  if (typeof window === 'undefined') return 'zh';
+  const stored = localStorage.getItem('servo-selector-locale');
+  return stored === 'en' ? 'en' : 'zh';
+}
+
+/**
+ * Get default axis name based on locale
+ * @param index - Axis index (1-based)
+ * @returns Localized default axis name
+ */
+function getDefaultAxisName(index: number): string {
+  const locale = getCurrentLocale();
+  return locale === 'en' ? `Axis-${index}` : `轴-${index}`;
+}
+
+/**
+ * Get default project name based on locale
+ * @returns Localized default project name
+ */
+function getDefaultProjectName(): string {
+  const locale = getCurrentLocale();
+  return locale === 'en' ? 'Unnamed Project' : '未命名项目';
+}
+
 // Flexible input type for store - allows partial duty/preferences without common params
 type StoreInput = Partial<Omit<SizingInput, 'duty' | 'preferences'>> & {
   duty?: DutyConditions;
@@ -59,14 +90,15 @@ export function generateProjectId(): string {
 
 /**
  * Create an initial axis configuration
- * @param name - Optional axis name (defaults to '轴 1')
+ * @param name - Optional axis name (defaults to locale-aware default)
  * @returns Initial AxisConfig object
  * Complexity: O(1)
  */
-export function createInitialAxis(name: string = '轴-1'): AxisConfig {
+export function createInitialAxis(name?: string): AxisConfig {
+  const axisName = name || getDefaultAxisName(1);
   return {
     id: generateId(),
-    name,
+    name: axisName,
     status: 'CONFIGURING' as AxisStatus,
     createdAt: new Date().toISOString(),
     input: {},
@@ -211,9 +243,11 @@ export const useProjectStore = create<ProjectStore>()(
       // Axis operations
       addAxis: (name, copyFrom) => {
         const state = get();
+        // Generate locale-aware default name if not provided
+        const axisName = name || getDefaultAxisName(state.project.axes.length + 1);
         const newAxis: AxisConfig = {
           id: generateId(),
-          name,
+          name: axisName,
           status: 'CONFIGURING',
           createdAt: new Date().toISOString(),
           input: copyFrom
