@@ -295,6 +295,8 @@
     "recommendedDrive": "推荐驱动器",
     "exportPdf": "导出 PDF",
     "noResults": "暂无选型结果",
+    "exportProject": "导出项目",
+    "importProject": "导入项目",
     "reason": "原因：",
     "backToEdit": "返回修改",
     "projectInfo": "项目信息",
