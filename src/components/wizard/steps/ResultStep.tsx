@@ -7,8 +7,8 @@ import { DetailedCalculations } from '../DetailedCalculations';
 import { SystemSummary, findMotor, findDrive, buildSummaryItems } from '../SystemSummary';
 import { PdfExportButton } from '../PdfExportButton';
 import { SaveToBasketMenu } from '../SaveToBasketMenu';
-import { ExportDialog } from '../ExportDialog';
-import { ImportDialog } from '../ImportDialog';
+import { ExportDialog } from '@/components/project-data/ExportDialog';
+import { ImportDialog } from '@/components/project-data/ImportDialog';
 import {
   Trophy,
   AlertTriangle,
