@@ -1,20 +1,16 @@
 'use client';
 
-import { useLanguageStore } from '@/stores/language-store';
+import { useLanguage } from '@/i18n/ClientLanguageProvider';
 import { locales, localeLabels, type Locale } from '@/i18n/config';
 import { Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {
-  const { locale, setLocale } = useLanguageStore();
+  const { locale, setLocale } = useLanguage();
 
   const handleChange = (newLocale: Locale) => {
-    setLocale(newLocale);
-    // Update URL parameter
-    const url = new URL(window.location.href);
-    url.searchParams.set('lang', newLocale);
-    window.history.replaceState({}, '', url.toString());
-    // Reload to apply new language
-    window.location.reload();
+    if (newLocale !== locale) {
+      setLocale(newLocale);
+    }
   };
 
   return (
