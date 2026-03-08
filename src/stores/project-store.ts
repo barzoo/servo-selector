@@ -285,14 +285,13 @@ export const useProjectStore = create<ProjectStore>()(
           }));
         }
 
-        // Load new axis state
-        // Project info is now at project level, not axis level
-        // Simplified 4-step wizard: 1=Mechanism, 2=Motion, 3=Duty, 4=SystemConfig
+        // Load new axis state from axis input
+        const axisInput = axis.input || {};
         set({
           currentAxisId: axisId,
           currentStep: axis.status === 'COMPLETED' ? 5 : 1,
           isComplete: axis.status === 'COMPLETED',
-          input: {},
+          input: axisInput,
           result: axis.result,
         });
       },
