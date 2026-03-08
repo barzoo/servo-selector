@@ -20,68 +20,120 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
   }
 
   return (
-    <div className="axis-detail-page">
+    <div>
       {/* 轴标题 */}
-      <div className="text-center border-b-2 border-gray-300 pb-4 mb-6">
-        <h2 className="text-xl font-bold text-gray-900">
+      <div style={{
+        textAlign: 'center',
+        borderBottom: '3px solid #1e40af',
+        paddingBottom: '1rem',
+        marginBottom: '1.5rem'
+      }}>
+        <h2 style={{
+          fontSize: '1.5rem',
+          fontWeight: 700,
+          color: '#1e3a8a',
+          margin: 0
+        }}>
           轴 {axisIndex + 1}: {axis.name}
         </h2>
         {axis.completedAt && (
-          <p className="text-sm text-gray-500 mt-1">
-            完成时间: {new Date(axis.completedAt).toLocaleDateString()}
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#6b7280',
+            marginTop: '0.25rem'
+          }}>
+            完成时间: {new Date(axis.completedAt).toLocaleDateString('zh-CN')}
           </p>
         )}
       </div>
 
       {/* 计算摘要 */}
       <Section title={t('pdf.sections.calculationSummary')}>
-        <div className="border rounded-lg overflow-hidden">
-          <div className="p-4 grid grid-cols-1 gap-2">
-            <CompactRow label={t('result.loadInertia')} value={`${result.mechanical.loadInertia.toExponential(3)} kg·m²`} />
-            <CompactRow label={t('result.rmsTorque')} value={`${result.mechanical.torques.rms.toFixed(2)} N·m`} />
-            <CompactRow label={t('result.peakTorque')} value={`${result.mechanical.torques.peak.toFixed(2)} N·m`} />
-            <CompactRow label={t('result.maxSpeed')} value={`${result.mechanical.speeds.max.toFixed(0)} rpm`} />
+        <div style={{
+          border: '1px solid #d1d5db',
+          borderRadius: '8px',
+          overflow: 'hidden'
+        }}>
+          <div style={{ padding: '1rem' }}>
+            <CompactRow
+              label={t('result.loadInertia')}
+              value={`${result.mechanical.loadInertia.toExponential(3)} kg·m²`}
+            />
+            <CompactRow
+              label={t('result.rmsTorque')}
+              value={`${result.mechanical.torques.rms.toFixed(2)} N·m`}
+            />
+            <CompactRow
+              label={t('result.peakTorque')}
+              value={`${result.mechanical.torques.peak.toFixed(2)} N·m`}
+            />
+            <CompactRow
+              label={t('result.maxSpeed')}
+              value={`${result.mechanical.speeds.max.toFixed(0)} rpm`}
+            />
           </div>
         </div>
       </Section>
 
       {/* 系统配置清单 */}
       <Section title={t('systemSummary.configList')}>
-        <div className="space-y-4">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {systemConfig && (
             <>
               {/* 电机 */}
-              <div className="border rounded-lg overflow-hidden">
-                <div className="bg-gray-100 px-4 py-2 font-medium border-b">
+              <div style={{
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  background: '#f3f4f6',
+                  padding: '0.75rem 1rem',
+                  fontWeight: 600,
+                  color: '#374151',
+                  borderBottom: '1px solid #d1d5db'
+                }}>
                   {t('systemSummary.motorDetails')}
                 </div>
-                <div className="p-4 grid grid-cols-1 gap-2">
-                  <div>
-                    <span className="text-gray-600 text-sm">{t('systemSummary.columns.partNumber')}:</span>
-                    <span className="ml-2 font-mono text-sm">{recommendation.motor.model}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-600 text-sm">{t('systemSummary.columns.description')}:</span>
-                    <span className="ml-2 text-gray-700">{recommendation.motor.baseModel}</span>
-                  </div>
+                <div style={{ padding: '1rem' }}>
+                  <InfoRow
+                    label={t('systemSummary.columns.partNumber')}
+                    value={recommendation.motor.model}
+                    mono
+                  />
+                  <InfoRow
+                    label={t('systemSummary.columns.description')}
+                    value={recommendation.motor.baseModel}
+                  />
                 </div>
               </div>
 
               {/* 驱动器 */}
               {systemConfig.drive && (
-                <div className="border rounded-lg overflow-hidden">
-                  <div className="bg-gray-100 px-4 py-2 font-medium border-b">
+                <div style={{
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  overflow: 'hidden'
+                }}>
+                  <div style={{
+                    background: '#f3f4f6',
+                    padding: '0.75rem 1rem',
+                    fontWeight: 600,
+                    color: '#374151',
+                    borderBottom: '1px solid #d1d5db'
+                  }}>
                     {t('systemSummary.driveDetails')}
                   </div>
-                  <div className="p-4 grid grid-cols-1 gap-2">
-                    <div>
-                      <span className="text-gray-600 text-sm">{t('systemSummary.columns.partNumber')}:</span>
-                      <span className="ml-2 font-mono text-sm">{systemConfig.drive.model}</span>
-                    </div>
-                    <div>
-                      <span className="text-gray-600 text-sm">{t('systemSummary.columns.description')}:</span>
-                      <span className="ml-2 text-gray-700">{systemConfig.drive.baseModel}</span>
-                    </div>
+                  <div style={{ padding: '1rem' }}>
+                    <InfoRow
+                      label={t('systemSummary.columns.partNumber')}
+                      value={systemConfig.drive.model}
+                      mono
+                    />
+                    <InfoRow
+                      label={t('systemSummary.columns.description')}
+                      value={systemConfig.drive.baseModel}
+                    />
                   </div>
                 </div>
               )}
@@ -89,43 +141,61 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
               {/* 电缆 */}
               {systemConfig.accessories && (
                 <>
-                  <div className="border rounded-lg overflow-hidden">
-                    <div className="bg-gray-100 px-4 py-2 font-medium border-b">
+                  <div style={{
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      background: '#f3f4f6',
+                      padding: '0.75rem 1rem',
+                      fontWeight: 600,
+                      color: '#374151',
+                      borderBottom: '1px solid #d1d5db'
+                    }}>
                       {t('systemSummary.labels.motorCable')}
                     </div>
-                    <div className="p-4 grid grid-cols-1 gap-2">
-                      <div>
-                        <span className="text-gray-600 text-sm">{t('systemSummary.columns.partNumber')}:</span>
-                        <span className="ml-2 font-mono text-sm">{systemConfig.accessories.motorCable.model}</span>
-                      </div>
-                      <div>
-                        <span className="text-gray-600 text-sm">{t('systemSummary.cable.length')}:</span>
-                        <span className="ml-2">
-                          {typeof systemConfig.accessories.motorCable.length === 'number'
-                            ? `${systemConfig.accessories.motorCable.length} m`
-                            : t('systemSummary.cable.terminalOnly')}
-                        </span>
-                      </div>
+                    <div style={{ padding: '1rem' }}>
+                      <InfoRow
+                        label={t('systemSummary.columns.partNumber')}
+                        value={systemConfig.accessories.motorCable.model}
+                        mono
+                      />
+                      <InfoRow
+                        label={t('systemSummary.cable.length')}
+                        value={typeof systemConfig.accessories.motorCable.length === 'number'
+                          ? `${systemConfig.accessories.motorCable.length} m`
+                          : t('systemSummary.cable.terminalOnly')}
+                      />
                     </div>
                   </div>
 
-                  <div className="border rounded-lg overflow-hidden">
-                    <div className="bg-gray-100 px-4 py-2 font-medium border-b">
+                  <div style={{
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    overflow: 'hidden'
+                  }}>
+                    <div style={{
+                      background: '#f3f4f6',
+                      padding: '0.75rem 1rem',
+                      fontWeight: 600,
+                      color: '#374151',
+                      borderBottom: '1px solid #d1d5db'
+                    }}>
                       {t('systemSummary.labels.encoderCable')}
                     </div>
-                    <div className="p-4 grid grid-cols-1 gap-2">
-                      <div>
-                        <span className="text-gray-600 text-sm">{t('systemSummary.columns.partNumber')}:</span>
-                        <span className="ml-2 font-mono text-sm">{systemConfig.accessories.encoderCable.model}</span>
-                      </div>
-                      <div>
-                        <span className="text-gray-600 text-sm">{t('systemSummary.cable.length')}:</span>
-                        <span className="ml-2">
-                          {typeof systemConfig.accessories.encoderCable.length === 'number'
-                            ? `${systemConfig.accessories.encoderCable.length} m`
-                            : t('systemSummary.cable.terminalOnly')}
-                        </span>
-                      </div>
+                    <div style={{ padding: '1rem' }}>
+                      <InfoRow
+                        label={t('systemSummary.columns.partNumber')}
+                        value={systemConfig.accessories.encoderCable.model}
+                        mono
+                      />
+                      <InfoRow
+                        label={t('systemSummary.cable.length')}
+                        value={typeof systemConfig.accessories.encoderCable.length === 'number'
+                          ? `${systemConfig.accessories.encoderCable.length} m`
+                          : t('systemSummary.cable.terminalOnly')}
+                      />
                     </div>
                   </div>
                 </>
@@ -138,16 +208,44 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
       {/* 电机详细参数 */}
       {recommendation.motor && (
         <Section title={t('systemSummary.motorDetails')}>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-4 grid grid-cols-1 gap-2">
-              <ParamRow label={t('systemSummary.labels.ratedPower')} value={`${recommendation.motor.ratedPower} W`} />
-              <ParamRow label={t('systemSummary.labels.ratedSpeed')} value={`${recommendation.motor.ratedSpeed} rpm`} />
-              <ParamRow label={t('systemSummary.labels.ratedTorque')} value={`${recommendation.motor.ratedTorque} N·m`} />
-              <ParamRow label={t('systemSummary.labels.peakTorque')} value={`${recommendation.motor.peakTorque} N·m`} />
-              <ParamRow label={t('systemSummary.labels.maxSpeed')} value={`${recommendation.motor.maxSpeed} rpm`} />
-              <ParamRow label={t('systemSummary.labels.ratedCurrent')} value={`${recommendation.motor.ratedCurrent} A`} />
-              <ParamRow label={t('systemSummary.labels.rotorInertia')} value={`${recommendation.motor.rotorInertia.toExponential(5)} kg·m²`} />
-              <ParamRow label={t('systemSummary.labels.torqueConstant')} value={`${recommendation.motor.torqueConstant} N·m/A`} />
+          <div style={{
+            border: '1px solid #d1d5db',
+            borderRadius: '8px',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '1rem' }}>
+              <ParamRow
+                label={t('systemSummary.labels.ratedPower')}
+                value={`${recommendation.motor.ratedPower} W`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.ratedSpeed')}
+                value={`${recommendation.motor.ratedSpeed} rpm`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.ratedTorque')}
+                value={`${recommendation.motor.ratedTorque} N·m`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.peakTorque')}
+                value={`${recommendation.motor.peakTorque} N·m`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.maxSpeed')}
+                value={`${recommendation.motor.maxSpeed} rpm`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.ratedCurrent')}
+                value={`${recommendation.motor.ratedCurrent} A`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.rotorInertia')}
+                value={`${recommendation.motor.rotorInertia.toExponential(5)} kg·m²`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.torqueConstant')}
+                value={`${recommendation.motor.torqueConstant} N·m/A`}
+              />
             </div>
           </div>
         </Section>
@@ -156,12 +254,28 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
       {/* 驱动器详细参数 */}
       {systemConfig?.drive && (
         <Section title={t('systemSummary.driveDetails')}>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-4 grid grid-cols-1 gap-2">
-              <ParamRow label={t('systemSummary.labels.maxCurrent')} value={`${systemConfig.drive.maxCurrent} A`} />
-              <ParamRow label={t('systemSummary.labels.ratedCurrent')} value={`${systemConfig.drive.ratedCurrent} A`} />
-              <ParamRow label={t('systemSummary.labels.overloadCapacity')} value={`${systemConfig.drive.overloadCapacity} ×`} />
-              <ParamRow label={t('systemSummary.labels.pwmFrequency')} value={`${systemConfig.drive.ratedPwmFrequency} kHz`} />
+          <div style={{
+            border: '1px solid #d1d5db',
+            borderRadius: '8px',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '1rem' }}>
+              <ParamRow
+                label={t('systemSummary.labels.maxCurrent')}
+                value={`${systemConfig.drive.maxCurrent} A`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.ratedCurrent')}
+                value={`${systemConfig.drive.ratedCurrent} A`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.overloadCapacity')}
+                value={`${systemConfig.drive.overloadCapacity} ×`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.pwmFrequency')}
+                value={`${systemConfig.drive.ratedPwmFrequency} kHz`}
+              />
             </div>
           </div>
         </Section>
@@ -170,13 +284,25 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
       {/* 制动能量分析 */}
       {result.mechanical.regeneration && (
         <Section title={t('systemSummary.regeneration')}>
-          <div className="border rounded-lg overflow-hidden">
-            <div className="p-4 grid grid-cols-1 gap-2">
-              <ParamRow label={t('systemSummary.labels.energyPerCycle')} value={`${result.mechanical.regeneration.energyPerCycle.toFixed(1)} J`} />
-              <ParamRow label={t('systemSummary.labels.brakingPower')} value={`${result.mechanical.regeneration.brakingPower.toFixed(1)} W`} />
+          <div style={{
+            border: '1px solid #d1d5db',
+            borderRadius: '8px',
+            overflow: 'hidden'
+          }}>
+            <div style={{ padding: '1rem' }}>
+              <ParamRow
+                label={t('systemSummary.labels.energyPerCycle')}
+                value={`${result.mechanical.regeneration.energyPerCycle.toFixed(1)} J`}
+              />
+              <ParamRow
+                label={t('systemSummary.labels.brakingPower')}
+                value={`${result.mechanical.regeneration.brakingPower.toFixed(1)} W`}
+              />
               <ParamRow
                 label={t('systemSummary.labels.externalResistorRequired')}
-                value={result.mechanical.regeneration.requiresExternalResistor ? t('systemSummary.options.yes') : t('systemSummary.options.no')}
+                value={result.mechanical.regeneration.requiresExternalResistor
+                  ? t('systemSummary.options.yes')
+                  : t('systemSummary.options.no')}
               />
             </div>
           </div>
@@ -189,8 +315,15 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
 // 辅助组件
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="mb-6">
-      <h3 className="text-base font-bold text-gray-900 border-b border-gray-300 pb-2 mb-3">
+    <div style={{ marginBottom: '1.5rem' }}>
+      <h3 style={{
+        fontSize: '1rem',
+        fontWeight: 700,
+        color: '#1e3a8a',
+        borderBottom: '2px solid #e5e7eb',
+        paddingBottom: '0.5rem',
+        marginBottom: '0.75rem'
+      }}>
         {title}
       </h3>
       {children}
@@ -200,18 +333,52 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 
 function ParamRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex justify-between py-1">
-      <span className="text-gray-600 text-sm">{label}</span>
-      <span className="font-medium text-gray-900 text-sm">{value}</span>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '0.375rem 0'
+    }}>
+      <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>{label}</span>
+      <span style={{
+        fontSize: '0.875rem',
+        fontWeight: 500,
+        color: '#1f2937'
+      }}>{value}</span>
     </div>
   );
 }
 
 function CompactRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex py-1">
-      <span className="text-gray-600 w-32 shrink-0 text-sm">{label}</span>
-      <span className="font-medium text-gray-900 text-sm">{value}</span>
+    <div style={{ display: 'flex', padding: '0.375rem 0' }}>
+      <span style={{
+        fontSize: '0.875rem',
+        color: '#6b7280',
+        width: '8rem',
+        flexShrink: 0
+      }}>{label}</span>
+      <span style={{
+        fontSize: '0.875rem',
+        fontWeight: 500,
+        color: '#1f2937'
+      }}>{value}</span>
+    </div>
+  );
+}
+
+function InfoRow({ label, value, mono = false }: { label: string; value: string; mono?: boolean }) {
+  return (
+    <div style={{ marginBottom: '0.5rem' }}>
+      <span style={{
+        fontSize: '0.875rem',
+        color: '#6b7280'
+      }}>{label}: </span>
+      <span style={{
+        fontSize: '0.875rem',
+        fontWeight: 500,
+        color: '#1f2937',
+        fontFamily: mono ? 'monospace' : 'inherit'
+      }}>{value}</span>
     </div>
   );
 }
