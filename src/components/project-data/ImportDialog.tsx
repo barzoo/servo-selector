@@ -22,6 +22,32 @@ export function ImportDialog({ isOpen, onClose }: ImportDialogProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
 
+  const handleFileSelect = useCallback(async (selectedFile: File) => {
+    setFile(selectedFile);
+    const result = await validateImportFile(selectedFile);
+    setValidation(result);
+  }, [validateImportFile]);
+
+  const handleDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    const droppedFile = e.dataTransfer.files[0];
+    if (droppedFile && droppedFile.type === 'application/json') {
+      handleFileSelect(droppedFile);
+    }
+  }, [handleFileSelect]);
+
+  const handleDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
   // Reset state when dialog opens/closes
   useEffect(() => {
     if (!isOpen) {
@@ -33,32 +59,6 @@ export function ImportDialog({ isOpen, onClose }: ImportDialogProps) {
   }, [isOpen]);
 
   if (!isOpen) return null;
-
-  const handleFileSelect = async (selectedFile: File) => {
-    setFile(selectedFile);
-    const result = await validateImportFile(selectedFile);
-    setValidation(result);
-  };
-
-  const handleDrop = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.type === 'application/json') {
-      handleFileSelect(droppedFile);
-    }
-  }, []);
-
-  const handleDragOver = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e: React.DragEvent) => {
-    e.preventDefault();
-    setIsDragging(false);
-  }, []);
 
   const handleImport = () => {
     if (validation?.data) {
