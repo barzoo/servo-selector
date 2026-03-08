@@ -15,7 +15,6 @@ import { ResultStep } from '@/components/wizard/steps/ResultStep';
 import { ProjectInfoEditStep } from '@/components/wizard/steps/ProjectInfoEditStep';
 import { CommonParamsEditStep } from '@/components/wizard/steps/CommonParamsEditStep';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { ProjectDataMenu } from '@/components/project-data';
 
 export default function Home() {
   const {
@@ -245,10 +244,9 @@ export default function Home() {
               />
             </div>
 
-            {/* Desktop: Language Switcher & Tools */}
+            {/* Desktop: Language Switcher */}
             <div className="hidden md:flex absolute right-0 top-0 items-center gap-2">
               <LanguageSwitcher />
-              <ProjectDataMenu />
             </div>
 
             <div className="inline-flex items-center gap-3 mb-3">
@@ -262,10 +260,9 @@ export default function Home() {
 
             <p className="text-[var(--foreground-secondary)]">{t('pageSubtitle')}</p>
 
-            {/* Mobile: Language Switcher & Tools */}
+            {/* Mobile: Language Switcher */}
             <div className="md:hidden mt-4 flex justify-center gap-2">
               <LanguageSwitcher />
-              <ProjectDataMenu />
             </div>
 
             {/* Current Axis Indicator */}
