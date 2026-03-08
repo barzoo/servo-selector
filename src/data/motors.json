@@ -1,16 +1,16 @@
 {
   "_metadata": {
     "version": "1.0.0",
-    "generatedAt": "2026-03-08T08:45:27.810Z",
+    "generatedAt": "2026-03-08T12:37:38.488Z",
     "sources": [
       {
         "file": "docs/data/MC20_电机技术参数.csv",
-        "checksum": "d8797f1ceac523e0",
+        "checksum": "2289f71039cfe38b",
         "description": "MC20电机技术参数表"
       },
       {
         "file": "docs/data/XC20_驱动技术参数.csv",
-        "checksum": "fd8c50dabbf3660f",
+        "checksum": "ee44fd6356fade74",
         "description": "XC20驱动技术参数表"
       },
       {
@@ -29,8 +29,7 @@
       "model": "MC20-060-3L30-N201-0APLNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "0.64 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -103,8 +102,7 @@
       "model": "MC20-060-3L30-N201-0APKNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "0.64 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -177,8 +175,7 @@
       "model": "MC20-060-3L30-N201-0BPLNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "0.64 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -251,8 +248,7 @@
       "model": "MC20-060-3L30-N201-0BPKNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "0.64 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -325,8 +321,7 @@
       "model": "MC20-060-3L30-N201-1APLNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "0.64 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -400,8 +395,7 @@
       "model": "MC20-060-3L30-N201-1APKNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "0.64 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -475,8 +469,7 @@
       "model": "MC20-060-3L30-N201-1BPLNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "0.64 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -550,8 +543,7 @@
       "model": "MC20-060-3L30-N201-1BPKNNNN",
       "baseModel": "MC20-060-3L30-N201",
       "description": {
-        "short": "0.64 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "0.64 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "0.64 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -625,8 +617,7 @@
       "model": "MC20-060-3L30-N401-0APLNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "1.28 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -699,8 +690,7 @@
       "model": "MC20-060-3L30-N401-0APKNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "1.28 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -773,8 +763,7 @@
       "model": "MC20-060-3L30-N401-0BPLNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "1.28 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -847,8 +836,7 @@
       "model": "MC20-060-3L30-N401-0BPKNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "1.28 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -921,8 +909,7 @@
       "model": "MC20-060-3L30-N401-1APLNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "1.28 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -996,8 +983,7 @@
       "model": "MC20-060-3L30-N401-1APKNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "1.28 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -1071,8 +1057,7 @@
       "model": "MC20-060-3L30-N401-1BPLNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "1.28 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -1146,8 +1131,7 @@
       "model": "MC20-060-3L30-N401-1BPKNNNN",
       "baseModel": "MC20-060-3L30-N401",
       "description": {
-        "short": "1.28 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "1.28 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "1.28 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 60,
@@ -1221,8 +1205,7 @@
       "model": "MC20-080-3L30-N751-0APLNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "2.39 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1295,8 +1278,7 @@
       "model": "MC20-080-3L30-N751-0APKNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "2.39 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1369,8 +1351,7 @@
       "model": "MC20-080-3L30-N751-0BPLNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "2.39 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1443,8 +1424,7 @@
       "model": "MC20-080-3L30-N751-0BPKNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "2.39 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1517,8 +1497,7 @@
       "model": "MC20-080-3L30-N751-1APLNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "2.39 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1592,8 +1571,7 @@
       "model": "MC20-080-3L30-N751-1APKNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "2.39 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1667,8 +1645,7 @@
       "model": "MC20-080-3L30-N751-1BPLNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "2.39 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1742,8 +1719,7 @@
       "model": "MC20-080-3L30-N751-1BPKNNNN",
       "baseModel": "MC20-080-3L30-N751",
       "description": {
-        "short": "2.39 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "2.39 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "2.39 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -1817,8 +1793,7 @@
       "model": "MC20-130-3M15-N851-0APLNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "5.4 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -1891,8 +1866,7 @@
       "model": "MC20-130-3M15-N851-0APKNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "5.4 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -1965,8 +1939,7 @@
       "model": "MC20-130-3M15-N851-0BPLNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "5.4 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -2039,8 +2012,7 @@
       "model": "MC20-130-3M15-N851-0BPKNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "5.4 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -2113,8 +2085,7 @@
       "model": "MC20-130-3M15-N851-1APLNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "5.4 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -2188,8 +2159,7 @@
       "model": "MC20-130-3M15-N851-1APKNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "5.4 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -2263,8 +2233,7 @@
       "model": "MC20-130-3M15-N851-1BPLNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "5.4 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -2338,8 +2307,7 @@
       "model": "MC20-130-3M15-N851-1BPKNNNN",
       "baseModel": "MC20-130-3M15-N851",
       "description": {
-        "short": "5.4 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "5.4 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "5.4 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -2413,8 +2381,7 @@
       "model": "MC20-080-3L30-N102-0APLNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "3.18 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2487,8 +2454,7 @@
       "model": "MC20-080-3L30-N102-0APKNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "3.18 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2561,8 +2527,7 @@
       "model": "MC20-080-3L30-N102-0BPLNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "3.18 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2635,8 +2600,7 @@
       "model": "MC20-080-3L30-N102-0BPKNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "3.18 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2709,8 +2673,7 @@
       "model": "MC20-080-3L30-N102-1APLNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "3.18 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2784,8 +2747,7 @@
       "model": "MC20-080-3L30-N102-1APKNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "3.18 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2859,8 +2821,7 @@
       "model": "MC20-080-3L30-N102-1BPLNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "3.18 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -2934,8 +2895,7 @@
       "model": "MC20-080-3L30-N102-1BPKNNNN",
       "baseModel": "MC20-080-3L30-N102",
       "description": {
-        "short": "3.18 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "3.18 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "3.18 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 80,
@@ -3009,8 +2969,7 @@
       "model": "MC20-130-3M20-N102-0APLNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "4.8 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3083,8 +3042,7 @@
       "model": "MC20-130-3M20-N102-0APKNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "4.8 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3157,8 +3115,7 @@
       "model": "MC20-130-3M20-N102-0BPLNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "4.8 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3231,8 +3188,7 @@
       "model": "MC20-130-3M20-N102-0BPKNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "4.8 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3305,8 +3261,7 @@
       "model": "MC20-130-3M20-N102-1APLNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "4.8 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3380,8 +3335,7 @@
       "model": "MC20-130-3M20-N102-1APKNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "4.8 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3455,8 +3409,7 @@
       "model": "MC20-130-3M20-N102-1BPLNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "4.8 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3530,8 +3483,7 @@
       "model": "MC20-130-3M20-N102-1BPKNNNN",
       "baseModel": "MC20-130-3M20-N102",
       "description": {
-        "short": "4.8 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "4.8 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3605,8 +3557,7 @@
       "model": "MC20-130-3M15-N132-0APLNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "8.3 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3679,8 +3630,7 @@
       "model": "MC20-130-3M15-N132-0APKNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "8.3 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3753,8 +3703,7 @@
       "model": "MC20-130-3M15-N132-0BPLNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "8.3 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3827,8 +3776,7 @@
       "model": "MC20-130-3M15-N132-0BPKNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "8.3 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3901,8 +3849,7 @@
       "model": "MC20-130-3M15-N132-1APLNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "8.3 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -3976,8 +3923,7 @@
       "model": "MC20-130-3M15-N132-1APKNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "8.3 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -4051,8 +3997,7 @@
       "model": "MC20-130-3M15-N132-1BPLNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "8.3 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -4126,8 +4071,7 @@
       "model": "MC20-130-3M15-N132-1BPKNNNN",
       "baseModel": "MC20-130-3M15-N132",
       "description": {
-        "short": "8.3 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "8.3 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "8.3 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -4201,8 +4145,7 @@
       "model": "MC20-100-3L30-N152-0APLNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "4.8 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4275,8 +4218,7 @@
       "model": "MC20-100-3L30-N152-0APKNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "4.8 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4349,8 +4291,7 @@
       "model": "MC20-100-3L30-N152-0BPLNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "4.8 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4423,8 +4364,7 @@
       "model": "MC20-100-3L30-N152-0BPKNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "4.8 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4497,8 +4437,7 @@
       "model": "MC20-100-3L30-N152-1APLNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "4.8 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4572,8 +4511,7 @@
       "model": "MC20-100-3L30-N152-1APKNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "4.8 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4647,8 +4585,7 @@
       "model": "MC20-100-3L30-N152-1BPLNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "4.8 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4722,8 +4659,7 @@
       "model": "MC20-100-3L30-N152-1BPKNNNN",
       "baseModel": "MC20-100-3L30-N152",
       "description": {
-        "short": "4.8 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "4.8 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "4.8 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -4797,8 +4733,7 @@
       "model": "MC20-130-3M20-N152-0APLNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "7.2 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -4871,8 +4806,7 @@
       "model": "MC20-130-3M20-N152-0APKNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "7.2 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -4945,8 +4879,7 @@
       "model": "MC20-130-3M20-N152-0BPLNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "7.2 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5019,8 +4952,7 @@
       "model": "MC20-130-3M20-N152-0BPKNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "7.2 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5093,8 +5025,7 @@
       "model": "MC20-130-3M20-N152-1APLNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "7.2 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5168,8 +5099,7 @@
       "model": "MC20-130-3M20-N152-1APKNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "7.2 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5243,8 +5173,7 @@
       "model": "MC20-130-3M20-N152-1BPLNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "7.2 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5318,8 +5247,7 @@
       "model": "MC20-130-3M20-N152-1BPKNNNN",
       "baseModel": "MC20-130-3M20-N152",
       "description": {
-        "short": "7.2 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "7.2 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "7.2 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5393,8 +5321,7 @@
       "model": "MC20-130-3M15-N182-0APLNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "11.5 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5467,8 +5394,7 @@
       "model": "MC20-130-3M15-N182-0APKNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "11.5 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5541,8 +5467,7 @@
       "model": "MC20-130-3M15-N182-0BPLNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "11.5 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5615,8 +5540,7 @@
       "model": "MC20-130-3M15-N182-0BPKNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "11.5 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5689,8 +5613,7 @@
       "model": "MC20-130-3M15-N182-1APLNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "11.5 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5764,8 +5687,7 @@
       "model": "MC20-130-3M15-N182-1APKNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "11.5 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5839,8 +5761,7 @@
       "model": "MC20-130-3M15-N182-1BPLNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "11.5 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5914,8 +5835,7 @@
       "model": "MC20-130-3M15-N182-1BPKNNNN",
       "baseModel": "MC20-130-3M15-N182",
       "description": {
-        "short": "11.5 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "11.5 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "11.5 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -5989,8 +5909,7 @@
       "model": "MC20-100-3L30-N202-0APLNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "6.38 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6063,8 +5982,7 @@
       "model": "MC20-100-3L30-N202-0APKNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "6.38 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6137,8 +6055,7 @@
       "model": "MC20-100-3L30-N202-0BPLNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "6.38 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6211,8 +6128,7 @@
       "model": "MC20-100-3L30-N202-0BPKNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "6.38 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6285,8 +6201,7 @@
       "model": "MC20-100-3L30-N202-1APLNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "6.38 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6360,8 +6275,7 @@
       "model": "MC20-100-3L30-N202-1APKNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "6.38 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6435,8 +6349,7 @@
       "model": "MC20-100-3L30-N202-1BPLNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "6.38 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6510,8 +6423,7 @@
       "model": "MC20-100-3L30-N202-1BPKNNNN",
       "baseModel": "MC20-100-3L30-N202",
       "description": {
-        "short": "6.38 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "6.38 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "6.38 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -6585,8 +6497,7 @@
       "model": "MC20-130-3M20-N202-0APLNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "9.6 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -6659,8 +6570,7 @@
       "model": "MC20-130-3M20-N202-0APKNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "9.6 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -6733,8 +6643,7 @@
       "model": "MC20-130-3M20-N202-0BPLNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "9.6 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -6807,8 +6716,7 @@
       "model": "MC20-130-3M20-N202-0BPKNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "9.6 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -6881,8 +6789,7 @@
       "model": "MC20-130-3M20-N202-1APLNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "9.6 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -6956,8 +6863,7 @@
       "model": "MC20-130-3M20-N202-1APKNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "9.6 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -7031,8 +6937,7 @@
       "model": "MC20-130-3M20-N202-1BPLNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "9.6 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -7106,8 +7011,7 @@
       "model": "MC20-130-3M20-N202-1BPKNNNN",
       "baseModel": "MC20-130-3M20-N202",
       "description": {
-        "short": "9.6 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "9.6 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -7181,8 +7085,7 @@
       "model": "MC20-100-3L30-N252-0APLNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "7.96 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7255,8 +7158,7 @@
       "model": "MC20-100-3L30-N252-0APKNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "7.96 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7329,8 +7231,7 @@
       "model": "MC20-100-3L30-N252-0BPLNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "7.96 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7403,8 +7304,7 @@
       "model": "MC20-100-3L30-N252-0BPKNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "7.96 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7477,8 +7377,7 @@
       "model": "MC20-100-3L30-N252-1APLNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "7.96 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7552,8 +7451,7 @@
       "model": "MC20-100-3L30-N252-1APKNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "7.96 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7627,8 +7525,7 @@
       "model": "MC20-100-3L30-N252-1BPLNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "7.96 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7702,8 +7599,7 @@
       "model": "MC20-100-3L30-N252-1BPKNNNN",
       "baseModel": "MC20-100-3L30-N252",
       "description": {
-        "short": "7.96 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "7.96 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "7.96 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 100,
@@ -7777,8 +7673,7 @@
       "model": "MC20-130-3M20-N252-0APLNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "12 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "12 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -7851,8 +7746,7 @@
       "model": "MC20-130-3M20-N252-0APKNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "12 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "12 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -7925,8 +7819,7 @@
       "model": "MC20-130-3M20-N252-0BPLNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "12 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "12 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -7999,8 +7892,7 @@
       "model": "MC20-130-3M20-N252-0BPKNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "12 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "12 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -8073,8 +7965,7 @@
       "model": "MC20-130-3M20-N252-1APLNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "12 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "12 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -8148,8 +8039,7 @@
       "model": "MC20-130-3M20-N252-1APKNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "12 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "12 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -8223,8 +8113,7 @@
       "model": "MC20-130-3M20-N252-1BPLNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "12 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "12 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -8298,8 +8187,7 @@
       "model": "MC20-130-3M20-N252-1BPKNNNN",
       "baseModel": "MC20-130-3M20-N252",
       "description": {
-        "short": "12 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "12 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "12 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -8373,8 +8261,7 @@
       "model": "MC20-180-3M15-N292-0APLNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "18.5 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8447,8 +8334,7 @@
       "model": "MC20-180-3M15-N292-0APKNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "18.5 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8521,8 +8407,7 @@
       "model": "MC20-180-3M15-N292-0BPLNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "18.5 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8595,8 +8480,7 @@
       "model": "MC20-180-3M15-N292-0BPKNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "18.5 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8669,8 +8553,7 @@
       "model": "MC20-180-3M15-N292-1APLNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "18.5 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8744,8 +8627,7 @@
       "model": "MC20-180-3M15-N292-1APKNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "18.5 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8819,8 +8701,7 @@
       "model": "MC20-180-3M15-N292-1BPLNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "18.5 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8894,8 +8775,7 @@
       "model": "MC20-180-3M15-N292-1BPKNNNN",
       "baseModel": "MC20-180-3M15-N292",
       "description": {
-        "short": "18.5 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "18.5 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "18.5 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -8969,8 +8849,7 @@
       "model": "MC20-130-3L30-N302-0APLNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "9.6 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9043,8 +8922,7 @@
       "model": "MC20-130-3L30-N302-0APKNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "9.6 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9117,8 +8995,7 @@
       "model": "MC20-130-3L30-N302-0BPLNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "9.6 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9191,8 +9068,7 @@
       "model": "MC20-130-3L30-N302-0BPKNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "9.6 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9265,8 +9141,7 @@
       "model": "MC20-130-3L30-N302-1APLNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "9.6 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9340,8 +9215,7 @@
       "model": "MC20-130-3L30-N302-1APKNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "9.6 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9415,8 +9289,7 @@
       "model": "MC20-130-3L30-N302-1BPLNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "9.6 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9490,8 +9363,7 @@
       "model": "MC20-130-3L30-N302-1BPKNNNN",
       "baseModel": "MC20-130-3L30-N302",
       "description": {
-        "short": "9.6 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "9.6 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "9.6 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9565,8 +9437,7 @@
       "model": "MC20-130-3M20-N302-0APLNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "14.3 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9639,8 +9510,7 @@
       "model": "MC20-130-3M20-N302-0APKNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "14.3 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9713,8 +9583,7 @@
       "model": "MC20-130-3M20-N302-0BPLNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "14.3 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9787,8 +9656,7 @@
       "model": "MC20-130-3M20-N302-0BPKNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "14.3 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9861,8 +9729,7 @@
       "model": "MC20-130-3M20-N302-1APLNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "14.3 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -9936,8 +9803,7 @@
       "model": "MC20-130-3M20-N302-1APKNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "14.3 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -10011,8 +9877,7 @@
       "model": "MC20-130-3M20-N302-1BPLNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "14.3 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -10086,8 +9951,7 @@
       "model": "MC20-130-3M20-N302-1BPKNNNN",
       "baseModel": "MC20-130-3M20-N302",
       "description": {
-        "short": "14.3 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "14.3 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "14.3 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -10161,8 +10025,7 @@
       "model": "MC20-180-3M15-N332-0APLNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "21 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "21 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10235,8 +10098,7 @@
       "model": "MC20-180-3M15-N332-0APKNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "21 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "21 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10309,8 +10171,7 @@
       "model": "MC20-180-3M15-N332-0BPLNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "21 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "21 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10383,8 +10244,7 @@
       "model": "MC20-180-3M15-N332-0BPKNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "21 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "21 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10457,8 +10317,7 @@
       "model": "MC20-180-3M15-N332-1APLNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "21 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "21 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10532,8 +10391,7 @@
       "model": "MC20-180-3M15-N332-1APKNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "21 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "21 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10607,8 +10465,7 @@
       "model": "MC20-180-3M15-N332-1BPLNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "21 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "21 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10682,8 +10539,7 @@
       "model": "MC20-180-3M15-N332-1BPKNNNN",
       "baseModel": "MC20-180-3M15-N332",
       "description": {
-        "short": "21 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "21 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "21 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10757,8 +10613,7 @@
       "model": "MC20-180-3M20-N352-0APLNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "16.7 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10831,8 +10686,7 @@
       "model": "MC20-180-3M20-N352-0APKNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "16.7 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10905,8 +10759,7 @@
       "model": "MC20-180-3M20-N352-0BPLNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "16.7 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -10979,8 +10832,7 @@
       "model": "MC20-180-3M20-N352-0BPKNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "16.7 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -11053,8 +10905,7 @@
       "model": "MC20-180-3M20-N352-1APLNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "16.7 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -11128,8 +10979,7 @@
       "model": "MC20-180-3M20-N352-1APKNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "16.7 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -11203,8 +11053,7 @@
       "model": "MC20-180-3M20-N352-1BPLNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "16.7 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -11278,8 +11127,7 @@
       "model": "MC20-180-3M20-N352-1BPKNNNN",
       "baseModel": "MC20-180-3M20-N352",
       "description": {
-        "short": "16.7 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "16.7 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "16.7 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -11353,8 +11201,7 @@
       "model": "MC20-130-3L30-N402-0APLNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "12.7 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11427,8 +11274,7 @@
       "model": "MC20-130-3L30-N402-0APKNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "12.7 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11501,8 +11347,7 @@
       "model": "MC20-130-3L30-N402-0BPLNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "12.7 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11575,8 +11420,7 @@
       "model": "MC20-130-3L30-N402-0BPKNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "12.7 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11649,8 +11493,7 @@
       "model": "MC20-130-3L30-N402-1APLNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "12.7 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11724,8 +11567,7 @@
       "model": "MC20-130-3L30-N402-1APKNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "12.7 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11799,8 +11641,7 @@
       "model": "MC20-130-3L30-N402-1BPLNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "12.7 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11874,8 +11715,7 @@
       "model": "MC20-130-3L30-N402-1BPKNNNN",
       "baseModel": "MC20-130-3L30-N402",
       "description": {
-        "short": "12.7 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "12.7 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "12.7 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -11949,8 +11789,7 @@
       "model": "MC20-180-3M20-N402-0APLNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "19.1 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12023,8 +11862,7 @@
       "model": "MC20-180-3M20-N402-0APKNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "19.1 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12097,8 +11935,7 @@
       "model": "MC20-180-3M20-N402-0BPLNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "19.1 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12171,8 +12008,7 @@
       "model": "MC20-180-3M20-N402-0BPKNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "19.1 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12245,8 +12081,7 @@
       "model": "MC20-180-3M20-N402-1APLNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "19.1 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12320,8 +12155,7 @@
       "model": "MC20-180-3M20-N402-1APKNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "19.1 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12395,8 +12229,7 @@
       "model": "MC20-180-3M20-N402-1BPLNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "19.1 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12470,8 +12303,7 @@
       "model": "MC20-180-3M20-N402-1BPKNNNN",
       "baseModel": "MC20-180-3M20-N402",
       "description": {
-        "short": "19.1 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "19.1 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "19.1 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12545,8 +12377,7 @@
       "model": "MC20-180-3M15-N442-0APLNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "28 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "28 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12619,8 +12450,7 @@
       "model": "MC20-180-3M15-N442-0APKNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "28 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "28 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12693,8 +12523,7 @@
       "model": "MC20-180-3M15-N442-0BPLNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "28 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "28 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12767,8 +12596,7 @@
       "model": "MC20-180-3M15-N442-0BPKNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "28 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "28 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12841,8 +12669,7 @@
       "model": "MC20-180-3M15-N442-1APLNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "28 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "28 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12916,8 +12743,7 @@
       "model": "MC20-180-3M15-N442-1APKNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "28 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "28 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -12991,8 +12817,7 @@
       "model": "MC20-180-3M15-N442-1BPLNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "28 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "28 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -13066,8 +12891,7 @@
       "model": "MC20-180-3M15-N442-1BPKNNNN",
       "baseModel": "MC20-180-3M15-N442",
       "description": {
-        "short": "28 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "28 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "28 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -13141,8 +12965,7 @@
       "model": "MC20-130-3L30-N502-0APLNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "16 N·m, 3000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "16 N·m, 3000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13215,8 +13038,7 @@
       "model": "MC20-130-3L30-N502-0APKNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "16 N·m, 3000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "16 N·m, 3000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13289,8 +13111,7 @@
       "model": "MC20-130-3L30-N502-0BPLNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "16 N·m, 3000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "16 N·m, 3000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13363,8 +13184,7 @@
       "model": "MC20-130-3L30-N502-0BPKNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "16 N·m, 3000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "16 N·m, 3000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13437,8 +13257,7 @@
       "model": "MC20-130-3L30-N502-1APLNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "16 N·m, 3000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "16 N·m, 3000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13512,8 +13331,7 @@
       "model": "MC20-130-3L30-N502-1APKNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "16 N·m, 3000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "16 N·m, 3000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13587,8 +13405,7 @@
       "model": "MC20-130-3L30-N502-1BPLNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "16 N·m, 3000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "16 N·m, 3000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13662,8 +13479,7 @@
       "model": "MC20-130-3L30-N502-1BPKNNNN",
       "baseModel": "MC20-130-3L30-N502",
       "description": {
-        "short": "16 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "16 N·m, 3000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "16 N·m, 3000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 130,
@@ -13737,8 +13553,7 @@
       "model": "MC20-180-3M20-N502-0APLNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "24 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "24 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -13811,8 +13626,7 @@
       "model": "MC20-180-3M20-N502-0APKNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "24 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "24 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -13885,8 +13699,7 @@
       "model": "MC20-180-3M20-N502-0BPLNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "24 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "24 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -13959,8 +13772,7 @@
       "model": "MC20-180-3M20-N502-0BPKNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "24 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "24 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14033,8 +13845,7 @@
       "model": "MC20-180-3M20-N502-1APLNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "24 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "24 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14108,8 +13919,7 @@
       "model": "MC20-180-3M20-N502-1APKNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "24 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "24 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14183,8 +13993,7 @@
       "model": "MC20-180-3M20-N502-1BPLNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "24 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "24 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14258,8 +14067,7 @@
       "model": "MC20-180-3M20-N502-1BPKNNNN",
       "baseModel": "MC20-180-3M20-N502",
       "description": {
-        "short": "24 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "24 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "24 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14333,8 +14141,7 @@
       "model": "MC20-180-3M15-N552-0APLNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "35 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "35 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14407,8 +14214,7 @@
       "model": "MC20-180-3M15-N552-0APKNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "35 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "35 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14481,8 +14287,7 @@
       "model": "MC20-180-3M15-N552-0BPLNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "35 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "35 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14555,8 +14360,7 @@
       "model": "MC20-180-3M15-N552-0BPKNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "35 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "35 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14629,8 +14433,7 @@
       "model": "MC20-180-3M15-N552-1APLNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "35 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "35 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14704,8 +14507,7 @@
       "model": "MC20-180-3M15-N552-1APKNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "35 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "35 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14779,8 +14581,7 @@
       "model": "MC20-180-3M15-N552-1BPLNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "35 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "35 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14854,8 +14655,7 @@
       "model": "MC20-180-3M15-N552-1BPKNNNN",
       "baseModel": "MC20-180-3M15-N552",
       "description": {
-        "short": "35 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "35 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "35 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -14929,8 +14729,7 @@
       "model": "MC20-180-3M20-N752-0APLNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "36 N·m, 2000 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "36 N·m, 2000 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15003,8 +14802,7 @@
       "model": "MC20-180-3M20-N752-0APKNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "36 N·m, 2000 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "36 N·m, 2000 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15077,8 +14875,7 @@
       "model": "MC20-180-3M20-N752-0BPLNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "36 N·m, 2000 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "36 N·m, 2000 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15151,8 +14948,7 @@
       "model": "MC20-180-3M20-N752-0BPKNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "36 N·m, 2000 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "36 N·m, 2000 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15225,8 +15021,7 @@
       "model": "MC20-180-3M20-N752-1APLNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "36 N·m, 2000 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "36 N·m, 2000 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15300,8 +15095,7 @@
       "model": "MC20-180-3M20-N752-1APKNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "36 N·m, 2000 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "36 N·m, 2000 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15375,8 +15169,7 @@
       "model": "MC20-180-3M20-N752-1BPLNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "36 N·m, 2000 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "36 N·m, 2000 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15450,8 +15243,7 @@
       "model": "MC20-180-3M20-N752-1BPKNNNN",
       "baseModel": "MC20-180-3M20-N752",
       "description": {
-        "short": "36 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "36 N·m, 2000 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "36 N·m, 2000 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15525,8 +15317,7 @@
       "model": "MC20-180-3M15-N752-0APLNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴",
-        "shortEn": "48 N·m, 1500 rpm, Type A Encoder, No Brake, Smooth Shaft"
+        "short": "48 N·m, 1500 rpm, A型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15599,8 +15390,7 @@
       "model": "MC20-180-3M15-N752-0APKNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴",
-        "shortEn": "48 N·m, 1500 rpm, Type A Encoder, No Brake, Keyed Shaft"
+        "short": "48 N·m, 1500 rpm, A型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15673,8 +15463,7 @@
       "model": "MC20-180-3M15-N752-0BPLNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴",
-        "shortEn": "48 N·m, 1500 rpm, Type B Encoder, No Brake, Smooth Shaft"
+        "short": "48 N·m, 1500 rpm, B型编码器, 无抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15747,8 +15536,7 @@
       "model": "MC20-180-3M15-N752-0BPKNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴",
-        "shortEn": "48 N·m, 1500 rpm, Type B Encoder, No Brake, Keyed Shaft"
+        "short": "48 N·m, 1500 rpm, B型编码器, 无抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15821,8 +15609,7 @@
       "model": "MC20-180-3M15-N752-1APLNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴",
-        "shortEn": "48 N·m, 1500 rpm, Type A Encoder, 带抱闸, Smooth Shaft"
+        "short": "48 N·m, 1500 rpm, A型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15896,8 +15683,7 @@
       "model": "MC20-180-3M15-N752-1APKNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴",
-        "shortEn": "48 N·m, 1500 rpm, Type A Encoder, 带抱闸, Keyed Shaft"
+        "short": "48 N·m, 1500 rpm, A型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -15971,8 +15757,7 @@
       "model": "MC20-180-3M15-N752-1BPLNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴",
-        "shortEn": "48 N·m, 1500 rpm, Type B Encoder, 带抱闸, Smooth Shaft"
+        "short": "48 N·m, 1500 rpm, B型编码器, 带抱闸, 光轴"
       },
       "series": "MC20",
       "frameSize": 180,
@@ -16046,8 +15831,7 @@
       "model": "MC20-180-3M15-N752-1BPKNNNN",
       "baseModel": "MC20-180-3M15-N752",
       "description": {
-        "short": "48 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴",
-        "shortEn": "48 N·m, 1500 rpm, Type B Encoder, 带抱闸, Keyed Shaft"
+        "short": "48 N·m, 1500 rpm, B型编码器, 带抱闸, 带键轴"
       },
       "series": "MC20",
       "frameSize": 180,
