@@ -556,3 +556,17 @@ export interface MultiAxisReportData {
     usedIn: string[];
   }>;
 }
+
+// ============ 项目数据导出 ============
+
+export interface ProjectExportData {
+  version: string;
+  exportedAt: string;
+  project: Project;
+}
+
+export interface ImportValidationResult {
+  valid: boolean;
+  error?: string;
+  data?: ProjectExportData;
+}
