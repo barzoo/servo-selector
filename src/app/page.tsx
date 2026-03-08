@@ -236,11 +236,19 @@ export default function Home() {
               <MobileAxisDrawer
                 project={project}
                 currentAxisId={currentAxisId}
-                onSwitchAxis={switchAxis}
+                onSwitchAxis={(axisId) => {
+                  switchAxis(axisId);
+                  setMainViewMode('wizard');
+                }}
                 onAddAxis={handleAddAxis}
                 onDeleteAxis={deleteAxis}
-                onReeditAxis={reeditAxis}
+                onReeditAxis={(axisId) => {
+                  reeditAxis(axisId);
+                  setMainViewMode('wizard');
+                }}
                 onUpdateAxisName={updateAxisName}
+                onOpenProjectSettings={() => setMainViewMode('edit-project')}
+                onOpenCommonParams={() => setMainViewMode('edit-common')}
               />
             </div>
 

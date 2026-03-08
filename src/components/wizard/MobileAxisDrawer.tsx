@@ -12,6 +12,8 @@ interface MobileAxisDrawerProps {
   onDeleteAxis?: (axisId: string) => void;
   onReeditAxis?: (axisId: string) => void;
   onUpdateAxisName?: (axisId: string, name: string) => void;
+  onOpenProjectSettings?: () => void;
+  onOpenCommonParams?: () => void;
 }
 
 export function MobileAxisDrawer({
@@ -22,11 +24,23 @@ export function MobileAxisDrawer({
   onDeleteAxis,
   onReeditAxis,
   onUpdateAxisName,
+  onOpenProjectSettings,
+  onOpenCommonParams,
 }: MobileAxisDrawerProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSwitchAxis = (axisId: string) => {
     onSwitchAxis(axisId);
+    setIsOpen(false);
+  };
+
+  const handleOpenProjectSettings = () => {
+    onOpenProjectSettings?.();
+    setIsOpen(false);
+  };
+
+  const handleOpenCommonParams = () => {
+    onOpenCommonParams?.();
     setIsOpen(false);
   };
 
@@ -60,8 +74,8 @@ export function MobileAxisDrawer({
             className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="md:hidden fixed left-0 top-0 h-full w-64 bg-white z-50 shadow-xl text-gray-900">
-            <div className="flex items-center justify-between p-4 border-b">
+          <div className="md:hidden fixed left-0 top-0 h-full w-64 bg-white z-50 shadow-xl text-gray-900 flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b flex-shrink-0">
               <span className="font-semibold text-gray-900">轴列表</span>
               <button
                 onClick={() => setIsOpen(false)}
@@ -82,18 +96,22 @@ export function MobileAxisDrawer({
                 </svg>
               </button>
             </div>
-            <AxisSidebar
-              project={project}
-              currentAxisId={currentAxisId}
-              onSwitchAxis={handleSwitchAxis}
-              onAddAxis={() => {
-                onAddAxis();
-                setIsOpen(false);
-              }}
-              onDeleteAxis={onDeleteAxis}
-              onReeditAxis={onReeditAxis}
-              onUpdateAxisName={onUpdateAxisName}
-            />
+            <div className="flex-1 overflow-hidden">
+              <AxisSidebar
+                project={project}
+                currentAxisId={currentAxisId}
+                onSwitchAxis={handleSwitchAxis}
+                onAddAxis={() => {
+                  onAddAxis();
+                  setIsOpen(false);
+                }}
+                onDeleteAxis={onDeleteAxis}
+                onReeditAxis={onReeditAxis}
+                onUpdateAxisName={onUpdateAxisName}
+                onOpenProjectSettings={handleOpenProjectSettings}
+                onOpenCommonParams={handleOpenCommonParams}
+              />
+            </div>
           </div>
         </>
       )}
