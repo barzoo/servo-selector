@@ -34,16 +34,29 @@ export default function ClientLanguageProvider({ children }: Props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Read locale from localStorage (set by language-store)
-    const stored = localStorage.getItem('servo-selector-language');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (parsed.state?.locale) {
-          setLocaleState(parsed.state.locale);
+    // Priority: URL param > localStorage > default
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang') as Locale | null;
+
+    if (langParam && ['zh', 'en'].includes(langParam)) {
+      setLocaleState(langParam);
+      // Sync to localStorage
+      localStorage.setItem('servo-selector-language', JSON.stringify({ state: { locale: langParam } }));
+    } else {
+      // Read locale from localStorage (set by language-store)
+      const stored = localStorage.getItem('servo-selector-language');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed.state?.locale) {
+            setLocaleState(parsed.state.locale);
+            // Sync back to URL
+            urlParams.set('lang', parsed.state.locale);
+            window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+          }
+        } catch {
+          // fallback to default
         }
-      } catch {
-        // fallback to default
       }
     }
     setMounted(true);

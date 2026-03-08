@@ -37,7 +37,11 @@
       "Read(//c/Users/Xing/.claude/plugins/cache/superpowers-marketplace/superpowers/4.3.1/skills/**)",
       "Read(//c/Users/Xing/.claude/**)",
       "mcp__chrome-devtools__press_key",
-      "Bash(npx ts-node:*)"
+      "Bash(npx ts-node:*)",
+      "mcp__chrome-devtools__emulate",
+      "Bash(grep:*)",
+      "Bash(strings:*)",
+      "Bash(cat:*)"
     ]
   },
   "spinnerVerbs": {

@@ -46,9 +46,9 @@ export function AxisSidebar({
   const configCount = project.axes.filter((a) => a.status === 'CONFIGURING').length;
 
   return (
-    <div className="h-full flex flex-col glass border-r border-[var(--border-subtle)]">
-      {/* Header */}
-      <div className="p-4 border-b border-[var(--border-subtle)]">
+    <div className="h-full flex flex-col glass border-r border-[var(--border-subtle)] overflow-hidden">
+      {/* Header - Fixed */}
+      <div className="p-4 border-b border-[var(--border-subtle)] flex-shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-600)] flex items-center justify-center shadow-lg">
             <Settings className="w-5 h-5 text-white" />
@@ -60,78 +60,79 @@ export function AxisSidebar({
         </div>
       </div>
 
-      {/* Project Info Section */}
-      <div className="p-3 border-b border-[var(--border-subtle)]">
-        <button
-          onClick={onOpenProjectSettings}
-          className={`
-            w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-left
-            ${mainViewMode === 'edit-project'
-              ? 'bg-[var(--primary-500)]/10 border border-[var(--primary-500)]/50 shadow-lg shadow-[var(--primary-500)]/10'
-              : 'bg-[var(--background-tertiary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] hover:bg-[var(--background-elevated)]'
-            }
-          `}
-        >
-          <div className={`
-            w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
-            ${mainViewMode === 'edit-project'
-              ? 'bg-[var(--primary-500)]/20 text-[var(--primary-300)]'
-              : 'bg-[var(--background-secondary)] text-[var(--foreground-secondary)]'
-            }
-          `}>
-            <FileText className="w-5 h-5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-[var(--foreground)] truncate">
-              {project.name || t('unnamedProject')}
-            </p>
-            <p className="text-xs text-[var(--foreground-muted)]">
-              {mainViewMode === 'edit-project' ? t('editing') : t('clickToEdit')}
-            </p>
-          </div>
-          <ChevronRight className={`
-            w-4 h-4 transition-transform duration-200 flex-shrink-0
-            ${mainViewMode === 'edit-project' ? 'rotate-90 text-[var(--primary-400)]' : 'text-[var(--foreground-muted)]'}
-          `} />
-        </button>
-      </div>
+      {/* Scrollable Content Area */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        {/* Project Info Section */}
+        <div className="p-3 border-b border-[var(--border-subtle)]">
+          <button
+            onClick={onOpenProjectSettings}
+            className={`
+              w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-left
+              ${mainViewMode === 'edit-project'
+                ? 'bg-[var(--primary-500)]/10 border border-[var(--primary-500)]/50 shadow-lg shadow-[var(--primary-500)]/10'
+                : 'bg-[var(--background-tertiary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] hover:bg-[var(--background-elevated)]'
+              }
+            `}
+          >
+            <div className={`
+              w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
+              ${mainViewMode === 'edit-project'
+                ? 'bg-[var(--primary-500)]/20 text-[var(--primary-300)]'
+                : 'bg-[var(--background-secondary)] text-[var(--foreground-secondary)]'
+              }
+            `}>
+              <FileText className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-[var(--foreground)] truncate">
+                {project.name || t('unnamedProject')}
+              </p>
+              <p className="text-xs text-[var(--foreground-muted)]">
+                {mainViewMode === 'edit-project' ? t('editing') : t('clickToEdit')}
+              </p>
+            </div>
+            <ChevronRight className={`
+              w-4 h-4 transition-transform duration-200 flex-shrink-0
+              ${mainViewMode === 'edit-project' ? 'rotate-90 text-[var(--primary-400)]' : 'text-[var(--foreground-muted)]'}
+            `} />
+          </button>
+        </div>
 
-      {/* Common Params Section */}
-      <div className="p-3 border-b border-[var(--border-subtle)]">
-        <button
-          onClick={onOpenCommonParams}
-          className={`
-            w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-left
-            ${mainViewMode === 'edit-common'
-              ? 'bg-[var(--amber-500)]/10 border border-[var(--amber-500)]/50 shadow-lg shadow-[var(--amber-500)]/10'
-              : 'bg-[var(--background-tertiary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] hover:bg-[var(--background-elevated)]'
-            }
-          `}
-        >
-          <div className={`
-            w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
-            ${mainViewMode === 'edit-common'
-              ? 'bg-[var(--amber-500)]/20 text-[var(--amber-400)]'
-              : 'bg-[var(--background-secondary)] text-[var(--foreground-secondary)]'
-            }
-          `}>
-            <Settings className="w-5 h-5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-[var(--foreground)]">{t('commonParams')}</p>
-            <p className="text-xs text-[var(--foreground-muted)]">
-              {mainViewMode === 'edit-common' ? t('editing') : t('commonParamsDesc')}
-            </p>
-          </div>
-          <ChevronRight className={`
-            w-4 h-4 transition-transform duration-200 flex-shrink-0
-            ${mainViewMode === 'edit-common' ? 'rotate-90 text-[var(--amber-400)]' : 'text-[var(--foreground-muted)]'}
-          `} />
-        </button>
-      </div>
+        {/* Common Params Section */}
+        <div className="p-3 border-b border-[var(--border-subtle)]">
+          <button
+            onClick={onOpenCommonParams}
+            className={`
+              w-full flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-left
+              ${mainViewMode === 'edit-common'
+                ? 'bg-[var(--amber-500)]/10 border border-[var(--amber-500)]/50 shadow-lg shadow-[var(--amber-500)]/10'
+                : 'bg-[var(--background-tertiary)] border border-[var(--border-default)] hover:border-[var(--border-hover)] hover:bg-[var(--background-elevated)]'
+              }
+            `}
+          >
+            <div className={`
+              w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0
+              ${mainViewMode === 'edit-common'
+                ? 'bg-[var(--amber-500)]/20 text-[var(--amber-400)]'
+                : 'bg-[var(--background-secondary)] text-[var(--foreground-secondary)]'
+              }
+            `}>
+              <Settings className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-medium text-[var(--foreground)]">{t('commonParams')}</p>
+              <p className="text-xs text-[var(--foreground-muted)]">
+                {mainViewMode === 'edit-common' ? t('editing') : t('commonParamsDesc')}
+              </p>
+            </div>
+            <ChevronRight className={`
+              w-4 h-4 transition-transform duration-200 flex-shrink-0
+              ${mainViewMode === 'edit-common' ? 'rotate-90 text-[var(--amber-400)]' : 'text-[var(--foreground-muted)]'}
+            `} />
+          </button>
+        </div>
 
-      {/* Axis List Section */}
-      <div className="flex-1 overflow-y-auto">
+        {/* Axis List Section */}
         <div className="px-4 py-3 flex items-center justify-between">
           <span className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-wider">
             {t('axisConfig')}
@@ -164,59 +165,59 @@ export function AxisSidebar({
             {project.axes.length === 0 ? t('addFirstAxis') : t('addNewAxis')}
           </button>
         </div>
+
+        {/* Project Summary Section */}
+        <div className="p-4 border-t border-[var(--border-subtle)] bg-[var(--background-secondary)]/50">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-wider">
+              {t('projectSummary')}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="bg-[var(--background-tertiary)] rounded-lg p-3 border border-[var(--border-subtle)]">
+              <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('completed')}</p>
+              <p className="text-2xl font-bold text-[var(--green-400)] number-display">{completedCount}</p>
+            </div>
+            <div className="bg-[var(--background-tertiary)] rounded-lg p-3 border border-[var(--border-subtle)]">
+              <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('configuring')}</p>
+              <p className="text-2xl font-bold text-[var(--amber-400)] number-display">{configCount}</p>
+            </div>
+          </div>
+
+          <ProjectPdfExport project={project} />
+
+          {/* Export/Import Buttons */}
+          <div className="grid grid-cols-2 gap-2 mt-3">
+            <button
+              onClick={() => setShowExportDialog(true)}
+              className="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-[var(--foreground-secondary)] bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-lg hover:bg-[var(--background-elevated)] hover:border-[var(--border-hover)] transition-all duration-200"
+              title={resultT('exportProject')}
+            >
+              <Download className="w-4 h-4" />
+              <span className="hidden lg:inline">{resultT('exportProject')}</span>
+            </button>
+
+            <button
+              onClick={() => setShowImportDialog(true)}
+              className="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-[var(--foreground-secondary)] bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-lg hover:bg-[var(--background-elevated)] hover:border-[var(--border-hover)] transition-all duration-200"
+              title={resultT('importProject')}
+            >
+              <Upload className="w-4 h-4" />
+              <span className="hidden lg:inline">{resultT('importProject')}</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Project Summary Section */}
-      <div className="p-4 border-t border-[var(--border-subtle)] bg-[var(--background-secondary)]/50">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-semibold text-[var(--foreground-muted)] uppercase tracking-wider">
-            {t('projectSummary')}
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <div className="bg-[var(--background-tertiary)] rounded-lg p-3 border border-[var(--border-subtle)]">
-            <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('completed')}</p>
-            <p className="text-2xl font-bold text-[var(--green-400)] number-display">{completedCount}</p>
-          </div>
-          <div className="bg-[var(--background-tertiary)] rounded-lg p-3 border border-[var(--border-subtle)]">
-            <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('configuring')}</p>
-            <p className="text-2xl font-bold text-[var(--amber-400)] number-display">{configCount}</p>
-          </div>
-        </div>
-
-        <ProjectPdfExport project={project} />
-
-        {/* Export/Import Buttons */}
-        <div className="grid grid-cols-2 gap-2 mt-3">
-          <button
-            onClick={() => setShowExportDialog(true)}
-            className="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-[var(--foreground-secondary)] bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-lg hover:bg-[var(--background-elevated)] hover:border-[var(--border-hover)] transition-all duration-200"
-            title={resultT('exportProject')}
-          >
-            <Download className="w-4 h-4" />
-            <span className="hidden lg:inline">{resultT('exportProject')}</span>
-          </button>
-
-          <button
-            onClick={() => setShowImportDialog(true)}
-            className="flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-[var(--foreground-secondary)] bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-lg hover:bg-[var(--background-elevated)] hover:border-[var(--border-hover)] transition-all duration-200"
-            title={resultT('importProject')}
-          >
-            <Upload className="w-4 h-4" />
-            <span className="hidden lg:inline">{resultT('importProject')}</span>
-          </button>
-        </div>
-
-        <ExportDialog
-          isOpen={showExportDialog}
-          onClose={() => setShowExportDialog(false)}
-        />
-        <ImportDialog
-          isOpen={showImportDialog}
-          onClose={() => setShowImportDialog(false)}
-        />
-      </div>
+      <ExportDialog
+        isOpen={showExportDialog}
+        onClose={() => setShowExportDialog(false)}
+      />
+      <ImportDialog
+        isOpen={showImportDialog}
+        onClose={() => setShowImportDialog(false)}
+      />
     </div>
   );
 }

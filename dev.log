@@ -1,0 +1,240 @@
+
+> servo-selector@0.1.0 dev
+> next dev
+
+ ⚠ Port 3000 is in use, trying 3001 instead.
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+
+ ✓ Starting...
+ ✓ Ready in 2.6s
+ ○ Compiling / ...
+(node:76980) ExperimentalWarning: CommonJS module D:\Xing\dev\ctrlX\servo-selector\node_modules\tailwindcss\lib\lib\load-config.js is loading ES Module D:\Xing\dev\ctrlX\servo-selector\tailwind.config.ts using require().
+Support for loading ES Module in require() is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+ ✓ Compiled / in 2.7s (904 modules)
+IntlError: ENVIRONMENT_FALLBACK: There is no `timeZone` configured, this can lead to markup mismatches caused by environment differences. Consider adding a global default: https://next-intl.dev/docs/configuration#time-zone
+    at useTranslationsImpl (webpack-internal:///(ssr)/./node_modules/use-intl/dist/esm/development/react.js:101:13)
+    at useTranslations (webpack-internal:///(ssr)/./node_modules/use-intl/dist/esm/development/react.js:133:10)
+    at eval (webpack-internal:///(ssr)/./node_modules/next-intl/dist/esm/development/react-client/index.js:24:14)
+    at Home (webpack-internal:///(ssr)/./src/app/page.tsx:44:74)
+    at au (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:10446)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:15122
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:46505)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aj (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:53793)
+    at aC (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:52874)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:50095)
+    at aj (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:53793)
+    at aC (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:52874)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:50095)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:45321)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ac (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11400)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:14707)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ac (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11400)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:14707)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:42922)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:42922)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908) {
+  code: 'ENVIRONMENT_FALLBACK',
+  originalMessage: 'There is no `timeZone` configured, this can lead to markup mismatches caused by environment differences. Consider adding a global default: https://next-intl.dev/docs/configuration#time-zone'
+}
+ GET / 200 in 3033ms
+ ✓ Compiled in 431ms (445 modules)
+ ✓ Compiled /_not-found in 274ms (762 modules)
+ GET /.well-known/appspecific/com.chrome.devtools.json 404 in 398ms
+ GET /_next/static/css/app/layout.css?v=1772979539842 404 in 395ms
+ ✓ Compiled / in 85ms (459 modules)
+IntlError: ENVIRONMENT_FALLBACK: There is no `timeZone` configured, this can lead to markup mismatches caused by environment differences. Consider adding a global default: https://next-intl.dev/docs/configuration#time-zone
+    at useTranslationsImpl (webpack-internal:///(ssr)/./node_modules/use-intl/dist/esm/development/react.js:101:13)
+    at useTranslations (webpack-internal:///(ssr)/./node_modules/use-intl/dist/esm/development/react.js:133:10)
+    at eval (webpack-internal:///(ssr)/./node_modules/next-intl/dist/esm/development/react-client/index.js:24:14)
+    at Home (webpack-internal:///(ssr)/./src/app/page.tsx:44:74)
+    at au (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:10446)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:15122
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:46505)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aj (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:53793)
+    at aC (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:52874)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:50095)
+    at aj (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:53793)
+    at aC (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:52874)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:50095)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:45321)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ac (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11400)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:14707)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ac (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11400)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:14707)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:42922)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:42922)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908) {
+  code: 'ENVIRONMENT_FALLBACK',
+  originalMessage: 'There is no `timeZone` configured, this can lead to markup mismatches caused by environment differences. Consider adding a global default: https://next-intl.dev/docs/configuration#time-zone'
+}
+ GET /?lang=zh 200 in 577ms
+ ✓ Compiled /_not-found in 151ms (893 modules)
+ GET /_next/static/css/app/layout.css?v=1772980697453 404 in 248ms
+ GET /_next/static/chunks/main-app.js?v=1772980697453 404 in 225ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 225ms
+ GET /_next/static/chunks/app/page.js 404 in 225ms
+IntlError: ENVIRONMENT_FALLBACK: There is no `timeZone` configured, this can lead to markup mismatches caused by environment differences. Consider adding a global default: https://next-intl.dev/docs/configuration#time-zone
+    at useTranslationsImpl (webpack-internal:///(ssr)/./node_modules/use-intl/dist/esm/development/react.js:101:13)
+    at useTranslations (webpack-internal:///(ssr)/./node_modules/use-intl/dist/esm/development/react.js:133:10)
+    at eval (webpack-internal:///(ssr)/./node_modules/next-intl/dist/esm/development/react-client/index.js:24:14)
+    at Home (webpack-internal:///(ssr)/./src/app/page.tsx:44:74)
+    at au (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:10446)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:15122
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:46505)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aj (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:53793)
+    at aC (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:52874)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:50095)
+    at aj (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:53793)
+    at aC (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:52874)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:50095)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:45321)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ac (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11400)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:14707)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ac (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11400)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:14707)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:42922)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:42922)
+    at a_ (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:49776)
+    at ab (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:11808)
+    at D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16871
+    at aw (D:\Xing\dev\ctrlX\servo-selector\node_modules\next\dist\compiled\next-server\app-page.runtime.dev.js:35:16908) {
+  code: 'ENVIRONMENT_FALLBACK',
+  originalMessage: 'There is no `timeZone` configured, this can lead to markup mismatches caused by environment differences. Consider adding a global default: https://next-intl.dev/docs/configuration#time-zone'
+}
+ GET /?lang=zh 200 in 60ms
+ GET /_next/static/css/app/layout.css?v=1772980700133 404 in 16ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 23ms
+ GET /_next/static/chunks/app/page.js 404 in 22ms
+ GET /_next/static/chunks/main-app.js?v=1772980700133 404 in 25ms
+ GET /?lang=zh 200 in 65ms
+ GET /_next/static/css/app/layout.css?v=1772980713711 404 in 21ms
+ GET /_next/static/chunks/main-app.js?v=1772980713711 404 in 27ms
+ GET /_next/static/chunks/app/page.js 404 in 26ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 26ms
+ ⨯ ./src/components/wizard/MobileAxisDrawer.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4mD:\Xing\dev\ctrlX\servo-selector\src\components\wizard\MobileAxisDrawer.tsx[0m:31:1]
+ [2m31[0m |   };
+ [2m32[0m | 
+ [2m33[0m |   return (
+ [2m34[0m |     <>
+    : [31;1m     ^[0m
+ [2m35[0m |       {/* Menu Button */}
+ [2m36[0m |       <button
+ [2m36[0m |         onClick={() => setIsOpen(true)}
+    `----
+
+  [31mx[0m Expected ',', got '< (jsx tag start)'
+    ,-[[36;1;4mD:\Xing\dev\ctrlX\servo-selector\src\components\wizard\MobileAxisDrawer.tsx[0m:33:1]
+ [2m33[0m |   return (
+ [2m34[0m |     <>
+ [2m35[0m |       {/* Menu Button */}
+ [2m36[0m |       <button
+    : [31;1m      ^[0m
+ [2m37[0m |         onClick={() => setIsOpen(true)}
+ [2m38[0m |         className="md:hidden p-2 rounded-md hover:bg-gray-100"
+ [2m38[0m |         aria-label="打开轴列表"
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/wizard/MobileAxisDrawer.tsx
+./src/app/page.tsx
+ ✓ Compiled in 156ms (445 modules)
+ ✓ Compiled in 125ms (445 modules)
+ ⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+ ⚠ Port 3000 is in use, trying 3001 instead.
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+
+ ✓ Starting...
+ ✓ Ready in 8.9s
