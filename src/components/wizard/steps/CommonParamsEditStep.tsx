@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useProjectStore } from '@/stores/project-store';
 import { CommonParams } from '@/types';
 import { useTranslations } from 'next-intl';
+import { Settings2, Thermometer, Shield, Network, Cable, Gauge, Rotate3D } from 'lucide-react';
 
 interface CommonParamsEditStepProps {
   onComplete?: () => void;
@@ -23,83 +24,119 @@ export function CommonParamsEditStep({ onComplete }: CommonParamsEditStepProps) 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">编辑公共参数</h2>
-        <p className="mt-2 text-sm text-gray-500">
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Header */}
+      <div className="text-center pb-6 border-b border-[var(--border-subtle)]">
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--primary-500)]/20 to-[var(--primary-600)]/10 border border-[var(--primary-500)]/30 mb-4">
+          <Settings2 className="w-7 h-7 text-[var(--primary-400)]" />
+        </div>
+        <h2 className="text-2xl font-bold gradient-text mb-2">编辑公共参数</h2>
+        <p className="text-sm text-[var(--foreground-muted)]">
           修改公共参数，这些参数将应用于所有轴
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+      {/* Form Fields */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Ambient Temperature */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Thermometer className="w-4 h-4 text-[var(--primary-400)]" />
             {t('ambientTemp')}
           </label>
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <input
               type="number"
               value={formData.ambientTemp}
               onChange={(e) => setFormData({ ...formData, ambientTemp: parseFloat(e.target.value) || 0 })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
+              className="flex-1 px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--primary-400)] focus:shadow-[0_0_0_3px_rgba(14,165,233,0.15)] outline-none"
             />
-            <span className="ml-2 text-gray-500">°C</span>
+            <span className="text-[var(--foreground-muted)] font-medium">°C</span>
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* IP Rating */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Shield className="w-4 h-4 text-[var(--primary-400)]" />
             {t('ipRating')}
           </label>
-          <select
-            value={formData.ipRating}
-            onChange={(e) => setFormData({ ...formData, ipRating: e.target.value as CommonParams['ipRating'] })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
-          >
-            <option value="IP54">IP54</option>
-            <option value="IP65">IP65</option>
-            <option value="IP67">IP67</option>
-          </select>
+          <div className="relative">
+            <select
+              value={formData.ipRating}
+              onChange={(e) => setFormData({ ...formData, ipRating: e.target.value as CommonParams['ipRating'] })}
+              className="w-full px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--primary-400)] focus:shadow-[0_0_0_3px_rgba(14,165,233,0.15)] outline-none appearance-none cursor-pointer"
+            >
+              <option value="IP54" className="bg-[var(--background-tertiary)]">IP54</option>
+              <option value="IP65" className="bg-[var(--background-tertiary)]">IP65</option>
+              <option value="IP67" className="bg-[var(--background-tertiary)]">IP67</option>
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg className="w-4 h-4 text-[var(--foreground-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* Communication */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Network className="w-4 h-4 text-[var(--primary-400)]" />
             {t('communication')}
           </label>
-          <select
-            value={formData.communication}
-            onChange={(e) => setFormData({ ...formData, communication: e.target.value as CommonParams['communication'] })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
-          >
-            <option value="ETHERCAT">EtherCAT</option>
-            <option value="PROFINET">PROFINET</option>
-            <option value="ETHERNET_IP">EtherNet/IP</option>
-            <option value="ANALOG">Analog</option>
-          </select>
+          <div className="relative">
+            <select
+              value={formData.communication}
+              onChange={(e) => setFormData({ ...formData, communication: e.target.value as CommonParams['communication'] })}
+              className="w-full px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--primary-400)] focus:shadow-[0_0_0_3px_rgba(14,165,233,0.15)] outline-none appearance-none cursor-pointer"
+            >
+              <option value="ETHERCAT" className="bg-[var(--background-tertiary)]">EtherCAT</option>
+              <option value="PROFINET" className="bg-[var(--background-tertiary)]">PROFINET</option>
+              <option value="ETHERNET_IP" className="bg-[var(--background-tertiary)]">EtherNet/IP</option>
+              <option value="ANALOG" className="bg-[var(--background-tertiary)]">Analog</option>
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg className="w-4 h-4 text-[var(--foreground-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* Cable Length */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Cable className="w-4 h-4 text-[var(--primary-400)]" />
             {t('cableLength')}
           </label>
-          <select
-            value={formData.cableLength}
-            onChange={(e) => setFormData({ ...formData, cableLength: e.target.value === 'TERMINAL_ONLY' ? 'TERMINAL_ONLY' : parseInt(e.target.value) })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
-          >
-            <option value="TERMINAL_ONLY">{t('terminalOnly')}</option>
-            <option value={3}>3m</option>
-            <option value={5}>5m</option>
-            <option value={10}>10m</option>
-            <option value={15}>15m</option>
-            <option value={20}>20m</option>
-            <option value={25}>25m</option>
-            <option value={30}>30m</option>
-          </select>
+          <div className="relative">
+            <select
+              value={formData.cableLength}
+              onChange={(e) => setFormData({ ...formData, cableLength: e.target.value === 'TERMINAL_ONLY' ? 'TERMINAL_ONLY' : parseInt(e.target.value) })}
+              className="w-full px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--primary-400)] focus:shadow-[0_0_0_3px_rgba(14,165,233,0.15)] outline-none appearance-none cursor-pointer"
+            >
+              <option value="TERMINAL_ONLY" className="bg-[var(--background-tertiary)]">{t('terminalOnly')}</option>
+              <option value={3} className="bg-[var(--background-tertiary)]">3m</option>
+              <option value={5} className="bg-[var(--background-tertiary)]">5m</option>
+              <option value={10} className="bg-[var(--background-tertiary)]">10m</option>
+              <option value={15} className="bg-[var(--background-tertiary)]">15m</option>
+              <option value={20} className="bg-[var(--background-tertiary)]">20m</option>
+              <option value={25} className="bg-[var(--background-tertiary)]">25m</option>
+              <option value={30} className="bg-[var(--background-tertiary)]">30m</option>
+            </select>
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg className="w-4 h-4 text-[var(--foreground-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* Safety Factor */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Gauge className="w-4 h-4 text-[var(--primary-400)]" />
             {t('safetyFactor')}
           </label>
           <input
@@ -108,56 +145,64 @@ export function CommonParamsEditStep({ onComplete }: CommonParamsEditStepProps) 
             min="1"
             value={formData.safetyFactor}
             onChange={(e) => setFormData({ ...formData, safetyFactor: parseFloat(e.target.value) || 1 })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
+            className="w-full px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--primary-400)] focus:shadow-[0_0_0_3px_rgba(14,165,233,0.15)] outline-none"
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* Max Inertia Ratio */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Rotate3D className="w-4 h-4 text-[var(--primary-400)]" />
             {t('maxInertiaRatio')}
           </label>
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <input
               type="number"
               min="1"
               value={formData.maxInertiaRatio}
               onChange={(e) => setFormData({ ...formData, maxInertiaRatio: parseInt(e.target.value) || 10 })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
+              className="flex-1 px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--primary-400)] focus:shadow-[0_0_0_3px_rgba(14,165,233,0.15)] outline-none"
             />
-            <span className="ml-2 text-gray-500">:1</span>
+            <span className="text-[var(--foreground-muted)] font-medium">:1</span>
           </div>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
+        {/* Target Inertia Ratio */}
+        <div className="group">
+          <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
+            <Rotate3D className="w-4 h-4 text-[var(--green-400)]" />
             目标惯量比
           </label>
-          <div className="flex items-center">
+          <div className="flex items-center gap-3">
             <input
               type="number"
               min="1"
               value={formData.targetInertiaRatio}
               onChange={(e) => setFormData({ ...formData, targetInertiaRatio: parseInt(e.target.value) || 5 })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
+              className="flex-1 px-4 py-3 bg-[var(--background-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--foreground)] transition-all duration-200 hover:border-[var(--border-hover)] focus:border-[var(--green-400)] focus:shadow-[0_0_0_3px_rgba(74,222,128,0.15)] outline-none"
             />
-            <span className="ml-2 text-gray-500">:1</span>
+            <span className="text-[var(--foreground-muted)] font-medium">:1</span>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between gap-3">
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row justify-between gap-4 pt-6 border-t border-[var(--border-subtle)]">
         <button
           type="button"
           onClick={onComplete}
-          className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          className="w-full sm:w-auto px-6 py-3 bg-[var(--background-elevated)] text-[var(--foreground-secondary)] border border-[var(--border-default)] rounded-xl hover:bg-[var(--background-tertiary)] hover:text-[var(--foreground)] hover:border-[var(--border-hover)] transition-all duration-200 font-medium"
         >
           {commonT('cancel')}
         </button>
         <button
           type="submit"
-          className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white rounded-xl hover:from-[var(--primary-400)] hover:to-[var(--primary-500)] hover:shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-all duration-200 font-medium flex items-center justify-center gap-2"
         >
-          {commonT('save')}
+          <span>{commonT('save')}</span>
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
         </button>
       </div>
     </form>
