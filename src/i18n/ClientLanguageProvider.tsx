@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import zhMessages from './messages/zh.json';
 import enMessages from './messages/en.json';
@@ -11,12 +11,27 @@ const messagesMap = {
   en: enMessages,
 };
 
+interface LanguageContextType {
+  locale: Locale;
+  setLocale: (locale: Locale) => void;
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export function useLanguage() {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within LanguageProvider');
+  }
+  return context;
+}
+
 interface Props {
   children: React.ReactNode;
 }
 
 export default function ClientLanguageProvider({ children }: Props) {
-  const [locale, setLocale] = useState<Locale>('zh');
+  const [locale, setLocaleState] = useState<Locale>('zh');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -26,13 +41,21 @@ export default function ClientLanguageProvider({ children }: Props) {
       try {
         const parsed = JSON.parse(stored);
         if (parsed.state?.locale) {
-          setLocale(parsed.state.locale);
+          setLocaleState(parsed.state.locale);
         }
       } catch {
         // fallback to default
       }
     }
     setMounted(true);
+  }, []);
+
+  const setLocale = useCallback((newLocale: Locale) => {
+    setLocaleState(newLocale);
+    // Update URL parameter without reload
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', newLocale);
+    window.history.replaceState({}, '', url.toString());
   }, []);
 
   // Prevent hydration mismatch by not rendering until mounted
@@ -45,8 +68,10 @@ export default function ClientLanguageProvider({ children }: Props) {
   }
 
   return (
-    <NextIntlClientProvider messages={messagesMap[locale]} locale={locale}>
-      {children}
-    </NextIntlClientProvider>
+    <LanguageContext.Provider value={{ locale, setLocale }}>
+      <NextIntlClientProvider messages={messagesMap[locale]} locale={locale}>
+        {children}
+      </NextIntlClientProvider>
+    </LanguageContext.Provider>
   );
 }
