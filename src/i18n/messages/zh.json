@@ -538,5 +538,48 @@
       "date": "日期",
       "notes": "备注"
     }
+  },
+  "projectData": {
+    "menu": {
+      "title": "工具",
+      "exportProject": "导出项目",
+      "importProject": "导入项目",
+      "exportPdf": "导出 PDF",
+      "noCompletedAxes": "没有已完成的轴"
+    },
+    "export": {
+      "title": "导出项目",
+      "projectSummary": "项目摘要",
+      "projectName": "项目名称",
+      "unnamed": "未命名",
+      "axisCount": "轴数量",
+      "filename": "文件名",
+      "exportButton": "导出",
+      "noDataWarning": "当前没有可导出的数据，请先添加至少一个轴"
+    },
+    "import": {
+      "title": "导入项目",
+      "dragDrop": "拖放 JSON 文件到此处",
+      "or": "或",
+      "selectFile": "选择文件",
+      "projectName": "项目名称",
+      "axisCount": "轴数量",
+      "exportedAt": "导出时间",
+      "unnamed": "未命名",
+      "warning": "导入将覆盖当前项目数据",
+      "confirmTitle": "确认导入",
+      "confirmMessage": "此操作不可撤销，当前项目数据将被替换。是否继续？",
+      "importButton": "确认导入",
+      "nextButton": "下一步",
+      "validation": {
+        "valid": "文件验证通过"
+      }
+    },
+    "errors": {
+      "invalidJson": "文件格式不正确，请检查是否为有效的 JSON 文件",
+      "missingFields": "文件格式不正确，缺少必要的数据字段",
+      "unsupportedVersion": "不支持的文件版本，请更新应用后重试",
+      "corruptedData": "项目数据不完整，可能已损坏"
+    }
   }
 }
