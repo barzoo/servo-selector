@@ -295,6 +295,8 @@
     "recommendedDrive": "Recommended Drive",
     "exportPdf": "Export PDF",
     "noResults": "No sizing results available",
+    "exportProject": "Export Project",
+    "importProject": "Import Project",
     "reason": "Reason: ",
     "backToEdit": "Back to Edit",
     "projectInfo": "Project Information",
