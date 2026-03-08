@@ -5,12 +5,45 @@ import { SystemPreferences } from '@/types';
 import { useState } from 'react';
 import { SizingEngine } from '@/lib/calculations/sizing-engine';
 import { useTranslations } from 'next-intl';
+import { Cpu, ArrowRight, ArrowLeft, AlertCircle, Check, Shield, Hash } from 'lucide-react';
+
+const getSafetyOptions = (t: (key: string) => string) => [
+  { value: 'NONE', label: t('safetyOptions.none'), desc: t('safetyOptions.noneDesc') },
+  { value: 'STO', label: t('safetyOptions.sto'), desc: t('safetyOptions.stoDesc') },
+];
+
+const getEncoderOptions = (t: (key: string) => string) => [
+  { value: 'BOTH', label: t('encoderOptions.both'), desc: t('encoderOptions.bothDesc'), icon: '🔀' },
+  { value: 'A', label: t('encoderOptions.typeA'), desc: t('encoderOptions.typeADesc'), icon: '🔋' },
+  { value: 'B', label: t('encoderOptions.typeB'), desc: t('encoderOptions.typeBDesc'), icon: '⚙️' },
+];
+
+interface FormFieldProps {
+  label: string;
+  required?: boolean;
+  children?: React.ReactNode;
+}
+
+function FormField({ label, required, children }: FormFieldProps) {
+  return (
+    <div className="space-y-2">
+      <label className="form-label">
+        {label}
+        {required && <span className="text-[var(--red-400)] ml-1">*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
 
 export function SystemConfigStep() {
   const { project, currentAxisId, input, setPreferences, setResult, prevStep, completeWizard, updateAxisName } = useProjectStore();
   const currentAxis = project.axes.find(a => a.id === currentAxisId);
   const t = useTranslations('systemConfig');
   const commonT = useTranslations('common');
+
+  const SAFETY_OPTIONS = getSafetyOptions(t);
+  const ENCODER_OPTIONS = getEncoderOptions(t);
 
   const [formData, setFormData] = useState<SystemPreferences>(
     input.preferences || {
@@ -19,53 +52,45 @@ export function SystemConfigStep() {
     }
   );
   const [axisName, setAxisName] = useState(currentAxis?.name || '');
-
   const [error, setError] = useState<string | null>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setIsCalculating(true);
 
-    // Debug logging
-    console.log('Form submitted', { input });
-
-    // Check if all required data is present
-    // Project info is now at project level (shared)
     if (!project.name) {
-      console.error('Missing project info');
-      setError('缺少项目信息，请在侧边栏填写');
+      setError(t('errors.missingProject'));
+      setIsCalculating(false);
       return;
     }
     if (!currentAxis?.input.mechanism) {
-      console.error('Missing mechanism');
-      setError('缺少机械结构信息，请返回第一步填写');
+      setError(t('errors.missingMechanism'));
+      setIsCalculating(false);
       return;
     }
     if (!currentAxis?.input.motion) {
-      console.error('Missing motion');
-      setError('缺少运动参数信息，请返回第二步填写');
+      setError(t('errors.missingMotion'));
+      setIsCalculating(false);
       return;
     }
     if (!currentAxis?.input.dutyConditions) {
-      console.error('Missing duty');
-      setError('缺少工作条件信息，请返回第三步填写');
+      setError(t('errors.missingDuty'));
+      setIsCalculating(false);
       return;
     }
 
-    // Save preferences
     setPreferences(formData);
 
-    // Execute sizing calculation - merge common params and axis-specific params
     try {
       const engine = new SizingEngine();
-      // Build project info from project level
       const projectInfo = {
         name: project.name,
         customer: project.customer,
         salesPerson: project.salesPerson,
         notes: project.notes,
       };
-      // Convert dutyConditions to duty format expected by engine
       const dutyConditions = currentAxis.input.dutyConditions!;
       const duty = {
         ambientTemp: project.commonParams.ambientTemp,
@@ -81,120 +106,175 @@ export function SystemConfigStep() {
         motion: currentAxis.input.motion,
         duty: duty,
         preferences: {
-          // Common params (shared across all axes)
           safetyFactor: project.commonParams.safetyFactor,
           maxInertiaRatio: project.commonParams.maxInertiaRatio,
           targetInertiaRatio: project.commonParams.targetInertiaRatio,
           communication: project.commonParams.communication,
           cableLength: project.commonParams.cableLength,
-          // Axis-specific params
           encoderType: formData.encoderType,
           safety: formData.safety,
         },
       });
-      console.log('Calculation result:', result);
       setResult(result);
-      // Save axis name
       if (axisName.trim() && updateAxisName) {
         updateAxisName(currentAxisId, axisName.trim());
       }
       completeWizard();
     } catch (err) {
-      console.error('Calculation failed:', err);
-      setError('选型计算失败，请检查输入参数');
+      setError(t('errors.calculationFailed'));
+    } finally {
+      setIsCalculating(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
-
-      {/* Simplified hint - common params are shown in sidebar */}
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-        <p className="text-sm text-gray-600">
-          请确认轴特有的系统配置选项。
-          公共参数（安全系数、惯量比、通信协议等）可在侧边栏查看和修改。
-        </p>
+    <form onSubmit={handleSubmit} className="space-y-8 animate-fade-in">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-600)] flex items-center justify-center shadow-lg">
+          <Cpu className="w-6 h-6 text-white" />
+        </div>
+        <div>
+          <h2 className="text-2xl font-bold text-[var(--foreground)]">{t('title')}</h2>
+          <p className="text-sm text-[var(--foreground-muted)]">{t('subtitle')}</p>
+        </div>
       </div>
 
-      {/* Error message */}
+      {/* Info Card */}
+      <div className="card p-5 bg-gradient-to-r from-[var(--amber-500)]/5 to-transparent border-l-4 border-l-[var(--amber-500)]">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-lg bg-[var(--amber-500)]/10 flex items-center justify-center flex-shrink-0">
+            <AlertCircle className="w-5 h-5 text-[var(--amber-400)]" />
+          </div>
+          <div>
+            <h3 className="font-medium text-[var(--foreground)] mb-1">{t('infoCard.title')}</h3>
+            <p className="text-sm text-[var(--foreground-secondary)]">
+              {t('infoCard.content')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="card p-4 bg-[var(--red-500)]/5 border-[var(--red-500)]/30">
+          <div className="flex items-center gap-3">
+            <AlertCircle className="w-5 h-5 text-[var(--red-400)]" />
+            <p className="text-sm text-[var(--red-400)]">{error}</p>
+          </div>
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('safety')}
-          </label>
-          <select
-            value={formData.safety}
-            onChange={(e) =>
-              setFormData({ ...formData, safety: e.target.value as 'STO' | 'NONE' })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          >
-            <option value="NONE">{t('safetyOptions.none')}</option>
-            <option value="STO">{t('safetyOptions.sto')}</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            编码器类型
-          </label>
-          <select
-            value={formData.encoderType}
-            onChange={(e) =>
-              setFormData({ ...formData, encoderType: e.target.value as 'A' | 'B' | 'BOTH' })
-            }
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-          >
-            <option value="BOTH">两者都可 (显示所有选项)</option>
-            <option value="A">A型 - 电池盒式多圈 (2.5Mbps)</option>
-            <option value="B">B型 - 机械式多圈 (5Mbps)</option>
-          </select>
-          <p className="mt-1 text-xs text-gray-500">
-            A型需要电池维护，B型为机械式免维护但价格较高
-          </p>
+      {/* Safety Options */}
+      <div className="space-y-3">
+        <FormField label={t('safety')} />
+        <div className="grid grid-cols-2 gap-3">
+          {SAFETY_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => setFormData({ ...formData, safety: opt.value as 'STO' | 'NONE' })}
+              className={`
+                p-4 rounded-xl border transition-all duration-200 text-left
+                ${formData.safety === opt.value
+                  ? 'bg-[var(--primary-500)]/10 border-[var(--primary-500)] shadow-lg shadow-[var(--primary-500)]/10'
+                  : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
+                }
+              `}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className={`w-4 h-4 ${formData.safety === opt.value ? 'text-[var(--primary-400)]' : 'text-[var(--foreground-muted)]'}`} />
+                <span className={`font-medium ${formData.safety === opt.value ? 'text-[var(--primary-300)]' : 'text-[var(--foreground)]'}`}>
+                  {opt.label}
+                </span>
+              </div>
+              <p className={`text-xs ${formData.safety === opt.value ? 'text-[var(--primary-200)]' : 'text-[var(--foreground-muted)]'}`}>
+                {opt.desc}
+              </p>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* 轴名称确认 */}
-      <div className="border-t border-gray-200 pt-6 mt-6">
-        <h3 className="text-lg font-medium text-gray-900 mb-4">轴名称确认</h3>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            轴名称
-          </label>
+      {/* Encoder Options */}
+      <div className="space-y-3">
+        <FormField label={t('encoder')} />
+        <div className="grid grid-cols-3 gap-3">
+          {ENCODER_OPTIONS.map((opt) => (
+            <button
+              key={opt.value}
+              type="button"
+              onClick={() => setFormData({ ...formData, encoderType: opt.value as 'A' | 'B' | 'BOTH' })}
+              className={`
+                p-4 rounded-xl border transition-all duration-200 text-center
+                ${formData.encoderType === opt.value
+                  ? 'bg-[var(--primary-500)]/10 border-[var(--primary-500)] shadow-lg shadow-[var(--primary-500)]/10'
+                  : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
+                }
+              `}
+            >
+              <div className="text-2xl mb-2">{opt.icon}</div>
+              <div className={`font-medium mb-1 ${formData.encoderType === opt.value ? 'text-[var(--primary-300)]' : 'text-[var(--foreground)]'}`}>
+                {opt.label}
+              </div>
+              <p className={`text-xs ${formData.encoderType === opt.value ? 'text-[var(--primary-200)]' : 'text-[var(--foreground-muted)]'}`}>
+                {opt.desc}
+              </p>
+            </button>
+          ))}
+        </div>
+        <p className="text-xs text-[var(--foreground-muted)]">
+          {t('encoderHint')}
+        </p>
+      </div>
+
+      {/* Axis Name */}
+      <div className="card p-5 border-t-4 border-t-[var(--primary-500)]">
+        <div className="flex items-center gap-2 mb-4">
+          <Hash className="w-5 h-5 text-[var(--primary-400)]" />
+          <h3 className="font-semibold text-[var(--foreground)]">{t('axisName.title')}</h3>
+        </div>
+        <FormField label={t('axisName.label')}>
           <input
             type="text"
             value={axisName}
             onChange={(e) => setAxisName(e.target.value)}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900"
-            placeholder="请输入轴名称"
+            className="w-full px-4 py-2.5"
+            placeholder={t('axisName.placeholder')}
           />
-          <p className="mt-1 text-xs text-gray-500">
-            此名称将用于标识该轴，可在侧边栏随时修改
-          </p>
-        </div>
+        </FormField>
+        <p className="text-xs text-[var(--foreground-muted)] mt-2">
+          {t('axisName.hint')}
+        </p>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between gap-3">
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4 border-t border-[var(--border-subtle)]">
         <button
           type="button"
           onClick={prevStep}
-          className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          className="btn btn-secondary"
+          disabled={isCalculating}
         >
+          <ArrowLeft className="w-4 h-4" />
           {commonT('back')}
         </button>
         <button
           type="submit"
-          className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="btn btn-primary"
+          disabled={isCalculating}
         >
-          {t('startSizing')}
+          {isCalculating ? (
+            <>
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              {t('calculating')}
+            </>
+          ) : (
+            <>
+              <Check className="w-4 h-4" />
+              {t('startSizing')}
+            </>
+          )}
         </button>
       </div>
     </form>

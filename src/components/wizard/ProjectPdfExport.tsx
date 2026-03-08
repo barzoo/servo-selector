@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { MultiAxisPrintView } from './MultiAxisPrintView';
 import type { Project } from '@/types';
 
@@ -10,6 +11,7 @@ interface ProjectPdfExportProps {
 
 export function ProjectPdfExport({ project }: ProjectPdfExportProps) {
   const [showPrintView, setShowPrintView] = useState(false);
+  const t = useTranslations('result');
 
   const completedCount = project.axes.filter((a) => a.status === 'COMPLETED').length;
 
@@ -34,7 +36,7 @@ export function ProjectPdfExport({ project }: ProjectPdfExportProps) {
       "
     >
       <span>📄</span>
-      <span>导出项目PDF</span>
+      <span>{t('exportProjectPdf')}</span>
     </button>
   );
 }

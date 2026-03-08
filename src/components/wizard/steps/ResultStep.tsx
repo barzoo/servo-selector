@@ -145,7 +145,7 @@ export function ResultStep() {
         </div>
         <div>
           <h2 className="text-2xl font-bold text-[var(--foreground)]">{t('title')}</h2>
-          <p className="text-sm text-[var(--foreground-muted)]">选型计算完成，以下是推荐方案</p>
+          <p className="text-sm text-[var(--foreground-muted)]">{t('subtitle')}</p>
         </div>
       </div>
 
@@ -229,22 +229,22 @@ export function ResultStep() {
               <AlertTriangle className="w-5 h-5 text-[var(--amber-400)]" />
             </div>
             <div className="flex-1">
-              <h4 className="font-semibold text-[var(--amber-400)] mb-2">制动电阻警告</h4>
+              <h4 className="font-semibold text-[var(--amber-400)] mb-2">{t('regeneration.warningTitle')}</h4>
               <p className="text-sm text-[var(--foreground-secondary)] mb-3">
                 {result.mechanical.regeneration.warning}
               </p>
               {result.mechanical.regeneration.recommendedResistor && (
                 <div className="bg-[var(--background-tertiary)] rounded-lg p-3">
-                  <p className="text-sm font-medium text-[var(--foreground)] mb-2">建议外部电阻规格：</p>
+                  <p className="text-sm font-medium text-[var(--foreground)] mb-2">{t('regeneration.recommendedResistor')}：</p>
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <span className="text-[var(--foreground-muted)]">持续功率: </span>
+                      <span className="text-[var(--foreground-muted)]">{t('regeneration.continuousPower')}: </span>
                       <span className="text-[var(--amber-400)] font-medium">
                         ≥ {result.mechanical.regeneration.recommendedResistor.minPower.toFixed(0)}W
                       </span>
                     </div>
                     <div>
-                      <span className="text-[var(--foreground-muted)]">阻值: </span>
+                      <span className="text-[var(--foreground-muted)]">{t('regeneration.resistance')}: </span>
                       <span className="text-[var(--amber-400)] font-medium">
                         ≈ {result.mechanical.regeneration.recommendedResistor.resistance}Ω
                       </span>
@@ -376,13 +376,13 @@ export function ResultStep() {
               {isSaved ? (
                 <>
                   <CheckCircle className="w-4 h-4" />
-                  已保存
+                  {t('saved')}
                   {showSaveMenu ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                 </>
               ) : (
                 <>
                   <Save className="w-4 h-4" />
-                  保存到篮子
+                  {t('saveToBasket')}
                 </>
               )}
             </button>
@@ -392,16 +392,14 @@ export function ResultStep() {
               onClose={() => setShowSaveMenu(false)}
               onCloneAxis={() => {
                 const currentAxisId = useProjectStore.getState().currentAxisId;
-                const newAxisId = addAxis(`轴-${project.axes.length + 1}`, currentAxisId);
+                const newAxisId = addAxis(t('axisName', { index: project.axes.length + 1 }), currentAxisId);
                 switchAxis(newAxisId);
                 setShowSaveMenu(false);
-                reset();
               }}
               onAddNewAxis={() => {
-                const newAxisId = addAxis(`轴-${project.axes.length + 1}`);
+                const newAxisId = addAxis(t('axisName', { index: project.axes.length + 1 }));
                 switchAxis(newAxisId);
                 setShowSaveMenu(false);
-                reset();
               }}
               onContinueEditing={() => setShowSaveMenu(false)}
               triggerRef={saveButtonRef}

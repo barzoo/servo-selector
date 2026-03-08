@@ -51,9 +51,9 @@ export function ProjectInfoEditStep({ onComplete }: ProjectInfoEditStepProps) {
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--primary-500)]/20 to-[var(--primary-600)]/10 border border-[var(--primary-500)]/30 mb-4">
           <FileText className="w-7 h-7 text-[var(--primary-400)]" />
         </div>
-        <h2 className="text-2xl font-bold gradient-text mb-2">编辑项目信息</h2>
+        <h2 className="text-2xl font-bold gradient-text mb-2">{t('editTitle')}</h2>
         <p className="text-sm text-[var(--foreground-muted)]">
-          修改项目基本信息，这些信息将应用于所有轴
+          {t('editSubtitle')}
         </p>
       </div>
 

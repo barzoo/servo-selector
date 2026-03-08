@@ -3,6 +3,53 @@
     "title": "伺服选型工具",
     "description": "Bosch Rexroth 伺服系统选型计算工具"
   },
+  "home": {
+    "welcomeTitle": "欢迎使用伺服选型工具",
+    "welcomeSubtitle": "专业的 Bosch Rexroth XC20 + MC20 伺服系统选型向导，为您的机械负载匹配最佳运动控制方案",
+    "pageTitle": "博世力士乐伺服选型工具",
+    "pageSubtitle": "XC20 + MC20 伺服系统选型向导",
+    "cards": {
+      "projectConfig": "配置项目",
+      "projectConfigDesc": "设置项目信息和公共参数",
+      "addAxis": "添加轴",
+      "addAxisDesc": "配置机械结构和运动参数"
+    },
+    "buttons": {
+      "addFirstAxis": "添加第一个轴",
+      "setProjectFirst": "先设置项目信息"
+    }
+  },
+  "axis": {
+    "currentConfig": "当前配置",
+    "status": {
+      "configuring": "配置中",
+      "completed": "已完成"
+    }
+  },
+  "footer": {
+    "version": "Bosch Rexroth 伺服选型工具 v1.0"
+  },
+  "sidebar": {
+    "logoTitle": "伺服选型",
+    "logoSubtitle": "Servo Sizing Tool",
+    "unnamedProject": "未命名项目",
+    "editing": "编辑中...",
+    "clickToEdit": "点击编辑",
+    "commonParams": "公共参数",
+    "commonParamsDesc": "电压、海拔等",
+    "axisConfig": "轴配置",
+    "axisCount": "{count} 个轴",
+    "addFirstAxis": "添加第一个轴",
+    "addNewAxis": "添加新轴",
+    "projectSummary": "项目汇总",
+    "completed": "已完成",
+    "configuring": "配置中"
+  },
+  "defaults": {
+    "unnamedProject": "未命名项目",
+    "axisName": "轴-{index}",
+    "newAxis": "新轴"
+  },
   "common": {
     "next": "下一步",
     "back": "上一步",
@@ -24,6 +71,8 @@
   },
   "projectInfo": {
     "title": "项目信息",
+    "editTitle": "编辑项目信息",
+    "editSubtitle": "修改项目基本信息，这些信息将应用于所有轴",
     "projectName": "项目名称",
     "projectNamePlaceholder": "请输入项目名称",
     "customerName": "客户名称",
@@ -40,6 +89,9 @@
   },
   "mechanism": {
     "title": "机械参数",
+    "subtitle": "选择传动机构类型并配置参数",
+    "typeLabel": "传动机构类型",
+    "paramsTitle": "参数配置",
     "type": "传动方式",
     "types": {
       "ballScrew": "滚珠丝杠",
@@ -47,6 +99,10 @@
       "directDrive": "直接驱动",
       "belt": "同步带/皮带",
       "rackPinion": "齿条齿轮"
+    },
+    "hints": {
+      "loadMass": "包含工作台和工件的总质量",
+      "lead": "丝杠每转一圈的移动距离"
     },
     "params": {
       "loadMass": "负载质量 (kg)",
@@ -84,6 +140,9 @@
   },
   "motion": {
     "title": "运动参数",
+    "subtitle": "定义运动行程、速度和加速度参数",
+    "profileLabel": "速度曲线类型",
+    "paramsTitle": "运动参数",
     "stroke": "行程 (mm)",
     "maxVelocity": "最大速度 (mm/s)",
     "maxAcceleration": "最大加速度 (mm/s²)",
@@ -92,11 +151,30 @@
       "trapezoidal": "梯形曲线",
       "sCurve": "S曲线"
     },
+    "profileDesc": {
+      "trapezoidal": "恒加速运动",
+      "sCurve": "平滑加减速"
+    },
+    "hints": {
+      "stroke": "运动轴的总行程范围",
+      "maxVelocity": "最大运行速度",
+      "maxAcceleration": "最大加速度",
+      "dwellTime": "到位后的停留时间",
+      "cycleTime": "完整运动周期时间"
+    },
+    "stats": {
+      "cycleRate": "理论节拍",
+      "cyclesPerMinute": "次/分钟",
+      "accelRatio": "加速度比",
+      "maxSpeed": "最大速度",
+      "stroke": "行程"
+    },
     "dwellTime": "停顿时间 (s)",
     "cycleTime": "循环周期 (s)"
   },
   "duty": {
     "title": "工况条件",
+    "subtitle": "配置工作制和安装条件",
     "ambientTemp": "环境温度 (°C)",
     "dutyCycle": "占空比 (%)",
     "mountingOrientation": "安装方向",
@@ -112,6 +190,26 @@
       "smoothDesc": "标准光滑轴，适用于联轴器连接",
       "keyed": "带键 (K)",
       "keyedDesc": "带键槽轴，适用于需要传递大扭矩的场合"
+    },
+    "environment": {
+      "title": "环境参数",
+      "temp": "温度",
+      "ipRating": "防护等级",
+      "hint": "环境参数已在项目设置中配置，可在侧边栏修改"
+    },
+    "dutyCycles": {
+      "s1": "连续工作",
+      "s2": "短时工作",
+      "s3": "间歇工作",
+      "s4": "频繁启停"
+    },
+    "brake": {
+      "title": "电机刹车",
+      "verticalWarning": "垂直轴建议带刹车",
+      "noBrake": "无刹车",
+      "noBrakeDesc": "标准配置，适合水平轴应用",
+      "withBrake": "带刹车",
+      "withBrakeDesc": "抱闸制动，适合垂直轴或需要保持力矩的应用"
     }
   },
   "projectSettings": {
@@ -123,6 +221,9 @@
     "notes": "项目备注",
     "commonParams": "公共参数",
     "commonParamsDescription": "这些参数将应用于所有轴",
+    "editCommonTitle": "编辑公共参数",
+    "editCommonSubtitle": "修改公共参数，这些参数将应用于所有轴",
+    "targetInertiaRatio": "目标惯量比",
     "ambientTemp": "环境温度",
     "ipRating": "防护等级",
     "communication": "通信协议",
@@ -135,6 +236,7 @@
   },
   "systemConfig": {
     "title": "系统配置",
+    "subtitle": "确认轴特有的系统配置选项",
     "safetyFactor": "安全余量系数",
     "safetyFactorHint": "默认 1.5，推荐范围 1.2-2.0",
     "communication": "通讯接口",
@@ -146,17 +248,48 @@
     },
     "safety": "安全功能",
     "safetyOptions": {
-      "none": "无",
-      "sto": "STO 安全扭矩关断 (SIL3/PLe)"
+      "none": "无安全功能",
+      "noneDesc": "标准配置",
+      "sto": "STO 安全转矩关闭",
+      "stoDesc": "符合 SIL3/PLe 等级"
     },
     "cableLength": "电缆长度 (m)",
     "cableLengthOptions": {
       "terminalOnly": "仅端子（自制电缆）"
     },
+    "encoder": "编码器类型",
+    "encoderOptions": {
+      "both": "两者都可",
+      "bothDesc": "显示所有选项",
+      "typeA": "A型",
+      "typeADesc": "电池盒式多圈 (2.5Mbps)",
+      "typeB": "B型",
+      "typeBDesc": "机械式多圈 (5Mbps)"
+    },
+    "encoderHint": "A型需要电池维护，B型为机械式免维护但价格较高",
+    "axisName": {
+      "title": "轴名称确认",
+      "label": "轴名称",
+      "placeholder": "请输入轴名称",
+      "hint": "此名称将用于标识该轴，可在侧边栏随时修改"
+    },
+    "infoCard": {
+      "title": "配置提示",
+      "content": "公共参数（安全系数、惯量比、通信协议等）可在侧边栏查看和修改。此处配置仅影响当前轴的选型结果。"
+    },
+    "errors": {
+      "missingProject": "缺少项目信息，请在侧边栏填写",
+      "missingMechanism": "缺少机械结构信息，请返回第一步填写",
+      "missingMotion": "缺少运动参数信息，请返回第二步填写",
+      "missingDuty": "缺少工作条件信息，请返回第三步填写",
+      "calculationFailed": "选型计算失败，请检查输入参数"
+    },
+    "calculating": "计算中...",
     "startSizing": "开始选型"
   },
   "result": {
     "title": "选型结果",
+    "subtitle": "选型计算完成，以下是推荐方案",
     "summary": "计算摘要",
     "recommendedMotor": "推荐电机",
     "recommendedDrive": "推荐驱动器",
@@ -181,6 +314,15 @@
       "warning": "警告",
       "critical": "风险"
     },
+    "regeneration": {
+      "warningTitle": "制动电阻警告",
+      "continuousPower": "持续功率",
+      "resistance": "阻值",
+      "recommendedResistor": "建议外部电阻规格"
+    },
+    "saved": "已保存",
+    "saveToBasket": "保存到篮子",
+    "axisName": "轴-{index}",
     "systemConfigDetails": "系统配置详情",
     "motor": "电机",
     "motorModel": "型号：",
@@ -199,7 +341,42 @@
     "emcFilter": "EMC滤波器：",
     "restart": "重新开始",
     "pdfExportInDevelopment": "PDF导出功能开发中...",
-    "print": "打印"
+    "print": "打印",
+    "exportProjectPdf": "导出项目 PDF",
+    "reportTitle": "博世力士乐伺服选型报告",
+    "generatedAt": "生成时间",
+    "noCompletedAxes": "没有已完成的轴可供导出",
+    "completeOneAxis": "请至少完成一个轴的配置",
+    "projectInfo": "项目信息",
+    "commonParams": "公共参数（适用于所有轴）",
+    "bom": "物料清单 (BOM)",
+    "axisDetail": "轴详情",
+    "axisName": "轴 {index}: {name}",
+    "completedAt": "完成时间",
+    "columns": {
+      "index": "序号",
+      "partNumber": "料号",
+      "description": "描述",
+      "quantity": "数量",
+      "usedIn": "用于轴"
+    },
+    "labels": {
+      "projectName": "项目名称",
+      "customer": "客户",
+      "salesPerson": "销售人员",
+      "axisCount": "轴数量",
+      "ambientTemp": "环境温度",
+      "ipRating": "防护等级",
+      "communication": "通信协议",
+      "cableLength": "电缆长度",
+      "safetyFactor": "安全系数",
+      "maxInertiaRatio": "最大惯量比",
+      "terminalOnly": "仅接线端子"
+    },
+    "footer": {
+      "generatedBy": "博世力士乐伺服选型工具生成",
+      "system": "XC20 + MC20 伺服系统"
+    }
   },
   "detailedCalculations": {
     "title": "详细计算信息",

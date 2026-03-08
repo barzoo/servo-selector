@@ -30,9 +30,9 @@ export function CommonParamsEditStep({ onComplete }: CommonParamsEditStepProps) 
         <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br from-[var(--primary-500)]/20 to-[var(--primary-600)]/10 border border-[var(--primary-500)]/30 mb-4">
           <Settings2 className="w-7 h-7 text-[var(--primary-400)]" />
         </div>
-        <h2 className="text-2xl font-bold gradient-text mb-2">编辑公共参数</h2>
+        <h2 className="text-2xl font-bold gradient-text mb-2">{t('editCommonTitle')}</h2>
         <p className="text-sm text-[var(--foreground-muted)]">
-          修改公共参数，这些参数将应用于所有轴
+          {t('editCommonSubtitle')}
         </p>
       </div>
 
@@ -171,7 +171,7 @@ export function CommonParamsEditStep({ onComplete }: CommonParamsEditStepProps) 
         <div className="group">
           <label className="flex items-center gap-2 text-sm font-medium text-[var(--foreground-secondary)] mb-2">
             <Rotate3D className="w-4 h-4 text-[var(--green-400)]" />
-            目标惯量比
+            {t('targetInertiaRatio')}
           </label>
           <div className="flex items-center gap-3">
             <input

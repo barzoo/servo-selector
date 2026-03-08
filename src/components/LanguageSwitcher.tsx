@@ -2,6 +2,7 @@
 
 import { useLanguageStore } from '@/stores/language-store';
 import { locales, localeLabels, type Locale } from '@/i18n/config';
+import { Globe } from 'lucide-react';
 
 export default function LanguageSwitcher() {
   const { locale, setLocale } = useLanguageStore();
@@ -17,15 +18,18 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+    <div className="flex items-center gap-1 bg-[var(--background-tertiary)] rounded-xl p-1 border border-[var(--border-subtle)]">
+      <div className="px-2">
+        <Globe className="w-4 h-4 text-[var(--foreground-muted)]" />
+      </div>
       {locales.map((l) => (
         <button
           key={l}
           onClick={() => handleChange(l)}
-          className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
+          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
             locale === l
-              ? 'bg-white text-blue-600 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-[var(--primary-500)] text-white shadow-lg shadow-[var(--primary-500)]/30'
+              : 'text-[var(--foreground-secondary)] hover:text-[var(--foreground)] hover:bg-[var(--background-elevated)]'
           }`}
         >
           {localeLabels[l]}

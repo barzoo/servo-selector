@@ -64,9 +64,9 @@ function CalculationCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="bg-white border rounded-lg overflow-hidden">
-      <div className="px-4 py-2 bg-blue-50 border-b">
-        <h4 className="font-medium text-blue-900">{title}</h4>
+    <div className="bg-[var(--background-secondary)] border border-[var(--border-default)] rounded-lg overflow-hidden">
+      <div className="px-4 py-2 bg-[var(--primary-500)]/10 border-b border-[var(--border-subtle)]">
+        <h4 className="font-medium text-[var(--primary-300)]">{title}</h4>
       </div>
       <div className="p-4">{children}</div>
     </div>
@@ -91,19 +91,19 @@ function ParamRow({
 }) {
   const valueClass =
     highlight === 'positive'
-      ? 'text-green-700'
+      ? 'text-[var(--green-400)]'
       : highlight === 'negative'
-        ? 'text-red-600'
+        ? 'text-[var(--red-400)]'
         : highlight === 'warning'
-          ? 'text-yellow-700'
-          : 'text-gray-900';
+          ? 'text-[var(--amber-400)]'
+          : 'text-[var(--foreground)]';
 
   return (
     <div className="flex justify-between py-1 items-center">
-      <span className="text-gray-700">{label}</span>
+      <span className="text-[var(--foreground-secondary)]">{label}</span>
       <span className={`font-mono font-medium ${valueClass}`}>
         {value}
-        {unit && <span className="text-gray-500 ml-1">{unit}</span>}
+        {unit && <span className="text-[var(--foreground-muted)] ml-1">{unit}</span>}
         {suffix && <span className="ml-2">{suffix}</span>}
       </span>
     </div>
@@ -114,7 +114,7 @@ function ParamRow({
  * 分隔线组件
  */
 function Divider() {
-  return <div className="border-t my-2" />;
+  return <div className="border-t border-[var(--border-subtle)] my-2" />;
 }
 
 /**
@@ -224,7 +224,7 @@ function TorqueCard({
           highlight={getHighlight(torques.decel)}
           suffix={
             isRegenerative ? (
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800">
+              <span className="badge badge-warning">
                 ⚡{t('detailedCalculations.labels.regenerative')}
               </span>
             ) : undefined
@@ -373,22 +373,22 @@ function PowerCard({
         )}
         <Divider />
         <div className="flex justify-between py-1 items-center">
-          <span className="text-gray-700">
+          <span className="text-[var(--foreground-secondary)]">
             {t('detailedCalculations.labels.brakeResistor')}
           </span>
           {regeneration.requiresExternalResistor ? (
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800">
+            <span className="badge badge-error">
               ⚠️ {t('detailedCalculations.labels.externalRequired')}
             </span>
           ) : (
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+            <span className="badge badge-success">
               ✓ {t('detailedCalculations.labels.internalSufficient')}
             </span>
           )}
         </div>
         {regeneration.requiresExternalResistor &&
           regeneration.recommendedResistor && (
-            <div className="text-sm text-gray-600 mt-1">
+            <div className="text-sm text-[var(--foreground-muted)] mt-1">
               ≥{formatPower(regeneration.recommendedResistor.minPower)}W,{' '}
               {regeneration.recommendedResistor.resistance}Ω
             </div>
@@ -414,24 +414,24 @@ export function DetailedCalculations({
   const details = extractCalculationDetails(input, mechanical);
 
   return (
-    <section className="border rounded-lg overflow-hidden">
+    <section className="border border-[var(--border-default)] rounded-lg overflow-hidden">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-4 py-3 bg-gray-50 hover:bg-gray-100 flex justify-between items-center transition-colors"
+        className="w-full px-4 py-3 bg-[var(--background-tertiary)] hover:bg-[var(--background-elevated)] flex justify-between items-center transition-colors"
         aria-expanded={isExpanded}
         aria-controls="detailed-calculations-content"
       >
-        <span className="font-medium text-gray-800 flex items-center gap-2">
-          <span>🔧</span>
+        <span className="font-medium text-[var(--foreground)] flex items-center gap-2">
+          <span className="text-[var(--primary-400)]">🔧</span>
           <span>{t('detailedCalculations.title')}</span>
         </span>
-        <span className="text-gray-500">{isExpanded ? '▲' : '▼'}</span>
+        <span className="text-[var(--foreground-muted)]">{isExpanded ? '▲' : '▼'}</span>
       </button>
 
       {isExpanded && (
         <div
           id="detailed-calculations-content"
-          className="p-4 space-y-4 bg-gray-50/50"
+          className="p-4 space-y-4 bg-[var(--background-secondary)]"
         >
           <MechanismCard details={details} t={t} />
           <InertiaCard details={details} t={t} />

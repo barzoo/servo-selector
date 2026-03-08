@@ -4,11 +4,43 @@ import { useProjectStore } from '@/stores/project-store';
 import { DutyConditions } from '@/types';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Clock, ArrowRight, ArrowLeft, Thermometer, Shield } from 'lucide-react';
 
-const BRAKE_OPTIONS = [
-  { value: false, label: '无刹车', desc: '标准配置，适合水平轴应用' },
-  { value: true, label: '带刹车', desc: '抱闸制动，适合垂直轴或需要保持力矩的应用' },
+const getBrakeOptions = (t: (key: string) => string) => [
+  { value: false, label: t('brake.noBrake'), desc: t('brake.noBrakeDesc'), icon: '○' },
+  { value: true, label: t('brake.withBrake'), desc: t('brake.withBrakeDesc'), icon: '◉' },
 ];
+
+const getDutyCycles = (t: (key: string) => string) => [
+  { value: 100, label: 'S1', desc: t('dutyCycles.s1'), color: 'var(--green-400)' },
+  { value: 60, label: 'S2', desc: t('dutyCycles.s2'), color: 'var(--primary-400)' },
+  { value: 40, label: 'S3', desc: t('dutyCycles.s3'), color: 'var(--amber-400)' },
+  { value: 25, label: 'S4', desc: t('dutyCycles.s4'), color: 'var(--red-400)' },
+];
+
+const getOrientations = (t: (key: string) => string) => [
+  { value: 'HORIZONTAL', label: t('orientations.horizontal'), icon: '═' },
+  { value: 'VERTICAL_UP', label: t('orientations.verticalUp'), icon: '↑' },
+  { value: 'VERTICAL_DOWN', label: t('orientations.verticalDown'), icon: '↓' },
+];
+
+interface FormFieldProps {
+  label: string;
+  required?: boolean;
+  children?: React.ReactNode;
+}
+
+function FormField({ label, required, children }: FormFieldProps) {
+  return (
+    <div className="space-y-2">
+      <label className="form-label">
+        {label}
+        {required && <span className="text-[var(--red-400)] ml-1">*</span>}
+      </label>
+      {children}
+    </div>
+  );
+}
 
 export function DutyStep() {
   const { project, currentAxisId, updateAxisDutyConditions, nextStep, prevStep } = useProjectStore();
@@ -17,7 +49,10 @@ export function DutyStep() {
 
   const currentAxis = project.axes.find(a => a.id === currentAxisId);
 
-  // 电机轴类型选项（使用翻译）
+  const BRAKE_OPTIONS = getBrakeOptions(t);
+  const DUTY_CYCLES = getDutyCycles(t);
+  const ORIENTATIONS = getOrientations(t);
+
   const keyShaftOptions = [
     { value: 'L' as const, label: t('keyShaftOptions.smooth'), desc: t('keyShaftOptions.smoothDesc') },
     { value: 'K' as const, label: t('keyShaftOptions.keyed'), desc: t('keyShaftOptions.keyedDesc') },
@@ -39,161 +74,195 @@ export function DutyStep() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* 标题和提示 */}
-      <div>
-        <h2 className="text-2xl font-bold text-gray-900">{t('title')}</h2>
-        <p className="mt-2 text-sm text-gray-500">
-          环境参数（温度 {project.commonParams.ambientTemp}°C，防护等级 {project.commonParams.ipRating}）
-          已在项目设置中配置，
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new CustomEvent('open-project-settings'))}
-            className="text-blue-600 hover:underline"
-          >
-            点击修改
-          </button>
-        </p>
-      </div>
-
-      {/* 轴特有参数 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* dutyCycle */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('dutyCycle')} <span className="text-red-500">*</span>
-          </label>
-          <select
-            value={formData.dutyCycle}
-            onChange={(e) => setFormData({ ...formData, dutyCycle: parseInt(e.target.value) })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
-          >
-            <option value={100}>S1 (100% - 连续工作)</option>
-            <option value={60}>S2 (60% - 短时工作)</option>
-            <option value={40}>S3 (40% - 间歇工作)</option>
-            <option value={25}>S4 (25% - 频繁启停)</option>
-          </select>
+    <form onSubmit={handleSubmit} className="space-y-8 animate-fade-in">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-600)] flex items-center justify-center shadow-lg">
+          <Clock className="w-6 h-6 text-white" />
         </div>
-
-        {/* mountingOrientation */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            {t('mountingOrientation')} <span className="text-red-500">*</span>
-          </label>
-          <select
-            value={formData.mountingOrientation}
-            onChange={(e) => {
-              const newOrientation = e.target.value as 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN';
-              setFormData({
-                ...formData,
-                mountingOrientation: newOrientation,
-                brake: newOrientation.startsWith('VERTICAL'),
-              });
-            }}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border px-3 py-2 text-gray-900 bg-white"
-          >
-            <option value="HORIZONTAL">{t('orientations.horizontal')}</option>
-            <option value="VERTICAL_UP">{t('orientations.verticalUp')}</option>
-            <option value="VERTICAL_DOWN">{t('orientations.verticalDown')}</option>
-          </select>
+          <h2 className="text-2xl font-bold text-[var(--foreground)]">{t('title')}</h2>
+          <p className="text-sm text-[var(--foreground-muted)]">{t('subtitle')}</p>
         </div>
       </div>
 
-      {/* 刹车选项 */}
+      {/* Environment Info Card */}
+      <div className="card p-5 bg-gradient-to-r from-[var(--background-tertiary)] to-transparent border-l-4 border-l-[var(--primary-500)]">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-lg bg-[var(--primary-500)]/10 flex items-center justify-center flex-shrink-0">
+            <Thermometer className="w-5 h-5 text-[var(--primary-400)]" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-medium text-[var(--foreground)] mb-1">{t('environment.title')}</h3>
+            <p className="text-sm text-[var(--foreground-secondary)]">
+              {t('environment.temp')}: <span className="text-[var(--foreground)] font-medium">{project.commonParams.ambientTemp}°C</span>
+              <span className="mx-2 text-[var(--border-default)]">|</span>
+              {t('environment.ipRating')}: <span className="text-[var(--foreground)] font-medium">IP{project.commonParams.ipRating}</span>
+            </p>
+            <p className="text-xs text-[var(--foreground-muted)] mt-2">
+              {t('environment.hint')}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Duty Cycle Selection */}
       <div className="space-y-3">
-        <label className="block text-sm font-medium text-gray-700">
-          电机刹车
+        <FormField label={t('dutyCycle')} required />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {DUTY_CYCLES.map((cycle) => (
+            <button
+              key={cycle.value}
+              type="button"
+              onClick={() => setFormData({ ...formData, dutyCycle: cycle.value })}
+              className={`
+                relative p-4 rounded-xl border transition-all duration-200 text-left
+                ${formData.dutyCycle === cycle.value
+                  ? 'bg-[var(--primary-500)]/10 border-[var(--primary-500)] shadow-lg shadow-[var(--primary-500)]/10'
+                  : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
+                }
+              `}
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span
+                  className="text-2xl font-bold"
+                  style={{ color: formData.dutyCycle === cycle.value ? cycle.color : 'var(--foreground-muted)' }}
+                >
+                  {cycle.label}
+                </span>
+                <span className="text-xs font-medium text-[var(--foreground-muted)]">{cycle.value}%</span>
+              </div>
+              <p className={`text-sm ${formData.dutyCycle === cycle.value ? 'text-[var(--foreground)]' : 'text-[var(--foreground-muted)]'}`}>
+                {cycle.desc}
+              </p>
+              {formData.dutyCycle === cycle.value && (
+                <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[var(--primary-400)]" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Mounting Orientation */}
+      <div className="space-y-3">
+        <FormField label={t('mountingOrientation')} required />
+        <div className="grid grid-cols-3 gap-3">
+          {ORIENTATIONS.map((orientation) => (
+            <button
+              key={orientation.value}
+              type="button"
+              onClick={() => {
+                const isVertical = orientation.value.startsWith('VERTICAL');
+                setFormData({
+                  ...formData,
+                  mountingOrientation: orientation.value as 'HORIZONTAL' | 'VERTICAL_UP' | 'VERTICAL_DOWN',
+                  brake: isVertical ? true : formData.brake,
+                });
+              }}
+              className={`
+                p-4 rounded-xl border transition-all duration-200
+                ${formData.mountingOrientation === orientation.value
+                  ? 'bg-[var(--primary-500)]/10 border-[var(--primary-500)] shadow-lg shadow-[var(--primary-500)]/10'
+                  : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
+                }
+              `}
+            >
+              <div className={`text-2xl mb-2 ${formData.mountingOrientation === orientation.value ? 'text-[var(--primary-400)]' : 'text-[var(--foreground-muted)]'}`}>
+                {orientation.icon}
+              </div>
+              <p className={`text-sm font-medium ${formData.mountingOrientation === orientation.value ? 'text-[var(--primary-300)]' : 'text-[var(--foreground)]'}`}>
+                {orientation.label}
+              </p>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Brake Selection */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <span className="form-label mb-0">{t('brake.title')}</span>
           {formData.mountingOrientation.startsWith('VERTICAL') && (
-            <span className="ml-2 text-xs text-amber-600">(垂直轴建议带刹车)</span>
+            <span className="badge badge-warning text-xs">{t('brake.verticalWarning')}</span>
           )}
-        </label>
+        </div>
         <div className="grid grid-cols-2 gap-3">
           {BRAKE_OPTIONS.map((opt) => (
-            <label
+            <button
               key={opt.value ? 'yes' : 'no'}
-              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                formData.brake === opt.value
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <input
-                type="radio"
-                name="brake"
-                value={opt.value ? 'true' : 'false'}
-                checked={formData.brake === opt.value}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    brake: e.target.value === 'true',
-                  })
+              type="button"
+              onClick={() => setFormData({ ...formData, brake: opt.value })}
+              className={`
+                p-4 rounded-xl border transition-all duration-200 text-left
+                ${formData.brake === opt.value
+                  ? 'bg-[var(--primary-500)]/10 border-[var(--primary-500)] shadow-lg shadow-[var(--primary-500)]/10'
+                  : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
                 }
-                className="sr-only"
-              />
-              <div className={`font-medium text-sm ${formData.brake === opt.value ? 'text-blue-900' : 'text-gray-900'}`}>
-                {opt.label}
+              `}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <span className={`text-xl ${formData.brake === opt.value ? 'text-[var(--primary-400)]' : 'text-[var(--foreground-muted)]'}`}>
+                  {opt.icon}
+                </span>
+                <span className={`font-medium ${formData.brake === opt.value ? 'text-[var(--primary-300)]' : 'text-[var(--foreground)]'}`}>
+                  {opt.label}
+                </span>
               </div>
-              <div className={`text-xs mt-1 ${formData.brake === opt.value ? 'text-blue-700' : 'text-gray-500'}`}>
+              <p className={`text-xs ${formData.brake === opt.value ? 'text-[var(--primary-200)]' : 'text-[var(--foreground-muted)]'}`}>
                 {opt.desc}
-              </div>
-            </label>
+              </p>
+            </button>
           ))}
         </div>
       </div>
 
-      {/* 电机轴类型选项 */}
+      {/* Key Shaft Selection */}
       <div className="space-y-3">
-        <label className="block text-sm font-medium text-gray-700">
-          {t('keyShaft')}
-        </label>
+        <FormField label={t('keyShaft')} />
         <div className="grid grid-cols-2 gap-3">
           {keyShaftOptions.map((opt) => (
-            <label
+            <button
               key={opt.value}
-              className={`p-3 border rounded-lg cursor-pointer transition-colors ${
-                formData.keyShaft === opt.value
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 hover:border-gray-300'
-              }`}
-            >
-              <input
-                type="radio"
-                name="keyShaft"
-                value={opt.value}
-                checked={formData.keyShaft === opt.value}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    keyShaft: e.target.value as 'L' | 'K',
-                  })
+              type="button"
+              onClick={() => setFormData({ ...formData, keyShaft: opt.value })}
+              className={`
+                p-4 rounded-xl border transition-all duration-200 text-left
+                ${formData.keyShaft === opt.value
+                  ? 'bg-[var(--primary-500)]/10 border-[var(--primary-500)] shadow-lg shadow-[var(--primary-500)]/10'
+                  : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
                 }
-                className="sr-only"
-              />
-              <div className={`font-medium text-sm ${formData.keyShaft === opt.value ? 'text-blue-900' : 'text-gray-900'}`}>
-                {opt.label}
+              `}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className={`w-4 h-4 ${formData.keyShaft === opt.value ? 'text-[var(--primary-400)]' : 'text-[var(--foreground-muted)]'}`} />
+                <span className={`font-medium ${formData.keyShaft === opt.value ? 'text-[var(--primary-300)]' : 'text-[var(--foreground)]'}`}>
+                  {opt.label}
+                </span>
               </div>
-              <div className={`text-xs mt-1 ${formData.keyShaft === opt.value ? 'text-blue-700' : 'text-gray-500'}`}>
+              <p className={`text-xs ${formData.keyShaft === opt.value ? 'text-[var(--primary-200)]' : 'text-[var(--foreground-muted)]'}`}>
                 {opt.desc}
-              </div>
-            </label>
+              </p>
+            </button>
           ))}
         </div>
       </div>
 
-      {/* 按钮 */}
-      <div className="flex flex-col sm:flex-row justify-between gap-3">
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4 border-t border-[var(--border-subtle)]">
         <button
           type="button"
           onClick={prevStep}
-          className="w-full sm:w-auto px-6 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
+          className="btn btn-secondary"
         >
+          <ArrowLeft className="w-4 h-4" />
           {commonT('back')}
         </button>
         <button
           type="submit"
-          className="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="btn btn-primary"
         >
           {commonT('next')}
+          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </form>

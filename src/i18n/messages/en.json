@@ -3,6 +3,53 @@
     "title": "Servo Sizing Tool",
     "description": "Bosch Rexroth Servo System Sizing and Selection Tool"
   },
+  "home": {
+    "welcomeTitle": "Welcome to Servo Sizing Tool",
+    "welcomeSubtitle": "Professional Bosch Rexroth XC20 + MC20 servo system selection wizard for optimal motion control solutions",
+    "pageTitle": "Bosch Rexroth Servo Sizing Tool",
+    "pageSubtitle": "XC20 + MC20 Servo System Selection Wizard",
+    "cards": {
+      "projectConfig": "Project Configuration",
+      "projectConfigDesc": "Set project info and common parameters",
+      "addAxis": "Add Axis",
+      "addAxisDesc": "Configure mechanism and motion parameters"
+    },
+    "buttons": {
+      "addFirstAxis": "Add First Axis",
+      "setProjectFirst": "Set Project Info First"
+    }
+  },
+  "axis": {
+    "currentConfig": "Current Configuration",
+    "status": {
+      "configuring": "Configuring",
+      "completed": "Completed"
+    }
+  },
+  "footer": {
+    "version": "Bosch Rexroth Servo Sizing Tool v1.0"
+  },
+  "sidebar": {
+    "logoTitle": "Servo Sizing",
+    "logoSubtitle": "Servo Sizing Tool",
+    "unnamedProject": "Unnamed Project",
+    "editing": "Editing...",
+    "clickToEdit": "Click to Edit",
+    "commonParams": "Common Params",
+    "commonParamsDesc": "Voltage, Altitude, etc.",
+    "axisConfig": "Axis Configuration",
+    "axisCount": "{count} Axes",
+    "addFirstAxis": "Add First Axis",
+    "addNewAxis": "Add New Axis",
+    "projectSummary": "Project Summary",
+    "completed": "Completed",
+    "configuring": "Configuring"
+  },
+  "defaults": {
+    "unnamedProject": "Unnamed Project",
+    "axisName": "Axis-{index}",
+    "newAxis": "New Axis"
+  },
   "common": {
     "next": "Next",
     "back": "Back",
@@ -24,6 +71,8 @@
   },
   "projectInfo": {
     "title": "Project Information",
+    "editTitle": "Edit Project Information",
+    "editSubtitle": "Modify project basic information, these will apply to all axes",
     "projectName": "Project Name",
     "projectNamePlaceholder": "Enter project name",
     "customerName": "Customer Name",
@@ -40,6 +89,9 @@
   },
   "mechanism": {
     "title": "Mechanism Parameters",
+    "subtitle": "Select transmission type and configure parameters",
+    "typeLabel": "Transmission Type",
+    "paramsTitle": "Parameter Configuration",
     "type": "Transmission Type",
     "types": {
       "ballScrew": "Ball Screw",
@@ -72,6 +124,10 @@
       "pinionDiameter": "Pinion Diameter (mm)",
       "mountingAngle": "Mounting Angle (deg)"
     },
+    "hints": {
+      "loadMass": "Total mass including workbench and workpiece",
+      "lead": "Distance moved per screw revolution"
+    },
     "loadTypes": {
       "table": "Rotary Table",
       "drum": "Drum",
@@ -84,6 +140,9 @@
   },
   "motion": {
     "title": "Motion Parameters",
+    "subtitle": "Define motion stroke, velocity and acceleration parameters",
+    "profileLabel": "Motion Profile",
+    "paramsTitle": "Motion Parameters",
     "stroke": "Stroke (mm)",
     "maxVelocity": "Max Velocity (mm/s)",
     "maxAcceleration": "Max Acceleration (mm/s²)",
@@ -92,11 +151,30 @@
       "trapezoidal": "Trapezoidal",
       "sCurve": "S-Curve"
     },
+    "profileDesc": {
+      "trapezoidal": "Constant Acceleration",
+      "sCurve": "Smooth Acceleration"
+    },
+    "hints": {
+      "stroke": "Total travel range of motion axis",
+      "maxVelocity": "Maximum operating velocity",
+      "maxAcceleration": "Maximum acceleration",
+      "dwellTime": "Dwell time after positioning",
+      "cycleTime": "Complete motion cycle time"
+    },
+    "stats": {
+      "cycleRate": "Cycle Rate",
+      "cyclesPerMinute": "cpm",
+      "accelRatio": "Accel Ratio",
+      "maxSpeed": "Max Speed",
+      "stroke": "Stroke"
+    },
     "dwellTime": "Dwell Time (s)",
     "cycleTime": "Cycle Time (s)"
   },
   "duty": {
     "title": "Duty Conditions",
+    "subtitle": "Configure duty cycle and mounting conditions",
     "ambientTemp": "Ambient Temperature (°C)",
     "dutyCycle": "Duty Cycle (%)",
     "mountingOrientation": "Mounting Orientation",
@@ -112,6 +190,26 @@
       "smoothDesc": "Standard smooth shaft for coupling connection",
       "keyed": "Keyed Shaft (K)",
       "keyedDesc": "Keyed shaft for high torque transmission"
+    },
+    "environment": {
+      "title": "Environment",
+      "temp": "Temperature",
+      "ipRating": "IP Rating",
+      "hint": "Environment parameters are configured in project settings, can be modified in sidebar"
+    },
+    "dutyCycles": {
+      "s1": "Continuous",
+      "s2": "Short-time",
+      "s3": "Intermittent",
+      "s4": "Frequent Start/Stop"
+    },
+    "brake": {
+      "title": "Motor Brake",
+      "verticalWarning": "Brake recommended for vertical axis",
+      "noBrake": "No Brake",
+      "noBrakeDesc": "Standard configuration for horizontal axis",
+      "withBrake": "With Brake",
+      "withBrakeDesc": "Holding brake for vertical axis or torque holding"
     }
   },
   "projectSettings": {
@@ -123,6 +221,9 @@
     "notes": "Project Notes",
     "commonParams": "Common Parameters",
     "commonParamsDescription": "These parameters will be applied to all axes",
+    "editCommonTitle": "Edit Common Parameters",
+    "editCommonSubtitle": "Modify common parameters, these will apply to all axes",
+    "targetInertiaRatio": "Target Inertia Ratio",
     "ambientTemp": "Ambient Temperature",
     "ipRating": "IP Rating",
     "communication": "Communication Protocol",
@@ -135,6 +236,7 @@
   },
   "systemConfig": {
     "title": "System Configuration",
+    "subtitle": "Configure axis-specific system options",
     "safetyFactor": "Safety Factor",
     "safetyFactorHint": "Default 1.5, recommended range 1.2-2.0",
     "communication": "Communication",
@@ -147,16 +249,47 @@
     "safety": "Safety Function",
     "safetyOptions": {
       "none": "None",
-      "sto": "STO Safe Torque Off (SIL3/PLe)"
+      "noneDesc": "Standard configuration",
+      "sto": "STO Safe Torque Off",
+      "stoDesc": "SIL3/PLe compliant"
     },
     "cableLength": "Cable Length (m)",
     "cableLengthOptions": {
       "terminalOnly": "Terminal Only (Custom Cable)"
     },
+    "encoder": "Encoder Type",
+    "encoderOptions": {
+      "both": "Both",
+      "bothDesc": "Show all options",
+      "typeA": "Type A",
+      "typeADesc": "Battery multi-turn (2.5Mbps)",
+      "typeB": "Type B",
+      "typeBDesc": "Mechanical multi-turn (5Mbps)"
+    },
+    "encoderHint": "Type A requires battery maintenance, Type B is maintenance-free but more expensive",
+    "axisName": {
+      "title": "Axis Name Confirmation",
+      "label": "Axis Name",
+      "placeholder": "Enter axis name",
+      "hint": "This name identifies the axis and can be changed in sidebar"
+    },
+    "infoCard": {
+      "title": "Configuration Tips",
+      "content": "Common parameters (safety factor, inertia ratio, communication protocol) can be viewed and modified in the sidebar. Settings here only affect the current axis."
+    },
+    "errors": {
+      "missingProject": "Missing project info, please fill in sidebar",
+      "missingMechanism": "Missing mechanism info, please return to step 1",
+      "missingMotion": "Missing motion parameters, please return to step 2",
+      "missingDuty": "Missing duty conditions, please return to step 3",
+      "calculationFailed": "Sizing calculation failed, please check input parameters"
+    },
+    "calculating": "Calculating...",
     "startSizing": "Start Sizing"
   },
   "result": {
     "title": "Sizing Results",
+    "subtitle": "Sizing calculation complete. Here are the recommended solutions",
     "summary": "Calculation Summary",
     "recommendedMotor": "Recommended Motor",
     "recommendedDrive": "Recommended Drive",
@@ -181,6 +314,15 @@
       "warning": "Warning",
       "critical": "Risk"
     },
+    "regeneration": {
+      "warningTitle": "Brake Resistor Warning",
+      "continuousPower": "Continuous Power",
+      "resistance": "Resistance",
+      "recommendedResistor": "Recommended External Resistor"
+    },
+    "saved": "Saved",
+    "saveToBasket": "Save to Basket",
+    "axisName": "Axis-{index}",
     "systemConfigDetails": "System Configuration Details",
     "motor": "Motor",
     "motorModel": "Model: ",
@@ -199,7 +341,42 @@
     "emcFilter": "EMC Filter: ",
     "restart": "Restart",
     "pdfExportInDevelopment": "PDF export feature is under development...",
-    "print": "Print"
+    "print": "Print",
+    "exportProjectPdf": "Export Project PDF",
+    "reportTitle": "Bosch Rexroth Servo Sizing Report",
+    "generatedAt": "Generated At",
+    "noCompletedAxes": "No completed axes to export",
+    "completeOneAxis": "Please complete at least one axis configuration",
+    "projectInfo": "Project Information",
+    "commonParams": "Common Parameters (for all axes)",
+    "bom": "Bill of Materials (BOM)",
+    "axisDetail": "Axis Detail",
+    "axisName": "Axis {index}: {name}",
+    "completedAt": "Completed At",
+    "columns": {
+      "index": "No.",
+      "partNumber": "Part Number",
+      "description": "Description",
+      "quantity": "Qty",
+      "usedIn": "Used In"
+    },
+    "labels": {
+      "projectName": "Project Name",
+      "customer": "Customer",
+      "salesPerson": "Sales Person",
+      "axisCount": "Axis Count",
+      "ambientTemp": "Ambient Temp",
+      "ipRating": "IP Rating",
+      "communication": "Communication",
+      "cableLength": "Cable Length",
+      "safetyFactor": "Safety Factor",
+      "maxInertiaRatio": "Max Inertia Ratio",
+      "terminalOnly": "Terminal Only"
+    },
+    "footer": {
+      "generatedBy": "Generated by Bosch Rexroth Servo Sizing Tool",
+      "system": "XC20 + MC20 Servo System"
+    }
   },
   "detailedCalculations": {
     "title": "Detailed Calculations",

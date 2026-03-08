@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Plus, Settings, FileText, Zap, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useProjectStore, migrateLegacyData, migrateToSharedParams } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
@@ -29,24 +30,28 @@ export default function Home() {
     createProject,
   } = useProjectStore();
 
-  // Main view mode: 'wizard' | 'edit-project' | 'edit-common'
-  const [mainViewMode, setMainViewMode] = useState<'wizard' | 'edit-project' | 'edit-common'>('wizard');
+  const t = useTranslations('home');
+  const axisT = useTranslations('axis');
+  const commonT = useTranslations('common');
+  const footerT = useTranslations('footer');
 
-  // Migrate legacy data on first load
+  const [mainViewMode, setMainViewMode] = useState<'wizard' | 'edit-project' | 'edit-common'>('wizard');
+  const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
-    // Try new migration first
     const stored = localStorage.getItem('servo-selector-project');
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
         const migrated = migrateToSharedParams(parsed);
-        if (migrated && !project.name) {
+        if (migrated) {
           useProjectStore.setState({
             project: migrated,
             currentAxisId: migrated.axes[0]?.id || '',
             currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 5 : 1,
             isComplete: migrated.axes[0]?.status === 'COMPLETED',
           });
+          setIsLoaded(true);
           return;
         }
       } catch {
@@ -54,7 +59,6 @@ export default function Home() {
       }
     }
 
-    // Fall back to legacy migration
     const migrated = migrateLegacyData();
     if (migrated) {
       useProjectStore.setState({
@@ -64,17 +68,16 @@ export default function Home() {
         isComplete: migrated.axes[0].status === 'COMPLETED',
       });
     } else if (!project.name) {
-      // Initialize with empty project if no data
       createProject({ name: '', customer: '', salesPerson: '' });
     }
+    setIsLoaded(true);
   }, []);
 
   const handleAddAxis = () => {
-    const newAxisId = addAxis(`轴-${project.axes.length + 1}`);
+    const newAxisId = addAxis(`Axis-${project.axes.length + 1}`);
     switchAxis(newAxisId);
     setMainViewMode('wizard');
 
-    // If this is the first axis and project name is empty, prompt user to fill project info
     if (project.axes.length === 0 && !project.name) {
       setMainViewMode('edit-project');
     }
@@ -85,7 +88,6 @@ export default function Home() {
       return <ResultStep />;
     }
 
-    // Simplified 4-step wizard (removed ProjectInfoStep)
     switch (currentStep) {
       case 1:
         return <MechanismStep />;
@@ -101,7 +103,6 @@ export default function Home() {
   };
 
   const renderMainContent = () => {
-    // Edit project info mode
     if (mainViewMode === 'edit-project') {
       return (
         <ProjectInfoEditStep
@@ -110,7 +111,6 @@ export default function Home() {
       );
     }
 
-    // Edit common params mode
     if (mainViewMode === 'edit-common') {
       return (
         <CommonParamsEditStep
@@ -119,23 +119,46 @@ export default function Home() {
       );
     }
 
-    // Empty state - no axes
     if (project.axes.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <Plus className="w-8 h-8 text-blue-600" />
+        <div className="flex flex-col items-center justify-center min-h-[500px] text-center px-8">
+          <div className="relative mb-8">
+            <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-300)] rounded-full blur-2xl opacity-20 animate-pulse"></div>
+            <div className="relative w-24 h-24 bg-gradient-to-br from-[var(--background-tertiary)] to-[var(--background-secondary)] rounded-2xl flex items-center justify-center border border-[var(--border-default)] shadow-2xl">
+              <Zap className="w-12 h-12 text-[var(--primary-400)]" />
+            </div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
-            欢迎使用伺服选型工具
+
+          <h2 className="text-3xl font-bold mb-4">
+            <span className="gradient-text">{t('welcomeTitle')}</span>
           </h2>
-          <p className="text-gray-600 mb-6 max-w-md">
-            请从侧边栏开始：
-            <br />
-            1. 确认项目信息和公共参数
-            <br />
-            2. 点击"添加第一个轴"开始配置
+
+          <p className="text-[var(--foreground-secondary)] mb-8 max-w-md text-lg leading-relaxed">
+            {t('welcomeSubtitle')}
           </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md mb-8">
+            <div className="card p-4 card-hover">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-[var(--primary-500)]/10 flex items-center justify-center">
+                  <Settings className="w-5 h-5 text-[var(--primary-400)]" />
+                </div>
+                <span className="font-medium">{t('cards.projectConfig')}</span>
+              </div>
+              <p className="text-sm text-[var(--foreground-muted)]">{t('cards.projectConfigDesc')}</p>
+            </div>
+
+            <div className="card p-4 card-hover">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-[var(--green-500)]/10 flex items-center justify-center">
+                  <Plus className="w-5 h-5 text-[var(--green-400)]" />
+                </div>
+                <span className="font-medium">{t('cards.addAxis')}</span>
+              </div>
+              <p className="text-sm text-[var(--foreground-muted)]">{t('cards.addAxisDesc')}</p>
+            </div>
+          </div>
+
           <button
             onClick={() => {
               if (!project.name) {
@@ -144,25 +167,43 @@ export default function Home() {
                 handleAddAxis();
               }
             }}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="btn btn-primary text-base px-8 py-4"
           >
             <Plus className="w-5 h-5" />
-            {project.name ? '添加第一个轴' : '先设置项目信息'}
+            {project.name ? t('buttons.addFirstAxis') : t('buttons.setProjectFirst')}
+            <ChevronRight className="w-5 h-5" />
           </button>
         </div>
       );
     }
 
-    // Wizard mode - show the step content
     return renderStep();
   };
 
   const currentAxis = project.axes.find((a) => a.id === currentAxisId);
 
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-3 border-[var(--primary-500)] border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-[var(--foreground-secondary)]">{commonT('loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-[var(--background)] flex">
+      {/* Background Effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute inset-0 grid-pattern opacity-50"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--primary-500)] rounded-full blur-[150px] opacity-5"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--primary-300)] rounded-full blur-[150px] opacity-5"></div>
+      </div>
+
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-64 flex-shrink-0 h-screen sticky top-0 border-r border-gray-200">
+      <aside className="hidden md:block w-72 flex-shrink-0 h-screen sticky top-0 z-20">
         <AxisSidebar
           project={project}
           currentAxisId={currentAxisId}
@@ -186,9 +227,10 @@ export default function Home() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 min-w-0">
-        <div className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-8">
-          <header className="mb-6 sm:mb-8 text-center relative">
+      <main className="flex-1 min-w-0 relative z-10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+          {/* Header */}
+          <header className="mb-8 text-center relative">
             {/* Mobile Menu Button */}
             <div className="absolute left-0 top-0 md:hidden">
               <MobileAxisDrawer
@@ -207,10 +249,16 @@ export default function Home() {
               <LanguageSwitcher />
             </div>
 
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">
-              博世力士乐伺服选型工具
-            </h1>
-            <p className="mt-2 text-gray-600">XC20 + MC20 伺服系统选型向导</p>
+            <div className="inline-flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-600)] flex items-center justify-center shadow-lg">
+                <Zap className="w-5 h-5 text-white" />
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold">
+                <span className="gradient-text">{t('pageTitle')}</span>
+              </h1>
+            </div>
+
+            <p className="text-[var(--foreground-secondary)]">{t('pageSubtitle')}</p>
 
             {/* Mobile: Language Switcher */}
             <div className="md:hidden mt-4 flex justify-center gap-2">
@@ -219,20 +267,37 @@ export default function Home() {
 
             {/* Current Axis Indicator */}
             {currentAxis && mainViewMode === 'wizard' && (
-              <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                <span>🛠️</span>
-                <span>当前配置: {currentAxis.name}</span>
+              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[var(--primary-500)]/10 border border-[var(--primary-500)]/30 rounded-full">
+                <div className="w-2 h-2 rounded-full bg-[var(--primary-400)] animate-pulse"></div>
+                <span className="text-sm font-medium text-[var(--primary-300)]">
+                  {axisT('currentConfig')}: {currentAxis.name}
+                </span>
                 {currentAxis.status === 'CONFIGURING' && (
-                  <span className="text-xs">🔄</span>
+                  <span className="text-xs text-[var(--amber-400)]">{axisT('status.configuring')}</span>
+                )}
+                {currentAxis.status === 'COMPLETED' && (
+                  <span className="badge badge-success">{axisT('status.completed')}</span>
                 )}
               </div>
             )}
           </header>
 
-          <div className="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8">
-            {project.axes.length > 0 && mainViewMode === 'wizard' && <StepIndicator currentStep={currentStep} />}
-            <div className={project.axes.length > 0 ? 'mt-8' : ''}>{renderMainContent()}</div>
+          {/* Main Card */}
+          <div className="card shadow-2xl">
+            {project.axes.length > 0 && mainViewMode === 'wizard' && (
+              <div className="border-b border-[var(--border-subtle)]">
+                <StepIndicator currentStep={currentStep} />
+              </div>
+            )}
+            <div className="p-6 sm:p-8">
+              {renderMainContent()}
+            </div>
           </div>
+
+          {/* Footer */}
+          <footer className="mt-12 text-center text-sm text-[var(--foreground-muted)]">
+            <p>{footerT('version')}</p>
+          </footer>
         </div>
       </main>
     </div>

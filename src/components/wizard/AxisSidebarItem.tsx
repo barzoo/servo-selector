@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { AxisConfig } from '@/types';
+import { Check, Loader2, X, MoreVertical, Edit2, Trash2, RotateCcw, Cog } from 'lucide-react';
 
 interface AxisSidebarItemProps {
   axis: AxisConfig;
@@ -26,11 +27,45 @@ export function AxisSidebarItem({
   const [editName, setEditName] = useState(axis.name);
   const [showMenu, setShowMenu] = useState(false);
 
-  const statusIcon = {
-    COMPLETED: '✅',
-    CONFIGURING: '🔄',
-    ABANDONED: '❌',
-  }[axis.status];
+  const getStatusConfig = () => {
+    switch (axis.status) {
+      case 'COMPLETED':
+        return {
+          icon: Check,
+          bgColor: 'bg-[var(--green-500)]/10',
+          textColor: 'text-[var(--green-400)]',
+          borderColor: 'border-[var(--green-500)]/30',
+          label: '已完成',
+        };
+      case 'CONFIGURING':
+        return {
+          icon: Loader2,
+          bgColor: 'bg-[var(--amber-500)]/10',
+          textColor: 'text-[var(--amber-400)]',
+          borderColor: 'border-[var(--amber-500)]/30',
+          label: '配置中',
+        };
+      case 'ABANDONED':
+        return {
+          icon: X,
+          bgColor: 'bg-[var(--red-500)]/10',
+          textColor: 'text-[var(--red-400)]',
+          borderColor: 'border-[var(--red-500)]/30',
+          label: '已放弃',
+        };
+      default:
+        return {
+          icon: Cog,
+          bgColor: 'bg-[var(--foreground-muted)]/10',
+          textColor: 'text-[var(--foreground-muted)]',
+          borderColor: 'border-[var(--border-default)]',
+          label: '未知',
+        };
+    }
+  };
+
+  const statusConfig = getStatusConfig();
+  const StatusIcon = statusConfig.icon;
 
   const handleSaveName = () => {
     if (editName.trim() && onUpdateName) {
@@ -51,19 +86,31 @@ export function AxisSidebarItem({
   return (
     <div
       className={`
-        relative group
-        w-full rounded-lg border transition-colors
-        ${
-          isActive
-            ? 'bg-blue-50 border-blue-500 shadow-sm'
-            : 'bg-white border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+        relative group rounded-xl border transition-all duration-200
+        ${isActive
+          ? 'bg-[var(--primary-500)]/5 border-[var(--primary-500)]/50 shadow-lg shadow-[var(--primary-500)]/5'
+          : 'bg-[var(--background-tertiary)] border-[var(--border-subtle)] hover:border-[var(--border-hover)] hover:bg-[var(--background-elevated)]'
         }
       `}
     >
+      {/* Active indicator line */}
+      {isActive && (
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-10 bg-gradient-to-b from-[var(--primary-400)] to-[var(--primary-600)] rounded-r-full" />
+      )}
+
       {/* Main content */}
-      <div className="flex items-center justify-between p-3">
-        <div className="flex items-center gap-2 min-w-0 flex-1">
-          <span className="flex-shrink-0">🛠️</span>
+      <div className="flex items-center justify-between p-3 pl-4">
+        <div className="flex items-center gap-3 min-w-0 flex-1">
+          {/* Status Icon */}
+          <div className={`
+            w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0
+            ${statusConfig.bgColor} ${statusConfig.textColor}
+            ${axis.status === 'CONFIGURING' ? 'animate-pulse' : ''}
+          `}>
+            <StatusIcon className={`w-4 h-4 ${axis.status === 'CONFIGURING' ? 'animate-spin' : ''}`} />
+          </div>
+
+          {/* Name */}
           {isEditing ? (
             <input
               type="text"
@@ -71,38 +118,34 @@ export function AxisSidebarItem({
               onChange={(e) => setEditName(e.target.value)}
               onBlur={handleSaveName}
               onKeyDown={handleKeyDown}
-              className="flex-1 px-2 py-1 text-sm border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 px-3 py-1.5 text-sm bg-[var(--background-secondary)] border border-[var(--primary-500)]/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary-500)]/30 text-[var(--foreground)]"
               autoFocus
               onClick={(e) => e.stopPropagation()}
             />
           ) : (
-            <span
-              className="truncate font-medium text-gray-900 cursor-pointer flex-1"
-              onClick={onClick}
-            >
-              {axis.name}
-            </span>
+            <div className="flex flex-col min-w-0 flex-1 cursor-pointer" onClick={onClick}>
+              <span className={`truncate font-medium ${isActive ? 'text-[var(--primary-300)]' : 'text-[var(--foreground)]'}`}>
+                {axis.name}
+              </span>
+              <span className={`text-xs ${statusConfig.textColor}`}>
+                {statusConfig.label}
+              </span>
+            </div>
           )}
         </div>
 
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <span className="text-sm">{statusIcon}</span>
-
-          {/* Menu button */}
-          {!isEditing && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowMenu(!showMenu);
-              }}
-              className="p-1 rounded hover:bg-gray-200 opacity-0 group-hover:opacity-100 transition-opacity"
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-              </svg>
-            </button>
-          )}
-        </div>
+        {/* Menu button */}
+        {!isEditing && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowMenu(!showMenu);
+            }}
+            className="p-2 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-[var(--background-secondary)] text-[var(--foreground-muted)] hover:text-[var(--foreground)]"
+          >
+            <MoreVertical className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
       {/* Dropdown menu */}
@@ -112,7 +155,7 @@ export function AxisSidebarItem({
             className="fixed inset-0 z-10"
             onClick={() => setShowMenu(false)}
           />
-          <div className="absolute right-2 top-8 z-20 bg-white border border-gray-200 rounded-lg shadow-lg py-1 min-w-[120px]">
+          <div className="absolute right-3 top-10 z-20 bg-[var(--background-secondary)] border border-[var(--border-default)] rounded-xl shadow-2xl py-2 min-w-[140px] overflow-hidden">
             {axis.status === 'COMPLETED' && onReedit && (
               <button
                 onClick={(e) => {
@@ -120,9 +163,9 @@ export function AxisSidebarItem({
                   onReedit();
                   setShowMenu(false);
                 }}
-                className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-100 flex items-center gap-2"
+                className="w-full px-4 py-2.5 text-left text-sm text-[var(--foreground)] hover:bg-[var(--primary-500)]/10 flex items-center gap-3 transition-colors"
               >
-                <span>✏️</span>
+                <RotateCcw className="w-4 h-4 text-[var(--primary-400)]" />
                 <span>重新编辑</span>
               </button>
             )}
@@ -132,9 +175,9 @@ export function AxisSidebarItem({
                 setIsEditing(true);
                 setShowMenu(false);
               }}
-              className="w-full px-3 py-2 text-left text-sm text-gray-900 hover:bg-gray-100 flex items-center gap-2"
+              className="w-full px-4 py-2.5 text-left text-sm text-[var(--foreground)] hover:bg-[var(--primary-500)]/10 flex items-center gap-3 transition-colors"
             >
-              <span>🏷️</span>
+              <Edit2 className="w-4 h-4 text-[var(--amber-400)]" />
               <span>重命名</span>
             </button>
             {canDelete && onDelete && (
@@ -146,19 +189,14 @@ export function AxisSidebarItem({
                   }
                   setShowMenu(false);
                 }}
-                className="w-full px-3 py-2 text-left text-sm text-red-600 hover:bg-gray-100 flex items-center gap-2"
+                className="w-full px-4 py-2.5 text-left text-sm text-[var(--red-400)] hover:bg-[var(--red-500)]/10 flex items-center gap-3 transition-colors"
               >
-                <span>🗑️</span>
+                <Trash2 className="w-4 h-4" />
                 <span>删除</span>
               </button>
             )}
           </div>
         </>
-      )}
-
-      {/* Active indicator */}
-      {isActive && axis.status === 'CONFIGURING' && (
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-500 rounded-r" />
       )}
     </div>
   );
