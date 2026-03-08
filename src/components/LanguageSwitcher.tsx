@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { useLanguage } from '@/i18n/ClientLanguageProvider';
 import { locales, localeLabels, type Locale } from '@/i18n/config';
 import { Globe } from 'lucide-react';

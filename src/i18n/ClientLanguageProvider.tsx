@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import zhMessages from './messages/zh.json';
 import enMessages from './messages/en.json';
@@ -16,14 +16,13 @@ interface LanguageContextType {
   setLocale: (locale: Locale) => void;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType>({
+  locale: 'zh',
+  setLocale: () => {},
+});
 
 export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (!context) {
-    throw new Error('useLanguage must be used within LanguageProvider');
-  }
-  return context;
+  return useContext(LanguageContext);
 }
 
 interface Props {
@@ -61,9 +60,11 @@ export default function ClientLanguageProvider({ children }: Props) {
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
     return (
-      <NextIntlClientProvider messages={zhMessages} locale="zh">
-        {children}
-      </NextIntlClientProvider>
+      <LanguageContext.Provider value={{ locale: 'zh', setLocale: () => {} }}>
+        <NextIntlClientProvider messages={zhMessages} locale="zh">
+          {children}
+        </NextIntlClientProvider>
+      </LanguageContext.Provider>
     );
   }
 
