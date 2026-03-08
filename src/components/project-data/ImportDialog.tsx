@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Upload, X, FileJson, AlertTriangle, CheckCircle } from 'lucide-react';
 import { useProjectData } from './hooks/useProjectData';
@@ -21,6 +21,16 @@ export function ImportDialog({ isOpen, onClose }: ImportDialogProps) {
   const [validation, setValidation] = useState<ImportValidationResult | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  // Reset state when dialog opens/closes
+  useEffect(() => {
+    if (!isOpen) {
+      setFile(null);
+      setValidation(null);
+      setIsDragging(false);
+      setShowConfirm(false);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
