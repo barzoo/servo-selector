@@ -74,7 +74,55 @@ export interface MechanismConfig {
   params: MechanismParams;
 }
 
-export interface MotionParams {
+// 基础运动参数（所有类型共有）
+interface BaseMotionParams {
+  profile: 'TRAPEZOIDAL' | 'S_CURVE';
+  dwellTime: number;
+  cycleTime: number;
+}
+
+// 直线运动参数（丝杠、齿条齿轮、直线直驱）
+export interface LinearMotionParams extends BaseMotionParams {
+  motionType: 'LINEAR';
+  stroke: number;           // mm
+  maxVelocity: number;      // mm/s
+  maxAcceleration: number;  // mm/s²
+}
+
+// 旋转运动参数（齿轮、旋转直驱）
+export interface RotaryMotionParams extends BaseMotionParams {
+  motionType: 'ROTARY';
+  rotationAngle: number;    // ° (旋转角度)
+  maxVelocity: number;      // rpm
+  maxAcceleration: number;  // rad/s²
+}
+
+// 皮带传动参数
+export interface BeltMotionParams extends BaseMotionParams {
+  motionType: 'BELT';
+  stroke: number;           // mm (皮带定位行程)
+  maxVelocity: number;      // mm/s
+  maxAcceleration: number;  // mm/s²
+}
+
+// 联合类型
+export type MotionParams = LinearMotionParams | RotaryMotionParams | BeltMotionParams;
+
+// Type guards
+export function isLinearMotion(params: MotionParams): params is LinearMotionParams {
+  return params.motionType === 'LINEAR';
+}
+
+export function isRotaryMotion(params: MotionParams): params is RotaryMotionParams {
+  return params.motionType === 'ROTARY';
+}
+
+export function isBeltMotion(params: MotionParams): params is BeltMotionParams {
+  return params.motionType === 'BELT';
+}
+
+// @deprecated 使用 LinearMotionParams | RotaryMotionParams | BeltMotionParams
+export interface LegacyMotionParams {
   stroke: number;
   maxVelocity: number;
   maxAcceleration: number;
