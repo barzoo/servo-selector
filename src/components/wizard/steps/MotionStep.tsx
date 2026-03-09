@@ -1,10 +1,17 @@
 'use client';
 
 import { useProjectStore } from '@/stores/project-store';
-import { MotionParams } from '@/types';
-import { useState } from 'react';
+import {
+  MotionParams,
+  LinearMotionParams,
+  RotaryMotionParams,
+  BeltMotionParams,
+  MechanismType
+} from '@/types';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Move, ArrowRight, ArrowLeft, TrendingUp, Activity } from 'lucide-react';
+import { buildDefaultMotionParams } from '@/lib/calculations/build-sizing-input';
 
 interface FormFieldProps {
   label: string;
@@ -28,26 +35,282 @@ function FormField({ label, required, children, hint }: FormFieldProps) {
   );
 }
 
+/**
+ * 根据传动类型获取运动参数类型
+ */
+function getMotionType(mechanismType: MechanismType): 'LINEAR' | 'ROTARY' | 'BELT' {
+  switch (mechanismType) {
+    case 'BALL_SCREW':
+    case 'RACK_PINION':
+      return 'LINEAR';
+    case 'GEARBOX':
+      return 'ROTARY';
+    case 'DIRECT_DRIVE':
+      return 'ROTARY'; // 默认旋转，可根据需要调整
+    case 'BELT':
+      return 'BELT';
+    default:
+      return 'LINEAR';
+  }
+}
+
 export function MotionStep() {
   const { input, setMotion, nextStep, prevStep } = useProjectStore();
   const t = useTranslations('motion');
   const commonT = useTranslations('common');
 
-  const [formData, setFormData] = useState<MotionParams>(
-    input.motion || {
-      stroke: 500,
-      maxVelocity: 500,
-      maxAcceleration: 5000,
-      profile: 'TRAPEZOIDAL',
-      dwellTime: 0.5,
-      cycleTime: 3,
+  // 获取当前传动类型
+  const mechanismType = input.mechanism?.type || 'BALL_SCREW';
+  const motionType = getMotionType(mechanismType);
+
+  // 初始化表单数据
+  const [formData, setFormData] = useState<MotionParams>(() => {
+    if (input.motion) {
+      // 确保现有数据有 motionType
+      return {
+        ...input.motion,
+        motionType: (input.motion as any).motionType || motionType,
+      };
     }
-  );
+    // 使用默认值
+    return buildDefaultMotionParams(mechanismType);
+  });
+
+  // 当传动类型改变时重置表单
+  useEffect(() => {
+    const newMotionType = getMotionType(mechanismType);
+    if (formData.motionType !== newMotionType) {
+      setFormData(buildDefaultMotionParams(mechanismType));
+    }
+  }, [mechanismType]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setMotion(formData);
     nextStep();
+  };
+
+  // 渲染直线运动参数
+  const renderLinearParams = () => {
+    const data = formData as LinearMotionParams;
+    return (
+      <>
+        <FormField label={t('stroke')} required hint={t('hints.stroke')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.stroke}
+              onChange={(e) =>
+                setFormData({ ...data, stroke: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-12"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm</span>
+          </div>
+        </FormField>
+
+        <FormField label={t('maxVelocity')} required hint={t('hints.maxVelocity')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.maxVelocity}
+              onChange={(e) =>
+                setFormData({ ...data, maxVelocity: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-16"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm/s</span>
+          </div>
+        </FormField>
+
+        <FormField label={t('maxAcceleration')} required hint={t('hints.maxAcceleration')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.maxAcceleration}
+              onChange={(e) =>
+                setFormData({ ...data, maxAcceleration: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-16"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm/s²</span>
+          </div>
+        </FormField>
+      </>
+    );
+  };
+
+  // 渲染旋转运动参数
+  const renderRotaryParams = () => {
+    const data = formData as RotaryMotionParams;
+    return (
+      <>
+        <FormField label={t('rotationAngle')} required hint={t('hints.rotationAngle')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.rotationAngle}
+              onChange={(e) =>
+                setFormData({ ...data, rotationAngle: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-12"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">°</span>
+          </div>
+        </FormField>
+
+        <FormField label={t('maxVelocityRotary')} required hint={t('hints.maxVelocityRotary')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.maxVelocity}
+              onChange={(e) =>
+                setFormData({ ...data, maxVelocity: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-12"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">rpm</span>
+          </div>
+        </FormField>
+
+        <FormField label={t('maxAccelerationRotary')} required hint={t('hints.maxAccelerationRotary')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.maxAcceleration}
+              onChange={(e) =>
+                setFormData({ ...data, maxAcceleration: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-16"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">rad/s²</span>
+          </div>
+        </FormField>
+      </>
+    );
+  };
+
+  // 渲染皮带运动参数（与直线类似）
+  const renderBeltParams = () => {
+    const data = formData as BeltMotionParams;
+    return (
+      <>
+        <FormField label={t('stroke')} required hint={t('hints.stroke')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.stroke}
+              onChange={(e) =>
+                setFormData({ ...data, stroke: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-12"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm</span>
+          </div>
+        </FormField>
+
+        <FormField label={t('maxVelocity')} required hint={t('hints.maxVelocity')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.maxVelocity}
+              onChange={(e) =>
+                setFormData({ ...data, maxVelocity: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-16"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm/s</span>
+          </div>
+        </FormField>
+
+        <FormField label={t('maxAcceleration')} required hint={t('hints.maxAcceleration')}>
+          <div className="relative">
+            <input
+              type="number"
+              value={data.maxAcceleration}
+              onChange={(e) =>
+                setFormData({ ...data, maxAcceleration: parseFloat(e.target.value) || 0 })
+              }
+              className="w-full px-4 py-2.5 pr-16"
+            />
+            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm/s²</span>
+          </div>
+        </FormField>
+      </>
+    );
+  };
+
+  // 根据运动类型渲染对应字段
+  const renderMotionParams = () => {
+    switch (formData.motionType) {
+      case 'LINEAR':
+        return renderLinearParams();
+      case 'ROTARY':
+        return renderRotaryParams();
+      case 'BELT':
+        return renderBeltParams();
+      default:
+        return renderLinearParams();
+    }
+  };
+
+  // 渲染快速统计信息
+  const renderQuickStats = () => {
+    const isRotary = formData.motionType === 'ROTARY';
+
+    return (
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="card p-4 text-center">
+          <TrendingUp className="w-5 h-5 text-[var(--primary-400)] mx-auto mb-2" />
+          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.cycleRate')}</p>
+          <p className="text-lg font-bold number-display text-[var(--foreground)]">
+            {(60 / (formData.cycleTime || 1)).toFixed(1)}
+          </p>
+          <p className="text-xs text-[var(--foreground-muted)]">{t('stats.cyclesPerMinute')}</p>
+        </div>
+        <div className="card p-4 text-center">
+          <Activity className="w-5 h-5 text-[var(--green-400)] mx-auto mb-2" />
+          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.accelRatio')}</p>
+          <p className="text-lg font-bold number-display text-[var(--foreground)]">
+            {isRotary
+              ? (formData.maxAcceleration / 9.8).toFixed(2)  // rad/s² 转 g 近似
+              : (formData.maxAcceleration / 9800).toFixed(2)  // mm/s² 转 g
+            }
+          </p>
+          <p className="text-xs text-[var(--foreground-muted)]">g</p>
+        </div>
+        <div className="card p-4 text-center">
+          <div className="w-5 h-5 rounded-full border-2 border-[var(--amber-400)] mx-auto mb-2 flex items-center justify-center">
+            <span className="text-[10px] text-[var(--amber-400)]">V</span>
+          </div>
+          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.maxSpeed')}</p>
+          <p className="text-lg font-bold number-display text-[var(--foreground)]">
+            {formData.maxVelocity}
+          </p>
+          <p className="text-xs text-[var(--foreground-muted)]">
+            {isRotary ? 'rpm' : 'mm/s'}
+          </p>
+        </div>
+        <div className="card p-4 text-center">
+          <div className="w-5 h-5 rounded-full border-2 border-[var(--primary-400)] mx-auto mb-2 flex items-center justify-center">
+            <span className="text-[10px] text-[var(--primary-400)]">
+              {isRotary ? '°' : 'S'}
+            </span>
+          </div>
+          <p className="text-xs text-[var(--foreground-muted)] mb-1">
+            {isRotary ? t('stats.rotationAngle') : t('stats.stroke')}
+          </p>
+          <p className="text-lg font-bold number-display text-[var(--foreground)]">
+            {isRotary
+              ? (formData as RotaryMotionParams).rotationAngle
+              : (formData as LinearMotionParams | BeltMotionParams).stroke}
+          </p>
+          <p className="text-xs text-[var(--foreground-muted)]">
+            {isRotary ? '°' : 'mm'}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -138,47 +401,7 @@ export function MotionStep() {
         </h3>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <FormField label={t('stroke')} required hint={t('hints.stroke')}>
-            <div className="relative">
-              <input
-                type="number"
-                value={formData.stroke}
-                onChange={(e) =>
-                  setFormData({ ...formData, stroke: parseFloat(e.target.value) || 0 })
-                }
-                className="w-full px-4 py-2.5 pr-12"
-              />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm</span>
-            </div>
-          </FormField>
-
-          <FormField label={t('maxVelocity')} required hint={t('hints.maxVelocity')}>
-            <div className="relative">
-              <input
-                type="number"
-                value={formData.maxVelocity}
-                onChange={(e) =>
-                  setFormData({ ...formData, maxVelocity: parseFloat(e.target.value) || 0 })
-                }
-                className="w-full px-4 py-2.5 pr-16"
-              />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm/s</span>
-            </div>
-          </FormField>
-
-          <FormField label={t('maxAcceleration')} required hint={t('hints.maxAcceleration')}>
-            <div className="relative">
-              <input
-                type="number"
-                value={formData.maxAcceleration}
-                onChange={(e) =>
-                  setFormData({ ...formData, maxAcceleration: parseFloat(e.target.value) || 0 })
-                }
-                className="w-full px-4 py-2.5 pr-16"
-              />
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[var(--foreground-muted)]">mm/s²</span>
-            </div>
-          </FormField>
+          {renderMotionParams()}
 
           <FormField label={t('dwellTime')} hint={t('hints.dwellTime')}>
             <div className="relative">
@@ -213,44 +436,7 @@ export function MotionStep() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="card p-4 text-center">
-          <TrendingUp className="w-5 h-5 text-[var(--primary-400)] mx-auto mb-2" />
-          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.cycleRate')}</p>
-          <p className="text-lg font-bold number-display text-[var(--foreground)]">
-            {(60 / (formData.cycleTime || 1)).toFixed(1)}
-          </p>
-          <p className="text-xs text-[var(--foreground-muted)]">{t('stats.cyclesPerMinute')}</p>
-        </div>
-        <div className="card p-4 text-center">
-          <Activity className="w-5 h-5 text-[var(--green-400)] mx-auto mb-2" />
-          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.accelRatio')}</p>
-          <p className="text-lg font-bold number-display text-[var(--foreground)]">
-            {(formData.maxAcceleration / 9800).toFixed(2)}
-          </p>
-          <p className="text-xs text-[var(--foreground-muted)]">g</p>
-        </div>
-        <div className="card p-4 text-center">
-          <div className="w-5 h-5 rounded-full border-2 border-[var(--amber-400)] mx-auto mb-2 flex items-center justify-center">
-            <span className="text-[10px] text-[var(--amber-400)]">V</span>
-          </div>
-          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.maxSpeed')}</p>
-          <p className="text-lg font-bold number-display text-[var(--foreground)]">
-            {formData.maxVelocity}
-          </p>
-          <p className="text-xs text-[var(--foreground-muted)]">mm/s</p>
-        </div>
-        <div className="card p-4 text-center">
-          <div className="w-5 h-5 rounded-full border-2 border-[var(--primary-400)] mx-auto mb-2 flex items-center justify-center">
-            <span className="text-[10px] text-[var(--primary-400)]">S</span>
-          </div>
-          <p className="text-xs text-[var(--foreground-muted)] mb-1">{t('stats.stroke')}</p>
-          <p className="text-lg font-bold number-display text-[var(--foreground)]">
-            {formData.stroke}
-          </p>
-          <p className="text-xs text-[var(--foreground-muted)]">mm</p>
-        </div>
-      </div>
+      {renderQuickStats()}
 
       {/* Actions */}
       <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4 border-t border-[var(--border-subtle)]">
