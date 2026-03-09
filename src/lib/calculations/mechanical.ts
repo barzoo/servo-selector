@@ -145,32 +145,123 @@ export class MechanicalCalculator {
   }
 
   private calculateMotionTimes(): { accel: number; constant: number; decel: number; dwell: number } {
-    const { motion } = this.input;
-    const v = motion.maxVelocity * 1e-3;
-    const a = motion.maxAcceleration * 1e-3;
-    const s = motion.stroke * 1e-3;
+    // 使用归一化后的参数
+    const { distance, velocity, acceleration } = this.normalizeMotionParams();
 
-    const t_accel = v / a;
-    const s_accel = 0.5 * a * t_accel * t_accel;
+    const t_accel = velocity / acceleration;
+    const s_accel = 0.5 * acceleration * t_accel * t_accel;
 
-    if (2 * s_accel <= s) {
-      const s_constant = s - 2 * s_accel;
-      const t_constant = s_constant / v;
+    if (2 * s_accel <= distance) {
+      const s_constant = distance - 2 * s_accel;
+      const t_constant = s_constant / velocity;
       return {
         accel: t_accel,
         constant: t_constant,
         decel: t_accel,
-        dwell: motion.dwellTime,
+        dwell: this.input.motion.dwellTime,
       };
     } else {
-      const t_peak = Math.sqrt(s / a);
+      const t_peak = Math.sqrt(distance / acceleration);
       return {
         accel: t_peak,
         constant: 0,
         decel: t_peak,
-        dwell: motion.dwellTime,
+        dwell: this.input.motion.dwellTime,
       };
     }
+  }
+
+  /**
+   * 将不同运动类型的参数归一化为标准单位 (m, m/s, m/s²)
+   * 用于统一计算运动时间
+   */
+  private normalizeMotionParams(): { distance: number; velocity: number; acceleration: number } {
+    const { motion } = this.input;
+
+    switch (motion.motionType) {
+      case 'LINEAR':
+      case 'BELT':
+        return {
+          distance: motion.stroke * 1e-3,        // mm -> m
+          velocity: motion.maxVelocity * 1e-3,   // mm/s -> m/s
+          acceleration: motion.maxAcceleration * 1e-3, // mm/s² -> m/s²
+        };
+
+      case 'ROTARY': {
+        // 旋转运动：将角度转换为等效直线距离（用于运动时间计算）
+        const angleRad = motion.rotationAngle * Math.PI / 180;  // ° -> rad
+
+        // 根据传动类型获取等效半径
+        const effectiveRadius = this.getEffectiveRadius();
+
+        return {
+          distance: angleRad * effectiveRadius,  // rad * m = m (等效弧长)
+          velocity: this.getRotaryLinearVelocity(),  // m/s
+          acceleration: this.getRotaryLinearAcceleration(), // m/s²
+        };
+      }
+
+      default:
+        throw new Error(`Unknown motion type: ${(motion as any).motionType}`);
+    }
+  }
+
+  /**
+   * 获取传动机构的等效半径（用于旋转运动转换）
+   */
+  private getEffectiveRadius(): number {
+    const { type, params } = this.input.mechanism;
+
+    switch (type) {
+      case 'GEARBOX': {
+        const p = params as GearboxParams;
+        if (p.loadType === 'TABLE' && p.tableDiameter) {
+          return p.tableDiameter * 1e-3 / 2;  // 转盘半径
+        } else if (p.loadType === 'DRUM' && p.drumDiameter) {
+          return p.drumDiameter * 1e-3 / 2;   // 卷筒半径
+        }
+        // 默认假设半径 0.1m (100mm)
+        return 0.1;
+      }
+
+      case 'DIRECT_DRIVE': {
+        const p = params as DirectDriveParams;
+        if (p.driveType === 'ROTARY' && p.tableDiameter) {
+          return p.tableDiameter * 1e-3 / 2;
+        }
+        return 0.1;
+      }
+
+      default:
+        return 0.1;
+    }
+  }
+
+  /**
+   * 获取旋转运动的等效线速度 (m/s)
+   */
+  private getRotaryLinearVelocity(): number {
+    const { motion } = this.input;
+    if (motion.motionType !== 'ROTARY') return 0;
+
+    const radius = this.getEffectiveRadius();
+    const rpm = motion.maxVelocity;  // rpm
+    const radPerSec = rpm * 2 * Math.PI / 60;  // rad/s
+
+    return radPerSec * radius;  // m/s
+  }
+
+  /**
+   * 获取旋转运动的等效线加速度 (m/s²)
+   */
+  private getRotaryLinearAcceleration(): number {
+    const { motion } = this.input;
+    if (motion.motionType !== 'ROTARY') return 0;
+
+    const radius = this.getEffectiveRadius();
+    const radPerSec2 = motion.maxAcceleration;  // rad/s²
+
+    return radPerSec2 * radius;  // m/s²
   }
 
   private calculateFrictionTorque(): number {
@@ -281,7 +372,13 @@ export class MechanicalCalculator {
     const { type, params } = this.input.mechanism;
     const { motion } = this.input;
 
-    const v = motion.maxVelocity * 1e-3;
+    // 如果是旋转运动，直接使用输入的转速
+    if (motion.motionType === 'ROTARY') {
+      return motion.maxVelocity * 2 * Math.PI / 60;  // rpm -> rad/s
+    }
+
+    // 原有直线运动转换逻辑保持不变
+    const v = motion.maxVelocity * 1e-3;  // mm/s -> m/s
 
     switch (type) {
       case 'BALL_SCREW': {
