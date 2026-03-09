@@ -144,8 +144,11 @@
     "profileLabel": "Motion Profile",
     "paramsTitle": "Motion Parameters",
     "stroke": "Stroke (mm)",
+    "rotationAngle": "Rotation Angle (°)",
     "maxVelocity": "Max Velocity (mm/s)",
+    "maxVelocityRotary": "Max Speed (rpm)",
     "maxAcceleration": "Max Acceleration (mm/s²)",
+    "maxAccelerationRotary": "Max Angular Accel (rad/s²)",
     "profile": "Motion Profile",
     "profiles": {
       "trapezoidal": "Trapezoidal",
@@ -156,18 +159,22 @@
       "sCurve": "Smooth Acceleration"
     },
     "hints": {
-      "stroke": "Total travel range of motion axis",
-      "maxVelocity": "Maximum operating velocity",
+      "stroke": "Total linear travel distance",
+      "rotationAngle": "Rotation range in degrees, 360° = one full revolution",
+      "maxVelocity": "Maximum running velocity",
+      "maxVelocityRotary": "Maximum rotation speed",
       "maxAcceleration": "Maximum acceleration",
+      "maxAccelerationRotary": "Maximum angular acceleration",
       "dwellTime": "Dwell time after positioning",
       "cycleTime": "Complete motion cycle time"
     },
     "stats": {
       "cycleRate": "Cycle Rate",
-      "cyclesPerMinute": "cpm",
+      "cyclesPerMinute": "cycles/min",
       "accelRatio": "Accel Ratio",
       "maxSpeed": "Max Speed",
-      "stroke": "Stroke"
+      "stroke": "Stroke",
+      "rotationAngle": "Rotation"
     },
     "dwellTime": "Dwell Time (s)",
     "cycleTime": "Cycle Time (s)"

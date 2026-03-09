@@ -144,8 +144,11 @@
     "profileLabel": "速度曲线类型",
     "paramsTitle": "运动参数",
     "stroke": "行程 (mm)",
+    "rotationAngle": "旋转角度 (°)",
     "maxVelocity": "最大速度 (mm/s)",
+    "maxVelocityRotary": "最大转速 (rpm)",
     "maxAcceleration": "最大加速度 (mm/s²)",
+    "maxAccelerationRotary": "最大角加速度 (rad/s²)",
     "profile": "运动曲线",
     "profiles": {
       "trapezoidal": "梯形曲线",
@@ -156,9 +159,12 @@
       "sCurve": "平滑加减速"
     },
     "hints": {
-      "stroke": "运动轴的总行程范围",
+      "stroke": "直线运动的总行程范围",
+      "rotationAngle": "旋转运动的范围角度，360°为一整圈",
       "maxVelocity": "最大运行速度",
+      "maxVelocityRotary": "最大旋转转速",
       "maxAcceleration": "最大加速度",
+      "maxAccelerationRotary": "最大角加速度",
       "dwellTime": "到位后的停留时间",
       "cycleTime": "完整运动周期时间"
     },
@@ -167,7 +173,8 @@
       "cyclesPerMinute": "次/分钟",
       "accelRatio": "加速度比",
       "maxSpeed": "最大速度",
-      "stroke": "行程"
+      "stroke": "行程",
+      "rotationAngle": "旋转角度"
     },
     "dwellTime": "停顿时间 (s)",
     "cycleTime": "循环周期 (s)"
