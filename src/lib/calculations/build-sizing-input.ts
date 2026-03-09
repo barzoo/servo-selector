@@ -1,4 +1,70 @@
-import { Project, AxisConfig, SizingInput, ProjectInfo } from '@/types';
+import { Project, AxisConfig, SizingInput, ProjectInfo, MotionParams, MechanismType } from '@/types';
+
+/**
+ * 根据传动类型确定运动参数类型
+ */
+function getMotionTypeForMechanism(mechanismType: MechanismType): 'LINEAR' | 'ROTARY' | 'BELT' {
+  switch (mechanismType) {
+    case 'BALL_SCREW':
+    case 'RACK_PINION':
+      return 'LINEAR';
+
+    case 'GEARBOX':
+      return 'ROTARY';
+
+    case 'DIRECT_DRIVE':
+      // 根据 driveType 判断，但默认为 ROTARY
+      return 'ROTARY';
+
+    case 'BELT':
+      return 'BELT';
+
+    default:
+      return 'LINEAR';
+  }
+}
+
+/**
+ * 构建默认运动参数
+ */
+export function buildDefaultMotionParams(mechanismType: MechanismType): MotionParams {
+  const motionType = getMotionTypeForMechanism(mechanismType);
+
+  switch (motionType) {
+    case 'LINEAR':
+      return {
+        motionType: 'LINEAR',
+        stroke: 500,
+        maxVelocity: 500,
+        maxAcceleration: 5000,
+        profile: 'TRAPEZOIDAL',
+        dwellTime: 0.5,
+        cycleTime: 3,
+      };
+
+    case 'ROTARY':
+      return {
+        motionType: 'ROTARY',
+        rotationAngle: 360,  // 一整圈
+        maxVelocity: 60,     // 60 rpm
+        maxAcceleration: 300, // rad/s²
+        profile: 'TRAPEZOIDAL',
+        dwellTime: 0.5,
+        cycleTime: 3,
+      };
+
+    case 'BELT':
+      return {
+        motionType: 'BELT',
+        stroke: 1000,
+        maxVelocity: 1000,
+        maxAcceleration: 5000,
+        profile: 'TRAPEZOIDAL',
+        dwellTime: 0.5,
+        cycleTime: 3,
+      };
+  }
+}
 
 /**
  * 合并项目公共参数和轴特有参数，生成完整的 SizingInput
@@ -44,10 +110,19 @@ export function buildSizingInput(
     safety: (axisPreferences?.safety ?? 'NONE') as 'STO' | 'NONE',
   };
 
+  // 确保 motion 有 motionType 字段（向后兼容）
+  const motion = axis.input.motion;
+  const motionWithType: MotionParams = motion
+    ? {
+        ...motion,
+        motionType: (motion as any).motionType || getMotionTypeForMechanism(axis.input.mechanism!.type),
+      }
+    : buildDefaultMotionParams(axis.input.mechanism!.type);
+
   return {
     project: projectInfo,
     mechanism: axis.input.mechanism,
-    motion: axis.input.motion,
+    motion: motionWithType,
     duty,
     preferences,
     selections: axis.input.selections,
