@@ -41,6 +41,7 @@ const mockAxis: AxisConfig = {
       },
     },
     motion: {
+      motionType: 'LINEAR',
       stroke: 500,
       maxVelocity: 1000,
       maxAcceleration: 5000,
@@ -96,7 +97,8 @@ describe('buildSizingInput', () => {
     const result = buildSizingInput(mockProject, mockAxis);
 
     expect(result.mechanism?.type).toBe('BALL_SCREW');
-    expect(result.motion?.stroke).toBe(500);
+    expect(result.motion?.motionType).toBe('LINEAR');
+    expect((result.motion as any).stroke).toBe(500);
   });
 
   it('should handle incomplete axis input', () => {

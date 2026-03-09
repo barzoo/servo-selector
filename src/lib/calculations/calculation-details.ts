@@ -298,9 +298,26 @@ export function extractMotionParams(
     };
   }
   const { motion } = input;
-  const v = motion.maxVelocity * 1e-3;  // mm/s -> m/s
-  const a = motion.maxAcceleration * 1e-3;  // mm/s² -> m/s²
-  const s = motion.stroke * 1e-3;  // mm -> m
+
+  // 根据运动类型获取行程距离
+  let s: number;  // 行程 (m)
+  let v: number;  // 速度 (m/s)
+  let a: number;  // 加速度 (m/s²)
+
+  if (motion.motionType === 'ROTARY') {
+    // 旋转运动：将角度转换为等效直线距离
+    const angleRad = motion.rotationAngle * Math.PI / 180;  // ° -> rad
+    // 使用默认等效半径 0.1m (与 mechanical.ts 保持一致)
+    const effectiveRadius = 0.1;
+    s = angleRad * effectiveRadius;  // 等效弧长 (m)
+    v = (motion.maxVelocity * 2 * Math.PI / 60) * effectiveRadius;  // rpm -> rad/s -> m/s
+    a = motion.maxAcceleration * effectiveRadius;  // rad/s² -> m/s²
+  } else {
+    // 直线运动
+    s = motion.stroke * 1e-3;  // mm -> m
+    v = motion.maxVelocity * 1e-3;  // mm/s -> m/s
+    a = motion.maxAcceleration * 1e-3;  // mm/s² -> m/s²
+  }
 
   // 计算运动时间
   const t_accel = v / a;

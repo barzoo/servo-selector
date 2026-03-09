@@ -24,6 +24,7 @@ const baseInput: SizingInput = {
     },
   },
   motion: {
+    motionType: 'LINEAR',
     stroke: 100,
     maxVelocity: 500,
     maxAcceleration: 1000,
