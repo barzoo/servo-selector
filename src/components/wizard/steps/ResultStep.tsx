@@ -7,6 +7,7 @@ import { DetailedCalculations } from '../DetailedCalculations';
 import { SystemSummary, findMotor, findDrive, buildSummaryItems } from '../SystemSummary';
 import { PdfExportButton } from '../PdfExportButton';
 import { SaveToBasketMenu } from '../SaveToBasketMenu';
+import { MotorCharacteristicChart } from '@/components/wizard/MotorCharacteristicChart';
 import {
   Trophy,
   AlertTriangle,
@@ -323,6 +324,33 @@ export function ResultStep() {
           ))}
         </div>
       </div>
+
+      {/* Motor Characteristic Chart */}
+      {selectedRecommendation && result && (
+        <MotorCharacteristicChart
+          motor={{
+            ratedTorque: selectedRecommendation.motor.ratedTorque,
+            peakTorque: selectedRecommendation.motor.peakTorque,
+            ratedSpeed: selectedRecommendation.motor.ratedSpeed,
+            maxSpeed: selectedRecommendation.motor.maxSpeed,
+          }}
+          operatingPoints={{
+            accel: {
+              speed: result.mechanical.speeds.max * 0.5,
+              torque: result.mechanical.torques.accel,
+            },
+            constant: {
+              speed: result.mechanical.speeds.max,
+              torque: result.mechanical.torques.constant,
+            },
+            decel: {
+              speed: result.mechanical.speeds.max * 0.5,
+              torque: Math.abs(result.mechanical.torques.decel),
+            },
+          }}
+          className="mt-4"
+        />
+      )}
 
       {/* System Configuration */}
       {config && (
