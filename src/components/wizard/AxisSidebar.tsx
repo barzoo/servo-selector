@@ -6,6 +6,7 @@ import { AxisSidebarItem } from './AxisSidebarItem';
 import { ProjectPdfExport } from './ProjectPdfExport';
 import { ExportDialog } from '@/components/project-data/ExportDialog';
 import { ImportDialog } from '@/components/project-data/ImportDialog';
+import { ExcelExportButton } from '@/components/project-data/ExcelExportButton';
 import { useState } from 'react';
 import type { Project } from '@/types';
 
@@ -186,6 +187,11 @@ export function AxisSidebar({
           </div>
 
           <ProjectPdfExport project={project} />
+
+          {/* Excel Export Button */}
+          <div className="mt-3">
+            <ExcelExportButton project={project} />
+          </div>
 
           {/* Export/Import Buttons */}
           <div className="grid grid-cols-2 gap-2 mt-3">
