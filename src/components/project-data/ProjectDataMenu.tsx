@@ -2,9 +2,10 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-import { Settings, Download, Upload, FileText, ChevronDown } from 'lucide-react';
+import { Settings, Download, Upload, FileText, ChevronDown, FileSpreadsheet } from 'lucide-react';
 import { ExportDialog } from './ExportDialog';
 import { ImportDialog } from './ImportDialog';
+import { ExcelExportButton } from './ExcelExportButton';
 import { useProjectStore } from '@/stores/project-store';
 
 export function ProjectDataMenu() {
@@ -106,6 +107,9 @@ export function ProjectDataMenu() {
               disabled={completedCount === 0}
               hint={completedCount === 0 ? t('noCompletedAxes') : undefined}
             />
+            <div className="px-3 py-2">
+              <ExcelExportButton project={project} />
+            </div>
           </div>
         )}
       </div>
