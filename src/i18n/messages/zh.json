@@ -549,6 +549,9 @@
     }
   },
   "projectData": {
+    "exportExcel": "导出 Excel",
+    "exportExcelTooltip": "导出项目数据为 Excel 文件",
+    "noCompletedAxesForExport": "请完成至少一个轴的配置后再导出",
     "menu": {
       "title": "工具",
       "exportProject": "导出项目",

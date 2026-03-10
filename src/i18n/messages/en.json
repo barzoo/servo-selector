@@ -549,6 +549,9 @@
     }
   },
   "projectData": {
+    "exportExcel": "Export Excel",
+    "exportExcelTooltip": "Export project data as Excel file",
+    "noCompletedAxesForExport": "Please complete at least one axis configuration before exporting",
     "menu": {
       "title": "Tools",
       "exportProject": "Export Project",
