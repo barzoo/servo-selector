@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { DetailedCalculations } from '../DetailedCalculations';
 import { SystemSummary, findMotor, findDrive, buildSummaryItems } from '../SystemSummary';
-import { PdfExportButton } from '../PdfExportButton';
 import { SaveToBasketMenu } from '../SaveToBasketMenu';
 import { MotorCharacteristicChart } from '@/components/wizard/MotorCharacteristicChart';
 import {
@@ -433,8 +432,6 @@ export function ResultStep() {
               triggerRef={saveButtonRef}
             />
           </div>
-
-          <PdfExportButton disabled={!config} />
         </div>
       </div>
     </div>
