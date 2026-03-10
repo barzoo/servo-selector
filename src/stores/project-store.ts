@@ -372,12 +372,30 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       reset: () => {
-        const newProject = createInitialProject();
-        set({
-          ...initialState,
-          project: newProject,
-          currentAxisId: newProject.axes[0].id,
-        });
+        const state = get();
+        const currentAxisId = state.currentAxisId;
+
+        // Reset only the current axis, preserve project and other axes
+        set((state) => ({
+          currentStep: 1 as WizardStep,
+          isComplete: false,
+          input: {},
+          result: undefined,
+          project: {
+            ...state.project,
+            axes: state.project.axes.map((a) =>
+              a.id === currentAxisId
+                ? {
+                    ...a,
+                    status: 'CONFIGURING' as AxisStatus,
+                    input: {},
+                    result: undefined,
+                    completedAt: undefined,
+                  }
+                : a
+            ),
+          },
+        }));
       },
 
       // Individual input setters (for compatibility with existing components)
