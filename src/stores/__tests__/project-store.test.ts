@@ -123,3 +123,10 @@ describe('migrateLegacyData', () => {
   });
 });
 
+// Note: Full store reset() test requires Zustand store setup
+// The reset() function should:
+// - Preserve project info (name, customer, salesPerson, notes, commonParams)
+// - Preserve other axes data
+// - Only reset current axis (input, result, status)
+// - Reset step to 1 and isComplete to false
+
