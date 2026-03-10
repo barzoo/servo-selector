@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { Move, ArrowRight, ArrowLeft, TrendingUp, Activity } from 'lucide-react';
 import { buildDefaultMotionParams } from '@/lib/calculations/build-sizing-input';
+import { VelocityProfileChart } from '@/components/wizard/VelocityProfileChart';
 
 interface FormFieldProps {
   label: string;
@@ -392,6 +393,9 @@ export function MotionStep() {
           </button>
         </div>
       </div>
+
+      {/* Velocity Profile Chart */}
+      <VelocityProfileChart profile={formData.profile} />
 
       {/* Parameters */}
       <div className="card p-6">
