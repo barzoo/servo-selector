@@ -71,19 +71,6 @@ export function MotorCharacteristicChart({
     };
   }, [motor.ratedTorque, scaleY]);
 
-  // Check if points are within envelope
-  const isPointWithinEnvelope = (point: OperatingPoint) => {
-    if (point.speed <= motor.ratedSpeed) {
-      return point.torque <= motor.peakTorque;
-    } else if (point.speed <= motor.maxSpeed) {
-      const maxAllowedTorque = motor.peakTorque -
-        (motor.peakTorque - motor.ratedTorque) *
-        (point.speed - motor.ratedSpeed) / (motor.maxSpeed - motor.ratedSpeed);
-      return point.torque <= maxAllowedTorque;
-    }
-    return false;
-  };
-
   return (
     <div className={`bg-[var(--background-secondary)] rounded-xl p-4 ${className}`}>
       <svg
