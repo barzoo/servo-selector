@@ -42,7 +42,8 @@
       "Bash(grep:*)",
       "Bash(strings:*)",
       "Bash(cat:*)",
-      "WebFetch(domain:localhost)"
+      "WebFetch(domain:localhost)",
+      "Bash(npx:*)"
     ]
   },
   "spinnerVerbs": {

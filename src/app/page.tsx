@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useProjectStore, migrateLegacyData, migrateToSharedParams } from '@/stores/project-store';
+import { useProjectStore, migrateLegacyData, migrateToSharedParams, createEmptyProject } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
@@ -40,36 +40,52 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    // Check if there's a saved project in localStorage (from Zustand persist)
     const stored = localStorage.getItem('servo-selector-project');
+
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        const migrated = migrateToSharedParams(parsed);
-        if (migrated) {
-          useProjectStore.setState({
-            project: migrated,
-            currentAxisId: migrated.axes[0]?.id || '',
-            currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 5 : 1,
-            isComplete: migrated.axes[0]?.status === 'COMPLETED',
-          });
+        const state = parsed.state || parsed;
+
+        // Check if the stored project has axes - if so, use it
+        if (state.project?.axes?.length > 0) {
           setIsLoaded(true);
           return;
         }
+
+        // Stored project has no axes, reset to empty project for onboarding
+        useProjectStore.setState({
+          project: createEmptyProject(),
+          currentAxisId: '',
+          currentStep: 1,
+          isComplete: false,
+          input: {},
+          result: undefined,
+        });
+        setIsLoaded(true);
+        return;
       } catch {
-        // Ignore parse errors
+        // Invalid stored data, clear it
+        localStorage.removeItem('servo-selector-project');
       }
     }
 
+    // Check for legacy data
     const migrated = migrateLegacyData();
     if (migrated) {
       useProjectStore.setState({
         project: migrated,
-        currentAxisId: migrated.axes[0].id,
-        currentStep: migrated.axes[0].status === 'COMPLETED' ? 5 : 1,
-        isComplete: migrated.axes[0].status === 'COMPLETED',
+        currentAxisId: migrated.axes[0]?.id || '',
+        currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 5 : 1,
+        isComplete: migrated.axes[0]?.status === 'COMPLETED',
       });
-    } else if (!project.name) {
-      createProject({ name: '', customer: '', salesPerson: '' });
+    } else if (!project.name && project.axes.length === 0) {
+      // Fresh start - create empty project to show onboarding
+      useProjectStore.setState({
+        project: createEmptyProject(),
+        currentAxisId: '',
+      });
     }
     setIsLoaded(true);
   }, []);

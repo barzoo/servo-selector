@@ -239,13 +239,13 @@ export const useProjectStore = create<ProjectStore>()(
       createProject: (info) =>
         set({
           project: {
-            ...createInitialProject(),
+            ...createEmptyProject(),
             name: info.name,
             customer: info.customer,
             salesPerson: info.salesPerson,
             notes: info.notes,
           },
-          currentAxisId: createInitialProject().axes[0].id,
+          currentAxisId: '',
         }),
 
       updateProjectInfo: (info) =>
