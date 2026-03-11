@@ -419,12 +419,12 @@ export function ResultStep() {
               onClose={() => setShowSaveMenu(false)}
               onCloneAxis={() => {
                 const currentAxisId = useProjectStore.getState().currentAxisId;
-                const newAxisId = addAxis(t('axisName', { index: project.axes.length + 1 }), currentAxisId);
+                const newAxisId = addAxis(t('newAxisName', { index: project.axes.length + 1 }), currentAxisId);
                 switchAxis(newAxisId);
                 setShowSaveMenu(false);
               }}
               onAddNewAxis={() => {
-                const newAxisId = addAxis(t('axisName', { index: project.axes.length + 1 }));
+                const newAxisId = addAxis(t('newAxisName', { index: project.axes.length + 1 }));
                 switchAxis(newAxisId);
                 setShowSaveMenu(false);
               }}

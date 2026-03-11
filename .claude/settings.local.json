@@ -41,7 +41,8 @@
       "mcp__chrome-devtools__emulate",
       "Bash(grep:*)",
       "Bash(strings:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "WebFetch(domain:localhost)"
     ]
   },
   "spinnerVerbs": {

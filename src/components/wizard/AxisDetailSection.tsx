@@ -35,7 +35,7 @@ export function AxisDetailSection({ axis, axisIndex }: AxisDetailSectionProps) {
           color: '#1e3a8a',
           margin: 0
         }}>
-          {t('result.axisName', { index: axisIndex + 1, name: axis.name })}
+          {t('result.axisNameWithLabel', { index: axisIndex + 1, name: axis.name })}
         </h2>
         {axis.completedAt && (
           <p style={{
