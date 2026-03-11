@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useProjectStore, migrateLegacyData, migrateToSharedParams, createEmptyProject } from '@/stores/project-store';
+import { useProjectStore, migrateLegacyData } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
@@ -40,7 +40,16 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if there's a saved project in localStorage (from Zustand persist)
+    // Check current store state (may have been hydrated by Zustand persist)
+    const currentState = useProjectStore.getState();
+
+    // If store already has axes (from Zustand persist), keep it
+    if (currentState.project.axes.length > 0) {
+      setIsLoaded(true);
+      return;
+    }
+
+    // Check if there's a saved project in localStorage
     const stored = localStorage.getItem('servo-selector-project');
 
     if (stored) {
@@ -48,23 +57,21 @@ export default function Home() {
         const parsed = JSON.parse(stored);
         const state = parsed.state || parsed;
 
-        // Check if the stored project has axes - if so, use it
+        // Check if the stored project has axes
         if (state.project?.axes?.length > 0) {
+          // Restore the saved state
+          useProjectStore.setState({
+            project: state.project,
+            currentAxisId: state.project.axes[0]?.id || '',
+            currentStep: state.project.axes[0]?.status === 'COMPLETED' ? 5 : 1,
+            isComplete: state.project.axes[0]?.status === 'COMPLETED',
+          });
           setIsLoaded(true);
           return;
         }
 
-        // Stored project has no axes, reset to empty project for onboarding
-        useProjectStore.setState({
-          project: createEmptyProject(),
-          currentAxisId: '',
-          currentStep: 1,
-          isComplete: false,
-          input: {},
-          result: undefined,
-        });
-        setIsLoaded(true);
-        return;
+        // Stored project has no axes, clear it and show onboarding
+        localStorage.removeItem('servo-selector-project');
       } catch {
         // Invalid stored data, clear it
         localStorage.removeItem('servo-selector-project');
@@ -80,13 +87,9 @@ export default function Home() {
         currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 5 : 1,
         isComplete: migrated.axes[0]?.status === 'COMPLETED',
       });
-    } else if (!project.name && project.axes.length === 0) {
-      // Fresh start - create empty project to show onboarding
-      useProjectStore.setState({
-        project: createEmptyProject(),
-        currentAxisId: '',
-      });
     }
+    // Otherwise, keep the initial empty project state (will show onboarding)
+
     setIsLoaded(true);
   }, []);
 
