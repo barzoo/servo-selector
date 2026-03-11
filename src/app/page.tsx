@@ -40,16 +40,7 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Check current store state (may have been hydrated by Zustand persist)
-    const currentState = useProjectStore.getState();
-
-    // If store already has axes (from Zustand persist), keep it
-    if (currentState.project.axes.length > 0) {
-      setIsLoaded(true);
-      return;
-    }
-
-    // Check if there's a saved project in localStorage
+    // Rehydrate from localStorage manually (since skipHydration is enabled)
     const stored = localStorage.getItem('servo-selector-project');
 
     if (stored) {
@@ -57,23 +48,23 @@ export default function Home() {
         const parsed = JSON.parse(stored);
         const state = parsed.state || parsed;
 
-        // Check if the stored project has axes
+        // Only restore if the stored project has axes
         if (state.project?.axes?.length > 0) {
-          // Restore the saved state
           useProjectStore.setState({
             project: state.project,
             currentAxisId: state.project.axes[0]?.id || '',
             currentStep: state.project.axes[0]?.status === 'COMPLETED' ? 5 : 1,
             isComplete: state.project.axes[0]?.status === 'COMPLETED',
+            input: state.input || {},
+            result: state.result,
           });
           setIsLoaded(true);
           return;
         }
 
-        // Stored project has no axes, clear it and show onboarding
+        // Stored project has no axes, clear it
         localStorage.removeItem('servo-selector-project');
       } catch {
-        // Invalid stored data, clear it
         localStorage.removeItem('servo-selector-project');
       }
     }
@@ -94,7 +85,8 @@ export default function Home() {
   }, []);
 
   const handleAddAxis = () => {
-    const newAxisId = addAxis(`Axis-${project.axes.length + 1}`);
+    // Pass empty string to let addAxis use locale-aware default name
+    const newAxisId = addAxis('');
     switchAxis(newAxisId);
     setMainViewMode('wizard');
 
@@ -126,7 +118,7 @@ export default function Home() {
     if (mainViewMode === 'edit-project') {
       return (
         <ProjectInfoEditStep
-          onComplete={() => setMainViewMode('wizard')}
+          onComplete={() => setMainViewMode('edit-common')}
         />
       );
     }
@@ -134,7 +126,10 @@ export default function Home() {
     if (mainViewMode === 'edit-common') {
       return (
         <CommonParamsEditStep
-          onComplete={() => setMainViewMode('wizard')}
+          onComplete={() => {
+            // After common params, create first axis and enter wizard
+            handleAddAxis();
+          }}
         />
       );
     }

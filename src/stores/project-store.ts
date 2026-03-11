@@ -574,21 +574,19 @@ export const useProjectStore = create<ProjectStore>()(
     }),
     {
       name: 'servo-selector-project',
-      version: 2, // 增加版本号
+      version: 3, // 增加版本号，强制重新迁移
+      skipHydration: true, // 禁用自动 hydration，让页面组件控制
       migrate: (persistedState: any, version: number) => {
-        if (version < 2) {
-          // 从旧版本迁移
-          const migrated = migrateToSharedParams(persistedState);
-          if (migrated) {
-            return {
-              project: migrated,
-              currentAxisId: migrated.axes[0]?.id || '',
-              currentStep: 1,
-              isComplete: false,
-              input: {},
-              result: undefined,
-            };
-          }
+        if (version < 3) {
+          // 从旧版本迁移，重置为空项目以显示引导页
+          return {
+            project: createEmptyProject(),
+            currentAxisId: '',
+            currentStep: 1,
+            isComplete: false,
+            input: {},
+            result: undefined,
+          };
         }
         return persistedState;
       },
