@@ -135,6 +135,33 @@ export function createInitialProject(
   };
 }
 
+/**
+ * Create an empty project without any axes
+ * Used for initial app state to show onboarding
+ * @returns Empty Project object
+ * Complexity: O(1)
+ */
+export function createEmptyProject(): Project {
+  const now = new Date().toISOString();
+  return {
+    id: generateProjectId(),
+    name: '',
+    customer: '',
+    salesPerson: '',
+    createdAt: now,
+    commonParams: {
+      ambientTemp: 25,
+      ipRating: 'IP65',
+      communication: 'ETHERCAT',
+      cableLength: 5,
+      safetyFactor: 1.5,
+      maxInertiaRatio: 10,
+      targetInertiaRatio: 5,
+    },
+    axes: [],
+  };
+}
+
 // ============ Store Interface ============
 
 interface ProjectStore {
@@ -192,7 +219,7 @@ interface ProjectStore {
 }
 
 const initialState = {
-  project: createInitialProject(),
+  project: createEmptyProject(),
   currentAxisId: '',
   currentStep: 1 as WizardStep,
   isComplete: false,
@@ -206,7 +233,7 @@ export const useProjectStore = create<ProjectStore>()(
   persist(
     (set, get) => ({
       ...initialState,
-      currentAxisId: initialState.project.axes[0].id,
+      currentAxisId: initialState.project.axes[0]?.id ?? '',
 
       // Project operations
       createProject: (info) =>
