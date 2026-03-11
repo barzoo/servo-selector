@@ -15,6 +15,7 @@ import { ResultStep } from '@/components/wizard/steps/ResultStep';
 import { ProjectInfoEditStep } from '@/components/wizard/steps/ProjectInfoEditStep';
 import { CommonParamsEditStep } from '@/components/wizard/steps/CommonParamsEditStep';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { OnboardingEmptyState } from '@/components/onboarding';
 
 export default function Home() {
   const {
@@ -121,59 +122,15 @@ export default function Home() {
 
     if (project.axes.length === 0) {
       return (
-        <div className="flex flex-col items-center justify-center min-h-[500px] text-center px-8">
-          <div className="relative mb-8">
-            <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-300)] rounded-full blur-2xl opacity-20 animate-pulse"></div>
-            <div className="relative w-24 h-24 bg-gradient-to-br from-[var(--background-tertiary)] to-[var(--background-secondary)] rounded-2xl flex items-center justify-center border border-[var(--border-default)] shadow-2xl">
-              <Zap className="w-12 h-12 text-[var(--primary-400)]" />
-            </div>
-          </div>
-
-          <h2 className="text-3xl font-bold mb-4">
-            <span className="gradient-text">{t('welcomeTitle')}</span>
-          </h2>
-
-          <p className="text-[var(--foreground-secondary)] mb-8 max-w-md text-lg leading-relaxed">
-            {t('welcomeSubtitle')}
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md mb-8">
-            <div className="card p-4 card-hover">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-[var(--primary-500)]/10 flex items-center justify-center">
-                  <Settings className="w-5 h-5 text-[var(--primary-400)]" />
-                </div>
-                <span className="font-medium">{t('cards.projectConfig')}</span>
-              </div>
-              <p className="text-sm text-[var(--foreground-muted)]">{t('cards.projectConfigDesc')}</p>
-            </div>
-
-            <div className="card p-4 card-hover">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-[var(--green-500)]/10 flex items-center justify-center">
-                  <Plus className="w-5 h-5 text-[var(--green-400)]" />
-                </div>
-                <span className="font-medium">{t('cards.addAxis')}</span>
-              </div>
-              <p className="text-sm text-[var(--foreground-muted)]">{t('cards.addAxisDesc')}</p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => {
-              if (!project.name) {
-                setMainViewMode('edit-project');
-              } else {
-                handleAddAxis();
-              }
-            }}
-            className="btn btn-primary text-base px-8 py-4"
-          >
-            <Plus className="w-5 h-5" />
-            {project.name ? t('buttons.addFirstAxis') : t('buttons.setProjectFirst')}
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </div>
+        <OnboardingEmptyState
+          onStartConfiguration={() => {
+            if (!project.name) {
+              setMainViewMode('edit-project');
+            } else {
+              handleAddAxis();
+            }
+          }}
+        />
       );
     }
 
