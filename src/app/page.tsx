@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Plus, Settings, FileText, Zap, ChevronRight } from 'lucide-react';
+import { Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useProjectStore, migrateLegacyData, migrateToSharedParams } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
