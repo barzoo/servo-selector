@@ -340,7 +340,7 @@
       "continueEditing": "继续编辑当前轴",
       "continueEditingDesc": "返回查看或修改配置"
     },
-    "axisName": "轴-{index}",
+    "newAxisName": "轴-{index}",
     "systemConfigDetails": "系统配置详情",
     "motor": "电机",
     "motorModel": "型号：",
@@ -369,7 +369,7 @@
     "commonParams": "公共参数（适用于所有轴）",
     "bom": "物料清单 (BOM)",
     "axisDetail": "轴详情",
-    "axisName": "轴 {index}: {name}",
+    "axisNameWithLabel": "轴 {index}: {name}",
     "completedAt": "完成时间",
     "columns": {
       "index": "序号",
@@ -546,6 +546,43 @@
       "salesPerson": "销售人员",
       "date": "日期",
       "notes": "备注"
+    }
+  },
+  "onboarding": {
+    "hero": {
+      "title": "专业的伺服系统选型工具",
+      "subtitle": "为 Bosch Rexroth XC20 + MC20 系列快速生成完整的技术方案"
+    },
+    "features": {
+      "wizard": {
+        "title": "向导式配置",
+        "description": "5步引导，降低选型门槛"
+      },
+      "smart": {
+        "title": "智能计算",
+        "description": "自动计算负载惯量、扭矩需求、制动电阻"
+      },
+      "report": {
+        "title": "专业报告",
+        "description": "一键导出PDF技术规格书"
+      }
+    },
+    "process": {
+      "projectPhase": "阶段一：项目配置（所有轴共享）",
+      "axisPhase": "阶段二：轴配置（每个轴独立）",
+      "repeatable": "可重复配置多个轴",
+      "steps": {
+        "projectInfo": "项目信息",
+        "commonParams": "公共参数",
+        "mechanism": "机械参数",
+        "motion": "运动参数",
+        "duty": "工况条件",
+        "systemConfig": "系统配置"
+      }
+    },
+    "cta": {
+      "start": "开始配置项目",
+      "loadRecent": "加载已有项目"
     }
   },
   "projectData": {
