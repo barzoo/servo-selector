@@ -340,7 +340,7 @@
       "continueEditing": "Continue editing current axis",
       "continueEditingDesc": "Return to view or modify configuration"
     },
-    "axisName": "Axis-{index}",
+    "newAxisName": "Axis-{index}",
     "systemConfigDetails": "System Configuration Details",
     "motor": "Motor",
     "motorModel": "Model: ",
@@ -369,7 +369,7 @@
     "commonParams": "Common Parameters (for all axes)",
     "bom": "Bill of Materials (BOM)",
     "axisDetail": "Axis Detail",
-    "axisName": "Axis {index}: {name}",
+    "axisNameWithLabel": "Axis {index}: {name}",
     "completedAt": "Completed At",
     "columns": {
       "index": "No.",
@@ -546,6 +546,43 @@
       "salesPerson": "Sales Person",
       "date": "Date",
       "notes": "Notes"
+    }
+  },
+  "onboarding": {
+    "hero": {
+      "title": "Professional Servo Sizing Tool",
+      "subtitle": "Generate complete technical solutions for Bosch Rexroth XC20 + MC20 series"
+    },
+    "features": {
+      "wizard": {
+        "title": "Guided Configuration",
+        "description": "5-step wizard simplifies the sizing process"
+      },
+      "smart": {
+        "title": "Smart Calculation",
+        "description": "Auto-calculate inertia, torque, and braking resistor"
+      },
+      "report": {
+        "title": "Professional Report",
+        "description": "One-click PDF technical specification export"
+      }
+    },
+    "process": {
+      "projectPhase": "Phase 1: Project Configuration (Shared)",
+      "axisPhase": "Phase 2: Axis Configuration (Per Axis)",
+      "repeatable": "Can be repeated for multiple axes",
+      "steps": {
+        "projectInfo": "Project Info",
+        "commonParams": "Common Params",
+        "mechanism": "Mechanism",
+        "motion": "Motion",
+        "duty": "Duty",
+        "systemConfig": "System Config"
+      }
+    },
+    "cta": {
+      "start": "Start Configuration",
+      "loadRecent": "Load Existing Project"
     }
   },
   "projectData": {
