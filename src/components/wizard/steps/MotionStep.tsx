@@ -346,7 +346,7 @@ export function MotionStep() {
                 <path
                   d="M4 36 L20 36 L32 4 L44 36 L60 36"
                   fill="none"
-                  stroke={formData.profile === 'TRAPEZOIDAL' ? 'var(--primary-400)' : 'var(--foreground-muted)'}
+                  stroke={formData.profile === 'TRAPEZOIDAL' ? '#00A4E4' : '#718096'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -377,7 +377,7 @@ export function MotionStep() {
                 <path
                   d="M4 36 Q16 36 20 28 Q24 4 32 4 Q40 4 44 28 Q48 36 60 36"
                   fill="none"
-                  stroke={formData.profile === 'S_CURVE' ? 'var(--primary-400)' : 'var(--foreground-muted)'}
+                  stroke={formData.profile === 'S_CURVE' ? '#00A4E4' : '#718096'}
                   strokeWidth="2"
                   strokeLinecap="round"
                 />

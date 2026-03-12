@@ -15,9 +15,9 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex items-center gap-1 bg-[var(--background-tertiary)] rounded-xl p-1 border border-[var(--border-subtle)]">
+    <div className="flex items-center gap-1 bg-[#e8eef5] rounded-xl p-1 border border-[#e2e8f0]">
       <div className="px-2">
-        <Globe className="w-4 h-4 text-[var(--foreground-muted)]" />
+        <Globe className="w-4 h-4 text-[#718096]" />
       </div>
       {locales.map((l) => (
         <button
@@ -25,8 +25,8 @@ export default function LanguageSwitcher() {
           onClick={() => handleChange(l)}
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 ${
             locale === l
-              ? 'bg-[var(--primary-500)] text-white shadow-lg shadow-[var(--primary-500)]/30'
-              : 'text-[var(--foreground-secondary)] hover:text-[var(--foreground)] hover:bg-[var(--background-elevated)]'
+              ? 'bg-[#00A4E4] text-white shadow-lg shadow-[#00A4E4]/30'
+              : 'text-[#4a5568] hover:text-[#1a1a1a] hover:bg-white'
           }`}
         >
           {localeLabels[l]}
