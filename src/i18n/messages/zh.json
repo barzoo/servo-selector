@@ -59,6 +59,7 @@
     "submit": "提交",
     "cancel": "取消",
     "save": "保存",
+    "create": "创建",
     "loading": "加载中...",
     "error": "错误",
     "success": "成功",
@@ -88,6 +89,37 @@
     "errors": {
       "projectNameRequired": "请输入项目名称",
       "customerNameRequired": "请输入客户名称"
+    }
+  },
+  "project": {
+    "title": "我的项目",
+    "newProject": "新建项目",
+    "settings": "项目设置",
+    "confirmNew": {
+      "title": "创建新项目",
+      "message": "当前项目已自动保存。确定要创建新项目吗？",
+      "currentProject": "当前项目：{name}",
+      "lastUpdated": "最后更新：{time}",
+      "cancel": "取消",
+      "confirm": "确定",
+      "warningMessage": "当前项目有未保存的更改。新建项目将清除所有当前数据。",
+      "unsavedWarning": "此操作不可撤销，请确保您已导出或保存当前项目数据。",
+      "confirmButton": "确定新建"
+    },
+    "form": {
+      "title": "新项目信息",
+      "name": "项目名称",
+      "namePlaceholder": "未命名项目",
+      "customer": "客户名称",
+      "salesPerson": "销售人员",
+      "notes": "备注",
+      "create": "创建项目",
+      "cancel": "取消"
+    },
+    "delete": {
+      "title": "删除项目",
+      "confirm": "确定要删除项目「{name}」吗？此操作不可恢复。",
+      "confirmButton": "删除"
     }
   },
   "mechanism": {
@@ -600,16 +632,6 @@
     "directDrive": "直接驱动系统示意图",
     "gearbox": "齿轮减速机传动系统示意图",
     "rackPinion": "齿轮齿条传动系统示意图"
-  },
-  "project": {
-    "confirmNew": {
-      "title": "确认新建项目",
-      "warningMessage": "当前项目有未保存的更改。新建项目将清除所有当前数据。",
-      "currentProject": "当前项目",
-      "lastUpdated": "最后更新",
-      "unsavedWarning": "此操作不可撤销，请确保您已导出或保存当前项目数据。",
-      "confirmButton": "确定新建"
-    }
   },
   "projectData": {
     "exportExcel": "导出 Excel",

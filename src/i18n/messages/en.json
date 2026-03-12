@@ -59,6 +59,7 @@
     "submit": "Submit",
     "cancel": "Cancel",
     "save": "Save",
+    "create": "Create",
     "loading": "Loading...",
     "error": "Error",
     "success": "Success",
@@ -88,6 +89,37 @@
     "errors": {
       "projectNameRequired": "Please enter project name",
       "customerNameRequired": "Please enter customer name"
+    }
+  },
+  "project": {
+    "title": "My Projects",
+    "newProject": "New Project",
+    "settings": "Project Settings",
+    "confirmNew": {
+      "title": "Create New Project",
+      "message": "Current project has been auto-saved. Are you sure you want to create a new project?",
+      "currentProject": "Current: {name}",
+      "lastUpdated": "Last updated: {time}",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "warningMessage": "Current project has unsaved changes. Creating a new project will clear all current data.",
+      "unsavedWarning": "This action cannot be undone. Please make sure you have exported or saved your current project data.",
+      "confirmButton": "Create New"
+    },
+    "form": {
+      "title": "New Project Information",
+      "name": "Project Name",
+      "namePlaceholder": "Unnamed Project",
+      "customer": "Customer",
+      "salesPerson": "Sales Person",
+      "notes": "Notes",
+      "create": "Create Project",
+      "cancel": "Cancel"
+    },
+    "delete": {
+      "title": "Delete Project",
+      "confirm": "Are you sure you want to delete project \"{name}\"? This action cannot be undone.",
+      "confirmButton": "Delete"
     }
   },
   "mechanism": {
@@ -600,16 +632,6 @@
     "directDrive": "Direct drive system diagram",
     "gearbox": "Gear reducer transmission system diagram",
     "rackPinion": "Rack and pinion transmission system diagram"
-  },
-  "project": {
-    "confirmNew": {
-      "title": "Confirm New Project",
-      "warningMessage": "Current project has unsaved changes. Creating a new project will clear all current data.",
-      "currentProject": "Current Project",
-      "lastUpdated": "Last Updated",
-      "unsavedWarning": "This action cannot be undone. Please make sure you have exported or saved your current project data.",
-      "confirmButton": "Create New"
-    }
   },
   "projectData": {
     "exportExcel": "Export Excel",
