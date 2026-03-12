@@ -48,7 +48,9 @@
       "WebFetch(domain:www.boschrexroth.com.cn)",
       "WebSearch",
       "WebFetch(domain:www.boschrexroth.com)",
-      "WebFetch(domain:brandfetch.com)"
+      "WebFetch(domain:brandfetch.com)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/i18n/messages/zh.json', 'utf8'\\)\\); console.log\\('zh.json is valid'\\)\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('src/i18n/messages/en.json', 'utf8'\\)\\); console.log\\('en.json is valid'\\)\")"
     ]
   },
   "spinnerVerbs": {
