@@ -7,6 +7,7 @@ import { ProjectPdfExport } from './ProjectPdfExport';
 import { ExportDialog } from '@/components/project-data/ExportDialog';
 import { ImportDialog } from '@/components/project-data/ImportDialog';
 import { ExcelExportButton } from '@/components/project-data/ExcelExportButton';
+import { ProjectPanel } from '@/components/project';
 import { useState } from 'react';
 import type { Project } from '@/types';
 
@@ -63,6 +64,11 @@ export function AxisSidebar({
 
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        {/* Project Panel */}
+        {onOpenProjectSettings && (
+          <ProjectPanel onOpenProjectSettings={onOpenProjectSettings} />
+        )}
+
         {/* Project Info Section */}
         <div className="p-3 border-b border-[#e2e8f0]">
           <button
