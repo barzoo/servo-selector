@@ -32,33 +32,33 @@ export function AxisSidebarItem({
       case 'COMPLETED':
         return {
           icon: Check,
-          bgColor: 'bg-[var(--green-500)]/10',
-          textColor: 'text-[var(--green-400)]',
-          borderColor: 'border-[var(--green-500)]/30',
+          bgColor: 'bg-[#0077C8]/10',
+          textColor: 'text-[#0077C8]',
+          borderColor: 'border-[#0077C8]/30',
           label: '已完成',
         };
       case 'CONFIGURING':
         return {
           icon: Loader2,
-          bgColor: 'bg-[var(--amber-500)]/10',
-          textColor: 'text-[var(--amber-400)]',
-          borderColor: 'border-[var(--amber-500)]/30',
+          bgColor: 'bg-[#00A4E4]/10',
+          textColor: 'text-[#00A4E4]',
+          borderColor: 'border-[#00A4E4]/30',
           label: '配置中',
         };
       case 'ABANDONED':
         return {
           icon: X,
-          bgColor: 'bg-[var(--red-500)]/10',
-          textColor: 'text-[var(--red-400)]',
-          borderColor: 'border-[var(--red-500)]/30',
+          bgColor: 'bg-red-50',
+          textColor: 'text-red-500',
+          borderColor: 'border-red-200',
           label: '已放弃',
         };
       default:
         return {
           icon: Cog,
-          bgColor: 'bg-[var(--foreground-muted)]/10',
-          textColor: 'text-[var(--foreground-muted)]',
-          borderColor: 'border-[var(--border-default)]',
+          bgColor: 'bg-[#e8eef5]',
+          textColor: 'text-[#718096]',
+          borderColor: 'border-[#e2e8f0]',
           label: '未知',
         };
     }
