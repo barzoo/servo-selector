@@ -35,10 +35,10 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                   className={`
                     step-dot transition-all duration-300
                     ${isActive
-                      ? 'bg-red-600 text-white shadow-glow-red scale-110'
+                      ? 'bg-[#00A4E4] text-white shadow-[0_0_20px_rgba(0,164,228,0.4)] scale-110'
                       : isCompleted
-                      ? 'bg-cyan-500 text-white'
-                      : 'bg-neutral-800 text-neutral-500 border-2 border-neutral-700'
+                      ? 'bg-[#0077C8] text-white'
+                      : 'bg-white text-[#718096] border-2 border-[#e2e8f0]'
                     }
                   `}
                 >
@@ -51,7 +51,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                 <span
                   className={`
                     hidden sm:block mt-3 text-xs font-medium transition-colors duration-200
-                    ${isActive ? 'text-red-400' : isCompleted ? 'text-cyan-400' : 'text-neutral-500'}
+                    ${isActive ? 'text-[#00A4E4]' : isCompleted ? 'text-[#0077C8]' : 'text-[#718096]'}
                   `}
                 >
                   {t(step.key)}
@@ -61,7 +61,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                 <div
                   className={`
                     step-line mx-2 sm:mx-4 transition-all duration-500
-                    ${isCompleted ? 'bg-cyan-500' : 'bg-neutral-700'}
+                    ${isCompleted ? 'bg-[#0077C8]' : 'bg-[#e2e8f0]'}
                   `}
                 />
               )}
