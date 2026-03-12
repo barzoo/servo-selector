@@ -44,7 +44,11 @@
       "Bash(cat:*)",
       "WebFetch(domain:localhost)",
       "Bash(npx:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "WebFetch(domain:www.boschrexroth.com.cn)",
+      "WebSearch",
+      "WebFetch(domain:www.boschrexroth.com)",
+      "WebFetch(domain:brandfetch.com)"
     ]
   },
   "spinnerVerbs": {

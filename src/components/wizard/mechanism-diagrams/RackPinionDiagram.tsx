@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { MechanismDiagramProps } from './index';
 import { MECHANISM_COLORS, CANVAS_CONFIG } from './constants';
 
@@ -11,6 +12,7 @@ import { MECHANISM_COLORS, CANVAS_CONFIG } from './constants';
  */
 const RackPinionDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
   const { servo, transmission, load, frame, arrow } = MECHANISM_COLORS;
+  const t = useTranslations('mechanismDiagrams');
 
   // 生成齿条的齿形路径
   const generateRackTeeth = (startX: number, y: number, count: number, toothWidth: number, toothHeight: number) => {
@@ -35,7 +37,7 @@ const RackPinionDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
     <svg
       viewBox={CANVAS_CONFIG.viewBox}
       className={className}
-      aria-label="齿轮齿条传动系统示意图"
+      aria-label={t('rackPinion')}
       role="img"
     >
       {/* 底部导轨 */}

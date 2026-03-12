@@ -397,6 +397,12 @@
     "footer": {
       "generatedBy": "博世力士乐伺服选型工具生成",
       "system": "XC20 + MC20 伺服系统"
+    },
+    "errors": {
+      "torque": "所需连续扭矩超过所有可用电机范围",
+      "peakTorque": "所需峰值扭矩超过所有可用电机范围",
+      "speed": "所需转速超过所有可用电机范围",
+      "noMatch": "无满足所有条件的电机，建议调整工况参数"
     }
   },
   "detailedCalculations": {
@@ -586,6 +592,23 @@
     "cta": {
       "start": "开始配置项目",
       "loadRecent": "加载已有项目"
+    }
+  },
+  "mechanismDiagrams": {
+    "ballScrew": "滚珠丝杠传动系统示意图",
+    "belt": "同步带传动系统示意图",
+    "directDrive": "直接驱动系统示意图",
+    "gearbox": "齿轮减速机传动系统示意图",
+    "rackPinion": "齿轮齿条传动系统示意图"
+  },
+  "project": {
+    "confirmNew": {
+      "title": "确认新建项目",
+      "warningMessage": "当前项目有未保存的更改。新建项目将清除所有当前数据。",
+      "currentProject": "当前项目",
+      "lastUpdated": "最后更新",
+      "unsavedWarning": "此操作不可撤销，请确保您已导出或保存当前项目数据。",
+      "confirmButton": "确定新建"
     }
   },
   "projectData": {

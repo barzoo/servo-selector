@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 import { MechanismDiagramProps } from './index';
 import { MECHANISM_COLORS, CANVAS_CONFIG } from './constants';
 
@@ -10,12 +11,13 @@ import { MECHANISM_COLORS, CANVAS_CONFIG } from './constants';
  */
 const GearboxDiagram: React.FC<MechanismDiagramProps> = ({ className }) => {
   const { servo, transmission, load, frame, arrow } = MECHANISM_COLORS;
+  const t = useTranslations('mechanismDiagrams');
 
   return (
     <svg
       viewBox={CANVAS_CONFIG.viewBox}
       className={className}
-      aria-label="齿轮减速机传动系统示意图"
+      aria-label={t('gearbox')}
       role="img"
     >
       {/* 伺服电机 */}

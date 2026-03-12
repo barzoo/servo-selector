@@ -32,6 +32,20 @@ export function ResultStep() {
   const t = useTranslations('result');
   const tSystem = useTranslations('systemSummary');
   const tLabels = useTranslations('systemSummary.labels');
+
+  // Map failure reason type to translation key
+  const getFailureMessage = (failureReason: { type: string; message: string }): string => {
+    switch (failureReason.type) {
+      case 'TORQUE':
+        return t('errors.torque');
+      case 'PEAK_TORQUE':
+        return t('errors.peakTorque');
+      case 'SPEED':
+        return t('errors.speed');
+      default:
+        return t('errors.noMatch');
+    }
+  };
   const [selectedMotorIndex, setSelectedMotorIndex] = useState(0);
   const [showSaveMenu, setShowSaveMenu] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -49,7 +63,7 @@ export function ResultStep() {
           <div className="card p-4 bg-[var(--amber-500)]/5 border-[var(--amber-500)]/30 mb-6 max-w-md">
             <div className="flex items-start gap-3">
               <AlertTriangle className="w-5 h-5 text-[var(--amber-400)] flex-shrink-0 mt-0.5" />
-              <p className="text-sm text-[var(--amber-400)]">{result.failureReason.message}</p>
+              <p className="text-sm text-[var(--amber-400)]">{getFailureMessage(result.failureReason)}</p>
             </div>
           </div>
         )}
