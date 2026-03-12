@@ -166,12 +166,12 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex">
+    <div className="min-h-screen bg-white flex">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 grid-pattern opacity-20" />
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00A4E4]/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#0077C8]/5 rounded-full blur-[150px]" />
       </div>
 
       {/* Desktop Sidebar */}
@@ -230,15 +230,15 @@ export default function Home() {
             </div>
 
             <div className="inline-flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-sm bg-red-600 flex items-center justify-center shadow-glow-red">
+              <div className="w-10 h-10 rounded-sm bg-[#00A4E4] flex items-center justify-center shadow-[0_0_20px_rgba(0,164,228,0.4)]">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a]">
                 {t('pageTitle')}
               </h1>
             </div>
 
-            <p className="text-neutral-400">{t('pageSubtitle')}</p>
+            <p className="text-[#718096]">{t('pageSubtitle')}</p>
 
             {/* Mobile: Language Switcher */}
             <div className="md:hidden mt-4 flex justify-center gap-2">
@@ -247,13 +247,13 @@ export default function Home() {
 
             {/* Current Axis Indicator */}
             {currentAxis && mainViewMode === 'wizard' && (
-              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
-                <span className="text-sm font-medium text-cyan-300">
+              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[#00A4E4]/10 border border-[#00A4E4]/30 rounded-full">
+                <div className="w-2 h-2 rounded-full bg-[#00A4E4] animate-pulse"></div>
+                <span className="text-sm font-medium text-[#0077C8]">
                   {axisT('currentConfig')}: {currentAxis.name}
                 </span>
                 {currentAxis.status === 'CONFIGURING' && (
-                  <span className="text-xs text-amber-400">{axisT('status.configuring')}</span>
+                  <span className="text-xs text-[#00A4E4]">{axisT('status.configuring')}</span>
                 )}
                 {currentAxis.status === 'COMPLETED' && (
                   <span className="badge badge-success">{axisT('status.completed')}</span>
@@ -263,9 +263,9 @@ export default function Home() {
           </header>
 
           {/* Main Card */}
-          <div className="bg-neutral-900/50 border border-neutral-800 rounded-sm shadow-2xl">
+          <div className="bg-white border border-[#e2e8f0] rounded-sm shadow-2xl">
             {project.axes.length > 0 && mainViewMode === 'wizard' && (
-              <div className="border-b border-neutral-800">
+              <div className="border-b border-[#e2e8f0]">
                 <StepIndicator currentStep={currentStep} />
               </div>
             )}
@@ -275,7 +275,7 @@ export default function Home() {
           </div>
 
           {/* Footer */}
-          <footer className="mt-12 text-center text-sm text-neutral-500">
+          <footer className="mt-12 text-center text-sm text-[#718096]">
             <p>{footerT('version')}</p>
           </footer>
         </div>
