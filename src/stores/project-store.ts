@@ -18,6 +18,16 @@ import {
   CommonParams,
 } from '@/types';
 import { buildSizingInput } from '@/lib/calculations/build-sizing-input';
+import type { ProjectMeta } from '@/types/project-list';
+import {
+  loadProjectsStorage,
+  saveProjectsStorage,
+  migrateProjectsStorage,
+  extractProjectMeta,
+  updateProjectMeta,
+  deleteProjectMeta,
+  setCurrentProjectId,
+} from '@/lib/project-storage';
 
 // ============ Locale-Aware Default Names ============
 
@@ -173,6 +183,14 @@ interface ProjectStore {
   input: StoreInput;
   result?: SizingResult;
 
+  // Project list operations
+  projects: ProjectMeta[];
+  saveAndCreateNewProject: (info: ProjectInfo) => void;
+  switchProject: (projectId: string) => void;
+  deleteProject: (projectId: string) => void;
+  loadProjectsList: () => void;
+  syncProjectMeta: () => void;
+
   // Project operations
   createProject: (info: ProjectInfo) => void;
   updateProjectInfo: (info: Partial<ProjectInfo>) => void;
@@ -225,6 +243,7 @@ const initialState = {
   isComplete: false,
   input: {},
   result: undefined,
+  projects: [] as ProjectMeta[],
 };
 
 // ============ Zustand Store ============
@@ -570,6 +589,106 @@ export const useProjectStore = create<ProjectStore>()(
       canExportPdf: () => {
         const state = get();
         return state.project.axes.some((a) => a.status === 'COMPLETED');
+      },
+
+      // Project list operations
+      loadProjectsList: () => {
+        // Ensure storage is migrated
+        migrateProjectsStorage();
+        const storage = loadProjectsStorage();
+        if (storage) {
+          set({ projects: storage.projects });
+        }
+      },
+
+      syncProjectMeta: () => {
+        const state = get();
+        const meta = extractProjectMeta(state.project);
+        updateProjectMeta(state.project.id, meta);
+        // Reload project list
+        const storage = loadProjectsStorage();
+        if (storage) {
+          set({ projects: storage.projects });
+        }
+      },
+
+      saveAndCreateNewProject: (info) => {
+        const state = get();
+
+        // Sync current project meta before creating new one
+        if (state.project.id) {
+          const currentMeta = extractProjectMeta(state.project);
+          updateProjectMeta(state.project.id, currentMeta);
+        }
+
+        // Create new project
+        const newProject = createEmptyProject();
+        newProject.name = info.name ?? '';
+        newProject.customer = info.customer ?? '';
+        newProject.salesPerson = info.salesPerson ?? '';
+        newProject.notes = info.notes;
+
+        // Add to project list
+        const newMeta = extractProjectMeta(newProject);
+        const storage = loadProjectsStorage();
+        if (storage) {
+          storage.projects.push(newMeta);
+          storage.currentProjectId = newProject.id;
+          saveProjectsStorage(storage);
+        }
+
+        // Update store state
+        set({
+          project: newProject,
+          currentAxisId: '',
+          currentStep: 1 as WizardStep,
+          isComplete: false,
+          input: {},
+          result: undefined,
+          projects: storage?.projects || [],
+        });
+      },
+
+      switchProject: (projectId) => {
+        const state = get();
+
+        // Cannot switch to current project
+        if (projectId === state.project.id) {
+          return;
+        }
+
+        // Sync current project meta
+        if (state.project.id) {
+          const currentMeta = extractProjectMeta(state.project);
+          updateProjectMeta(state.project.id, currentMeta);
+        }
+
+        // Set new current project ID
+        setCurrentProjectId(projectId);
+
+        // Reload page to load the new project (simplified approach)
+        if (typeof window !== 'undefined') {
+          window.location.reload();
+        }
+      },
+
+      deleteProject: (projectId) => {
+        const state = get();
+
+        // Cannot delete current project
+        if (projectId === state.project.id) {
+          console.warn('[ProjectStore] Cannot delete current project');
+          return;
+        }
+
+        // Delete project meta from storage
+        deleteProjectMeta(projectId);
+
+        // Reload project list
+        const storage = loadProjectsStorage();
+        if (storage) {
+          set({ projects: storage.projects });
+        }
       },
     }),
     {
