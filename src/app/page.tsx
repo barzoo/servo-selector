@@ -16,6 +16,7 @@ import { ProjectInfoEditStep } from '@/components/wizard/steps/ProjectInfoEditSt
 import { CommonParamsEditStep } from '@/components/wizard/steps/CommonParamsEditStep';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
 import { OnboardingEmptyState } from '@/components/onboarding';
+import { HeroSection } from '@/components/hero';
 
 export default function Home() {
   const {
@@ -136,7 +137,7 @@ export default function Home() {
 
     if (project.axes.length === 0) {
       return (
-        <OnboardingEmptyState
+        <HeroSection
           onStartConfiguration={() => {
             if (!project.name) {
               setMainViewMode('edit-project');
@@ -165,12 +166,12 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--background)] flex">
+    <div className="min-h-screen bg-black flex">
       {/* Background Effects */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute inset-0 grid-pattern opacity-50"></div>
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--primary-500)] rounded-full blur-[150px] opacity-5"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--primary-300)] rounded-full blur-[150px] opacity-5"></div>
+        <div className="absolute inset-0 grid-pattern opacity-20" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-red-500/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[150px]" />
       </div>
 
       {/* Desktop Sidebar */}
@@ -229,15 +230,15 @@ export default function Home() {
             </div>
 
             <div className="inline-flex items-center gap-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-600)] flex items-center justify-center shadow-lg">
+              <div className="w-10 h-10 rounded-sm bg-red-600 flex items-center justify-center shadow-glow-red">
                 <Zap className="w-5 h-5 text-white" />
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold">
-                <span className="gradient-text">{t('pageTitle')}</span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                {t('pageTitle')}
               </h1>
             </div>
 
-            <p className="text-[var(--foreground-secondary)]">{t('pageSubtitle')}</p>
+            <p className="text-neutral-400">{t('pageSubtitle')}</p>
 
             {/* Mobile: Language Switcher */}
             <div className="md:hidden mt-4 flex justify-center gap-2">
@@ -246,13 +247,13 @@ export default function Home() {
 
             {/* Current Axis Indicator */}
             {currentAxis && mainViewMode === 'wizard' && (
-              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-[var(--primary-500)]/10 border border-[var(--primary-500)]/30 rounded-full">
-                <div className="w-2 h-2 rounded-full bg-[var(--primary-400)] animate-pulse"></div>
-                <span className="text-sm font-medium text-[var(--primary-300)]">
+              <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full">
+                <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+                <span className="text-sm font-medium text-cyan-300">
                   {axisT('currentConfig')}: {currentAxis.name}
                 </span>
                 {currentAxis.status === 'CONFIGURING' && (
-                  <span className="text-xs text-[var(--amber-400)]">{axisT('status.configuring')}</span>
+                  <span className="text-xs text-amber-400">{axisT('status.configuring')}</span>
                 )}
                 {currentAxis.status === 'COMPLETED' && (
                   <span className="badge badge-success">{axisT('status.completed')}</span>
@@ -262,9 +263,9 @@ export default function Home() {
           </header>
 
           {/* Main Card */}
-          <div className="card shadow-2xl">
+          <div className="bg-neutral-900/50 border border-neutral-800 rounded-sm shadow-2xl">
             {project.axes.length > 0 && mainViewMode === 'wizard' && (
-              <div className="border-b border-[var(--border-subtle)]">
+              <div className="border-b border-neutral-800">
                 <StepIndicator currentStep={currentStep} />
               </div>
             )}
@@ -274,7 +275,7 @@ export default function Home() {
           </div>
 
           {/* Footer */}
-          <footer className="mt-12 text-center text-sm text-[var(--foreground-muted)]">
+          <footer className="mt-12 text-center text-sm text-neutral-500">
             <p>{footerT('version')}</p>
           </footer>
         </div>
