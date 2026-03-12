@@ -3,6 +3,9 @@
     "title": "伺服选型工具",
     "description": "Bosch Rexroth 伺服系统选型计算工具"
   },
+  "hero": {
+    "startConfiguration": "开始配置"
+  },
   "home": {
     "welcomeTitle": "欢迎使用伺服选型工具",
     "welcomeSubtitle": "专业的 Bosch Rexroth XC20 + MC20 伺服系统选型向导，为您的机械负载匹配最佳运动控制方案",

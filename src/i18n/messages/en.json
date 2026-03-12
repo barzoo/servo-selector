@@ -3,6 +3,9 @@
     "title": "Servo Sizing Tool",
     "description": "Bosch Rexroth Servo System Sizing and Selection Tool"
   },
+  "hero": {
+    "startConfiguration": "Start Configuration"
+  },
   "home": {
     "welcomeTitle": "Welcome to Servo Sizing Tool",
     "welcomeSubtitle": "Professional Bosch Rexroth XC20 + MC20 servo system selection wizard for optimal motion control solutions",
