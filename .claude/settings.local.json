@@ -43,7 +43,8 @@
       "Bash(strings:*)",
       "Bash(cat:*)",
       "WebFetch(domain:localhost)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(powershell:*)"
     ]
   },
   "spinnerVerbs": {
