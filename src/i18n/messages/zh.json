@@ -120,6 +120,10 @@
       "title": "删除项目",
       "confirm": "确定要删除项目「{name}」吗？此操作不可恢复。",
       "confirmButton": "删除"
+    },
+    "panel": {
+      "title": "我的项目",
+      "noProjects": "暂无项目"
     }
   },
   "mechanism": {

@@ -51,24 +51,25 @@ export function AxisSidebar({
     <div className="h-full flex flex-col bg-[#f5f7fa] border-r border-[#e2e8f0] overflow-hidden">
       {/* Header - Fixed */}
       <div className="p-4 border-b border-[#e2e8f0] flex-shrink-0">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-sm bg-[#00A4E4] flex items-center justify-center shadow-[0_0_20px_rgba(0,164,228,0.4)]">
-            <Settings className="w-5 h-5 text-white" />
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-sm bg-[#00A4E4] flex items-center justify-center shadow-[0_0_20px_rgba(0,164,228,0.4)]">
+              <Settings className="w-5 h-5 text-white" />
+            </div>
+            <div>
+              <h2 className="font-bold text-lg text-[#1a1a1a]">{t('logoTitle')}</h2>
+              <p className="text-xs text-[#718096]">{t('logoSubtitle')}</p>
+            </div>
           </div>
-          <div>
-            <h2 className="font-bold text-lg text-[#1a1a1a]">{t('logoTitle')}</h2>
-            <p className="text-xs text-[#718096]">{t('logoSubtitle')}</p>
-          </div>
+          {/* Project Dropdown Button */}
+          {onOpenProjectSettings && (
+            <ProjectPanel onOpenProjectSettings={onOpenProjectSettings} />
+          )}
         </div>
       </div>
 
       {/* Scrollable Content Area */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        {/* Project Panel */}
-        {onOpenProjectSettings && (
-          <ProjectPanel onOpenProjectSettings={onOpenProjectSettings} />
-        )}
-
         {/* Project Info Section */}
         <div className="p-3 border-b border-[#e2e8f0]">
           <button

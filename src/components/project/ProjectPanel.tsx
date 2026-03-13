@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
-import { FolderOpen, Plus, Settings, ChevronLeft, ChevronRight } from 'lucide-react';
+import { FolderOpen, Plus, Settings, ChevronDown, Check, Trash2 } from 'lucide-react';
 import { useProjectStore } from '@/stores/project-store';
-import { ProjectListItem } from './ProjectListItem';
 import { NewProjectConfirmModal } from './NewProjectConfirmModal';
 import { NewProjectFormModal } from './NewProjectFormModal';
 import { ProjectInfo } from '@/types';
+import type { ProjectMeta } from '@/types/project-list';
 
 interface ProjectPanelProps {
   onOpenProjectSettings: () => void;
@@ -15,7 +15,6 @@ interface ProjectPanelProps {
 
 export function ProjectPanel({ onOpenProjectSettings }: ProjectPanelProps) {
   const t = useTranslations('project');
-  const commonT = useTranslations('common');
 
   // Store state and methods
   const {
@@ -28,18 +27,32 @@ export function ProjectPanel({ onOpenProjectSettings }: ProjectPanelProps) {
   } = useProjectStore();
 
   // Local state
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showFormModal, setShowFormModal] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Load projects list on mount
   useEffect(() => {
     loadProjectsList();
   }, [loadProjectsList]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   // Handle new project button click
   const handleNewProjectClick = () => {
+    setIsOpen(false);
     // Check if current project has unsaved changes
     const hasUnsavedChanges = project.axes.length > 0 &&
       project.axes.some(axis =>
@@ -68,13 +81,15 @@ export function ProjectPanel({ onOpenProjectSettings }: ProjectPanelProps) {
 
   // Handle project switch
   const handleSwitchProject = (projectId: string) => {
+    setIsOpen(false);
     if (projectId !== project.id) {
       switchProject(projectId);
     }
   };
 
   // Handle project delete
-  const handleDeleteProject = (projectId: string) => {
+  const handleDeleteProject = (e: React.MouseEvent, projectId: string) => {
+    e.stopPropagation();
     setProjectToDelete(projectId);
   };
 
@@ -93,135 +108,168 @@ export function ProjectPanel({ onOpenProjectSettings }: ProjectPanelProps) {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
     });
   };
 
   return (
     <>
-      {/* Collapsed State - Toggle Button */}
-      {!isExpanded && (
+      {/* Dropdown */}
+      <div ref={dropdownRef} className="relative">
         <button
-          onClick={() => setIsExpanded(true)}
-          className="fixed left-4 top-24 z-40 flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-lg shadow-md hover:shadow-lg transition-all duration-200"
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center gap-1.5 px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
           title={t('panel.title')}
         >
-          <FolderOpen className="w-5 h-5 text-[#00A4E4]" />
-          <ChevronRight className="w-4 h-4 text-gray-400" />
+          <FolderOpen className="w-4 h-4" />
+          <span className="max-w-[100px] truncate hidden sm:inline">{t('panel.title')}</span>
+          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
-      )}
 
-      {/* Expanded Panel */}
-      {isExpanded && (
-        <div className="fixed left-4 top-24 z-40 w-72 bg-white border border-gray-200 rounded-lg shadow-xl overflow-hidden">
-          {/* Header */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-gray-50">
-            <div className="flex items-center gap-2">
-              <FolderOpen className="w-5 h-5 text-[#00A4E4]" />
-              <span className="font-semibold text-gray-900">{t('panel.title')}</span>
+        {/* Dropdown Menu */}
+        {isOpen && (
+          <div className="absolute right-0 top-full mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-xl z-50 overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between px-3 py-2 border-b border-gray-100 bg-gray-50">
+              <span className="font-medium text-sm text-gray-700">{t('panel.title')}</span>
+              <span className="text-xs text-gray-400">{projects.length} 个项目</span>
             </div>
-            <button
-              onClick={() => setIsExpanded(false)}
-              className="p-1.5 hover:bg-gray-200 rounded-md transition-colors"
-              title={commonT('collapse')}
-            >
-              <ChevronLeft className="w-4 h-4 text-gray-500" />
-            </button>
-          </div>
 
-          {/* Project List */}
-          <div className="max-h-80 overflow-y-auto p-2 space-y-1">
-            {projects.length === 0 ? (
-              <div className="px-4 py-8 text-center text-gray-500 text-sm">
-                {t('panel.noProjects')}
-              </div>
-            ) : (
-              projects.map((proj) => (
-                <ProjectListItem
-                  key={proj.id}
-                  project={proj}
-                  isActive={proj.id === project.id}
-                  onClick={() => handleSwitchProject(proj.id)}
-                  onDelete={proj.id !== project.id ? () => handleDeleteProject(proj.id) : undefined}
-                />
-              ))
-            )}
-          </div>
+            {/* Project List */}
+            <div className="max-h-60 overflow-y-auto py-1">
+              {projects.length === 0 ? (
+                <div className="px-3 py-4 text-center text-gray-500 text-sm">
+                  {t('panel.noProjects')}
+                </div>
+              ) : (
+                projects.map((proj) => (
+                  <ProjectDropdownItem
+                    key={proj.id}
+                    project={proj}
+                    isActive={proj.id === project.id}
+                    onClick={() => handleSwitchProject(proj.id)}
+                    onDelete={proj.id !== project.id ? (e) => handleDeleteProject(e, proj.id) : undefined}
+                    formatDate={formatLastUpdated}
+                  />
+                ))
+              )}
+            </div>
 
-          {/* Footer Actions */}
-          <div className="flex items-center justify-between px-4 py-3 border-t border-gray-200 bg-gray-50">
-            <button
-              onClick={handleNewProjectClick}
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white bg-[#00A4E4] rounded-md hover:bg-[#0093cd] transition-colors"
-            >
-              <Plus className="w-4 h-4" />
-              {t('panel.newProject')}
-            </button>
-            <button
-              onClick={onOpenProjectSettings}
-              className="p-1.5 text-gray-600 hover:bg-gray-200 rounded-md transition-colors"
-              title={t('panel.projectSettings')}
-            >
-              <Settings className="w-4 h-4" />
-            </button>
+            {/* Actions */}
+            <div className="border-t border-gray-100 p-1.5 space-y-0.5">
+              <button
+                onClick={() => {
+                  setIsOpen(false);
+                  onOpenProjectSettings();
+                }}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+              >
+                <Settings className="w-4 h-4" />
+                {t('settings')}
+              </button>
+              <button
+                onClick={handleNewProjectClick}
+                className="w-full flex items-center gap-2 px-2.5 py-1.5 text-sm text-[#00A4E4] hover:bg-[#00A4E4]/10 rounded-md transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                {t('newProject')}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* New Project Confirm Modal */}
+      {/* Confirm Modal */}
       <NewProjectConfirmModal
         isOpen={showConfirmModal}
-        projectName={project.name || t('panel.unnamedProject')}
-        lastUpdated={formatLastUpdated(project.createdAt)}
+        projectName={project.name || '未命名项目'}
+        lastUpdated={new Date().toLocaleString()}
         onConfirm={handleConfirmNewProject}
         onCancel={() => setShowConfirmModal(false)}
       />
 
-      {/* New Project Form Modal */}
+      {/* Form Modal */}
       <NewProjectFormModal
         isOpen={showFormModal}
         onSubmit={handleFormSubmit}
         onCancel={() => setShowFormModal(false)}
       />
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirm Modal */}
       {projectToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50 backdrop-blur-sm"
-            onClick={() => setProjectToDelete(null)}
-          />
-
-          {/* Dialog */}
-          <div className="relative w-full max-w-sm bg-white rounded-lg shadow-2xl overflow-hidden">
-            <div className="p-6 space-y-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {t('deleteConfirm.title')}
-              </h3>
-              <p className="text-gray-600">
-                {t('deleteConfirm.message')}
-              </p>
-            </div>
-
-            <div className="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              {t('delete.title')}
+            </h3>
+            <p className="text-gray-600 mb-4">
+              {t('delete.confirm', { name: projects.find(p => p.id === projectToDelete)?.name || '' })}
+            </p>
+            <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setProjectToDelete(null)}
-                className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
               >
-                {commonT('cancel')}
+                {t('form.cancel')}
               </button>
               <button
                 onClick={confirmDelete}
-                className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors"
+                className="px-4 py-2 text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
               >
-                {commonT('delete')}
+                {t('delete.confirmButton')}
               </button>
             </div>
           </div>
         </div>
       )}
     </>
+  );
+}
+
+// Dropdown Item Component
+interface ProjectDropdownItemProps {
+  project: ProjectMeta;
+  isActive: boolean;
+  onClick: () => void;
+  onDelete?: (e: React.MouseEvent) => void;
+  formatDate: (date: string) => string;
+}
+
+function ProjectDropdownItem({ project, isActive, onClick, onDelete, formatDate }: ProjectDropdownItemProps) {
+  const [showDelete, setShowDelete] = useState(false);
+
+  return (
+    <div
+      className={`
+        group flex items-center gap-2 px-3 py-2 mx-1 rounded-md cursor-pointer
+        transition-colors
+        ${isActive ? 'bg-[#00A4E4]/10 text-[#0077C8]' : 'hover:bg-gray-100 text-gray-700'}
+      `}
+      onClick={onClick}
+      onMouseEnter={() => setShowDelete(true)}
+      onMouseLeave={() => setShowDelete(false)}
+    >
+      <div className="flex-1 min-w-0">
+        <p className={`font-medium text-sm truncate ${isActive ? 'text-[#0077C8]' : 'text-gray-900'}`}>
+          {project.name}
+        </p>
+        <p className="text-xs text-gray-400">
+          {formatDate(project.updatedAt)}
+        </p>
+      </div>
+
+      {isActive && (
+        <Check className="w-4 h-4 text-[#00A4E4] flex-shrink-0" />
+      )}
+
+      {!isActive && onDelete && showDelete && (
+        <button
+          onClick={onDelete}
+          className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+          title="Delete project"
+        >
+          <Trash2 className="w-3.5 h-3.5" />
+        </button>
+      )}
+    </div>
   );
 }
