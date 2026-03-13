@@ -100,6 +100,8 @@
       "message": "当前项目已自动保存。确定要创建新项目吗？",
       "currentProject": "当前项目：{name}",
       "lastUpdated": "最后更新：{time}",
+      "currentProjectLabel": "当前项目",
+      "lastUpdatedLabel": "最后更新",
       "cancel": "取消",
       "confirm": "确定",
       "warningMessage": "当前项目有未保存的更改。新建项目将清除所有当前数据。",

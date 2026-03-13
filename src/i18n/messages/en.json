@@ -100,6 +100,8 @@
       "message": "Current project has been auto-saved. Are you sure you want to create a new project?",
       "currentProject": "Current: {name}",
       "lastUpdated": "Last updated: {time}",
+      "currentProjectLabel": "Current Project",
+      "lastUpdatedLabel": "Last Updated",
       "cancel": "Cancel",
       "confirm": "Confirm",
       "warningMessage": "Current project has unsaved changes. Creating a new project will clear all current data.",

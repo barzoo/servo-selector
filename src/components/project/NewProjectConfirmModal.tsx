@@ -62,11 +62,11 @@ export function NewProjectConfirmModal({
           <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">{t('currentProject')}:</span>
+                <span className="text-sm text-gray-500">{t('currentProjectLabel')}:</span>
                 <span className="text-sm font-medium text-gray-900">{projectName}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">{t('lastUpdated')}:</span>
+                <span className="text-sm text-gray-500">{t('lastUpdatedLabel')}:</span>
                 <span className="text-sm text-gray-700">{lastUpdated}</span>
               </div>
             </div>
