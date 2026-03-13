@@ -117,12 +117,11 @@ export function ProjectPanel({ onOpenProjectSettings }: ProjectPanelProps) {
       <div ref={dropdownRef} className="relative">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1.5 px-2 py-1.5 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+          className="flex items-center gap-1 px-2 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
           title={t('panel.title')}
         >
-          <FolderOpen className="w-4 h-4" />
-          <span className="max-w-[100px] truncate hidden sm:inline">{t('panel.title')}</span>
-          <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          <FolderOpen className="w-5 h-5" />
+          <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
 
         {/* Dropdown Menu */}

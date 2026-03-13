@@ -56,10 +56,7 @@ export function AxisSidebar({
             <div className="w-10 h-10 rounded-sm bg-[#00A4E4] flex items-center justify-center shadow-[0_0_20px_rgba(0,164,228,0.4)]">
               <Settings className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <h2 className="font-bold text-lg text-[#1a1a1a]">{t('logoTitle')}</h2>
-              <p className="text-xs text-[#718096]">{t('logoSubtitle')}</p>
-            </div>
+            <h2 className="font-bold text-lg text-[#1a1a1a]">{t('logoTitle')}</h2>
           </div>
           {/* Project Dropdown Button */}
           {onOpenProjectSettings && (
