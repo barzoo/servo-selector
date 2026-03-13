@@ -108,13 +108,19 @@
     },
     "form": {
       "title": "新项目信息",
-      "name": "项目名称",
-      "namePlaceholder": "未命名项目",
-      "customer": "客户名称",
+      "subtitle": "填写新项目的基本信息",
+      "projectName": "项目名称",
+      "projectNamePlaceholder": "请输入项目名称",
+      "customerName": "客户名称",
+      "customerNamePlaceholder": "请输入客户名称",
       "salesPerson": "销售人员",
+      "salesPersonPlaceholder": "请输入销售人员姓名",
       "notes": "备注",
-      "create": "创建项目",
-      "cancel": "取消"
+      "notesPlaceholder": "其他需要说明的信息...",
+      "defaultName": "未命名项目",
+      "errors": {
+        "nameRequired": "请输入项目名称"
+      }
     },
     "delete": {
       "title": "删除项目",

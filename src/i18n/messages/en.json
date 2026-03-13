@@ -108,13 +108,19 @@
     },
     "form": {
       "title": "New Project Information",
-      "name": "Project Name",
-      "namePlaceholder": "Unnamed Project",
-      "customer": "Customer",
+      "subtitle": "Fill in the basic information for the new project",
+      "projectName": "Project Name",
+      "projectNamePlaceholder": "Enter project name",
+      "customerName": "Customer",
+      "customerNamePlaceholder": "Enter customer name",
       "salesPerson": "Sales Person",
+      "salesPersonPlaceholder": "Enter sales person name",
       "notes": "Notes",
-      "create": "Create Project",
-      "cancel": "Cancel"
+      "notesPlaceholder": "Other information...",
+      "defaultName": "Unnamed Project",
+      "errors": {
+        "nameRequired": "Please enter a project name"
+      }
     },
     "delete": {
       "title": "Delete Project",
