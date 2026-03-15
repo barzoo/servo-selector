@@ -27,6 +27,8 @@ import {
   updateProjectMeta,
   deleteProjectMeta,
   setCurrentProjectId,
+  saveProjectData,
+  deleteProjectData,
 } from '@/lib/project-storage';
 
 // ============ Locale-Aware Default Names ============
@@ -613,31 +615,70 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       saveAndCreateNewProject: (info) => {
+        const MAX_PROJECTS = 20;
         const state = get();
 
-        // Sync current project meta before creating new one
-        if (state.project.id) {
+        // 1. Sync current project metadata (if current project has data)
+        if (state.project.id && state.project.axes.length > 0) {
           const currentMeta = extractProjectMeta(state.project);
           updateProjectMeta(state.project.id, currentMeta);
+          // Save full project data to independent storage
+          saveProjectData(state.project.id, state.project);
         }
 
-        // Create new project
+        // 2. Load latest project list metadata
+        const storage = loadProjectsStorage();
+        const projects = storage?.projects || [];
+
+        // 3. FIFO cleanup: if at or over limit, delete oldest projects
+        if (projects.length >= MAX_PROJECTS) {
+          // Sort by updatedAt, exclude current project being edited
+          const otherProjects = projects.filter(p => p.id !== state.project.id);
+
+          // Calculate how many to delete (to make room for new project)
+          const toDeleteCount = projects.length - MAX_PROJECTS + 1;
+
+          // Edge case: if no other projects to delete
+          if (otherProjects.length === 0) {
+            // All projects are current project, delete oldest one
+            const oldestProject = [...projects].sort(
+              (a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+            )[0];
+            if (oldestProject) {
+              deleteProjectMeta(oldestProject.id);
+              deleteProjectData(oldestProject.id);
+            }
+          } else {
+            // Sort other projects by updatedAt
+            const sortedProjects = otherProjects.sort(
+              (a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+            );
+            const actualDeleteCount = Math.min(toDeleteCount, sortedProjects.length);
+            for (let i = 0; i < actualDeleteCount; i++) {
+              const projectToDelete = sortedProjects[i];
+              deleteProjectMeta(projectToDelete.id);
+              deleteProjectData(projectToDelete.id);
+            }
+          }
+        }
+
+        // 4. Create new project (existing logic)
         const newProject = createEmptyProject();
         newProject.name = info.name ?? '';
         newProject.customer = info.customer ?? '';
         newProject.salesPerson = info.salesPerson ?? '';
         newProject.notes = info.notes;
 
-        // Add to project list
+        // 5. Add new project to project list
         const newMeta = extractProjectMeta(newProject);
-        const storage = loadProjectsStorage();
-        if (storage) {
-          storage.projects.push(newMeta);
-          storage.currentProjectId = newProject.id;
-          saveProjectsStorage(storage);
+        const updatedStorage = loadProjectsStorage();
+        if (updatedStorage) {
+          updatedStorage.projects.push(newMeta);
+          updatedStorage.currentProjectId = newProject.id;
+          saveProjectsStorage(updatedStorage);
         }
 
-        // Update store state
+        // 6. Update store state
         set({
           project: newProject,
           currentAxisId: '',
@@ -645,7 +686,7 @@ export const useProjectStore = create<ProjectStore>()(
           isComplete: false,
           input: {},
           result: undefined,
-          projects: storage?.projects || [],
+          projects: updatedStorage?.projects || [],
         });
       },
 
