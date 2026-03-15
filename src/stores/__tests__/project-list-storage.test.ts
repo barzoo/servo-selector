@@ -7,6 +7,10 @@ import {
   updateProjectMeta,
   deleteProjectMeta,
   setCurrentProjectId,
+  saveProjectData,
+  loadProjectData,
+  deleteProjectData,
+  getProjectDataKey,
   STORAGE_KEY,
   CURRENT_PROJECT_KEY,
   STORAGE_VERSION,
@@ -241,6 +245,69 @@ describe('project-list-storage', () => {
       expect(result).toBeDefined();
       expect(result!.version).toBe(STORAGE_VERSION);
       expect(result!.projects).toEqual([]);
+    });
+  });
+
+  describe('project data storage', () => {
+    it('should save and load project data', () => {
+      const project: Project = {
+        id: 'proj_test123',
+        name: 'Test Project',
+        customer: 'Test Customer',
+        salesPerson: 'Test Sales',
+        createdAt: new Date().toISOString(),
+        commonParams: {
+          ambientTemp: 25,
+          ipRating: 'IP65',
+          communication: 'ETHERCAT',
+          cableLength: 5,
+          safetyFactor: 1.5,
+          maxInertiaRatio: 10,
+          targetInertiaRatio: 5,
+        },
+        axes: [],
+      };
+
+      saveProjectData(project.id, project);
+      const loaded = loadProjectData(project.id);
+
+      expect(loaded).toEqual(project);
+    });
+
+    it('should return null for non-existent project', () => {
+      const loaded = loadProjectData('proj_nonexistent');
+      expect(loaded).toBeNull();
+    });
+
+    it('should delete project data', () => {
+      const project: Project = {
+        id: 'proj_test456',
+        name: 'Test Project',
+        customer: '',
+        salesPerson: '',
+        createdAt: new Date().toISOString(),
+        commonParams: {
+          ambientTemp: 25,
+          ipRating: 'IP65',
+          communication: 'ETHERCAT',
+          cableLength: 5,
+          safetyFactor: 1.5,
+          maxInertiaRatio: 10,
+          targetInertiaRatio: 5,
+        },
+        axes: [],
+      };
+
+      saveProjectData(project.id, project);
+      deleteProjectData(project.id);
+      const loaded = loadProjectData(project.id);
+
+      expect(loaded).toBeNull();
+    });
+
+    it('should generate correct project data key', () => {
+      const key = getProjectDataKey('proj_abc123');
+      expect(key).toBe('servo-selector-project-proj_abc123');
     });
   });
 });
