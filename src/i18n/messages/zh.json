@@ -129,6 +129,9 @@
       "confirm": "确定要删除项目「{name}」吗？此操作不可恢复。",
       "confirmButton": "删除"
     },
+    "errors": {
+      "storageFull": "存储空间不足，无法保存项目数据。请删除旧项目或导出备份后重试。"
+    },
     "panel": {
       "title": "我的项目",
       "noProjects": "暂无项目"

@@ -129,6 +129,9 @@
       "confirm": "Are you sure you want to delete project \"{name}\"? This action cannot be undone.",
       "confirmButton": "Delete"
     },
+    "errors": {
+      "storageFull": "Storage full. Please delete old projects or export backups."
+    },
     "panel": {
       "title": "My Projects",
       "noProjects": "No projects"
