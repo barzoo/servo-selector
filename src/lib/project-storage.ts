@@ -145,6 +145,8 @@ export function migrateProjectsStorage(): ProjectsStorage | null {
     // 检查是否已存在新版本存储
     const existing = loadProjectsStorage();
     if (existing && existing.version >= STORAGE_VERSION) {
+      // Check if need to migrate old project data format
+      migrateOldProjectData(existing);
       return existing;
     }
 
@@ -181,7 +183,13 @@ export function migrateProjectsStorage(): ProjectsStorage | null {
     // 保存新结构
     saveProjectsStorage(newStorage);
 
-    console.log('[project-storage] 数据迁移成功:', project.id);
+    // 保存完整项目数据到新的独立存储
+    saveProjectData(project.id, project);
+
+    // 删除旧存储
+    localStorage.removeItem(CURRENT_PROJECT_KEY);
+
+    console.log('[project-storage] Migration successful:', project.id);
     return newStorage;
   } catch (error) {
     console.error('[project-storage] 数据迁移失败:', error);
@@ -192,6 +200,39 @@ export function migrateProjectsStorage(): ProjectsStorage | null {
       currentProjectId: '',
     };
     return fallbackStorage;
+  }
+}
+
+/**
+ * Migrate old project data format (if exists)
+ * Migrate data from servo-selector-project to independent storage
+ */
+function migrateOldProjectData(storage: ProjectsStorage): void {
+  try {
+    // Check if old format project data exists (stored in servo-selector-project key)
+    const oldProjectData = localStorage.getItem('servo-selector-project');
+    if (!oldProjectData) return;
+
+    const parsed = JSON.parse(oldProjectData);
+    const project: Project = parsed.state?.project;
+
+    if (project && project.id) {
+      // Check if project already in list
+      const exists = storage.projects.some(p => p.id === project.id);
+      if (!exists) {
+        // Add to list and save data
+        const meta = extractProjectMeta(project);
+        storage.projects.push(meta);
+        saveProjectsStorage(storage);
+        saveProjectData(project.id, project);
+      }
+
+      // Delete old storage
+      localStorage.removeItem('servo-selector-project');
+    }
+  } catch (error) {
+    console.error('[project-storage] Failed to migrate old project data:', error);
+    // Don't block on migration failure
   }
 }
 
