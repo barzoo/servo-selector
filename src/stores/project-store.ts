@@ -28,6 +28,7 @@ import {
   deleteProjectMeta,
   setCurrentProjectId,
   saveProjectData,
+  loadProjectData,
   deleteProjectData,
 } from '@/lib/project-storage';
 
@@ -698,19 +699,41 @@ export const useProjectStore = create<ProjectStore>()(
           return;
         }
 
-        // Sync current project meta
-        if (state.project.id) {
+        // 1. Save current project to storage
+        if (state.project.id && state.project.axes.length > 0) {
           const currentMeta = extractProjectMeta(state.project);
           updateProjectMeta(state.project.id, currentMeta);
+          saveProjectData(state.project.id, state.project);
         }
 
-        // Set new current project ID
+        // 2. Load target project from independent storage
+        const targetProject = loadProjectData(projectId);
+        if (!targetProject) {
+          console.error(`[ProjectStore] Project not found: ${projectId}`);
+          // Remove non-existent project from list
+          deleteProjectMeta(projectId);
+          deleteProjectData(projectId);
+          // Refresh project list
+          const storage = loadProjectsStorage();
+          if (storage) {
+            set({ projects: storage.projects });
+          }
+          return;
+        }
+
+        // 3. Update store state
+        const firstAxis = targetProject.axes[0];
+        set({
+          project: targetProject,
+          currentAxisId: firstAxis?.id ?? '',
+          currentStep: firstAxis?.status === 'COMPLETED' ? 5 : 1,
+          isComplete: firstAxis?.status === 'COMPLETED',
+          input: firstAxis?.input || {},
+          result: firstAxis?.result,
+        });
+
+        // 4. Update current project ID (for compatibility)
         setCurrentProjectId(projectId);
-
-        // Reload page to load the new project (simplified approach)
-        if (typeof window !== 'undefined') {
-          window.location.reload();
-        }
       },
 
       deleteProject: (projectId) => {
@@ -724,6 +747,9 @@ export const useProjectStore = create<ProjectStore>()(
 
         // Delete project meta from storage
         deleteProjectMeta(projectId);
+
+        // Delete full project data
+        deleteProjectData(projectId);
 
         // Reload project list
         const storage = loadProjectsStorage();
