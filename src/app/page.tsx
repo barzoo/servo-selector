@@ -42,12 +42,14 @@ export default function Home() {
 
   useEffect(() => {
     // Manually trigger rehydration from Zustand persist
-    useProjectStore.persist.rehydrate().then(() => {
+    const rehydrate = async () => {
+      await useProjectStore.persist.rehydrate();
       // After rehydration, load the projects list
       const { loadProjectsList } = useProjectStore.getState();
       loadProjectsList();
       setIsLoaded(true);
-    });
+    };
+    rehydrate();
   }, []);
 
   const handleAddAxis = () => {

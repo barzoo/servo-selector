@@ -1,16 +1,16 @@
 {
   "_metadata": {
     "version": "1.0.0",
-    "generatedAt": "2026-03-12T00:13:28.325Z",
+    "generatedAt": "2026-03-15T09:23:40.534Z",
     "sources": [
       {
         "file": "docs/data/MC20_电机技术参数.csv",
-        "checksum": "d8797f1ceac523e0",
+        "checksum": "2289f71039cfe38b",
         "description": "MC20电机技术参数表"
       },
       {
         "file": "docs/data/XC20_驱动技术参数.csv",
-        "checksum": "fd8c50dabbf3660f",
+        "checksum": "ee44fd6356fade74",
         "description": "XC20驱动技术参数表"
       },
       {

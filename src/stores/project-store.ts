@@ -258,7 +258,7 @@ export const useProjectStore = create<ProjectStore>()(
       currentAxisId: initialState.project.axes[0]?.id ?? '',
 
       // Project operations
-      createProject: (info) =>
+      createProject: (info: ProjectInfo) =>
         set({
           project: {
             ...createEmptyProject(),
@@ -270,16 +270,16 @@ export const useProjectStore = create<ProjectStore>()(
           currentAxisId: '',
         }),
 
-      updateProjectInfo: (info) =>
-        set((state) => ({
+      updateProjectInfo: (info: Partial<ProjectInfo>) =>
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
             ...info,
           },
         })),
 
-      updateCommonParams: (params) =>
-        set((state) => ({
+      updateCommonParams: (params: Partial<CommonParams>) =>
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
             commonParams: {
@@ -290,7 +290,7 @@ export const useProjectStore = create<ProjectStore>()(
         })),
 
       // Axis operations
-      addAxis: (name, copyFrom) => {
+      addAxis: (name: string, copyFrom?: string) => {
         const state = get();
         // Generate locale-aware default name if not provided
         const axisName = name || getDefaultAxisName(state.project.axes.length + 1);
@@ -300,11 +300,11 @@ export const useProjectStore = create<ProjectStore>()(
           status: 'CONFIGURING',
           createdAt: new Date().toISOString(),
           input: copyFrom
-            ? state.project.axes.find((a) => a.id === copyFrom)?.input || {}
+            ? state.project.axes.find((a: AxisConfig) => a.id === copyFrom)?.input || {}
             : {},
         };
 
-        set((state) => ({
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
             axes: [...state.project.axes, newAxis],
@@ -314,18 +314,18 @@ export const useProjectStore = create<ProjectStore>()(
         return newAxis.id;
       },
 
-      switchAxis: (axisId) => {
+      switchAxis: (axisId: string) => {
         const state = get();
-        const axis = state.project.axes.find((a) => a.id === axisId);
+        const axis = state.project.axes.find((a: AxisConfig) => a.id === axisId);
         if (!axis) return;
 
         // Save current axis state before switching
-        const currentAxis = state.project.axes.find((a) => a.id === state.currentAxisId);
+        const currentAxis = state.project.axes.find((a: AxisConfig) => a.id === state.currentAxisId);
         if (currentAxis) {
-          set((state) => ({
+          set((state: ProjectStore) => ({
             project: {
               ...state.project,
-              axes: state.project.axes.map((a) =>
+              axes: state.project.axes.map((a: AxisConfig) =>
                 a.id === currentAxis.id
                   ? { ...a, input: state.input, result: state.result }
                   : a
@@ -345,15 +345,15 @@ export const useProjectStore = create<ProjectStore>()(
         });
       },
 
-      deleteAxis: (axisId) => {
+      deleteAxis: (axisId: string) => {
         const state = get();
         if (state.project.axes.length <= 1) {
           // Don't delete the last axis
           return;
         }
 
-        const newAxes = state.project.axes.filter((a) => a.id !== axisId);
-        set((state) => ({
+        const newAxes = state.project.axes.filter((a: AxisConfig) => a.id !== axisId);
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
             axes: newAxes,
@@ -365,21 +365,21 @@ export const useProjectStore = create<ProjectStore>()(
         }));
       },
 
-      updateAxisName: (axisId, name) =>
-        set((state) => ({
+      updateAxisName: (axisId: string, name: string) =>
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === axisId ? { ...a, name } : a
             ),
           },
         })),
 
       completeAxis: () =>
-        set((state) => ({
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === state.currentAxisId
                 ? {
                     ...a,
@@ -395,14 +395,14 @@ export const useProjectStore = create<ProjectStore>()(
         })),
 
       // Wizard operations
-      setStep: (step) => set({ currentStep: step }),
+      setStep: (step: WizardStep) => set({ currentStep: step }),
 
-      setInput: (input) =>
-        set((state) => ({
+      setInput: (input: Partial<SizingInput>) =>
+        set((state: ProjectStore) => ({
           input: { ...state.input, ...input },
         })),
 
-      setResult: (result) => set({ result }),
+      setResult: (result: SizingResult) => set({ result }),
 
       nextStep: () => {
         const { currentStep } = get();
@@ -425,14 +425,14 @@ export const useProjectStore = create<ProjectStore>()(
         const currentAxisId = state.currentAxisId;
 
         // Reset only the current axis, preserve project and other axes
-        set((state) => ({
+        set((state: ProjectStore) => ({
           currentStep: 1 as WizardStep,
           isComplete: false,
           input: {},
           result: undefined,
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === currentAxisId
                 ? {
                     ...a,
@@ -448,8 +448,8 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       // Individual input setters (for compatibility with existing components)
-      setProjectInfo: (projectInfo) =>
-        set((state) => ({
+      setProjectInfo: (projectInfo: ProjectInfo) =>
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
             name: projectInfo.name,
@@ -460,12 +460,12 @@ export const useProjectStore = create<ProjectStore>()(
           input: { ...state.input, project: projectInfo },
         })),
 
-      setMechanism: (mechanism) =>
-        set((state) => ({
+      setMechanism: (mechanism: MechanismConfig) =>
+        set((state: ProjectStore) => ({
           input: { ...state.input, mechanism },
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === state.currentAxisId
                 ? { ...a, input: { ...a.input, mechanism } }
                 : a
@@ -473,8 +473,8 @@ export const useProjectStore = create<ProjectStore>()(
           },
         })),
 
-      setMotion: (motion) =>
-        set((state) => ({
+      setMotion: (motion: MotionParams) =>
+        set((state: ProjectStore) => ({
           input: { ...state.input, motion },
           project: {
             ...state.project,
@@ -486,34 +486,34 @@ export const useProjectStore = create<ProjectStore>()(
           },
         })),
 
-      setDuty: (duty) =>
-        set((state) => ({
+      setDuty: (duty: DutyConditions) =>
+        set((state: ProjectStore) => ({
           input: { ...state.input, duty },
         })),
 
-      setPreferences: (preferences) =>
-        set((state) => ({
+      setPreferences: (preferences: SystemPreferences) =>
+        set((state: ProjectStore) => ({
           input: { ...state.input, preferences },
         })),
 
-      setSelections: (selections) =>
-        set((state) => ({
+      setSelections: (selections: MotorSelections) =>
+        set((state: ProjectStore) => ({
           input: { ...state.input, selections },
         })),
 
       completeWizard: () => set({ isComplete: true }),
 
       // Re-edit completed axis
-      reeditAxis: (axisId) => {
+      reeditAxis: (axisId: string) => {
         const state = get();
-        const axis = state.project.axes.find((a) => a.id === axisId);
+        const axis = state.project.axes.find((a: AxisConfig) => a.id === axisId);
         if (!axis || axis.status !== 'COMPLETED') return;
 
         // Update axis status back to CONFIGURING
-        set((state) => ({
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === axisId
                 ? {
                     ...a,
@@ -530,11 +530,11 @@ export const useProjectStore = create<ProjectStore>()(
       },
 
       // Update axis duty conditions (axis-specific only)
-      updateAxisDutyConditions: (duty) =>
-        set((state) => ({
+      updateAxisDutyConditions: (duty: DutyConditions) =>
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === state.currentAxisId
                 ? {
                     ...a,
@@ -549,11 +549,11 @@ export const useProjectStore = create<ProjectStore>()(
         })),
 
       // Update axis system preferences (axis-specific only)
-      updateAxisPreferences: (preferences) =>
-        set((state) => ({
+      updateAxisPreferences: (preferences: SystemPreferences) =>
+        set((state: ProjectStore) => ({
           project: {
             ...state.project,
-            axes: state.project.axes.map((a) =>
+            axes: state.project.axes.map((a: AxisConfig) =>
               a.id === state.currentAxisId
                 ? {
                     ...a,
@@ -570,7 +570,7 @@ export const useProjectStore = create<ProjectStore>()(
       // Get merged SizingInput
       getSizingInput: () => {
         const state = get();
-        const axis = state.project.axes.find((a) => a.id === state.currentAxisId);
+        const axis = state.project.axes.find((a: AxisConfig) => a.id === state.currentAxisId);
         if (!axis) throw new Error('Axis not found');
         return buildSizingInput(state.project, axis);
       },
@@ -579,19 +579,19 @@ export const useProjectStore = create<ProjectStore>()(
       getCurrentAxis: () => {
         const state = get();
         return (
-          state.project.axes.find((a) => a.id === state.currentAxisId) ||
+          state.project.axes.find((a: AxisConfig) => a.id === state.currentAxisId) ||
           state.project.axes[0]
         );
       },
 
       getCompletedAxes: () => {
         const state = get();
-        return state.project.axes.filter((a) => a.status === 'COMPLETED');
+        return state.project.axes.filter((a: AxisConfig) => a.status === 'COMPLETED');
       },
 
       canExportPdf: () => {
         const state = get();
-        return state.project.axes.some((a) => a.status === 'COMPLETED');
+        return state.project.axes.some((a: AxisConfig) => a.status === 'COMPLETED');
       },
 
       // Project list operations
@@ -615,7 +615,7 @@ export const useProjectStore = create<ProjectStore>()(
         }
       },
 
-      saveAndCreateNewProject: (info) => {
+      saveAndCreateNewProject: (info: ProjectInfo) => {
         const MAX_PROJECTS = 20;
         const state = get();
 
@@ -691,7 +691,7 @@ export const useProjectStore = create<ProjectStore>()(
         });
       },
 
-      switchProject: (projectId) => {
+      switchProject: (projectId: string) => {
         const state = get();
 
         // Cannot switch to current project
@@ -736,7 +736,7 @@ export const useProjectStore = create<ProjectStore>()(
         setCurrentProjectId(projectId);
       },
 
-      deleteProject: (projectId) => {
+      deleteProject: (projectId: string) => {
         const state = get();
 
         // Cannot delete current project
@@ -763,7 +763,8 @@ export const useProjectStore = create<ProjectStore>()(
       version: 3,
       skipHydration: true,
       // Only persist project list metadata, not current project details
-      partialize: (state) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      partialize: (state: any) => ({
         projects: state.projects,
         // Don't save project, currentAxisId, input, result, etc.
       }),
