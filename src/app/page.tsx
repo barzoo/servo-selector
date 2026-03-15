@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Zap } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useProjectStore, migrateLegacyData } from '@/stores/project-store';
+import { useProjectStore } from '@/stores/project-store';
 import { AxisSidebar } from '@/components/wizard/AxisSidebar';
 import { MobileAxisDrawer } from '@/components/wizard/MobileAxisDrawer';
 import { StepIndicator } from '@/components/wizard/StepIndicator';
@@ -41,48 +41,13 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Rehydrate from localStorage manually (since skipHydration is enabled)
-    const stored = localStorage.getItem('servo-selector-project');
-
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        const state = parsed.state || parsed;
-
-        // Only restore if the stored project has axes
-        if (state.project?.axes?.length > 0) {
-          useProjectStore.setState({
-            project: state.project,
-            currentAxisId: state.project.axes[0]?.id || '',
-            currentStep: state.project.axes[0]?.status === 'COMPLETED' ? 5 : 1,
-            isComplete: state.project.axes[0]?.status === 'COMPLETED',
-            input: state.input || {},
-            result: state.result,
-          });
-          setIsLoaded(true);
-          return;
-        }
-
-        // Stored project has no axes, clear it
-        localStorage.removeItem('servo-selector-project');
-      } catch {
-        localStorage.removeItem('servo-selector-project');
-      }
-    }
-
-    // Check for legacy data
-    const migrated = migrateLegacyData();
-    if (migrated) {
-      useProjectStore.setState({
-        project: migrated,
-        currentAxisId: migrated.axes[0]?.id || '',
-        currentStep: migrated.axes[0]?.status === 'COMPLETED' ? 5 : 1,
-        isComplete: migrated.axes[0]?.status === 'COMPLETED',
-      });
-    }
-    // Otherwise, keep the initial empty project state (will show onboarding)
-
-    setIsLoaded(true);
+    // Manually trigger rehydration from Zustand persist
+    useProjectStore.persist.rehydrate().then(() => {
+      // After rehydration, load the projects list
+      const { loadProjectsList } = useProjectStore.getState();
+      loadProjectsList();
+      setIsLoaded(true);
+    });
   }, []);
 
   const handleAddAxis = () => {
