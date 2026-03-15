@@ -318,3 +318,75 @@ export function setCurrentProjectId(projectId: string): ProjectsStorage | null {
   saveProjectsStorage(storage);
   return storage;
 }
+
+/**
+ * Get project data localStorage key
+ * @param projectId - Project ID
+ * @returns Storage key
+ */
+export function getProjectDataKey(projectId: string): string {
+  return `servo-selector-project-${projectId}`;
+}
+
+/**
+ * Save full project data to localStorage
+ *
+ * @param projectId - Project ID
+ * @param project - Full Project object
+ * @throws QuotaExceededError when storage is full
+ */
+export function saveProjectData(projectId: string, project: Project): void {
+  if (!isBrowser()) return;
+
+  try {
+    const key = getProjectDataKey(projectId);
+    const data = JSON.stringify(project);
+    localStorage.setItem(key, data);
+  } catch (error) {
+    if (error instanceof Error && error.name === 'QuotaExceededError') {
+      console.error('[project-storage] Storage full:', error);
+      throw new Error(
+        'Storage full. Please delete old projects or export backups.'
+      );
+    }
+    console.error('[project-storage] Failed to save project data:', error);
+    throw error;
+  }
+}
+
+/**
+ * Load full project data from localStorage
+ *
+ * @param projectId - Project ID
+ * @returns Project object or null if not found
+ */
+export function loadProjectData(projectId: string): Project | null {
+  if (!isBrowser()) return null;
+
+  try {
+    const key = getProjectDataKey(projectId);
+    const data = localStorage.getItem(key);
+    if (!data) return null;
+
+    return JSON.parse(data) as Project;
+  } catch (error) {
+    console.error('[project-storage] Failed to load project data:', error);
+    return null;
+  }
+}
+
+/**
+ * Delete full project data
+ *
+ * @param projectId - Project ID
+ */
+export function deleteProjectData(projectId: string): void {
+  if (!isBrowser()) return;
+
+  try {
+    const key = getProjectDataKey(projectId);
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error('[project-storage] Failed to delete project data:', error);
+  }
+}
